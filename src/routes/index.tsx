@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import {
   Zap,
@@ -211,12 +211,12 @@ function Index() {
               </p>
 
               <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
-                <a
-                  href="#services"
+                <Link
+                  to="/designs"
                   className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 text-sm font-bold text-primary-foreground shadow-[var(--shadow-elevated)] transition-transform hover:scale-[1.02] hover:bg-primary-glow sm:w-auto"
                 >
                   تعرف على الخدمات
-                </a>
+                </Link>
                 <a
                   href={WHATSAPP_URL}
                   target="_blank"
