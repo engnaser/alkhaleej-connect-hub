@@ -1,5 +1,7 @@
 {
-  "framework": "tanstack-start",
-  "buildCommand": "bun run build",
-  "outputDirectory": ".output"
+  "cleanUrls": true,
+  "routes": [
+    { "handle": "filesystem" },
+    { "src": "/(.*)", "dest": "/index.html" }
+  ]
 }
