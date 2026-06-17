@@ -60,22 +60,22 @@
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.205 0 0);
 
-  /* Deep premium blue #0D47A1 */
-  --primary: oklch(0.42 0.18 260);
-  --primary-foreground: oklch(0.99 0 0);
-  --primary-glow: oklch(0.55 0.2 258);
+  /* Brand teal #0e4754 */
+  --primary: #0e4754;
+  --primary-foreground: #ffffff;
+  --primary-glow: #176477;
 
-  --secondary: oklch(0.968 0.005 247);
-  --secondary-foreground: oklch(0.25 0.04 260);
+  --secondary: #f3f7f8;
+  --secondary-foreground: #0e4754;
 
-  --muted: oklch(0.968 0.005 247);
-  --muted-foreground: oklch(0.5 0.01 260);
+  --muted: #f3f7f8;
+  --muted-foreground: #5b6f74;
 
-  --accent: oklch(0.95 0.03 230);
-  --accent-foreground: oklch(0.3 0.08 260);
+  --accent: #fff7d6;
+  --accent-foreground: #0e4754;
 
-  /* Vibrant cyan #00B0FF */
-  --cyan: oklch(0.72 0.16 230);
+  /* Brand yellow #fada64 */
+  --cyan: #fada64;
   --cyan-foreground: oklch(0.15 0.05 260);
 
   /* WhatsApp green */
