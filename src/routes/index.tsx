@@ -59,8 +59,8 @@ const metrics = [
     label: "الاسم التجاري القانوني",
     value: "الخليج تيليكوم لخدمات الشحن الإلكتروني",
   },
-  { icon: Phone, label: "هاتف التواصل المعتمد", value: "‎+967 777 000 000" },
-  { icon: Mail, label: "البريد الإلكتروني الرسمي", value: "support@alkhaleej-telecom.ye" },
+  { icon: Phone, label: "هاتف التواصل المعتمد", value: SUPPORT_PHONE },
+  { icon: Mail, label: "البريد الإلكتروني الرسمي", value: SUPPORT_EMAIL },
   { icon: MapPin, label: "العنوان", value: "الجمهورية اليمنية" },
 ];
 
