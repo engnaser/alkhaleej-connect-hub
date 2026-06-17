@@ -15,9 +15,14 @@ import {
   ShieldAlert,
   ChevronDown,
   MessageCircle,
+  Download,
 } from "lucide-react";
 
-const WHATSAPP_URL = "https://wa.me/967777000000";
+const WHATSAPP_URL = "https://wa.me/967781635755";
+const APP_URL =
+  "https://play.google.com/store/apps/details?id=alkhalijtele.comapp&hl=ar";
+const SUPPORT_EMAIL = "alkhalijtelecom2021@gmail.com";
+const SUPPORT_PHONE = "‎+967 781 635 755";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -54,8 +59,8 @@ const metrics = [
     label: "الاسم التجاري القانوني",
     value: "الخليج تيليكوم لخدمات الشحن الإلكتروني",
   },
-  { icon: Phone, label: "هاتف التواصل المعتمد", value: "‎+967 777 000 000" },
-  { icon: Mail, label: "البريد الإلكتروني الرسمي", value: "support@alkhaleej-telecom.ye" },
+  { icon: Phone, label: "هاتف التواصل المعتمد", value: SUPPORT_PHONE },
+  { icon: Mail, label: "البريد الإلكتروني الرسمي", value: SUPPORT_EMAIL },
   { icon: MapPin, label: "العنوان", value: "الجمهورية اليمنية" },
 ];
 
@@ -210,10 +215,19 @@ function Index() {
                 الاستخدام، وإجراءات التحقق المعتمدة للدفع الرقمي وشرائح SIM.
               </p>
 
-              <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
+                <a
+                  href={APP_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 text-sm font-bold text-primary-foreground shadow-[var(--shadow-elevated)] transition-transform hover:scale-[1.02] hover:bg-primary-glow sm:w-auto"
+                >
+                  <Download className="h-4 w-4" />
+                  تحميل التطبيق
+                </a>
                 <Link
                   to="/designs"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 text-sm font-bold text-primary-foreground shadow-[var(--shadow-elevated)] transition-transform hover:scale-[1.02] hover:bg-primary-glow sm:w-auto"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-cyan px-7 py-3.5 text-sm font-bold text-cyan-foreground shadow-md transition-transform hover:scale-[1.02] sm:w-auto"
                 >
                   تعرف على الخدمات
                 </Link>
@@ -456,12 +470,23 @@ function Index() {
               <h4 className="mb-3 text-sm font-bold text-foreground">تواصل معنا</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-cyan" />
-                  ‎+967 777 000 000
+                  <Phone className="h-4 w-4 text-primary" />
+                  {SUPPORT_PHONE}
                 </li>
                 <li className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-cyan" />
-                  support@alkhaleej-telecom.ye
+                  <Mail className="h-4 w-4 text-primary" />
+                  {SUPPORT_EMAIL}
+                </li>
+                <li>
+                  <a
+                    href={APP_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 font-semibold text-primary transition-colors hover:text-primary-glow"
+                  >
+                    <Download className="h-4 w-4" />
+                    تحميل تطبيق الخليج تيليكوم
+                  </a>
                 </li>
                 <li>
                   <a
