@@ -215,10 +215,19 @@ function Index() {
                 الاستخدام، وإجراءات التحقق المعتمدة للدفع الرقمي وشرائح SIM.
               </p>
 
-              <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row">
+              <div className="mt-10 flex flex-col items-center justify-center gap-3 sm:flex-row sm:flex-wrap">
+                <a
+                  href={APP_URL}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 text-sm font-bold text-primary-foreground shadow-[var(--shadow-elevated)] transition-transform hover:scale-[1.02] hover:bg-primary-glow sm:w-auto"
+                >
+                  <Download className="h-4 w-4" />
+                  تحميل التطبيق
+                </a>
                 <Link
                   to="/designs"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 text-sm font-bold text-primary-foreground shadow-[var(--shadow-elevated)] transition-transform hover:scale-[1.02] hover:bg-primary-glow sm:w-auto"
+                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-cyan px-7 py-3.5 text-sm font-bold text-cyan-foreground shadow-md transition-transform hover:scale-[1.02] sm:w-auto"
                 >
                   تعرف على الخدمات
                 </Link>
