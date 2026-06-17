@@ -15,9 +15,14 @@ import {
   ShieldAlert,
   ChevronDown,
   MessageCircle,
+  Download,
 } from "lucide-react";
 
-const WHATSAPP_URL = "https://wa.me/967777000000";
+const WHATSAPP_URL = "https://wa.me/967781635755";
+const APP_URL =
+  "https://play.google.com/store/apps/details?id=alkhalijtele.comapp&hl=ar";
+const SUPPORT_EMAIL = "alkhalijtelecom2021@gmail.com";
+const SUPPORT_PHONE = "‎+967 781 635 755";
 
 export const Route = createFileRoute("/")({
   head: () => ({
