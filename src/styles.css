@@ -76,7 +76,7 @@
 
   /* Brand yellow #fada64 */
   --cyan: #fada64;
-  --cyan-foreground: oklch(0.15 0.05 260);
+  --cyan-foreground: #0e4754;
 
   /* WhatsApp green */
   --whatsapp: oklch(0.68 0.17 150);
