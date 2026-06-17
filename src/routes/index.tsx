@@ -470,12 +470,23 @@ function Index() {
               <h4 className="mb-3 text-sm font-bold text-foreground">تواصل معنا</h4>
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-cyan" />
-                  ‎+967 777 000 000
+                  <Phone className="h-4 w-4 text-primary" />
+                  {SUPPORT_PHONE}
                 </li>
                 <li className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-cyan" />
-                  support@alkhaleej-telecom.ye
+                  <Mail className="h-4 w-4 text-primary" />
+                  {SUPPORT_EMAIL}
+                </li>
+                <li>
+                  <a
+                    href={APP_URL}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 font-semibold text-primary transition-colors hover:text-primary-glow"
+                  >
+                    <Download className="h-4 w-4" />
+                    تحميل تطبيق الخليج تيليكوم
+                  </a>
                 </li>
                 <li>
                   <a
