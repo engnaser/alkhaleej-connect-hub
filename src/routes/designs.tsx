@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useRef, useState } from "react";
-import { ArrowRight, Download, Sparkles, Phone, User } from "lucide-react";
+import { ArrowRight, Download, Sparkles, Phone, User, Sun } from "lucide-react";
+import logoKhalij from "@/assets/logo-khalij.png";
 import posterSabah from "@/assets/poster-sabah.jpg";
 import posterMasaa from "@/assets/poster-masaa.jpg";
 import posterJumaa from "@/assets/poster-jumaa.jpg";
