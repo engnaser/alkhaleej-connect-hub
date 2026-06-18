@@ -41,7 +41,7 @@ const TEMPLATES: Template[] = [
 ];
 
 /* Position of the empty gold-bordered text box on the poster (relative to image, %). */
-const NAME_BOX = { topPct: 70, leftPct: 9, widthPct: 56, heightPct: 11 };
+const NAME_BOX = { topPct: 50, leftPct: 22, widthPct: 56, heightPct: 11 };
 
 function DesignsPage() {
   const [name, setName] = useState("");
