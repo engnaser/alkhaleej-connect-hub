@@ -429,12 +429,11 @@ function Index() {
           <div className="grid gap-8 md:grid-cols-3">
             <div>
               <div className="flex items-center gap-3">
-                <div
-                  className="grid h-10 w-10 place-items-center rounded-xl text-primary-foreground"
-                  style={{ background: "var(--gradient-primary)" }}
-                >
-                  <Zap className="h-5 w-5" strokeWidth={2.5} />
-                </div>
+                <img
+                  src={logoKhalij}
+                  alt="الخليج تيليكوم"
+                  className="h-10 w-10 shrink-0 rounded-full ring-2 ring-primary/40"
+                />
                 <div className="text-sm font-extrabold text-primary">
                   الخليج تيليكوم
                 </div>
