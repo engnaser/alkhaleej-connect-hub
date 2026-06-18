@@ -41,6 +41,7 @@ const TEMPLATES: Template[] = [
   { id: "ramadan", title: "رمضان كريم", occasion: "حلَّ الشهر الفضيل", src: posterRamadan },
   { id: "eid", title: "عيد مبارك", occasion: "بمناسبة العيد السعيد", src: posterEid },
   { id: "khotoba", title: "خطوبة مباركة", occasion: "تهنئة بمناسبة الخطوبة", src: posterKhotoba },
+  { id: "mawloud", title: "مبارك المولود", occasion: "تهنئة بمناسبة المولود", src: posterMawloud },
   { id: "promo", title: "عرض حصري", occasion: "خصم خاص لعملائنا", src: posterPromo },
 ];
 
@@ -77,11 +78,6 @@ function DesignsPage() {
     if (!ctx) return;
     ctx.drawImage(img, 0, 0, w, h);
 
-    const boxX = (NAME_BOX.leftPct / 100) * w;
-    const boxY = (NAME_BOX.topPct / 100) * h;
-    const boxW = (NAME_BOX.widthPct / 100) * w;
-    const boxH = (NAME_BOX.heightPct / 100) * h;
-
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.shadowColor = "rgba(0,0,0,0.5)";
@@ -89,15 +85,30 @@ function DesignsPage() {
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 2;
 
-    // Name (gold/white)
-    ctx.fillStyle = "#ffffff";
-    ctx.font = `900 ${Math.round(boxH * 0.38)}px Tajawal, system-ui, sans-serif`;
-    ctx.fillText(safeName, boxX + boxW / 2, boxY + boxH * 0.35, boxW * 0.95);
+    if (tpl.id === "mawloud") {
+      // Mawloud template: two gold boxes — recipient then sender
+      ctx.direction = "rtl";
+      ctx.fillStyle = "#f4d28a";
+      ctx.font = `bold ${Math.round(h * 0.038)}px Tajawal, Cairo, system-ui, sans-serif`;
+      ctx.fillText(safeName, w * 0.28, h * 0.606, w * 0.5);
+      ctx.font = `bold ${Math.round(h * 0.034)}px Tajawal, Cairo, system-ui, sans-serif`;
+      ctx.fillText(safePhone, w * 0.28, h * 0.731, w * 0.5);
+    } else {
+      const boxX = (NAME_BOX.leftPct / 100) * w;
+      const boxY = (NAME_BOX.topPct / 100) * h;
+      const boxW = (NAME_BOX.widthPct / 100) * w;
+      const boxH = (NAME_BOX.heightPct / 100) * h;
 
-    // Phone (gold)
-    ctx.fillStyle = "#fada64";
-    ctx.font = `800 ${Math.round(boxH * 0.34)}px ui-monospace, Menlo, monospace`;
-    ctx.fillText(safePhone, boxX + boxW / 2, boxY + boxH * 0.75, boxW * 0.95);
+      // Name (gold/white)
+      ctx.fillStyle = "#ffffff";
+      ctx.font = `900 ${Math.round(boxH * 0.38)}px Tajawal, system-ui, sans-serif`;
+      ctx.fillText(safeName, boxX + boxW / 2, boxY + boxH * 0.35, boxW * 0.95);
+
+      // Phone (gold)
+      ctx.fillStyle = "#fada64";
+      ctx.font = `800 ${Math.round(boxH * 0.34)}px ui-monospace, Menlo, monospace`;
+      ctx.fillText(safePhone, boxX + boxW / 2, boxY + boxH * 0.75, boxW * 0.95);
+    }
 
     const a = document.createElement("a");
     a.href = canvas.toDataURL("image/png");
@@ -278,38 +289,85 @@ function DesignsPage() {
                   {/* Dynamic text layer — absolutely positioned over the gold-bordered empty box.
                       Uses % for position and cqw for font-size so it scales identically across
                       every poster size and every screen width. */}
-                  <div
-                    className="pointer-events-none absolute flex flex-col items-center justify-center text-center"
-                    style={{
-                      top: `${NAME_BOX.topPct}%`,
-                      left: `${NAME_BOX.leftPct}%`,
-                      width: `${NAME_BOX.widthPct}%`,
-                      height: `${NAME_BOX.heightPct}%`,
-                    }}
-                  >
+                  {tpl.id === "mawloud" ? (
+                    <>
+                      <div
+                        className="pointer-events-none absolute flex flex-col items-center justify-center text-center"
+                        style={{
+                          top: "60%",
+                          left: "6%",
+                          width: "46%",
+                          height: "10%",
+                        }}
+                      >
+                        <div
+                          className="w-full truncate font-bold leading-tight"
+                          style={{
+                            fontSize: "4cqw",
+                            color: "#f4d28a",
+                            textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                          }}
+                          dir="rtl"
+                        >
+                          {safeName}
+                        </div>
+                      </div>
+                      <div
+                        className="pointer-events-none absolute flex flex-col items-center justify-center text-center"
+                        style={{
+                          top: "73%",
+                          left: "6%",
+                          width: "46%",
+                          height: "10%",
+                        }}
+                      >
+                        <div
+                          className="w-full truncate font-bold leading-tight"
+                          style={{
+                            fontSize: "3.6cqw",
+                            color: "#f4d28a",
+                            textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                          }}
+                          dir="rtl"
+                        >
+                          {safePhone}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
                     <div
-                      className="w-full truncate font-black leading-tight text-white"
+                      className="pointer-events-none absolute flex flex-col items-center justify-center text-center"
                       style={{
-                        fontSize: "5.2cqw",
-                        textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                        top: `${NAME_BOX.topPct}%`,
+                        left: `${NAME_BOX.leftPct}%`,
+                        width: `${NAME_BOX.widthPct}%`,
+                        height: `${NAME_BOX.heightPct}%`,
                       }}
-                      dir="rtl"
                     >
-                      {safeName}
+                      <div
+                        className="w-full truncate font-black leading-tight text-white"
+                        style={{
+                          fontSize: "5.2cqw",
+                          textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                        }}
+                        dir="rtl"
+                      >
+                        {safeName}
+                      </div>
+                      <div
+                        className="w-full truncate font-extrabold leading-tight"
+                        style={{
+                          fontSize: "4.6cqw",
+                          color: "#fada64",
+                          textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                          marginTop: "0.4cqw",
+                        }}
+                        dir="ltr"
+                      >
+                        {safePhone}
+                      </div>
                     </div>
-                    <div
-                      className="w-full truncate font-extrabold leading-tight"
-                      style={{
-                        fontSize: "4.6cqw",
-                        color: "#fada64",
-                        textShadow: "0 2px 6px rgba(0,0,0,0.5)",
-                        marginTop: "0.4cqw",
-                      }}
-                      dir="ltr"
-                    >
-                      {safePhone}
-                    </div>
-                  </div>
+                  )}
                 </div>
                 <div className="flex items-center justify-between gap-3 p-4">
                   <div className="min-w-0">
