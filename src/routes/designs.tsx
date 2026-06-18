@@ -78,7 +78,6 @@ function DesignsPage() {
     const boxW = (NAME_BOX.widthPct / 100) * w;
     const boxH = (NAME_BOX.heightPct / 100) * h;
 
-    ctx.direction = "rtl";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.shadowColor = "rgba(0,0,0,0.5)";
