@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useRef, useState } from "react";
-import { ArrowRight, Download, Sparkles, Phone, User } from "lucide-react";
+import { Download, Sparkles, Phone, User, Sun } from "lucide-react";
+import logoKhalij from "@/assets/logo-khalij.png";
 import posterSabah from "@/assets/poster-sabah.jpg";
 import posterMasaa from "@/assets/poster-masaa.jpg";
 import posterJumaa from "@/assets/poster-jumaa.jpg";
@@ -103,41 +104,108 @@ function DesignsPage() {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {/* HEADER — reference-inspired dark nav */}
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
+          {/* Brand (right in RTL) */}
+          <Link to="/" className="flex min-w-0 items-center gap-3">
+            <img
+              src={logoKhalij}
+              alt="الخليج تيليكوم"
+              className="h-10 w-10 shrink-0 rounded-full ring-2 ring-primary/40"
+            />
+            <span className="truncate text-sm font-extrabold text-primary sm:text-base">
+              الخليج تيليكوم
+            </span>
+          </Link>
+
+          {/* Nav links (centered) */}
+          <nav className="hidden items-center gap-1 md:flex">
+            {[
+              { href: "/", label: "الرئيسية" },
+              { href: "/designs", label: "صوري" },
+              { href: "/#privacy", label: "سياسة الخصوصية" },
+              { href: "/#privacy", label: "الشروط والأحكام" },
+              { href: "/#about", label: "سياسة الأمان" },
+              { href: "/#about", label: "اتصل بنا" },
+            ].map((l) => (
+              <a
+                key={l.label}
+                href={l.href}
+                className="rounded-md px-3 py-2 text-sm font-semibold text-foreground/80 transition-colors hover:bg-secondary hover:text-primary"
+              >
+                {l.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* Theme/back icon (left in RTL) */}
           <Link
             to="/"
-            className="inline-flex items-center gap-2 rounded-lg px-3 py-2 text-sm font-bold text-primary transition-colors hover:bg-secondary"
+            aria-label="العودة"
+            className="grid h-10 w-10 place-items-center rounded-full border border-border bg-secondary text-primary transition-colors hover:bg-primary/10"
           >
-            <ArrowRight className="h-4 w-4" />
-            <span>العودة للرئيسية</span>
+            <Sun className="h-4 w-4" />
           </Link>
-          <div className="text-xs font-bold text-muted-foreground sm:text-sm">
-            {BRAND}
-          </div>
         </div>
       </header>
 
-      <main className="mx-auto max-w-7xl px-4 py-10 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+        {/* HERO — sparkle + title + steps (matches reference) */}
         <div className="mx-auto max-w-3xl text-center">
-          <div className="mx-auto mb-4 inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-1.5 text-xs font-semibold text-primary shadow-sm">
-            <Sparkles className="h-4 w-4" />
-            <span>تصاميم حصرية بهوية الخليج تيليكوم</span>
+          <div
+            className="mx-auto mb-6 grid h-16 w-16 place-items-center rounded-full text-primary"
+            style={{
+              background:
+                "color-mix(in oklab, var(--primary) 14%, transparent)",
+              boxShadow:
+                "0 0 0 1px color-mix(in oklab, var(--primary) 30%, transparent), 0 12px 40px -10px color-mix(in oklab, var(--primary) 45%, transparent)",
+            }}
+          >
+            <Sparkles className="h-7 w-7" strokeWidth={2.2} />
           </div>
-          <h1 className="text-balance text-3xl font-black leading-tight text-foreground sm:text-4xl lg:text-5xl">
-            صمّم بطاقتك الدعائية{" "}
-            <span
-              className="bg-clip-text text-transparent"
-              style={{ backgroundImage: "var(--gradient-primary)" }}
-            >
-              باسمك ورقم جوالك
-            </span>
+
+          <h1 className="text-balance text-4xl font-black leading-tight text-primary sm:text-5xl lg:text-6xl">
+            الخليج تيليكوم
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
-            تصاميم احترافية بنفس فكرة بوستر «صباح الخير» — لكل مناسبة بوستر
-            خاص بهوية الخليج تيليكوم.
+            اختر التصميم المفضل، أدخل بياناتك، واحصل على بطاقتك الاحترافية فوراً.
           </p>
+
+          {/* Stepper pills */}
+          <div className="mx-auto mt-8 flex max-w-2xl items-center justify-center gap-2 sm:gap-4">
+            {[
+              { n: 1, label: "اختر الصورة", active: true },
+              { n: 2, label: "أدخل البيانات", active: false },
+              { n: 3, label: "النتيجة", active: false },
+            ].map((s, i, arr) => (
+              <div key={s.n} className="flex items-center gap-2 sm:gap-4">
+                <div
+                  className={`flex items-center gap-2 rounded-full px-3 py-2 text-xs font-bold transition-all sm:px-4 sm:text-sm ${
+                    s.active
+                      ? "bg-primary text-primary-foreground shadow-[var(--shadow-elevated)]"
+                      : "border border-border bg-secondary text-muted-foreground"
+                  }`}
+                >
+                  <span>{s.label}</span>
+                  <span
+                    className={`grid h-5 w-5 place-items-center rounded-full text-[10px] font-black ${
+                      s.active
+                        ? "bg-primary-foreground/20 text-primary-foreground"
+                        : "bg-background text-foreground"
+                    }`}
+                  >
+                    {s.n}
+                  </span>
+                </div>
+                {i < arr.length - 1 && (
+                  <span className="h-px w-6 bg-border sm:w-10" />
+                )}
+              </div>
+            ))}
+          </div>
         </div>
+
 
         <div className="mx-auto mt-10 max-w-3xl rounded-3xl border border-border bg-card p-6 shadow-[var(--shadow-card)] sm:p-8">
           <div className="grid gap-5 sm:grid-cols-2">

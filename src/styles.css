@@ -49,49 +49,49 @@
 :root {
   --radius: 0.75rem;
 
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.205 0 0);
+  /* Dark theme — inspired by reference UI */
+  --background: #0a1322;
+  --foreground: #e6edf6;
 
-  --surface: oklch(0.978 0.003 247);
+  --surface: #0f1a2d;
 
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.205 0 0);
+  --card: #111d33;
+  --card-foreground: #e6edf6;
 
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.205 0 0);
+  --popover: #111d33;
+  --popover-foreground: #e6edf6;
 
-  /* Brand teal #0e4754 */
-  --primary: #0e4754;
-  --primary-foreground: #ffffff;
-  --primary-glow: #176477;
+  /* Brand teal/mint accent */
+  --primary: #2dd4bf;
+  --primary-foreground: #052e2b;
+  --primary-glow: #5eead4;
 
-  --secondary: #f3f7f8;
-  --secondary-foreground: #0e4754;
+  --secondary: #18243b;
+  --secondary-foreground: #e6edf6;
 
-  --muted: #f3f7f8;
-  --muted-foreground: #5b6f74;
+  --muted: #18243b;
+  --muted-foreground: #8aa0bd;
 
-  --accent: #fff7d6;
-  --accent-foreground: #0e4754;
+  --accent: #18243b;
+  --accent-foreground: #2dd4bf;
 
-  /* Brand yellow #fada64 */
+  /* Secondary accent (gold) */
   --cyan: #fada64;
   --cyan-foreground: #0e4754;
 
-  /* WhatsApp green */
   --whatsapp: oklch(0.68 0.17 150);
   --whatsapp-foreground: oklch(0.99 0 0);
 
-  --warning-bg: oklch(0.97 0.04 85);
-  --warning-border: oklch(0.78 0.13 75);
-  --warning-foreground: oklch(0.35 0.1 60);
+  --warning-bg: #2a2410;
+  --warning-border: #b8902a;
+  --warning-foreground: #fde68a;
 
   --destructive: oklch(0.6 0.22 27);
   --destructive-foreground: oklch(0.99 0 0);
 
-  --border: oklch(0.92 0.005 250);
-  --input: oklch(0.92 0.005 250);
-  --ring: #0e4754;
+  --border: #1f2c44;
+  --input: #1f2c44;
+  --ring: #2dd4bf;
 }
 
 @layer base {
