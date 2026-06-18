@@ -188,7 +188,7 @@ function DesignsPage() {
                   isActive ? "border-primary" : "border-border"
                 }`}
               >
-                <div className="relative w-full overflow-hidden" style={{ aspectRatio: "3/4" }}>
+                <div className="relative w-full overflow-hidden">
                   <img
                     ref={(el) => {
                       imgRefs.current[tpl.id] = el;
@@ -196,7 +196,7 @@ function DesignsPage() {
                     src={tpl.src}
                     alt={tpl.title}
                     crossOrigin="anonymous"
-                    className="block h-full w-full object-cover"
+                    className="block h-auto w-full"
                     loading="lazy"
                   />
                   {/* Name/phone overlay inside the gold-bordered empty box */}
