@@ -17,6 +17,7 @@ import {
   MessageCircle,
   Download,
 } from "lucide-react";
+import logoKhalij from "@/assets/logo-khalij.png";
 
 const WHATSAPP_URL = "https://wa.me/967781635755";
 const APP_URL =
