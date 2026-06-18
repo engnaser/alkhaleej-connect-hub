@@ -395,32 +395,6 @@ function Index() {
           </div>
         </section>
 
-        {/* CTA STRIP */}
-        <section className="bg-surface">
-          <div className="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8">
-            <div
-              className="overflow-hidden rounded-3xl p-8 text-center text-primary-foreground shadow-[var(--shadow-elevated)] sm:p-12"
-              style={{ background: "var(--gradient-primary)" }}
-            >
-              <h3 className="text-2xl font-black sm:text-3xl">
-                هل تحتاج إلى مساعدة فورية؟
-              </h3>
-              <p className="mx-auto mt-3 max-w-xl text-sm opacity-90 sm:text-base">
-                فريق دعم الخليج تيليكوم متاح للرد على استفساراتك عبر القنوات
-                الرسمية المعتمدة.
-              </p>
-              <a
-                href={WHATSAPP_URL}
-                target="_blank"
-                rel="noreferrer"
-                className="mt-7 inline-flex items-center gap-2 rounded-xl bg-card px-7 py-3.5 text-sm font-extrabold text-primary shadow-lg transition-transform hover:scale-[1.03]"
-              >
-                <MessageCircle className="h-5 w-5" />
-                تواصل عبر واتساب الآن
-              </a>
-            </div>
-          </div>
-        </section>
       </main>
 
       {/* FOOTER */}
