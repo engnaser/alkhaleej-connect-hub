@@ -12,18 +12,18 @@ import posterPromo from "@/assets/poster-promo.jpg";
 export const Route = createFileRoute("/designs")({
   head: () => ({
     meta: [
-      { title: "التصاميم الدعائية للمناسبات | العريف موبايل" },
+      { title: "التصاميم الدعائية للمناسبات | الخليج تيليكوم" },
       {
         name: "description",
         content:
-          "تصاميم دعائية حصرية بهوية العريف موبايل — أضف اسمك ورقم جوالك وحمّل البطاقة فوراً.",
+          "تصاميم دعائية حصرية بهوية الخليج تيليكوم — أضف اسمك ورقم جوالك وحمّل البطاقة فوراً.",
       },
     ],
   }),
   component: DesignsPage,
 });
 
-const BRAND = "العريف موبايل • للشحن الإلكتروني";
+const BRAND = "الخليج تيليكوم • للشحن الإلكتروني";
 
 type Template = {
   id: string;
@@ -98,7 +98,7 @@ function DesignsPage() {
 
     const a = document.createElement("a");
     a.href = canvas.toDataURL("image/png");
-    a.download = `areef-${tpl.id}-${safeName}.png`;
+    a.download = `khalij-${tpl.id}-${safeName}.png`;
     a.click();
   };
 
@@ -111,11 +111,11 @@ function DesignsPage() {
           <Link to="/" className="flex min-w-0 items-center gap-3">
             <img
               src={logoKhalij}
-              alt="العريف موبايل"
+              alt="الخليج تيليكوم"
               className="h-10 w-10 shrink-0 rounded-full ring-2 ring-primary/40"
             />
             <span className="truncate text-sm font-extrabold text-primary sm:text-base">
-              العريف موبايل
+              الخليج تيليكوم
             </span>
           </Link>
 
@@ -166,7 +166,7 @@ function DesignsPage() {
           </div>
 
           <h1 className="text-balance text-4xl font-black leading-tight text-primary sm:text-5xl lg:text-6xl">
-            العريف موبايل
+            الخليج تيليكوم
           </h1>
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
             اختر التصميم المفضل، أدخل بياناتك، واحصل على بطاقتك الاحترافية فوراً.
