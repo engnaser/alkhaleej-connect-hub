@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useRef, useState } from "react";
-import { Download, Sparkles, Phone, User, Sun } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { Download, Sparkles, Phone, User, Sun, RefreshCw } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import posterSabah from "@/assets/poster-sabah.jpg";
 import posterMasaa from "@/assets/poster-masaa.jpg";
@@ -103,6 +103,57 @@ function DesignsPage() {
     a.download = `khalij-${tpl.id}-${safeName}.png`;
     a.click();
   };
+
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const drawPreview = () => {
+    const tpl = TEMPLATES.find((t) => t.id === activeId);
+    if (!tpl) return;
+    const img = imgRefs.current[tpl.id];
+    if (!img || !img.complete || !canvasRef.current) return;
+
+    const w = img.naturalWidth || 1024;
+    const h = img.naturalHeight || 1365;
+    const canvas = canvasRef.current;
+    canvas.width = w;
+    canvas.height = h;
+    const ctx = canvas.getContext("2d");
+    if (!ctx) return;
+    ctx.drawImage(img, 0, 0, w, h);
+
+    const boxX = (NAME_BOX.leftPct / 100) * w;
+    const boxY = (NAME_BOX.topPct / 100) * h;
+    const boxW = (NAME_BOX.widthPct / 100) * w;
+    const boxH = (NAME_BOX.heightPct / 100) * h;
+
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.shadowColor = "rgba(0,0,0,0.5)";
+    ctx.shadowBlur = 8;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 2;
+
+    ctx.fillStyle = "#ffffff";
+    ctx.font = `900 ${Math.round(boxH * 0.38)}px Tajawal, system-ui, sans-serif`;
+    ctx.fillText(safeName, boxX + boxW / 2, boxY + boxH * 0.35, boxW * 0.95);
+
+    ctx.fillStyle = "#fada64";
+    ctx.font = `800 ${Math.round(boxH * 0.34)}px ui-monospace, Menlo, monospace`;
+    ctx.fillText(safePhone, boxX + boxW / 2, boxY + boxH * 0.75, boxW * 0.95);
+  };
+
+  useEffect(() => {
+    const tpl = TEMPLATES.find((t) => t.id === activeId);
+    if (!tpl) return;
+    const img = imgRefs.current[tpl.id];
+    if (img && img.complete) {
+      drawPreview();
+    } else if (img) {
+      const onLoad = () => drawPreview();
+      img.addEventListener("load", onLoad);
+      return () => img.removeEventListener("load", onLoad);
+    }
+  }, [activeId, safeName, safePhone]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -242,8 +293,33 @@ function DesignsPage() {
             </label>
           </div>
           <p className="mt-4 text-xs text-muted-foreground">
-            * يتم تحديث التصميم لحظياً. التصاميم تُحفظ على جهازك فقط ولا تُرسل
+          * يتم تحديث التصميم لحظياً. التصاميم تُحفظ على جهازك فقط ولا تُرسل
             لأي جهة.
+          </p>
+        </div>
+
+        {/* Canvas Preview */}
+        <div className="mx-auto mt-10 max-w-3xl rounded-3xl border border-border bg-card p-6 shadow-[var(--shadow-card)] sm:p-8">
+          <div className="flex items-center justify-between gap-4">
+            <h2 className="text-lg font-extrabold text-primary">معاينة Canvas</h2>
+            <button
+              type="button"
+              onClick={drawPreview}
+              className="inline-flex items-center gap-2 rounded-xl border-2 border-primary bg-secondary px-4 py-2 text-sm font-bold text-primary hover:bg-primary/10"
+            >
+              <RefreshCw className="h-4 w-4" />
+              تحديث المعاينة
+            </button>
+          </div>
+          <div className="mt-4 overflow-hidden rounded-2xl border border-border bg-secondary">
+            <canvas
+              ref={canvasRef}
+              className="block h-auto w-full"
+              style={{ maxHeight: "70vh" }}
+            />
+          </div>
+          <p className="mt-3 text-center text-xs text-muted-foreground">
+            المعاينة أعلاه تُرسم عبر Canvas بالقيم الحالية.
           </p>
         </div>
 
