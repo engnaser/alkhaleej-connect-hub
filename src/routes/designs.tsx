@@ -208,14 +208,21 @@ function DesignsPage() {
                   >
                     <div
                       className="w-full truncate font-black leading-tight text-white"
-                      style={{ fontSize: "clamp(10px, 2.1vw, 22px)" }}
+                      style={{
+                        fontSize: "clamp(10px, 2.1vw, 22px)",
+                        textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                      }}
                       dir="rtl"
                     >
                       {safeName}
                     </div>
                     <div
                       className="w-full truncate font-extrabold leading-tight"
-                      style={{ fontSize: "clamp(9px, 1.9vw, 20px)", color: "#fada64" }}
+                      style={{
+                        fontSize: "clamp(9px, 1.9vw, 20px)",
+                        color: "#fada64",
+                        textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                      }}
                       dir="ltr"
                     >
                       {safePhone}
