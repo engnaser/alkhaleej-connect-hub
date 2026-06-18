@@ -78,11 +78,6 @@ function DesignsPage() {
     if (!ctx) return;
     ctx.drawImage(img, 0, 0, w, h);
 
-    const boxX = (NAME_BOX.leftPct / 100) * w;
-    const boxY = (NAME_BOX.topPct / 100) * h;
-    const boxW = (NAME_BOX.widthPct / 100) * w;
-    const boxH = (NAME_BOX.heightPct / 100) * h;
-
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.shadowColor = "rgba(0,0,0,0.5)";
@@ -90,15 +85,30 @@ function DesignsPage() {
     ctx.shadowOffsetX = 0;
     ctx.shadowOffsetY = 2;
 
-    // Name (gold/white)
-    ctx.fillStyle = "#ffffff";
-    ctx.font = `900 ${Math.round(boxH * 0.38)}px Tajawal, system-ui, sans-serif`;
-    ctx.fillText(safeName, boxX + boxW / 2, boxY + boxH * 0.35, boxW * 0.95);
+    if (tpl.id === "mawloud") {
+      // Mawloud template: two gold boxes — recipient then sender
+      ctx.direction = "rtl";
+      ctx.fillStyle = "#f4d28a";
+      ctx.font = `bold ${Math.round(h * 0.038)}px Tajawal, Cairo, system-ui, sans-serif`;
+      ctx.fillText(safeName, w * 0.28, h * 0.606, w * 0.5);
+      ctx.font = `bold ${Math.round(h * 0.034)}px Tajawal, Cairo, system-ui, sans-serif`;
+      ctx.fillText(safePhone, w * 0.28, h * 0.731, w * 0.5);
+    } else {
+      const boxX = (NAME_BOX.leftPct / 100) * w;
+      const boxY = (NAME_BOX.topPct / 100) * h;
+      const boxW = (NAME_BOX.widthPct / 100) * w;
+      const boxH = (NAME_BOX.heightPct / 100) * h;
 
-    // Phone (gold)
-    ctx.fillStyle = "#fada64";
-    ctx.font = `800 ${Math.round(boxH * 0.34)}px ui-monospace, Menlo, monospace`;
-    ctx.fillText(safePhone, boxX + boxW / 2, boxY + boxH * 0.75, boxW * 0.95);
+      // Name (gold/white)
+      ctx.fillStyle = "#ffffff";
+      ctx.font = `900 ${Math.round(boxH * 0.38)}px Tajawal, system-ui, sans-serif`;
+      ctx.fillText(safeName, boxX + boxW / 2, boxY + boxH * 0.35, boxW * 0.95);
+
+      // Phone (gold)
+      ctx.fillStyle = "#fada64";
+      ctx.font = `800 ${Math.round(boxH * 0.34)}px ui-monospace, Menlo, monospace`;
+      ctx.fillText(safePhone, boxX + boxW / 2, boxY + boxH * 0.75, boxW * 0.95);
+    }
 
     const a = document.createElement("a");
     a.href = canvas.toDataURL("image/png");
