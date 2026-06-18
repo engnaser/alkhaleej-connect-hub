@@ -17,6 +17,7 @@ import {
   MessageCircle,
   Download,
 } from "lucide-react";
+import logoKhalij from "@/assets/logo-khalij.png";
 
 const WHATSAPP_URL = "https://wa.me/967781635755";
 const APP_URL =
@@ -140,20 +141,14 @@ function Index() {
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
           {/* Brand (right in RTL) */}
           <a href="#home" className="flex min-w-0 items-center gap-3">
-            <div
-              className="grid h-11 w-11 shrink-0 place-items-center rounded-xl text-primary-foreground shadow-md"
-              style={{ background: "var(--gradient-primary)" }}
-            >
-              <Zap className="h-6 w-6" strokeWidth={2.5} />
-            </div>
-            <div className="min-w-0">
-              <div className="truncate text-sm font-extrabold leading-tight text-primary sm:text-base">
-                الخليج تيليكوم
-              </div>
-              <div className="hidden truncate text-[11px] text-muted-foreground sm:block">
-                لخدمات الشحن الإلكتروني
-              </div>
-            </div>
+            <img
+              src={logoKhalij}
+              alt="الخليج تيليكوم"
+              className="h-10 w-10 shrink-0 rounded-full ring-2 ring-primary/40"
+            />
+            <span className="truncate text-sm font-extrabold text-primary sm:text-base">
+              الخليج تيليكوم
+            </span>
           </a>
 
           {/* Nav links */}
@@ -434,12 +429,11 @@ function Index() {
           <div className="grid gap-8 md:grid-cols-3">
             <div>
               <div className="flex items-center gap-3">
-                <div
-                  className="grid h-10 w-10 place-items-center rounded-xl text-primary-foreground"
-                  style={{ background: "var(--gradient-primary)" }}
-                >
-                  <Zap className="h-5 w-5" strokeWidth={2.5} />
-                </div>
+                <img
+                  src={logoKhalij}
+                  alt="الخليج تيليكوم"
+                  className="h-10 w-10 shrink-0 rounded-full ring-2 ring-primary/40"
+                />
                 <div className="text-sm font-extrabold text-primary">
                   الخليج تيليكوم
                 </div>
