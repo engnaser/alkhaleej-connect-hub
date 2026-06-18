@@ -41,7 +41,7 @@ const TEMPLATES: Template[] = [
 ];
 
 /* Position of the empty gold-bordered text box on the poster (relative to image, %). */
-const NAME_BOX = { topPct: 70, leftPct: 9, widthPct: 56, heightPct: 11 };
+const NAME_BOX = { topPct: 54, leftPct: 22, widthPct: 56, heightPct: 11 };
 
 function DesignsPage() {
   const [name, setName] = useState("");
@@ -81,6 +81,10 @@ function DesignsPage() {
     ctx.direction = "rtl";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
+    ctx.shadowColor = "rgba(0,0,0,0.5)";
+    ctx.shadowBlur = 8;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 2;
 
     // Name (gold/white)
     ctx.fillStyle = "#ffffff";
@@ -208,14 +212,21 @@ function DesignsPage() {
                   >
                     <div
                       className="w-full truncate font-black leading-tight text-white"
-                      style={{ fontSize: "clamp(10px, 2.1vw, 22px)" }}
+                      style={{
+                        fontSize: "clamp(10px, 2.1vw, 22px)",
+                        textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                      }}
                       dir="rtl"
                     >
                       {safeName}
                     </div>
                     <div
                       className="w-full truncate font-extrabold leading-tight"
-                      style={{ fontSize: "clamp(9px, 1.9vw, 20px)", color: "#fada64" }}
+                      style={{
+                        fontSize: "clamp(9px, 1.9vw, 20px)",
+                        color: "#fada64",
+                        textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                      }}
                       dir="ltr"
                     >
                       {safePhone}
