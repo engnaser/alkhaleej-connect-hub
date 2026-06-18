@@ -204,8 +204,7 @@ function DesignsPage() {
                     className="pointer-events-none absolute flex flex-col items-center justify-center text-center"
                     style={{
                       top: `${NAME_BOX.topPct}%`,
-                      left: "50%",
-                      transform: "translateX(-50%)",
+                      left: `${NAME_BOX.leftPct}%`,
                       width: `${NAME_BOX.widthPct}%`,
                       height: `${NAME_BOX.heightPct}%`,
                     }}
