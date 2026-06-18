@@ -142,6 +142,19 @@ function DesignsPage() {
     ctx.fillText(safePhone, boxX + boxW / 2, boxY + boxH * 0.75, boxW * 0.95);
   };
 
+  useEffect(() => {
+    const tpl = TEMPLATES.find((t) => t.id === activeId);
+    if (!tpl) return;
+    const img = imgRefs.current[tpl.id];
+    if (img && img.complete) {
+      drawPreview();
+    } else if (img) {
+      const onLoad = () => drawPreview();
+      img.addEventListener("load", onLoad);
+      return () => img.removeEventListener("load", onLoad);
+    }
+  }, [activeId, safeName, safePhone]);
+
   return (
     <div className="min-h-screen bg-background text-foreground">
       {/* HEADER — reference-inspired dark nav */}
