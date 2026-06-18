@@ -62,7 +62,7 @@ const metrics = [
   },
   { icon: Phone, label: "هاتف التواصل المعتمد", value: SUPPORT_PHONE },
   { icon: Mail, label: "البريد الإلكتروني الرسمي", value: SUPPORT_EMAIL },
-  { icon: MapPin, label: "العنوان", value: "الجمهورية اليمنية" },
+  { icon: MapPin, label: "العنوان", value: "اليمن - عدن - المنصورة - بلك 22" },
 ];
 
 const services = [
