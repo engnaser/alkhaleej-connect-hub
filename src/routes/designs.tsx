@@ -293,8 +293,33 @@ function DesignsPage() {
             </label>
           </div>
           <p className="mt-4 text-xs text-muted-foreground">
-            * يتم تحديث التصميم لحظياً. التصاميم تُحفظ على جهازك فقط ولا تُرسل
+          * يتم تحديث التصميم لحظياً. التصاميم تُحفظ على جهازك فقط ولا تُرسل
             لأي جهة.
+          </p>
+        </div>
+
+        {/* Canvas Preview */}
+        <div className="mx-auto mt-10 max-w-3xl rounded-3xl border border-border bg-card p-6 shadow-[var(--shadow-card)] sm:p-8">
+          <div className="flex items-center justify-between gap-4">
+            <h2 className="text-lg font-extrabold text-primary">معاينة Canvas</h2>
+            <button
+              type="button"
+              onClick={drawPreview}
+              className="inline-flex items-center gap-2 rounded-xl border-2 border-primary bg-secondary px-4 py-2 text-sm font-bold text-primary hover:bg-primary/10"
+            >
+              <RefreshCw className="h-4 w-4" />
+              تحديث المعاينة
+            </button>
+          </div>
+          <div className="mt-4 overflow-hidden rounded-2xl border border-border bg-secondary">
+            <canvas
+              ref={canvasRef}
+              className="block h-auto w-full"
+              style={{ maxHeight: "70vh" }}
+            />
+          </div>
+          <p className="mt-3 text-center text-xs text-muted-foreground">
+            المعاينة أعلاه تُرسم عبر Canvas بالقيم الحالية.
           </p>
         </div>
 
