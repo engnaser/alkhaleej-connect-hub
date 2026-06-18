@@ -8,6 +8,7 @@ import posterJumaa from "@/assets/poster-jumaa.jpg";
 import posterRamadan from "@/assets/poster-ramadan.jpg";
 import posterEid from "@/assets/poster-eid.jpg";
 import posterPromo from "@/assets/poster-promo.jpg";
+import posterKhotoba from "@/assets/poster-khotoba.jpg";
 
 export const Route = createFileRoute("/designs")({
   head: () => ({
@@ -38,6 +39,7 @@ const TEMPLATES: Template[] = [
   { id: "jumaa", title: "جمعة مباركة", occasion: "تذكير الجمعة", src: posterJumaa },
   { id: "ramadan", title: "رمضان كريم", occasion: "حلَّ الشهر الفضيل", src: posterRamadan },
   { id: "eid", title: "عيد مبارك", occasion: "بمناسبة العيد السعيد", src: posterEid },
+  { id: "khotoba", title: "خطوبة مباركة", occasion: "تهنئة بمناسبة الخطوبة", src: posterKhotoba },
   { id: "promo", title: "عرض حصري", occasion: "خصم خاص لعملائنا", src: posterPromo },
 ];
 
