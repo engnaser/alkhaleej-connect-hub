@@ -289,38 +289,85 @@ function DesignsPage() {
                   {/* Dynamic text layer — absolutely positioned over the gold-bordered empty box.
                       Uses % for position and cqw for font-size so it scales identically across
                       every poster size and every screen width. */}
-                  <div
-                    className="pointer-events-none absolute flex flex-col items-center justify-center text-center"
-                    style={{
-                      top: `${NAME_BOX.topPct}%`,
-                      left: `${NAME_BOX.leftPct}%`,
-                      width: `${NAME_BOX.widthPct}%`,
-                      height: `${NAME_BOX.heightPct}%`,
-                    }}
-                  >
+                  {tpl.id === "mawloud" ? (
+                    <>
+                      <div
+                        className="pointer-events-none absolute flex flex-col items-center justify-center text-center"
+                        style={{
+                          top: "60%",
+                          left: "6%",
+                          width: "46%",
+                          height: "10%",
+                        }}
+                      >
+                        <div
+                          className="w-full truncate font-bold leading-tight"
+                          style={{
+                            fontSize: "4cqw",
+                            color: "#f4d28a",
+                            textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                          }}
+                          dir="rtl"
+                        >
+                          {safeName}
+                        </div>
+                      </div>
+                      <div
+                        className="pointer-events-none absolute flex flex-col items-center justify-center text-center"
+                        style={{
+                          top: "73%",
+                          left: "6%",
+                          width: "46%",
+                          height: "10%",
+                        }}
+                      >
+                        <div
+                          className="w-full truncate font-bold leading-tight"
+                          style={{
+                            fontSize: "3.6cqw",
+                            color: "#f4d28a",
+                            textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                          }}
+                          dir="rtl"
+                        >
+                          {safePhone}
+                        </div>
+                      </div>
+                    </>
+                  ) : (
                     <div
-                      className="w-full truncate font-black leading-tight text-white"
+                      className="pointer-events-none absolute flex flex-col items-center justify-center text-center"
                       style={{
-                        fontSize: "5.2cqw",
-                        textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                        top: `${NAME_BOX.topPct}%`,
+                        left: `${NAME_BOX.leftPct}%`,
+                        width: `${NAME_BOX.widthPct}%`,
+                        height: `${NAME_BOX.heightPct}%`,
                       }}
-                      dir="rtl"
                     >
-                      {safeName}
+                      <div
+                        className="w-full truncate font-black leading-tight text-white"
+                        style={{
+                          fontSize: "5.2cqw",
+                          textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                        }}
+                        dir="rtl"
+                      >
+                        {safeName}
+                      </div>
+                      <div
+                        className="w-full truncate font-extrabold leading-tight"
+                        style={{
+                          fontSize: "4.6cqw",
+                          color: "#fada64",
+                          textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                          marginTop: "0.4cqw",
+                        }}
+                        dir="ltr"
+                      >
+                        {safePhone}
+                      </div>
                     </div>
-                    <div
-                      className="w-full truncate font-extrabold leading-tight"
-                      style={{
-                        fontSize: "4.6cqw",
-                        color: "#fada64",
-                        textShadow: "0 2px 6px rgba(0,0,0,0.5)",
-                        marginTop: "0.4cqw",
-                      }}
-                      dir="ltr"
-                    >
-                      {safePhone}
-                    </div>
-                  </div>
+                  )}
                 </div>
                 <div className="flex items-center justify-between gap-3 p-4">
                   <div className="min-w-0">
