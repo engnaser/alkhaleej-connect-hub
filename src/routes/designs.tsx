@@ -81,6 +81,10 @@ function DesignsPage() {
     ctx.direction = "rtl";
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
+    ctx.shadowColor = "rgba(0,0,0,0.5)";
+    ctx.shadowBlur = 8;
+    ctx.shadowOffsetX = 0;
+    ctx.shadowOffsetY = 2;
 
     // Name (gold/white)
     ctx.fillStyle = "#ffffff";
