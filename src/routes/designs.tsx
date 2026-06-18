@@ -188,7 +188,10 @@ function DesignsPage() {
                   isActive ? "border-primary" : "border-border"
                 }`}
               >
-                <div className="relative w-full overflow-hidden">
+                <div
+                  className="relative w-full overflow-hidden"
+                  style={{ containerType: "inline-size" }}
+                >
                   <img
                     ref={(el) => {
                       imgRefs.current[tpl.id] = el;
@@ -199,7 +202,9 @@ function DesignsPage() {
                     className="block h-auto w-full"
                     loading="lazy"
                   />
-                  {/* Name/phone overlay inside the gold-bordered empty box */}
+                  {/* Dynamic text layer — absolutely positioned over the gold-bordered empty box.
+                      Uses % for position and cqw for font-size so it scales identically across
+                      every poster size and every screen width. */}
                   <div
                     className="pointer-events-none absolute flex flex-col items-center justify-center text-center"
                     style={{
@@ -212,7 +217,7 @@ function DesignsPage() {
                     <div
                       className="w-full truncate font-black leading-tight text-white"
                       style={{
-                        fontSize: "clamp(10px, 2.1vw, 22px)",
+                        fontSize: "5.2cqw",
                         textShadow: "0 2px 6px rgba(0,0,0,0.5)",
                       }}
                       dir="rtl"
@@ -222,9 +227,10 @@ function DesignsPage() {
                     <div
                       className="w-full truncate font-extrabold leading-tight"
                       style={{
-                        fontSize: "clamp(9px, 1.9vw, 20px)",
+                        fontSize: "4.6cqw",
                         color: "#fada64",
                         textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                        marginTop: "0.4cqw",
                       }}
                       dir="ltr"
                     >
