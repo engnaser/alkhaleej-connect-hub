@@ -9,16 +9,11 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as MawloudRouteImport } from './routes/mawloud'
 import { Route as DesignsRouteImport } from './routes/designs'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as MawloudIndexRouteImport } from './routes/mawloud.index'
 import { Route as MawloudSettingsRouteImport } from './routes/mawloud.settings'
 
-const MawloudRoute = MawloudRouteImport.update({
-  id: '/mawloud',
-  path: '/mawloud',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const DesignsRoute = DesignsRouteImport.update({
   id: '/designs',
   path: '/designs',
@@ -29,54 +24,53 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const MawloudIndexRoute = MawloudIndexRouteImport.update({
+  id: '/mawloud/',
+  path: '/mawloud/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MawloudSettingsRoute = MawloudSettingsRouteImport.update({
-  id: '/settings',
-  path: '/settings',
-  getParentRoute: () => MawloudRoute,
+  id: '/mawloud/settings',
+  path: '/mawloud/settings',
+  getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/designs': typeof DesignsRoute
-  '/mawloud': typeof MawloudRouteWithChildren
   '/mawloud/settings': typeof MawloudSettingsRoute
+  '/mawloud/': typeof MawloudIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/designs': typeof DesignsRoute
-  '/mawloud': typeof MawloudRouteWithChildren
   '/mawloud/settings': typeof MawloudSettingsRoute
+  '/mawloud': typeof MawloudIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/designs': typeof DesignsRoute
-  '/mawloud': typeof MawloudRouteWithChildren
   '/mawloud/settings': typeof MawloudSettingsRoute
+  '/mawloud/': typeof MawloudIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/designs' | '/mawloud' | '/mawloud/settings'
+  fullPaths: '/' | '/designs' | '/mawloud/settings' | '/mawloud/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/designs' | '/mawloud' | '/mawloud/settings'
-  id: '__root__' | '/' | '/designs' | '/mawloud' | '/mawloud/settings'
+  to: '/' | '/designs' | '/mawloud/settings' | '/mawloud'
+  id: '__root__' | '/' | '/designs' | '/mawloud/settings' | '/mawloud/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   DesignsRoute: typeof DesignsRoute
-  MawloudRoute: typeof MawloudRouteWithChildren
+  MawloudSettingsRoute: typeof MawloudSettingsRoute
+  MawloudIndexRoute: typeof MawloudIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/mawloud': {
-      id: '/mawloud'
-      path: '/mawloud'
-      fullPath: '/mawloud'
-      preLoaderRoute: typeof MawloudRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/designs': {
       id: '/designs'
       path: '/designs'
@@ -91,31 +85,28 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/mawloud/': {
+      id: '/mawloud/'
+      path: '/mawloud'
+      fullPath: '/mawloud/'
+      preLoaderRoute: typeof MawloudIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/mawloud/settings': {
       id: '/mawloud/settings'
-      path: '/settings'
+      path: '/mawloud/settings'
       fullPath: '/mawloud/settings'
       preLoaderRoute: typeof MawloudSettingsRouteImport
-      parentRoute: typeof MawloudRoute
+      parentRoute: typeof rootRouteImport
     }
   }
 }
 
-interface MawloudRouteChildren {
-  MawloudSettingsRoute: typeof MawloudSettingsRoute
-}
-
-const MawloudRouteChildren: MawloudRouteChildren = {
-  MawloudSettingsRoute: MawloudSettingsRoute,
-}
-
-const MawloudRouteWithChildren =
-  MawloudRoute._addFileChildren(MawloudRouteChildren)
-
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   DesignsRoute: DesignsRoute,
-  MawloudRoute: MawloudRouteWithChildren,
+  MawloudSettingsRoute: MawloudSettingsRoute,
+  MawloudIndexRoute: MawloudIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

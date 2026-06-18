@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { Download, RefreshCw, Baby, User, Gift, Settings as SettingsIcon } from "lucide-react";
 import posterMawloud from "@/assets/poster-mawloud.png";
 
-export const Route = createFileRoute("/mawloud")({
+export const Route = createFileRoute("/mawloud/")({
   head: () => ({
     meta: [
       { title: "بطاقة تهنئة بالمولود | الخليج تيليكوم" },
