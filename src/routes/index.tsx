@@ -226,15 +226,6 @@ function Index() {
                 >
                   تعرف على الخدمات
                 </Link>
-                <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex w-full items-center justify-center gap-2 rounded-xl border-2 border-primary/20 bg-card px-7 py-3.5 text-sm font-bold text-primary transition-all hover:scale-[1.02] hover:border-primary hover:bg-primary/5 sm:w-auto"
-                >
-                  <MessageCircle className="h-4 w-4" />
-                  تواصل مباشرة
-                </a>
               </div>
             </div>
           </div>
