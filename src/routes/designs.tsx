@@ -42,7 +42,6 @@ const TEMPLATES: Template[] = [
   { id: "eid", title: "عيد مبارك", occasion: "بمناسبة العيد السعيد", src: posterEid },
   
   { id: "mawloud", title: "مبارك المولود", occasion: "تهنئة بمناسبة المولود", src: posterMawloud },
-  { id: "promo", title: "عرض حصري", occasion: "خصم خاص لعملائنا", src: posterPromo },
 ];
 
 /* Position of the empty gold-bordered text box on the poster (relative to image, %). */
