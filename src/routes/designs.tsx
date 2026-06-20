@@ -329,9 +329,9 @@ function DesignsPage() {
                             color: "#f4d28a",
                             textShadow: "0 2px 6px rgba(0,0,0,0.5)",
                           }}
-                          dir="rtl"
+                          dir="ltr"
                         >
-                          {safeSender}
+                          {safePhone}
                         </div>
                       </div>
                     </>
