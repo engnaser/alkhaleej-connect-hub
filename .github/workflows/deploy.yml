@@ -18,31 +18,27 @@ jobs:
   deploy:
     environment:
       name: github-pages
-      url: ${{ steps: deployment.outputs.page_url }}
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/actions/checkout@v4
 
-      - name: Setup Bun
-        uses: oven-sh/setup-bun@v1
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          bun-version: latest
+          node-version: 20
 
-      - name: Install dependencies
-        run: bun install
+      - name: Install Dependencies
+        run: npm install
 
-      - name: Build project
-        run: bun run build
+      - name: Build Project
+        run: npm run build
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-
-      - name: Upload artifact
+      - name: Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          # بناءً على إعدادات الـ TanStack Start الافتراضية للـ static output
-          path: '.output/public' 
+          path: './dist'
 
       - name: Deploy to GitHub Pages
         id: deployment
