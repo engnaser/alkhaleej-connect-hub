@@ -354,7 +354,7 @@ function DesignsPage() {
                           }}
                           dir="rtl"
                         >
-                          {safePhone}
+                          {safeSender}
                         </div>
                       </div>
                     </>
