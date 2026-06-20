@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMemo, useRef, useState } from "react";
-import { Download, Sparkles, Phone, User, Sun } from "lucide-react";
+import { Download, Sparkles, Phone, User, Sun, Gift } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import posterSabah from "@/assets/poster-sabah.jpg";
 import posterMasaa from "@/assets/poster-masaa.jpg";
@@ -32,6 +32,7 @@ type Template = {
   title: string;
   occasion: string;
   src: string;
+  hasSender?: boolean;
 };
 
 const TEMPLATES: Template[] = [
@@ -40,8 +41,8 @@ const TEMPLATES: Template[] = [
   { id: "jumaa", title: "جمعة مباركة", occasion: "تذكير الجمعة", src: posterJumaa },
   { id: "ramadan", title: "رمضان كريم", occasion: "حلَّ الشهر الفضيل", src: posterRamadan },
   { id: "eid", title: "عيد مبارك", occasion: "بمناسبة العيد السعيد", src: posterEid },
-  
-  { id: "mawloud", title: "مبارك المولود", occasion: "تهنئة بمناسبة المولود", src: posterMawloud },
+
+  { id: "mawloud", title: "مبارك المولود", occasion: "تهنئة بمناسبة المولود", src: posterMawloud, hasSender: true },
 ];
 
 /* Position of the empty gold-bordered text box on the poster (relative to image, %). */
@@ -50,13 +51,21 @@ const NAME_BOX = { topPct: 52, leftPct: 6, widthPct: 46, heightPct: 13 };
 function DesignsPage() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [sender, setSender] = useState("");
   const [activeId, setActiveId] = useState<string>(TEMPLATES[0].id);
   const imgRefs = useRef<Record<string, HTMLImageElement | null>>({});
+
+  const activeTpl = TEMPLATES.find((t) => t.id === activeId) ?? TEMPLATES[0];
+  const showSender = !!activeTpl.hasSender;
 
   const safeName = useMemo(() => (name.trim() || "اسم العميل").slice(0, 40), [name]);
   const safePhone = useMemo(
     () => (phone.trim() || "+967 7XX XXX XXX").slice(0, 20),
     [phone],
+  );
+  const safeSender = useMemo(
+    () => (sender.trim() || "اسم المهنّئ").slice(0, 40),
+    [sender],
   );
 
   const downloadPng = async (tpl: Template) => {
@@ -91,7 +100,7 @@ function DesignsPage() {
       ctx.font = `bold ${Math.round(h * 0.038)}px Tajawal, Cairo, system-ui, sans-serif`;
       ctx.fillText(safeName, w * 0.28, h * 0.606, w * 0.5);
       ctx.font = `bold ${Math.round(h * 0.034)}px Tajawal, Cairo, system-ui, sans-serif`;
-      ctx.fillText(safePhone, w * 0.28, h * 0.731, w * 0.5);
+      ctx.fillText(safeSender, w * 0.28, h * 0.731, w * 0.5);
     } else {
       const boxX = (NAME_BOX.leftPct / 100) * w;
       const boxY = (NAME_BOX.topPct / 100) * h;
@@ -252,6 +261,22 @@ function DesignsPage() {
                 className="block w-full rounded-xl border-2 border-border bg-background px-4 py-3 text-left text-sm font-semibold text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
               />
             </label>
+            {showSender && (
+              <label className="block sm:col-span-2">
+                <span className="mb-2 flex items-center gap-2 text-sm font-bold text-foreground">
+                  <Gift className="h-4 w-4 text-primary" />
+                  تهنئة مقدمة من
+                </span>
+                <input
+                  type="text"
+                  value={sender}
+                  onChange={(e) => setSender(e.target.value)}
+                  maxLength={40}
+                  placeholder="مثال: ناصر أحمد محسن"
+                  className="block w-full rounded-xl border-2 border-border bg-background px-4 py-3 text-right text-sm font-semibold text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
+                />
+              </label>
+            )}
           </div>
           <p className="mt-4 text-xs text-muted-foreground">
           * يتم تحديث التصميم لحظياً. التصاميم تُحفظ على جهازك فقط ولا تُرسل
@@ -329,7 +354,7 @@ function DesignsPage() {
                           }}
                           dir="rtl"
                         >
-                          {safePhone}
+                          {safeSender}
                         </div>
                       </div>
                     </>
