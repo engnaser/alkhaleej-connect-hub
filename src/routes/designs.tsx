@@ -100,7 +100,7 @@ function DesignsPage() {
       ctx.font = `bold ${Math.round(h * 0.038)}px Tajawal, Cairo, system-ui, sans-serif`;
       ctx.fillText(safeName, w * 0.28, h * 0.606, w * 0.5);
       ctx.font = `bold ${Math.round(h * 0.034)}px Tajawal, Cairo, system-ui, sans-serif`;
-      ctx.fillText(safePhone, w * 0.28, h * 0.731, w * 0.5);
+      ctx.fillText(safeSender, w * 0.28, h * 0.731, w * 0.5);
     } else {
       const boxX = (NAME_BOX.leftPct / 100) * w;
       const boxY = (NAME_BOX.topPct / 100) * h;
