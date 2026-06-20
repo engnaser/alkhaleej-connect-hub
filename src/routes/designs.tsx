@@ -40,7 +40,7 @@ const TEMPLATES: Template[] = [
   { id: "jumaa", title: "جمعة مباركة", occasion: "تذكير الجمعة", src: posterJumaa },
   { id: "ramadan", title: "رمضان كريم", occasion: "حلَّ الشهر الفضيل", src: posterRamadan },
   { id: "eid", title: "عيد مبارك", occasion: "بمناسبة العيد السعيد", src: posterEid },
-  { id: "khotoba", title: "خطوبة مباركة", occasion: "تهنئة بمناسبة الخطوبة", src: posterKhotoba },
+  
   { id: "mawloud", title: "مبارك المولود", occasion: "تهنئة بمناسبة المولود", src: posterMawloud },
   { id: "promo", title: "عرض حصري", occasion: "خصم خاص لعملائنا", src: posterPromo },
 ];
