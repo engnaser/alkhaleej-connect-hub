@@ -261,6 +261,22 @@ function DesignsPage() {
                 className="block w-full rounded-xl border-2 border-border bg-background px-4 py-3 text-left text-sm font-semibold text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
               />
             </label>
+            {showSender && (
+              <label className="block sm:col-span-2">
+                <span className="mb-2 flex items-center gap-2 text-sm font-bold text-foreground">
+                  <Gift className="h-4 w-4 text-primary" />
+                  تهنئة مقدمة من
+                </span>
+                <input
+                  type="text"
+                  value={sender}
+                  onChange={(e) => setSender(e.target.value)}
+                  maxLength={40}
+                  placeholder="مثال: ناصر أحمد محسن"
+                  className="block w-full rounded-xl border-2 border-border bg-background px-4 py-3 text-right text-sm font-semibold text-foreground outline-none transition-all focus:border-primary focus:ring-2 focus:ring-primary/20"
+                />
+              </label>
+            )}
           </div>
           <p className="mt-4 text-xs text-muted-foreground">
           * يتم تحديث التصميم لحظياً. التصاميم تُحفظ على جهازك فقط ولا تُرسل
