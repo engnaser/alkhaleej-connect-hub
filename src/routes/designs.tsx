@@ -87,13 +87,13 @@ function DesignsPage() {
     ctx.shadowOffsetY = 2;
 
     if (tpl.id === "mawloud") {
-      // Mawloud template: two gold boxes — recipient then sender
+      // Mawloud template: two gold boxes
       ctx.direction = "rtl";
       ctx.fillStyle = "#f4d28a";
       ctx.font = `bold ${Math.round(h * 0.038)}px Tajawal, Cairo, system-ui, sans-serif`;
       ctx.fillText(safeName, w * 0.28, h * 0.606, w * 0.5);
       ctx.font = `bold ${Math.round(h * 0.034)}px Tajawal, Cairo, system-ui, sans-serif`;
-      ctx.fillText(safeSender, w * 0.28, h * 0.731, w * 0.5);
+      ctx.fillText(safePhone, w * 0.28, h * 0.731, w * 0.5);
     } else {
       const boxX = (NAME_BOX.leftPct / 100) * w;
       const boxY = (NAME_BOX.topPct / 100) * h;
