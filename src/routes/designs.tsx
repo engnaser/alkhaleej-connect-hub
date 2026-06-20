@@ -7,7 +7,7 @@ import posterMasaa from "@/assets/poster-masaa.jpg";
 import posterJumaa from "@/assets/poster-jumaa.jpg";
 import posterRamadan from "@/assets/poster-ramadan.jpg";
 import posterEid from "@/assets/poster-eid.jpg";
-import posterPromo from "@/assets/poster-promo.jpg";
+
 
 import posterMawloud from "@/assets/poster-mawloud.png";
 
@@ -42,7 +42,6 @@ const TEMPLATES: Template[] = [
   { id: "eid", title: "عيد مبارك", occasion: "بمناسبة العيد السعيد", src: posterEid },
   
   { id: "mawloud", title: "مبارك المولود", occasion: "تهنئة بمناسبة المولود", src: posterMawloud },
-  { id: "promo", title: "عرض حصري", occasion: "خصم خاص لعملائنا", src: posterPromo },
 ];
 
 /* Position of the empty gold-bordered text box on the poster (relative to image, %). */
