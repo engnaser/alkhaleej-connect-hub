@@ -32,6 +32,7 @@ type Template = {
   title: string;
   occasion: string;
   src: string;
+  hasSender?: boolean;
 };
 
 const TEMPLATES: Template[] = [
@@ -40,8 +41,8 @@ const TEMPLATES: Template[] = [
   { id: "jumaa", title: "جمعة مباركة", occasion: "تذكير الجمعة", src: posterJumaa },
   { id: "ramadan", title: "رمضان كريم", occasion: "حلَّ الشهر الفضيل", src: posterRamadan },
   { id: "eid", title: "عيد مبارك", occasion: "بمناسبة العيد السعيد", src: posterEid },
-  
-  { id: "mawloud", title: "مبارك المولود", occasion: "تهنئة بمناسبة المولود", src: posterMawloud },
+
+  { id: "mawloud", title: "مبارك المولود", occasion: "تهنئة بمناسبة المولود", src: posterMawloud, hasSender: true },
 ];
 
 /* Position of the empty gold-bordered text box on the poster (relative to image, %). */
