@@ -51,13 +51,21 @@ const NAME_BOX = { topPct: 52, leftPct: 6, widthPct: 46, heightPct: 13 };
 function DesignsPage() {
   const [name, setName] = useState("");
   const [phone, setPhone] = useState("");
+  const [sender, setSender] = useState("");
   const [activeId, setActiveId] = useState<string>(TEMPLATES[0].id);
   const imgRefs = useRef<Record<string, HTMLImageElement | null>>({});
+
+  const activeTpl = TEMPLATES.find((t) => t.id === activeId) ?? TEMPLATES[0];
+  const showSender = !!activeTpl.hasSender;
 
   const safeName = useMemo(() => (name.trim() || "اسم العميل").slice(0, 40), [name]);
   const safePhone = useMemo(
     () => (phone.trim() || "+967 7XX XXX XXX").slice(0, 20),
     [phone],
+  );
+  const safeSender = useMemo(
+    () => (sender.trim() || "اسم المهنّئ").slice(0, 40),
+    [sender],
   );
 
   const downloadPng = async (tpl: Template) => {
