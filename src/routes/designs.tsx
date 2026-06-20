@@ -8,7 +8,7 @@ import posterJumaa from "@/assets/poster-jumaa.jpg";
 import posterRamadan from "@/assets/poster-ramadan.jpg";
 import posterEid from "@/assets/poster-eid.jpg";
 import posterPromo from "@/assets/poster-promo.jpg";
-import posterKhotoba from "@/assets/poster-khotoba.jpg";
+
 import posterMawloud from "@/assets/poster-mawloud.png";
 
 export const Route = createFileRoute("/designs")({
