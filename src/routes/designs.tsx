@@ -48,7 +48,7 @@ const SIMPLE_FIELDS: FieldDef[] = [
 ];
 
 const MAWLOUD_FIELDS: FieldDef[] = [
-  { key: "name", label: "اسم المولود", placeholder: "مثال: عبدالله", type: "text", dir: "rtl", maxLength: 30, required: true },
+  { key: "name", label: "اسم صاحب الاهداء", placeholder: "مثال: عبدالله", type: "text", dir: "rtl", maxLength: 30, required: true },
   { key: "sender", label: "تهنئة مقدمة من", placeholder: "اسم مقدم التهنئة", type: "text", dir: "rtl", maxLength: 40, required: true },
   { key: "phone", label: "رقم الجوال", placeholder: "+967 7XX XXX XXX", type: "tel", dir: "ltr", maxLength: 20 },
   { key: "note", label: "كلمة تهنئة (اختياري)", placeholder: "ألف ألف مبروك", type: "textarea", dir: "rtl", maxLength: 120 },
