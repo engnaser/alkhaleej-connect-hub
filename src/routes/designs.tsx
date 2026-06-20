@@ -7,7 +7,7 @@ import posterMasaa from "@/assets/poster-masaa.jpg";
 import posterJumaa from "@/assets/poster-jumaa.jpg";
 import posterRamadan from "@/assets/poster-ramadan.jpg";
 import posterEid from "@/assets/poster-eid.jpg";
-import posterPromo from "@/assets/poster-promo.jpg";
+
 
 import posterMawloud from "@/assets/poster-mawloud.png";
 
