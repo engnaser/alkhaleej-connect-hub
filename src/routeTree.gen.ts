@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as Yemen4gInquiryRouteImport } from './routes/yemen4g-inquiry'
 import { Route as WhatsappUnblockRouteImport } from './routes/whatsapp-unblock'
 import { Route as SpeedTestRouteImport } from './routes/speed-test'
 import { Route as ServicesRouteImport } from './routes/services'
@@ -21,6 +22,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as MawloudIndexRouteImport } from './routes/mawloud.index'
 import { Route as MawloudSettingsRouteImport } from './routes/mawloud.settings'
 
+const Yemen4gInquiryRoute = Yemen4gInquiryRouteImport.update({
+  id: '/yemen4g-inquiry',
+  path: '/yemen4g-inquiry',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WhatsappUnblockRoute = WhatsappUnblockRouteImport.update({
   id: '/whatsapp-unblock',
   path: '/whatsapp-unblock',
@@ -87,6 +93,7 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
+  '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
 }
@@ -100,6 +107,7 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
+  '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud': typeof MawloudIndexRoute
 }
@@ -114,6 +122,7 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
+  '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
 }
@@ -129,6 +138,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/speed-test'
     | '/whatsapp-unblock'
+    | '/yemen4g-inquiry'
     | '/mawloud/settings'
     | '/mawloud/'
   fileRoutesByTo: FileRoutesByTo
@@ -142,6 +152,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/speed-test'
     | '/whatsapp-unblock'
+    | '/yemen4g-inquiry'
     | '/mawloud/settings'
     | '/mawloud'
   id:
@@ -155,6 +166,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/speed-test'
     | '/whatsapp-unblock'
+    | '/yemen4g-inquiry'
     | '/mawloud/settings'
     | '/mawloud/'
   fileRoutesById: FileRoutesById
@@ -169,12 +181,20 @@ export interface RootRouteChildren {
   ServicesRoute: typeof ServicesRoute
   SpeedTestRoute: typeof SpeedTestRoute
   WhatsappUnblockRoute: typeof WhatsappUnblockRoute
+  Yemen4gInquiryRoute: typeof Yemen4gInquiryRoute
   MawloudSettingsRoute: typeof MawloudSettingsRoute
   MawloudIndexRoute: typeof MawloudIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/yemen4g-inquiry': {
+      id: '/yemen4g-inquiry'
+      path: '/yemen4g-inquiry'
+      fullPath: '/yemen4g-inquiry'
+      preLoaderRoute: typeof Yemen4gInquiryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/whatsapp-unblock': {
       id: '/whatsapp-unblock'
       path: '/whatsapp-unblock'
@@ -265,6 +285,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesRoute: ServicesRoute,
   SpeedTestRoute: SpeedTestRoute,
   WhatsappUnblockRoute: WhatsappUnblockRoute,
+  Yemen4gInquiryRoute: Yemen4gInquiryRoute,
   MawloudSettingsRoute: MawloudSettingsRoute,
   MawloudIndexRoute: MawloudIndexRoute,
 }

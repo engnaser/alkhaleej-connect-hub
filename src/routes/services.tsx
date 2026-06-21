@@ -18,6 +18,7 @@ import {
   Lock,
   Wifi,
   Receipt,
+  Radio,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { COUNTRIES } from "@/data/countries";
@@ -100,6 +101,13 @@ const SERVICES = [
     title: "استعلام فاتورة الهاتف الثابت",
     desc: "استعلم عن فاتورة الهاتف الثابت عبر الصفحة الرسمية بسهولة.",
     to: "/phone-bill-inquiry" as const,
+    cta: "استعلم الآن",
+  },
+  {
+    icon: Radio,
+    title: "استعلام رصيد يمن فورجي",
+    desc: "استعلم عن رصيد وحالة اشتراك يمن فورجي عبر الصفحة الرسمية بسهولة.",
+    to: "/yemen4g-inquiry" as const,
     cta: "استعلم الآن",
   },
   {
