@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as WhatsappUnblockRouteImport } from './routes/whatsapp-unblock'
 import { Route as SpeedTestRouteImport } from './routes/speed-test'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as PhoneBillInquiryRouteImport } from './routes/phone-bill-inquiry'
 import { Route as DialCodesRouteImport } from './routes/dial-codes'
 import { Route as DesignsRouteImport } from './routes/designs'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -33,6 +34,11 @@ const SpeedTestRoute = SpeedTestRouteImport.update({
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PhoneBillInquiryRoute = PhoneBillInquiryRouteImport.update({
+  id: '/phone-bill-inquiry',
+  path: '/phone-bill-inquiry',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DialCodesRoute = DialCodesRouteImport.update({
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
+  '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
@@ -89,6 +96,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
+  '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
@@ -102,6 +110,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
+  '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
@@ -116,6 +125,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/designs'
     | '/dial-codes'
+    | '/phone-bill-inquiry'
     | '/services'
     | '/speed-test'
     | '/whatsapp-unblock'
@@ -128,6 +138,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/designs'
     | '/dial-codes'
+    | '/phone-bill-inquiry'
     | '/services'
     | '/speed-test'
     | '/whatsapp-unblock'
@@ -140,6 +151,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/designs'
     | '/dial-codes'
+    | '/phone-bill-inquiry'
     | '/services'
     | '/speed-test'
     | '/whatsapp-unblock'
@@ -153,6 +165,7 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DesignsRoute: typeof DesignsRoute
   DialCodesRoute: typeof DialCodesRoute
+  PhoneBillInquiryRoute: typeof PhoneBillInquiryRoute
   ServicesRoute: typeof ServicesRoute
   SpeedTestRoute: typeof SpeedTestRoute
   WhatsappUnblockRoute: typeof WhatsappUnblockRoute
@@ -181,6 +194,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/phone-bill-inquiry': {
+      id: '/phone-bill-inquiry'
+      path: '/phone-bill-inquiry'
+      fullPath: '/phone-bill-inquiry'
+      preLoaderRoute: typeof PhoneBillInquiryRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/dial-codes': {
@@ -241,6 +261,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   DesignsRoute: DesignsRoute,
   DialCodesRoute: DialCodesRoute,
+  PhoneBillInquiryRoute: PhoneBillInquiryRoute,
   ServicesRoute: ServicesRoute,
   SpeedTestRoute: SpeedTestRoute,
   WhatsappUnblockRoute: WhatsappUnblockRoute,

@@ -17,6 +17,7 @@ import {
   Globe,
   Lock,
   Wifi,
+  Receipt,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { COUNTRIES } from "@/data/countries";
@@ -92,6 +93,13 @@ const SERVICES = [
     title: "استعلام باقات الإنترنت الأرضي",
     desc: "اختصار آمن للوصول إلى صفحة الاستعلام الرسمية لباقات الإنترنت الأرضي (يمن نت).",
     to: "/adsl-inquiry" as const,
+    cta: "استعلم الآن",
+  },
+  {
+    icon: Receipt,
+    title: "استعلام فاتورة الهاتف الثابت",
+    desc: "استعلم عن فاتورة الهاتف الثابت عبر الصفحة الرسمية بسهولة.",
+    to: "/phone-bill-inquiry" as const,
     cta: "استعلم الآن",
   },
   {
