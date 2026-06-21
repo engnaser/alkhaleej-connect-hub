@@ -9,12 +9,18 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as ServicesRouteImport } from './routes/services'
 import { Route as DesignsRouteImport } from './routes/designs'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MawloudIndexRouteImport } from './routes/mawloud.index'
 import { Route as MawloudSettingsRouteImport } from './routes/mawloud.settings'
 
+const ServicesRoute = ServicesRouteImport.update({
+  id: '/services',
+  path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DesignsRoute = DesignsRouteImport.update({
   id: '/designs',
   path: '/designs',
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/designs': typeof DesignsRoute
+  '/services': typeof ServicesRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/designs': typeof DesignsRoute
+  '/services': typeof ServicesRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud': typeof MawloudIndexRoute
 }
@@ -60,19 +68,33 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/designs': typeof DesignsRoute
+  '/services': typeof ServicesRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/designs' | '/mawloud/settings' | '/mawloud/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/designs'
+    | '/services'
+    | '/mawloud/settings'
+    | '/mawloud/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/designs' | '/mawloud/settings' | '/mawloud'
+  to:
+    | '/'
+    | '/auth'
+    | '/designs'
+    | '/services'
+    | '/mawloud/settings'
+    | '/mawloud'
   id:
     | '__root__'
     | '/'
     | '/auth'
     | '/designs'
+    | '/services'
     | '/mawloud/settings'
     | '/mawloud/'
   fileRoutesById: FileRoutesById
@@ -81,12 +103,20 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   DesignsRoute: typeof DesignsRoute
+  ServicesRoute: typeof ServicesRoute
   MawloudSettingsRoute: typeof MawloudSettingsRoute
   MawloudIndexRoute: typeof MawloudIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/services': {
+      id: '/services'
+      path: '/services'
+      fullPath: '/services'
+      preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/designs': {
       id: '/designs'
       path: '/designs'
@@ -129,6 +159,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   DesignsRoute: DesignsRoute,
+  ServicesRoute: ServicesRoute,
   MawloudSettingsRoute: MawloudSettingsRoute,
   MawloudIndexRoute: MawloudIndexRoute,
 }

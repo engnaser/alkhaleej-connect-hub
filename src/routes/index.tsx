@@ -103,6 +103,13 @@ function HomePage() {
             >
               التصاميم
             </Link>
+            <Link
+              to="/services"
+              className="rounded-md px-3 py-2 text-sm font-semibold text-foreground/80 hover:bg-secondary hover:text-primary"
+            >
+              الخدمات
+            </Link>
+
             <a
               href={`https://wa.me/${WHATSAPP}`}
               target="_blank"
