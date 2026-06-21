@@ -100,12 +100,38 @@ const TEMPLATES: Template[] = [
   },
 ];
 
+const ADMIN_KEY = "khalij_admin_mode";
+
+function useAdminMode() {
+  const [admin, setAdmin] = useState(false);
+  useEffect(() => {
+    try {
+      const params = new URLSearchParams(window.location.search);
+      if (params.get("admin") === "1") {
+        localStorage.setItem(ADMIN_KEY, "1");
+      } else if (params.get("admin") === "0") {
+        localStorage.removeItem(ADMIN_KEY);
+      }
+      setAdmin(localStorage.getItem(ADMIN_KEY) === "1");
+    } catch {
+      /* ignore */
+    }
+  }, []);
+  return admin;
+}
+
 function DesignsPage() {
   const [openId, setOpenId] = useState<string | null>(null);
   const activeTpl = TEMPLATES.find((t) => t.id === openId) ?? null;
+  const adminMode = useAdminMode();
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      {adminMode && (
+        <div className="bg-primary/10 px-4 py-2 text-center text-xs font-bold text-primary">
+          وضع المسؤول مفعّل — أدوات ضبط النصوص ظاهرة لك فقط. للإلغاء: أضف <code className="mx-1 rounded bg-background px-1">?admin=0</code> إلى الرابط.
+        </div>
+      )}
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
           <Link to="/" className="flex min-w-0 items-center gap-3">
@@ -172,12 +198,12 @@ function DesignsPage() {
         </div>
       </main>
 
-      {activeTpl && <TemplateModal tpl={activeTpl} onClose={() => setOpenId(null)} />}
+      {activeTpl && <TemplateModal tpl={activeTpl} adminMode={adminMode} onClose={() => setOpenId(null)} />}
     </div>
   );
 }
 
-function TemplateModal({ tpl, onClose }: { tpl: Template; onClose: () => void }) {
+function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: boolean; onClose: () => void }) {
   const [values, setValues] = useState<Record<string, string>>(() =>
     Object.fromEntries(tpl.fields.map((f) => [f.key, ""])),
   );
@@ -348,49 +374,57 @@ function TemplateModal({ tpl, onClose }: { tpl: Template; onClose: () => void })
             ))}
           </div>
 
-          {/* Advanced layout controls */}
-          <div className="mt-5 rounded-xl border-2 border-dashed border-border p-3">
-            <button
-              type="button"
-              onClick={() => setShowAdvanced((s) => !s)}
-              className="flex w-full items-center justify-between gap-2 text-right text-sm font-bold text-primary"
-            >
-              <span className="inline-flex items-center gap-2">
-                <Settings2 className="h-4 w-4" />
-                التحكم بمكان النص وحجمه
-              </span>
-              <span className="text-xs text-muted-foreground">{showAdvanced ? "إخفاء" : "إظهار"}</span>
-            </button>
+          {/* Advanced layout controls — admin only */}
+          {adminMode && (
+            <div className="mt-5 rounded-xl border-2 border-dashed border-primary/40 bg-primary/5 p-3">
+              <button
+                type="button"
+                onClick={() => setShowAdvanced((s) => !s)}
+                className="flex w-full items-center justify-between gap-2 text-right text-sm font-bold text-primary"
+              >
+                <span className="inline-flex items-center gap-2">
+                  <Settings2 className="h-4 w-4" />
+                  أدوات المسؤول — ضبط مكان النص وحجمه
+                </span>
+                <span className="text-xs text-muted-foreground">{showAdvanced ? "إخفاء" : "إظهار"}</span>
+              </button>
 
-            {showAdvanced && (
-              <div className="mt-3 space-y-4">
-                {tpl.fields.map((f) => {
-                  const L = layout[f.key];
-                  if (!L) return null;
-                  return (
-                    <div key={f.key} className="rounded-lg bg-background/60 p-3">
-                      <div className="mb-2 text-right text-xs font-bold text-foreground">{f.label}</div>
-                      <div className="grid grid-cols-3 gap-2">
-                        <NumberControl label="أفقي %" value={L.x} min={0} max={100} step={0.5}
-                          onChange={(x) => updateLayout(f.key, { x })} />
-                        <NumberControl label="رأسي %" value={L.y} min={0} max={100} step={0.5}
-                          onChange={(y) => updateLayout(f.key, { y })} />
-                        <NumberControl label="الحجم" value={L.size} min={1} max={15} step={0.1}
-                          onChange={(size) => updateLayout(f.key, { size })} />
+              {showAdvanced && (
+                <div className="mt-3 space-y-4">
+                  {tpl.fields.map((f) => {
+                    const L = layout[f.key];
+                    if (!L) return null;
+                    return (
+                      <div key={f.key} className="rounded-lg bg-background/60 p-3">
+                        <div className="mb-2 text-right text-xs font-bold text-foreground">{f.label}</div>
+                        <div className="grid grid-cols-3 gap-2">
+                          <NumberControl label="أفقي %" value={L.x} min={0} max={100} step={0.5}
+                            onChange={(x) => updateLayout(f.key, { x })} />
+                          <NumberControl label="رأسي %" value={L.y} min={0} max={100} step={0.5}
+                            onChange={(y) => updateLayout(f.key, { y })} />
+                          <NumberControl label="الحجم" value={L.size} min={1} max={15} step={0.1}
+                            onChange={(size) => updateLayout(f.key, { size })} />
+                        </div>
+                        <div className="mt-2 text-left text-[10px] text-muted-foreground" dir="ltr">
+                          x:{L.x} y:{L.y} size:{L.size}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-                <button
-                  type="button"
-                  onClick={resetLayout}
-                  className="w-full rounded-lg border border-border bg-secondary px-3 py-2 text-xs font-bold text-foreground hover:bg-primary/10 hover:text-primary"
-                >
-                  إعادة تعيين المواضع الافتراضية
-                </button>
-              </div>
-            )}
-          </div>
+                    );
+                  })}
+                  <button
+                    type="button"
+                    onClick={resetLayout}
+                    className="w-full rounded-lg border border-border bg-secondary px-3 py-2 text-xs font-bold text-foreground hover:bg-primary/10 hover:text-primary"
+                  >
+                    إعادة تعيين المواضع الافتراضية
+                  </button>
+                  <p className="text-right text-[10px] text-muted-foreground">
+                    انسخ هذه الأرقام وضعها في القيم الافتراضية للقالب داخل الكود لتثبيتها لجميع الزبائن.
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
 
           <button
             type="button"
