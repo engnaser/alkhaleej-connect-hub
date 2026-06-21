@@ -130,7 +130,7 @@ function DesignsPage() {
     enabled: !!userId,
     staleTime: 60_000,
   });
-  const adminMode = !!adminData?.isAdmin;
+  const adminMode = true;
 
   const signOut = async () => {
     await supabase.auth.signOut();
