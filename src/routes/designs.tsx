@@ -270,7 +270,7 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
     if (typeof window === "undefined") return false;
     return window.localStorage.getItem(LAYOUT_LOCKED_KEY(tpl.id)) === "1";
   });
-  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(true);
   const imgRef = useRef<HTMLImageElement | null>(null);
 
   const saveAndLock = () => {
