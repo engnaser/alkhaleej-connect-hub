@@ -171,7 +171,7 @@ function DesignsPage() {
             ))}
           </nav>
           <div className="flex items-center gap-2">
-            {userId ? (
+            {userId && (
               <button
                 type="button"
                 onClick={signOut}
@@ -180,16 +180,6 @@ function DesignsPage() {
               >
                 <LogOut className="h-3.5 w-3.5" />
                 خروج
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => navigate({ to: "/auth" })}
-                title="تسجيل الدخول"
-                className="inline-flex h-10 items-center gap-1.5 rounded-full border border-border bg-secondary px-3 text-xs font-bold text-primary transition-colors hover:bg-primary/10"
-              >
-                <LogIn className="h-3.5 w-3.5" />
-                دخول
               </button>
             )}
             <Link to="/" aria-label="العودة" className="grid h-10 w-10 place-items-center rounded-full border border-border bg-secondary text-primary transition-colors hover:bg-primary/10">
