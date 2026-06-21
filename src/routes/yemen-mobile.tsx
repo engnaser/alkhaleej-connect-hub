@@ -169,10 +169,10 @@ function YemenMobilePage() {
               <PackagesTab />
             </TabsContent>
             <TabsContent value="services" className="mt-6">
-              <ServicesTab services={YM_GENERAL_SERVICES} />
+              <ServicesTab group="general" />
             </TabsContent>
             <TabsContent value="account" className="mt-6">
-              <ServicesTab services={YM_ACCOUNT_SERVICES} />
+              <ServicesTab group="account" />
             </TabsContent>
             <TabsContent value="internet" className="mt-6">
               <InternetTab />
