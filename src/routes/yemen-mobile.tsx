@@ -426,7 +426,7 @@ function ServiceCard({ service }: { service: YMServiceRow }) {
         {service.title}
       </h4>
       <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted-foreground">
-        {service.desc}
+        {service.description}
       </p>
       {service.code && (
         <div className="mt-4 flex items-center justify-between rounded-lg border border-dashed border-border bg-secondary/40 px-3 py-2">
