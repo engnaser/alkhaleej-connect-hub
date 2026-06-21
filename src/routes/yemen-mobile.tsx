@@ -38,10 +38,11 @@ import {
 } from "@/data/yemenMobilePackages";
 import { usePackagesStore } from "@/lib/packagesStore";
 import {
-  YM_GENERAL_SERVICES,
-  YM_ACCOUNT_SERVICES,
-  type YMService,
-} from "@/data/yemenMobileServices";
+  useServicesStore,
+  iconFor,
+  type YMServiceRow,
+  type ServiceGroup,
+} from "@/lib/servicesStore";
 
 export const Route = createFileRoute("/yemen-mobile")({
   head: () => ({
