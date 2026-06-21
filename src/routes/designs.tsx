@@ -71,8 +71,8 @@ const MAWLOUD_FIELDS: FieldDef[] = [
 ];
 
 const SIMPLE_LAYOUT: Record<string, FieldLayout> = {
-  name:  { x: 29, y: 56.5, size: 5.0, color: "#ffffff", dir: "rtl", weight: 900, maxWidth: 44 },
-  phone: { x: 29, y: 62,   size: 4.4, color: "#fada64", dir: "ltr", weight: 800, mono: true, maxWidth: 44 },
+  name:  { x: 32, y: 56.5, size: 3, color: "#ffffff", dir: "rtl", weight: 900, maxWidth: 44 },
+  phone: { x: 32, y: 61.5, size: 3, color: "#fada64", dir: "ltr", weight: 800, mono: true, maxWidth: 44 },
 };
 
 const TEMPLATES: Template[] = [
