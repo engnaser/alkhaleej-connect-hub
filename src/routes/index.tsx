@@ -9,7 +9,16 @@ import {
   MessageCircle,
   ArrowLeft,
   CheckCircle2,
+  Menu,
 } from "lucide-react";
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
+  SheetClose,
+  SheetTitle,
+  SheetDescription,
+} from "@/components/ui/sheet";
 import logoKhalij from "@/assets/logo-khalij.png";
 import posterSabah from "@/assets/poster-sabah.jpg";
 import posterMasaa from "@/assets/poster-masaa.jpg";
@@ -120,13 +129,79 @@ function HomePage() {
             </a>
           </nav>
 
-          <Link
-            to="/designs"
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-md transition-transform hover:scale-[1.03] sm:text-sm"
-          >
-            <Sparkles className="h-4 w-4" />
-            ابدأ الآن
-          </Link>
+          <div className="flex items-center gap-2">
+            <Link
+              to="/designs"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-md transition-transform hover:scale-[1.03] sm:text-sm"
+            >
+              <Sparkles className="h-4 w-4" />
+              ابدأ الآن
+            </Link>
+
+            <Sheet>
+              <SheetTrigger asChild>
+                <button
+                  type="button"
+                  className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-border bg-secondary text-primary transition-colors hover:bg-primary/10 md:hidden"
+                  aria-label="فتح القائمة"
+                >
+                  <Menu className="h-5 w-5" />
+                </button>
+              </SheetTrigger>
+              <SheetContent side="right" className="w-[280px] border-l border-border sm:w-[320px]">
+                <SheetTitle className="sr-only">قائمة التنقل</SheetTitle>
+                <SheetDescription className="sr-only">روابط التنقل الرئيسية</SheetDescription>
+                <div className="flex flex-col gap-6 pt-10">
+                  <div className="flex items-center gap-3 border-b border-border pb-4">
+                    <img
+                      src={logoKhalij}
+                      alt="الخليج تيليكوم"
+                      className="h-10 w-10 rounded-full ring-2 ring-primary/40"
+                    />
+                    <span className="text-base font-extrabold text-primary">
+                      الخليج تيليكوم
+                    </span>
+                  </div>
+                  <nav className="flex flex-col gap-1">
+                    <SheetClose asChild>
+                      <Link
+                        to="/"
+                        className="rounded-lg px-3 py-3 text-base font-semibold text-primary transition-colors hover:bg-secondary"
+                      >
+                        الرئيسية
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link
+                        to="/designs"
+                        className="rounded-lg px-3 py-3 text-base font-semibold text-foreground/80 transition-colors hover:bg-secondary hover:text-primary"
+                      >
+                        التصاميم
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <Link
+                        to="/services"
+                        className="rounded-lg px-3 py-3 text-base font-semibold text-foreground/80 transition-colors hover:bg-secondary hover:text-primary"
+                      >
+                        الخدمات
+                      </Link>
+                    </SheetClose>
+                    <SheetClose asChild>
+                      <a
+                        href={`https://wa.me/${WHATSAPP}`}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="rounded-lg px-3 py-3 text-base font-semibold text-foreground/80 transition-colors hover:bg-secondary hover:text-primary"
+                      >
+                        تواصل معنا
+                      </a>
+                    </SheetClose>
+                  </nav>
+                </div>
+              </SheetContent>
+            </Sheet>
+          </div>
         </div>
       </header>
 
