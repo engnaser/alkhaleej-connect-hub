@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as SpeedTestRouteImport } from './routes/speed-test'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as DesignsRouteImport } from './routes/designs'
 import { Route as AuthRouteImport } from './routes/auth'
@@ -16,6 +17,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as MawloudIndexRouteImport } from './routes/mawloud.index'
 import { Route as MawloudSettingsRouteImport } from './routes/mawloud.settings'
 
+const SpeedTestRoute = SpeedTestRouteImport.update({
+  id: '/speed-test',
+  path: '/speed-test',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthRoute
   '/designs': typeof DesignsRoute
   '/services': typeof ServicesRoute
+  '/speed-test': typeof SpeedTestRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthRoute
   '/designs': typeof DesignsRoute
   '/services': typeof ServicesRoute
+  '/speed-test': typeof SpeedTestRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud': typeof MawloudIndexRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/designs': typeof DesignsRoute
   '/services': typeof ServicesRoute
+  '/speed-test': typeof SpeedTestRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
 }
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/designs'
     | '/services'
+    | '/speed-test'
     | '/mawloud/settings'
     | '/mawloud/'
   fileRoutesByTo: FileRoutesByTo
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/designs'
     | '/services'
+    | '/speed-test'
     | '/mawloud/settings'
     | '/mawloud'
   id:
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/designs'
     | '/services'
+    | '/speed-test'
     | '/mawloud/settings'
     | '/mawloud/'
   fileRoutesById: FileRoutesById
@@ -104,12 +116,20 @@ export interface RootRouteChildren {
   AuthRoute: typeof AuthRoute
   DesignsRoute: typeof DesignsRoute
   ServicesRoute: typeof ServicesRoute
+  SpeedTestRoute: typeof SpeedTestRoute
   MawloudSettingsRoute: typeof MawloudSettingsRoute
   MawloudIndexRoute: typeof MawloudIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/speed-test': {
+      id: '/speed-test'
+      path: '/speed-test'
+      fullPath: '/speed-test'
+      preLoaderRoute: typeof SpeedTestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/services': {
       id: '/services'
       path: '/services'
@@ -160,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   AuthRoute: AuthRoute,
   DesignsRoute: DesignsRoute,
   ServicesRoute: ServicesRoute,
+  SpeedTestRoute: SpeedTestRoute,
   MawloudSettingsRoute: MawloudSettingsRoute,
   MawloudIndexRoute: MawloudIndexRoute,
 }

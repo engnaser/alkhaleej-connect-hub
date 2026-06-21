@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   Gift,
   Star,
+  Gauge,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 
