@@ -374,49 +374,57 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
             ))}
           </div>
 
-          {/* Advanced layout controls */}
-          <div className="mt-5 rounded-xl border-2 border-dashed border-border p-3">
-            <button
-              type="button"
-              onClick={() => setShowAdvanced((s) => !s)}
-              className="flex w-full items-center justify-between gap-2 text-right text-sm font-bold text-primary"
-            >
-              <span className="inline-flex items-center gap-2">
-                <Settings2 className="h-4 w-4" />
-                التحكم بمكان النص وحجمه
-              </span>
-              <span className="text-xs text-muted-foreground">{showAdvanced ? "إخفاء" : "إظهار"}</span>
-            </button>
+          {/* Advanced layout controls — admin only */}
+          {adminMode && (
+            <div className="mt-5 rounded-xl border-2 border-dashed border-primary/40 bg-primary/5 p-3">
+              <button
+                type="button"
+                onClick={() => setShowAdvanced((s) => !s)}
+                className="flex w-full items-center justify-between gap-2 text-right text-sm font-bold text-primary"
+              >
+                <span className="inline-flex items-center gap-2">
+                  <Settings2 className="h-4 w-4" />
+                  أدوات المسؤول — ضبط مكان النص وحجمه
+                </span>
+                <span className="text-xs text-muted-foreground">{showAdvanced ? "إخفاء" : "إظهار"}</span>
+              </button>
 
-            {showAdvanced && (
-              <div className="mt-3 space-y-4">
-                {tpl.fields.map((f) => {
-                  const L = layout[f.key];
-                  if (!L) return null;
-                  return (
-                    <div key={f.key} className="rounded-lg bg-background/60 p-3">
-                      <div className="mb-2 text-right text-xs font-bold text-foreground">{f.label}</div>
-                      <div className="grid grid-cols-3 gap-2">
-                        <NumberControl label="أفقي %" value={L.x} min={0} max={100} step={0.5}
-                          onChange={(x) => updateLayout(f.key, { x })} />
-                        <NumberControl label="رأسي %" value={L.y} min={0} max={100} step={0.5}
-                          onChange={(y) => updateLayout(f.key, { y })} />
-                        <NumberControl label="الحجم" value={L.size} min={1} max={15} step={0.1}
-                          onChange={(size) => updateLayout(f.key, { size })} />
+              {showAdvanced && (
+                <div className="mt-3 space-y-4">
+                  {tpl.fields.map((f) => {
+                    const L = layout[f.key];
+                    if (!L) return null;
+                    return (
+                      <div key={f.key} className="rounded-lg bg-background/60 p-3">
+                        <div className="mb-2 text-right text-xs font-bold text-foreground">{f.label}</div>
+                        <div className="grid grid-cols-3 gap-2">
+                          <NumberControl label="أفقي %" value={L.x} min={0} max={100} step={0.5}
+                            onChange={(x) => updateLayout(f.key, { x })} />
+                          <NumberControl label="رأسي %" value={L.y} min={0} max={100} step={0.5}
+                            onChange={(y) => updateLayout(f.key, { y })} />
+                          <NumberControl label="الحجم" value={L.size} min={1} max={15} step={0.1}
+                            onChange={(size) => updateLayout(f.key, { size })} />
+                        </div>
+                        <div className="mt-2 text-left text-[10px] text-muted-foreground" dir="ltr">
+                          x:{L.x} y:{L.y} size:{L.size}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-                <button
-                  type="button"
-                  onClick={resetLayout}
-                  className="w-full rounded-lg border border-border bg-secondary px-3 py-2 text-xs font-bold text-foreground hover:bg-primary/10 hover:text-primary"
-                >
-                  إعادة تعيين المواضع الافتراضية
-                </button>
-              </div>
-            )}
-          </div>
+                    );
+                  })}
+                  <button
+                    type="button"
+                    onClick={resetLayout}
+                    className="w-full rounded-lg border border-border bg-secondary px-3 py-2 text-xs font-bold text-foreground hover:bg-primary/10 hover:text-primary"
+                  >
+                    إعادة تعيين المواضع الافتراضية
+                  </button>
+                  <p className="text-right text-[10px] text-muted-foreground">
+                    انسخ هذه الأرقام وضعها في القيم الافتراضية للقالب داخل الكود لتثبيتها لجميع الزبائن.
+                  </p>
+                </div>
+              )}
+            </div>
+          )}
 
           <button
             type="button"
