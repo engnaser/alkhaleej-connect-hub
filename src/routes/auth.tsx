@@ -16,7 +16,7 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
-  const [mode, setMode] = useState<"signin" | "signup">("signin");
+  const mode = "signin" as const;
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -36,20 +36,9 @@ function AuthPage() {
     setInfo(null);
     setLoading(true);
     try {
-      if (mode === "signup") {
-        const { error: err } = await supabase.auth.signUp({
-          email,
-          password,
-          options: { emailRedirectTo: `${window.location.origin}/designs` },
-        });
-        if (err) throw err;
-        setInfo("تم إنشاء الحساب. إذا طُلب التحقق بالبريد فافتح رسالة التفعيل ثم سجّل الدخول.");
-        setMode("signin");
-      } else {
-        const { error: err } = await supabase.auth.signInWithPassword({ email, password });
-        if (err) throw err;
-        navigate({ to: "/designs" });
-      }
+      const { error: err } = await supabase.auth.signInWithPassword({ email, password });
+      if (err) throw err;
+      navigate({ to: "/designs" });
     } catch (err) {
       setError(err instanceof Error ? err.message : "حدث خطأ غير متوقع");
     } finally {
