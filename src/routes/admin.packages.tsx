@@ -1,5 +1,5 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import {
   ArrowLeft,
   Plus,
@@ -10,13 +10,24 @@ import {
   RotateCcw,
   FolderPlus,
   Shield,
+  LogOut,
+  Loader2,
 } from "lucide-react";
 import { SiteFooter } from "@/components/site-footer";
 import logoKhalij from "@/assets/logo-khalij.png";
+import { supabase } from "@/integrations/supabase/client";
 import {
   usePackagesStore,
   makeId,
   NETWORK_OPTIONS,
+  getCurrentAdminState,
+  createCategory,
+  updateCategory,
+  deleteCategory,
+  createPackage,
+  updatePackage,
+  deletePackage,
+  resetToDefaults,
   type YMCategory,
   type YMPackage,
   type NetworkType,
@@ -49,73 +60,97 @@ const emptyPackage = (): YMPackage => ({
 });
 
 function AdminPackagesPage() {
-  const { categories, update, reset } = usePackagesStore();
+  const navigate = useNavigate();
+  const { categories, loading, refresh } = usePackagesStore();
+  const [authState, setAuthState] = useState<
+    | { status: "loading" }
+    | { status: "guest" }
+    | { status: "no-admin"; email: string }
+    | { status: "admin"; email: string }
+  >({ status: "loading" });
+
   const [editingCat, setEditingCat] = useState<string | null>(null);
   const [editingPkg, setEditingPkg] = useState<string | null>(null);
-  const [adding, setAdding] = useState<string | null>(null); // category id we're adding to
+  const [adding, setAdding] = useState<string | null>(null);
   const [newCatOpen, setNewCatOpen] = useState(false);
+  const [busy, setBusy] = useState(false);
 
-  const addCategory = (data: Omit<YMCategory, "id" | "packages">) => {
-    const next: YMCategory[] = [
-      ...categories,
-      { id: makeId("cat"), packages: [], ...data },
-    ];
-    update(next);
-    setNewCatOpen(false);
+  useEffect(() => {
+    let active = true;
+    const check = async () => {
+      const { user, isAdmin } = await getCurrentAdminState();
+      if (!active) return;
+      if (!user) setAuthState({ status: "guest" });
+      else if (!isAdmin)
+        setAuthState({ status: "no-admin", email: user.email ?? "" });
+      else setAuthState({ status: "admin", email: user.email ?? "" });
+    };
+    check();
+    const { data: sub } = supabase.auth.onAuthStateChange(() => check());
+    return () => {
+      active = false;
+      sub.subscription.unsubscribe();
+    };
+  }, []);
+
+  const guard = async (fn: () => Promise<void>) => {
+    setBusy(true);
+    try {
+      await fn();
+    } catch (e) {
+      alert(e instanceof Error ? e.message : "حدث خطأ غير متوقع");
+    } finally {
+      setBusy(false);
+    }
   };
 
-  const updateCategory = (id: string, patch: Partial<YMCategory>) => {
-    update(categories.map((c) => (c.id === id ? { ...c, ...patch } : c)));
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate({ to: "/auth" });
   };
 
-  const deleteCategory = (id: string) => {
-    if (!confirm("هل أنت متأكد من حذف هذا القسم وكل الباقات بداخله؟")) return;
-    update(categories.filter((c) => c.id !== id));
-  };
-
-  const addPackage = (catId: string, pkg: YMPackage) => {
-    update(
-      categories.map((c) =>
-        c.id === catId ? { ...c, packages: [...c.packages, pkg] } : c,
-      ),
+  if (authState.status === "loading") {
+    return (
+      <CenterMessage>
+        <Loader2 className="h-5 w-5 animate-spin" />
+        جاري التحقق من الصلاحيات...
+      </CenterMessage>
     );
-    setAdding(null);
-  };
+  }
 
-  const updatePackage = (catId: string, pkg: YMPackage) => {
-    update(
-      categories.map((c) =>
-        c.id === catId
-          ? {
-              ...c,
-              packages: c.packages.map((p) => (p.id === pkg.id ? pkg : p)),
-            }
-          : c,
-      ),
+  if (authState.status === "guest") {
+    return (
+      <CenterMessage>
+        <Shield className="h-6 w-6 text-primary" />
+        <p className="text-sm font-bold">
+          لوحة الإدارة محمية. سجّل الدخول كمشرف أولًا.
+        </p>
+        <Link
+          to="/auth"
+          className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground"
+        >
+          الذهاب لتسجيل الدخول
+        </Link>
+      </CenterMessage>
     );
-    setEditingPkg(null);
-  };
+  }
 
-  const deletePackage = (catId: string, pkgId: string) => {
-    if (!confirm("هل أنت متأكد من حذف هذه الباقة؟")) return;
-    update(
-      categories.map((c) =>
-        c.id === catId
-          ? { ...c, packages: c.packages.filter((p) => p.id !== pkgId) }
-          : c,
-      ),
+  if (authState.status === "no-admin") {
+    return (
+      <CenterMessage>
+        <Shield className="h-6 w-6 text-destructive" />
+        <p className="text-sm font-bold text-destructive">
+          حسابك ({authState.email}) لا يملك صلاحية المشرف.
+        </p>
+        <button
+          onClick={handleLogout}
+          className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-4 py-2 text-xs font-bold"
+        >
+          <LogOut className="h-4 w-4" /> تسجيل خروج
+        </button>
+      </CenterMessage>
     );
-  };
-
-  const handleReset = () => {
-    if (
-      !confirm(
-        "سيتم استعادة الباقات الافتراضية وحذف كل تعديلاتك. هل تريد المتابعة؟",
-      )
-    )
-      return;
-    reset();
-  };
+  }
 
   return (
     <div dir="rtl" className="min-h-screen bg-background text-foreground">
@@ -131,13 +166,22 @@ function AdminPackagesPage() {
               الخليج تيليكوم
             </span>
           </Link>
-          <Link
-            to="/yemen-mobile"
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-md hover:scale-[1.03] sm:text-sm"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            عودة لخدمات يمن موبايل
-          </Link>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={handleLogout}
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-3 py-2 text-xs font-bold text-foreground hover:border-destructive/40 hover:text-destructive"
+            >
+              <LogOut className="h-3.5 w-3.5" />
+              خروج
+            </button>
+            <Link
+              to="/yemen-mobile"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-md hover:scale-[1.03] sm:text-sm"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              عودة لخدمات يمن موبايل
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -146,26 +190,39 @@ function AdminPackagesPage() {
           <div>
             <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
               <Shield className="h-3.5 w-3.5" />
-              لوحة تحكم محلية
+              تخزين سحابي — يظهر لكل الزوار
             </div>
             <h1 className="text-2xl font-black text-primary sm:text-3xl">
               إدارة باقات يمن موبايل
             </h1>
             <p className="mt-1 text-sm text-muted-foreground">
-              التعديلات تُحفظ في متصفحك فقط (localStorage) ولا تظهر لزوار آخرين.
+              مسجّل الدخول: <span className="font-bold">{authState.email}</span>
             </p>
           </div>
           <div className="flex flex-wrap gap-2">
             <button
               onClick={() => setNewCatOpen(true)}
-              className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground hover:scale-[1.02]"
+              disabled={busy}
+              className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground hover:scale-[1.02] disabled:opacity-60"
             >
               <FolderPlus className="h-4 w-4" />
               إضافة قسم
             </button>
             <button
-              onClick={handleReset}
-              className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-4 py-2 text-sm font-bold text-foreground hover:border-destructive/50 hover:text-destructive"
+              onClick={() =>
+                guard(async () => {
+                  if (
+                    !confirm(
+                      "سيتم حذف كل الأقسام والباقات الحالية واستعادة البيانات الافتراضية. هل تريد المتابعة؟",
+                    )
+                  )
+                    return;
+                  await resetToDefaults();
+                  await refresh();
+                })
+              }
+              disabled={busy}
+              className="inline-flex items-center gap-2 rounded-lg border border-border bg-background px-4 py-2 text-sm font-bold text-foreground hover:border-destructive/50 hover:text-destructive disabled:opacity-60"
             >
               <RotateCcw className="h-4 w-4" />
               استعادة الافتراضي
@@ -177,109 +234,173 @@ function AdminPackagesPage() {
           <CategoryForm
             initial={{ title: "", description: "" }}
             onCancel={() => setNewCatOpen(false)}
-            onSave={(data) => addCategory(data)}
+            onSave={(data) =>
+              guard(async () => {
+                await createCategory(data);
+                await refresh();
+                setNewCatOpen(false);
+              })
+            }
           />
         )}
 
-        <div className="space-y-5">
-          {categories.map((cat) => (
-            <section
-              key={cat.id}
-              className="rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]"
-            >
-              <div className="flex flex-col gap-3 border-b border-border p-5 sm:flex-row sm:items-start sm:justify-between">
-                {editingCat === cat.id ? (
-                  <CategoryForm
-                    initial={{ title: cat.title, description: cat.description ?? "" }}
-                    onCancel={() => setEditingCat(null)}
-                    onSave={(data) => {
-                      updateCategory(cat.id, data);
-                      setEditingCat(null);
-                    }}
-                    inline
-                  />
-                ) : (
-                  <>
-                    <div>
-                      <h2 className="text-lg font-extrabold text-foreground">
-                        {cat.title}
-                      </h2>
-                      {cat.description && (
-                        <p className="mt-1 text-sm text-muted-foreground">
-                          {cat.description}
-                        </p>
-                      )}
-                      <span className="mt-2 inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-bold text-primary">
-                        {cat.packages.length} باقات
-                      </span>
-                    </div>
-                    <div className="flex flex-wrap gap-2">
-                      <button
-                        onClick={() => setAdding(cat.id)}
-                        className="inline-flex items-center gap-1.5 rounded-lg bg-primary/10 px-3 py-2 text-xs font-bold text-primary hover:bg-primary/20"
-                      >
-                        <Plus className="h-3.5 w-3.5" />
-                        باقة
-                      </button>
-                      <button
-                        onClick={() => setEditingCat(cat.id)}
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-background px-3 py-2 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
-                      >
-                        <Pencil className="h-3.5 w-3.5" />
-                        تعديل
-                      </button>
-                      <button
-                        onClick={() => deleteCategory(cat.id)}
-                        className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-background px-3 py-2 text-xs font-bold text-destructive hover:border-destructive/50"
-                      >
-                        <Trash2 className="h-3.5 w-3.5" />
-                        حذف القسم
-                      </button>
-                    </div>
-                  </>
-                )}
-              </div>
+        {loading && categories.length === 0 ? (
+          <div className="rounded-xl border border-dashed border-border p-10 text-center text-sm text-muted-foreground">
+            جاري التحميل...
+          </div>
+        ) : (
+          <div className="space-y-5">
+            {categories.map((cat) => (
+              <section
+                key={cat.id}
+                className="rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]"
+              >
+                <div className="flex flex-col gap-3 border-b border-border p-5 sm:flex-row sm:items-start sm:justify-between">
+                  {editingCat === cat.id ? (
+                    <CategoryForm
+                      initial={{
+                        title: cat.title,
+                        description: cat.description ?? "",
+                      }}
+                      onCancel={() => setEditingCat(null)}
+                      onSave={(data) =>
+                        guard(async () => {
+                          await updateCategory(cat.id, {
+                            title: data.title,
+                            description: data.description ?? null,
+                          });
+                          await refresh();
+                          setEditingCat(null);
+                        })
+                      }
+                      inline
+                    />
+                  ) : (
+                    <>
+                      <div>
+                        <h2 className="text-lg font-extrabold text-foreground">
+                          {cat.title}
+                        </h2>
+                        {cat.description && (
+                          <p className="mt-1 text-sm text-muted-foreground">
+                            {cat.description}
+                          </p>
+                        )}
+                        <span className="mt-2 inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-bold text-primary">
+                          {cat.packages.length} باقات
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        <button
+                          onClick={() => setAdding(cat.id)}
+                          className="inline-flex items-center gap-1.5 rounded-lg bg-primary/10 px-3 py-2 text-xs font-bold text-primary hover:bg-primary/20"
+                        >
+                          <Plus className="h-3.5 w-3.5" />
+                          باقة
+                        </button>
+                        <button
+                          onClick={() => setEditingCat(cat.id)}
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-background px-3 py-2 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
+                        >
+                          <Pencil className="h-3.5 w-3.5" />
+                          تعديل
+                        </button>
+                        <button
+                          onClick={() =>
+                            guard(async () => {
+                              if (
+                                !confirm(
+                                  "هل أنت متأكد من حذف هذا القسم وكل الباقات بداخله؟",
+                                )
+                              )
+                                return;
+                              await deleteCategory(cat.id);
+                              await refresh();
+                            })
+                          }
+                          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-background px-3 py-2 text-xs font-bold text-destructive hover:border-destructive/50"
+                        >
+                          <Trash2 className="h-3.5 w-3.5" />
+                          حذف القسم
+                        </button>
+                      </div>
+                    </>
+                  )}
+                </div>
 
-              <div className="space-y-3 p-5">
-                {adding === cat.id && (
-                  <PackageForm
-                    initial={emptyPackage()}
-                    onCancel={() => setAdding(null)}
-                    onSave={(pkg) => addPackage(cat.id, pkg)}
-                  />
-                )}
-                {cat.packages.length === 0 && adding !== cat.id ? (
-                  <div className="rounded-xl border border-dashed border-border p-6 text-center text-xs text-muted-foreground">
-                    لا توجد باقات بعد. اضغط "باقة" لإضافة واحدة.
-                  </div>
-                ) : (
-                  <div className="grid gap-3 md:grid-cols-2">
-                    {cat.packages.map((pkg) =>
-                      editingPkg === pkg.id ? (
-                        <PackageForm
-                          key={pkg.id}
-                          initial={pkg}
-                          onCancel={() => setEditingPkg(null)}
-                          onSave={(p) => updatePackage(cat.id, p)}
-                        />
-                      ) : (
-                        <PackageRow
-                          key={pkg.id}
-                          pkg={pkg}
-                          onEdit={() => setEditingPkg(pkg.id)}
-                          onDelete={() => deletePackage(cat.id, pkg.id)}
-                        />
-                      ),
-                    )}
-                  </div>
-                )}
-              </div>
-            </section>
-          ))}
-        </div>
+                <div className="space-y-3 p-5">
+                  {adding === cat.id && (
+                    <PackageForm
+                      initial={emptyPackage()}
+                      onCancel={() => setAdding(null)}
+                      onSave={(pkg) =>
+                        guard(async () => {
+                          await createPackage(cat.id, pkg);
+                          await refresh();
+                          setAdding(null);
+                        })
+                      }
+                    />
+                  )}
+                  {cat.packages.length === 0 && adding !== cat.id ? (
+                    <div className="rounded-xl border border-dashed border-border p-6 text-center text-xs text-muted-foreground">
+                      لا توجد باقات بعد. اضغط "باقة" لإضافة واحدة.
+                    </div>
+                  ) : (
+                    <div className="grid gap-3 md:grid-cols-2">
+                      {cat.packages.map((pkg) =>
+                        editingPkg === pkg.id ? (
+                          <PackageForm
+                            key={pkg.id}
+                            initial={pkg}
+                            onCancel={() => setEditingPkg(null)}
+                            onSave={(p) =>
+                              guard(async () => {
+                                await updatePackage(cat.id, p);
+                                await refresh();
+                                setEditingPkg(null);
+                              })
+                            }
+                          />
+                        ) : (
+                          <PackageRow
+                            key={pkg.id}
+                            pkg={pkg}
+                            onEdit={() => setEditingPkg(pkg.id)}
+                            onDelete={() =>
+                              guard(async () => {
+                                if (!confirm("هل أنت متأكد من حذف هذه الباقة؟"))
+                                  return;
+                                await deletePackage(pkg.id);
+                                await refresh();
+                              })
+                            }
+                          />
+                        ),
+                      )}
+                    </div>
+                  )}
+                </div>
+              </section>
+            ))}
+          </div>
+        )}
       </main>
 
       <SiteFooter />
+    </div>
+  );
+}
+
+function CenterMessage({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      dir="rtl"
+      className="grid min-h-screen place-items-center bg-background px-4 text-foreground"
+    >
+      <div className="flex max-w-sm flex-col items-center gap-3 rounded-2xl border border-border bg-card p-8 text-center shadow-[var(--shadow-card)]">
+        {children}
+      </div>
     </div>
   );
 }
@@ -551,3 +672,6 @@ function Field({
     </label>
   );
 }
+
+// Suppress unused import warning when category type is exported elsewhere
+export type _Unused = YMCategory;

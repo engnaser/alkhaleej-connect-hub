@@ -35,6 +35,89 @@ export type Database = {
         }
         Relationships: []
       }
+      ym_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id: string
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      ym_packages: {
+        Row: {
+          category_id: string
+          code: string | null
+          created_at: string
+          id: string
+          internet: string
+          minutes: string
+          name: string
+          network: string
+          price: string
+          sms: string
+          sort_order: number
+          updated_at: string
+          validity: string
+        }
+        Insert: {
+          category_id: string
+          code?: string | null
+          created_at?: string
+          id: string
+          internet?: string
+          minutes?: string
+          name: string
+          network?: string
+          price: string
+          sms?: string
+          sort_order?: number
+          updated_at?: string
+          validity?: string
+        }
+        Update: {
+          category_id?: string
+          code?: string | null
+          created_at?: string
+          id?: string
+          internet?: string
+          minutes?: string
+          name?: string
+          network?: string
+          price?: string
+          sms?: string
+          sort_order?: number
+          updated_at?: string
+          validity?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "ym_packages_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "ym_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never

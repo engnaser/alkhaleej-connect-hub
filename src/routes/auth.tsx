@@ -16,7 +16,7 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
-  const mode = "signin" as const;
+  const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -26,7 +26,7 @@ function AuthPage() {
   // Redirect when already signed in
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
-      if (data.user) navigate({ to: "/designs" });
+      if (data.user) navigate({ to: "/admin/packages" });
     });
   }, [navigate]);
 
@@ -36,9 +36,24 @@ function AuthPage() {
     setInfo(null);
     setLoading(true);
     try {
-      const { error: err } = await supabase.auth.signInWithPassword({ email, password });
-      if (err) throw err;
-      navigate({ to: "/designs" });
+      if (mode === "signin") {
+        const { error: err } = await supabase.auth.signInWithPassword({ email, password });
+        if (err) throw err;
+        navigate({ to: "/admin/packages" });
+      } else {
+        const { data, error: err } = await supabase.auth.signUp({
+          email,
+          password,
+          options: { emailRedirectTo: window.location.origin + "/auth" },
+        });
+        if (err) throw err;
+        if (data.session) {
+          navigate({ to: "/admin/packages" });
+        } else {
+          setInfo("تم إنشاء الحساب. إذا طُلب تأكيد البريد، أكّده ثم سجّل الدخول.");
+          setMode("signin");
+        }
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "حدث خطأ غير متوقع");
     } finally {
@@ -63,10 +78,12 @@ function AuthPage() {
               <Sparkles className="h-5 w-5" />
             </div>
             <h1 className="text-2xl font-black text-primary">
-              {mode === "signin" ? "تسجيل دخول المسؤول" : "إنشاء حساب جديد"}
+              {mode === "signin" ? "تسجيل دخول المسؤول" : "إنشاء حساب مسؤول"}
             </h1>
             <p className="mt-1 text-xs text-muted-foreground">
-              دخولك يفعّل أدوات ضبط القوالب تلقائياً.
+              {mode === "signin"
+                ? "دخولك يفعّل لوحة إدارة الباقات."
+                : "أول حساب يتم إنشاؤه يصبح مشرفًا تلقائيًا."}
             </p>
           </div>
 
@@ -114,19 +131,30 @@ function AuthPage() {
               className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-black text-primary-foreground shadow-lg transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
             >
               <LogIn className="h-4 w-4" />
-              {loading ? "..." : "دخول"}
+              {loading ? "..." : mode === "signin" ? "دخول" : "إنشاء الحساب"}
             </button>
           </form>
 
-          <p className="mt-4 text-center text-xs font-bold text-muted-foreground">
-            التسجيل مغلق. الدخول مخصص للمسؤول فقط.
-          </p>
+          <button
+            type="button"
+            onClick={() => {
+              setMode((m) => (m === "signin" ? "signup" : "signin"));
+              setError(null);
+              setInfo(null);
+            }}
+            className="mt-4 block w-full text-center text-xs font-bold text-muted-foreground hover:text-primary"
+          >
+            {mode === "signin"
+              ? "ليس لديك حساب؟ إنشاء حساب مسؤول جديد"
+              : "لديك حساب؟ سجّل الدخول"}
+          </button>
         </div>
 
-        <Link to="/designs" className="mt-6 text-center text-xs font-bold text-muted-foreground hover:text-primary">
-          العودة للتصاميم
+        <Link to="/" className="mt-6 text-center text-xs font-bold text-muted-foreground hover:text-primary">
+          العودة للرئيسية
         </Link>
       </div>
     </div>
   );
 }
+
