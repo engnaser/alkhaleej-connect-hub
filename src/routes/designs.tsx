@@ -256,6 +256,19 @@ function TemplateModal({ tpl, onClose }: { tpl: Template; onClose: () => void })
                   </div>
                 </div>
               </>
+            ) : tpl.id === "khalij" ? (
+              <>
+                <div className="pointer-events-none absolute flex items-center justify-center text-center" style={{ top: "77%", left: "5%", width: "45%", height: "6%" }}>
+                  <div className="w-full truncate font-black leading-tight text-white" style={{ fontSize: "3.5cqw", textShadow: "0 2px 6px rgba(0,0,0,0.5)" }} dir="rtl">
+                    {v.name}
+                  </div>
+                </div>
+                <div className="pointer-events-none absolute flex items-center justify-center text-center" style={{ top: "83%", left: "5%", width: "45%", height: "6%" }}>
+                  <div className="w-full truncate font-extrabold leading-tight" style={{ fontSize: "3cqw", color: "#fada64", textShadow: "0 2px 6px rgba(0,0,0,0.5)" }} dir="ltr">
+                    {v.phone}
+                  </div>
+                </div>
+              </>
             ) : (
               <div className="pointer-events-none absolute flex flex-col items-center justify-center text-center" style={{ top: `${NAME_BOX.topPct}%`, left: `${NAME_BOX.leftPct}%`, width: `${NAME_BOX.widthPct}%`, height: `${NAME_BOX.heightPct}%` }}>
                 <div className="w-full truncate font-black leading-tight text-white" style={{ fontSize: "5.2cqw", textShadow: "0 2px 6px rgba(0,0,0,0.5)" }} dir="rtl">
