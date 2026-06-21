@@ -1,6 +1,9 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Download, Settings2, Sparkles, Sun, X } from "lucide-react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { Download, LogIn, LogOut, Settings2, Sparkles, Sun, X } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { getMyAdminStatus } from "@/lib/admin.functions";
 import logoKhalij from "@/assets/logo-khalij.png";
 import posterSabah from "@/assets/poster-sabah.jpg";
 import posterMasaa from "@/assets/poster-masaa.jpg";
@@ -100,36 +103,44 @@ const TEMPLATES: Template[] = [
   },
 ];
 
-const ADMIN_KEY = "khalij_admin_mode";
-
-function useAdminMode() {
-  const [admin, setAdmin] = useState(false);
+function useSession() {
+  const [userId, setUserId] = useState<string | null | undefined>(undefined);
+  const queryClient = useQueryClient();
   useEffect(() => {
-    try {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("admin") === "1") {
-        localStorage.setItem(ADMIN_KEY, "1");
-      } else if (params.get("admin") === "0") {
-        localStorage.removeItem(ADMIN_KEY);
-      }
-      setAdmin(localStorage.getItem(ADMIN_KEY) === "1");
-    } catch {
-      /* ignore */
-    }
-  }, []);
-  return admin;
+    supabase.auth.getSession().then(({ data }) => setUserId(data.session?.user.id ?? null));
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
+      setUserId(session?.user.id ?? null);
+      queryClient.invalidateQueries({ queryKey: ["admin-status"] });
+    });
+    return () => sub.subscription.unsubscribe();
+  }, [queryClient]);
+  return userId;
 }
 
 function DesignsPage() {
   const [openId, setOpenId] = useState<string | null>(null);
   const activeTpl = TEMPLATES.find((t) => t.id === openId) ?? null;
-  const adminMode = useAdminMode();
+  const navigate = useNavigate();
+  const userId = useSession();
+
+  const { data: adminData } = useQuery({
+    queryKey: ["admin-status", userId],
+    queryFn: () => getMyAdminStatus(),
+    enabled: !!userId,
+    staleTime: 60_000,
+  });
+  const adminMode = !!adminData?.isAdmin;
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       {adminMode && (
         <div className="bg-primary/10 px-4 py-2 text-center text-xs font-bold text-primary">
-          وضع المسؤول مفعّل — أدوات ضبط النصوص ظاهرة لك فقط. للإلغاء: أضف <code className="mx-1 rounded bg-background px-1">?admin=0</code> إلى الرابط.
+          وضع المسؤول مفعّل — أدوات ضبط النصوص ظاهرة لك فقط.
         </div>
       )}
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-xl">
@@ -150,9 +161,32 @@ function DesignsPage() {
               </a>
             ))}
           </nav>
-          <Link to="/" aria-label="العودة" className="grid h-10 w-10 place-items-center rounded-full border border-border bg-secondary text-primary transition-colors hover:bg-primary/10">
-            <Sun className="h-4 w-4" />
-          </Link>
+          <div className="flex items-center gap-2">
+            {userId ? (
+              <button
+                type="button"
+                onClick={signOut}
+                title="تسجيل الخروج"
+                className="inline-flex h-10 items-center gap-1.5 rounded-full border border-border bg-secondary px-3 text-xs font-bold text-primary transition-colors hover:bg-primary/10"
+              >
+                <LogOut className="h-3.5 w-3.5" />
+                خروج
+              </button>
+            ) : (
+              <button
+                type="button"
+                onClick={() => navigate({ to: "/auth" })}
+                title="تسجيل الدخول"
+                className="inline-flex h-10 items-center gap-1.5 rounded-full border border-border bg-secondary px-3 text-xs font-bold text-primary transition-colors hover:bg-primary/10"
+              >
+                <LogIn className="h-3.5 w-3.5" />
+                دخول
+              </button>
+            )}
+            <Link to="/" aria-label="العودة" className="grid h-10 w-10 place-items-center rounded-full border border-border bg-secondary text-primary transition-colors hover:bg-primary/10">
+              <Sun className="h-4 w-4" />
+            </Link>
+          </div>
         </div>
       </header>
 
