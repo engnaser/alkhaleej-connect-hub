@@ -1,4 +1,4 @@
-export type NetworkType = "4G" | "3G" | "VoLTE";
+export type NetworkType = "4G" | "3G" | "VoLTE" | "4G / 3G";
 
 export type YMPackage = {
   id: string;
