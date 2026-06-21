@@ -339,24 +339,7 @@ function HomePage() {
         </section>
       </main>
 
-      {/* FOOTER */}
-      <footer className="border-t border-border bg-secondary/40">
-        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 px-4 py-8 text-center sm:flex-row sm:px-6 lg:px-8">
-          <div className="flex items-center gap-3">
-            <img
-              src={logoKhalij}
-              alt="الخليج تيليكوم"
-              className="h-9 w-9 rounded-full ring-2 ring-primary/40"
-            />
-            <span className="text-sm font-extrabold text-primary">
-              الخليج تيليكوم
-            </span>
-          </div>
-          <p className="text-xs text-muted-foreground">
-            © {new Date().getFullYear()} جميع الحقوق محفوظة.
-          </p>
-        </div>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
