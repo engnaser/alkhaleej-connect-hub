@@ -198,12 +198,12 @@ function DesignsPage() {
         </div>
       </main>
 
-      {activeTpl && <TemplateModal tpl={activeTpl} onClose={() => setOpenId(null)} />}
+      {activeTpl && <TemplateModal tpl={activeTpl} adminMode={adminMode} onClose={() => setOpenId(null)} />}
     </div>
   );
 }
 
-function TemplateModal({ tpl, onClose }: { tpl: Template; onClose: () => void }) {
+function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: boolean; onClose: () => void }) {
   const [values, setValues] = useState<Record<string, string>>(() =>
     Object.fromEntries(tpl.fields.map((f) => [f.key, ""])),
   );
