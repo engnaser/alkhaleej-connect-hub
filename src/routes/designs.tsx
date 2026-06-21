@@ -130,7 +130,6 @@ function useSession() {
 function DesignsPage() {
   const [openId, setOpenId] = useState<string | null>(null);
   const activeTpl = TEMPLATES.find((t) => t.id === openId) ?? null;
-  const navigate = useNavigate();
   const userId = useSession();
 
   const { data: adminData } = useQuery({
