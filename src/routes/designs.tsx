@@ -188,6 +188,16 @@ function DesignsPage() {
         </div>
       </header>
 
+      {/* Discreet admin entry — invisible to visitors, click to sign in */}
+      {!userId && (
+        <Link
+          to="/auth"
+          aria-label="."
+          title=""
+          className="fixed bottom-2 left-2 z-30 h-3 w-3 rounded-full bg-transparent opacity-20 hover:opacity-100 hover:bg-primary"
+        />
+      )}
+
       <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <div
