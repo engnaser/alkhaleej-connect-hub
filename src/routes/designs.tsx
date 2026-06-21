@@ -12,6 +12,7 @@ import posterRamadan from "@/assets/poster-ramadan.jpg";
 import posterEid from "@/assets/poster-eid.jpg";
 import posterMawloud from "@/assets/poster-mawloud.png";
 import posterKhalij from "@/assets/poster-khalij.png.asset.json";
+import posterJumaaGold from "@/assets/poster-jumaa-gold.png.asset.json";
 
 export const Route = createFileRoute("/designs")({
   head: () => ({
