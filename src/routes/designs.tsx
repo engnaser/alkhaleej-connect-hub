@@ -188,14 +188,15 @@ function DesignsPage() {
         </div>
       </header>
 
-      {/* Discreet admin entry — invisible to visitors, click to sign in */}
+      {/* Visible admin entry — sign-in button for admin access */}
       {!userId && (
         <Link
           to="/auth"
-          aria-label="."
-          title=""
-          className="fixed bottom-2 left-2 z-30 h-3 w-3 rounded-full bg-transparent opacity-20 hover:opacity-100 hover:bg-primary"
-        />
+          className="fixed bottom-4 left-4 z-30 inline-flex items-center gap-2 rounded-full border-2 border-primary bg-background px-4 py-2.5 text-xs font-black text-primary shadow-lg transition-all hover:bg-primary hover:text-primary-foreground"
+        >
+          <Settings2 className="h-4 w-4" />
+          دخول المسؤول
+        </Link>
       )}
 
       <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
@@ -269,7 +270,7 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
     if (typeof window === "undefined") return false;
     return window.localStorage.getItem(LAYOUT_LOCKED_KEY(tpl.id)) === "1";
   });
-  const [showAdvanced, setShowAdvanced] = useState(false);
+  const [showAdvanced, setShowAdvanced] = useState(true);
   const imgRef = useRef<HTMLImageElement | null>(null);
 
   const saveAndLock = () => {
