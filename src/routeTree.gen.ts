@@ -22,6 +22,7 @@ import { Route as AdslInquiryRouteImport } from './routes/adsl-inquiry'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MawloudIndexRouteImport } from './routes/mawloud.index'
 import { Route as MawloudSettingsRouteImport } from './routes/mawloud.settings'
+import { Route as AdminPackagesRouteImport } from './routes/admin.packages'
 
 const Yemen4gInquiryRoute = Yemen4gInquiryRouteImport.update({
   id: '/yemen4g-inquiry',
@@ -88,6 +89,11 @@ const MawloudSettingsRoute = MawloudSettingsRouteImport.update({
   path: '/mawloud/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminPackagesRoute = AdminPackagesRouteImport.update({
+  id: '/admin/packages',
+  path: '/admin/packages',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -101,6 +107,7 @@ export interface FileRoutesByFullPath {
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
+  '/admin/packages': typeof AdminPackagesRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
 }
@@ -116,6 +123,7 @@ export interface FileRoutesByTo {
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
+  '/admin/packages': typeof AdminPackagesRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud': typeof MawloudIndexRoute
 }
@@ -132,6 +140,7 @@ export interface FileRoutesById {
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
+  '/admin/packages': typeof AdminPackagesRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
 }
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
     | '/whatsapp-unblock'
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
+    | '/admin/packages'
     | '/mawloud/settings'
     | '/mawloud/'
   fileRoutesByTo: FileRoutesByTo
@@ -164,6 +174,7 @@ export interface FileRouteTypes {
     | '/whatsapp-unblock'
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
+    | '/admin/packages'
     | '/mawloud/settings'
     | '/mawloud'
   id:
@@ -179,6 +190,7 @@ export interface FileRouteTypes {
     | '/whatsapp-unblock'
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
+    | '/admin/packages'
     | '/mawloud/settings'
     | '/mawloud/'
   fileRoutesById: FileRoutesById
@@ -195,6 +207,7 @@ export interface RootRouteChildren {
   WhatsappUnblockRoute: typeof WhatsappUnblockRoute
   YemenMobileRoute: typeof YemenMobileRoute
   Yemen4gInquiryRoute: typeof Yemen4gInquiryRoute
+  AdminPackagesRoute: typeof AdminPackagesRoute
   MawloudSettingsRoute: typeof MawloudSettingsRoute
   MawloudIndexRoute: typeof MawloudIndexRoute
 }
@@ -292,6 +305,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MawloudSettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/packages': {
+      id: '/admin/packages'
+      path: '/admin/packages'
+      fullPath: '/admin/packages'
+      preLoaderRoute: typeof AdminPackagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -307,6 +327,7 @@ const rootRouteChildren: RootRouteChildren = {
   WhatsappUnblockRoute: WhatsappUnblockRoute,
   YemenMobileRoute: YemenMobileRoute,
   Yemen4gInquiryRoute: Yemen4gInquiryRoute,
+  AdminPackagesRoute: AdminPackagesRoute,
   MawloudSettingsRoute: MawloudSettingsRoute,
   MawloudIndexRoute: MawloudIndexRoute,
 }
