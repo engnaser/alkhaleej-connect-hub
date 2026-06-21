@@ -15,9 +15,7 @@ import posterMasaa from "@/assets/poster-masaa.jpg";
 import posterJumaa from "@/assets/poster-jumaa.jpg";
 import posterRamadan from "@/assets/poster-ramadan.jpg";
 import posterEid from "@/assets/poster-eid.jpg";
-import posterKhotoba from "@/assets/poster-khotoba.jpg";
 import posterMawloud from "@/assets/poster-mawloud.png";
-import posterPromo from "@/assets/poster-promo.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -50,9 +48,7 @@ const PREVIEW_POSTERS = [
   { src: posterJumaa, title: "جمعة مباركة" },
   { src: posterRamadan, title: "رمضان كريم" },
   { src: posterEid, title: "عيد مبارك" },
-  { src: posterKhotoba, title: "خطوبة مباركة" },
   { src: posterMawloud, title: "مبارك المولود" },
-  { src: posterPromo, title: "عرض حصري" },
 ];
 
 const STEPS = [
