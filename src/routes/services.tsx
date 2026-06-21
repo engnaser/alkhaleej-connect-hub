@@ -110,7 +110,9 @@ const SERVICES = [
 ];
 
 function ServicesPage() {
+  const { dial } = Route.useSearch();
   return (
+
     <div dir="rtl" className="min-h-screen bg-background text-foreground">
       {/* HEADER */}
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-xl">
