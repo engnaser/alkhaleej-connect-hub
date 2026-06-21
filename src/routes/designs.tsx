@@ -196,6 +196,14 @@ function TemplateModal({ tpl, onClose }: { tpl: Template; onClose: () => void })
       ctx.fillText(v.name, w * 0.28, h * 0.606, w * 0.5);
       ctx.font = `bold ${Math.round(h * 0.034)}px Tajawal, Cairo, system-ui, sans-serif`;
       ctx.fillText(v.sender, w * 0.28, h * 0.731, w * 0.5);
+    } else if (tpl.id === "khalij") {
+      ctx.direction = "rtl";
+      ctx.fillStyle = "#ffffff";
+      ctx.font = `900 ${Math.round(h * 0.032)}px Tajawal, system-ui, sans-serif`;
+      ctx.fillText(v.name, w * 0.275, h * 0.77, w * 0.45);
+      ctx.fillStyle = "#fada64";
+      ctx.font = `800 ${Math.round(h * 0.028)}px ui-monospace, Menlo, monospace`;
+      ctx.fillText(v.phone, w * 0.275, h * 0.83, w * 0.45);
     } else {
       const boxX = (NAME_BOX.leftPct / 100) * w;
       const boxY = (NAME_BOX.topPct / 100) * h;
