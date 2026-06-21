@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { Download, Sparkles, Sun, X } from "lucide-react";
+import { Download, Settings2, Sparkles, Sun, X } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import posterSabah from "@/assets/poster-sabah.jpg";
 import posterMasaa from "@/assets/poster-masaa.jpg";
@@ -34,6 +34,17 @@ type FieldDef = {
   required?: boolean;
 };
 
+type FieldLayout = {
+  x: number;       // center x in %
+  y: number;       // center y in %
+  size: number;    // font size in % of image height
+  color: string;
+  dir: "rtl" | "ltr";
+  weight?: number; // css font weight (default 800)
+  mono?: boolean;  // monospace font (good for phone numbers)
+  maxWidth?: number; // max text width in % of image width
+};
+
 type Template = {
   id: string;
   title: string;
@@ -41,6 +52,7 @@ type Template = {
   src: string;
   fields: FieldDef[];
   defaults: Record<string, string>;
+  layout: Record<string, FieldLayout>;
 };
 
 const SIMPLE_FIELDS: FieldDef[] = [
@@ -55,17 +67,38 @@ const MAWLOUD_FIELDS: FieldDef[] = [
   { key: "note", label: "كلمة تهنئة (اختياري)", placeholder: "ألف ألف مبروك", type: "textarea", dir: "rtl", maxLength: 120 },
 ];
 
-const TEMPLATES: Template[] = [
-  { id: "sabah", title: "صباح الخير", occasion: "تحية الصباح", src: posterSabah, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" } },
-  { id: "masaa", title: "مساء الخير", occasion: "تحية المساء", src: posterMasaa, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" } },
-  { id: "jumaa", title: "جمعة مباركة", occasion: "تذكير الجمعة", src: posterJumaa, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" } },
-  { id: "ramadan", title: "رمضان كريم", occasion: "حلَّ الشهر الفضيل", src: posterRamadan, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" } },
-  { id: "eid", title: "عيد مبارك", occasion: "بمناسبة العيد السعيد", src: posterEid, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" } },
-  { id: "mawloud", title: "مبارك المولود", occasion: "تهنئة بمناسبة المولود", src: posterMawloud, fields: MAWLOUD_FIELDS, defaults: { name: "اسم المولود", sender: "مقدم التهنئة", phone: "+967 7XX XXX XXX", note: "" } },
-  { id: "khalij", title: "وكيل معتمد", occasion: "بطاقة الوكيل المعتمد", src: posterKhalij.url, fields: SIMPLE_FIELDS, defaults: { name: "اسم الوكيل", phone: "+967 7XX XXX XXX" } },
-];
+const SIMPLE_LAYOUT: Record<string, FieldLayout> = {
+  name:  { x: 29, y: 56.5, size: 5.0, color: "#ffffff", dir: "rtl", weight: 900, maxWidth: 44 },
+  phone: { x: 29, y: 62,   size: 4.4, color: "#fada64", dir: "ltr", weight: 800, mono: true, maxWidth: 44 },
+};
 
-const NAME_BOX = { topPct: 52, leftPct: 6, widthPct: 46, heightPct: 13 };
+const TEMPLATES: Template[] = [
+  { id: "sabah",   title: "صباح الخير",  occasion: "تحية الصباح",       src: posterSabah,   fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
+  { id: "masaa",   title: "مساء الخير",  occasion: "تحية المساء",       src: posterMasaa,   fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
+  { id: "jumaa",   title: "جمعة مباركة", occasion: "تذكير الجمعة",      src: posterJumaa,   fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
+  { id: "ramadan", title: "رمضان كريم",  occasion: "حلَّ الشهر الفضيل", src: posterRamadan, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
+  { id: "eid",     title: "عيد مبارك",   occasion: "بمناسبة العيد السعيد", src: posterEid,  fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
+  {
+    id: "mawloud", title: "مبارك المولود", occasion: "تهنئة بمناسبة المولود", src: posterMawloud,
+    fields: MAWLOUD_FIELDS,
+    defaults: { name: "اسم المولود", sender: "مقدم التهنئة", phone: "+967 7XX XXX XXX", note: "" },
+    layout: {
+      name:   { x: 28, y: 60.6, size: 3.8, color: "#f4d28a", dir: "rtl", weight: 800, maxWidth: 50 },
+      sender: { x: 28, y: 73.1, size: 3.4, color: "#f4d28a", dir: "rtl", weight: 800, maxWidth: 50 },
+      phone:  { x: 28, y: 80,   size: 2.8, color: "#f4d28a", dir: "ltr", weight: 700, mono: true, maxWidth: 50 },
+      note:   { x: 28, y: 86,   size: 2.6, color: "#f4d28a", dir: "rtl", weight: 700, maxWidth: 50 },
+    },
+  },
+  {
+    id: "khalij", title: "وكيل معتمد", occasion: "بطاقة الوكيل المعتمد", src: posterKhalij.url,
+    fields: SIMPLE_FIELDS,
+    defaults: { name: "اسم الوكيل", phone: "+967 7XX XXX XXX" },
+    layout: {
+      name:  { x: 27.5, y: 88, size: 3.2, color: "#ffffff", dir: "rtl", weight: 900, maxWidth: 45 },
+      phone: { x: 27.5, y: 93, size: 2.8, color: "#fada64", dir: "ltr", weight: 800, mono: true, maxWidth: 45 },
+    },
+  },
+];
 
 function DesignsPage() {
   const [openId, setOpenId] = useState<string | null>(null);
@@ -148,6 +181,10 @@ function TemplateModal({ tpl, onClose }: { tpl: Template; onClose: () => void })
   const [values, setValues] = useState<Record<string, string>>(() =>
     Object.fromEntries(tpl.fields.map((f) => [f.key, ""])),
   );
+  const [layout, setLayout] = useState<Record<string, FieldLayout>>(() =>
+    JSON.parse(JSON.stringify(tpl.layout)) as Record<string, FieldLayout>,
+  );
+  const [showAdvanced, setShowAdvanced] = useState(false);
   const imgRef = useRef<HTMLImageElement | null>(null);
 
   useEffect(() => {
@@ -170,6 +207,10 @@ function TemplateModal({ tpl, onClose }: { tpl: Template; onClose: () => void })
   }, [values, tpl]);
 
   const setField = (k: string, val: string) => setValues((p) => ({ ...p, [k]: val }));
+  const updateLayout = (key: string, patch: Partial<FieldLayout>) =>
+    setLayout((p) => ({ ...p, [key]: { ...p[key], ...patch } }));
+  const resetLayout = () =>
+    setLayout(JSON.parse(JSON.stringify(tpl.layout)) as Record<string, FieldLayout>);
 
   const download = async () => {
     const img = imgRef.current;
@@ -189,32 +230,17 @@ function TemplateModal({ tpl, onClose }: { tpl: Template; onClose: () => void })
     ctx.shadowBlur = 8;
     ctx.shadowOffsetY = 2;
 
-    if (tpl.id === "mawloud") {
-      ctx.direction = "rtl";
-      ctx.fillStyle = "#f4d28a";
-      ctx.font = `bold ${Math.round(h * 0.038)}px Tajawal, Cairo, system-ui, sans-serif`;
-      ctx.fillText(v.name, w * 0.28, h * 0.606, w * 0.5);
-      ctx.font = `bold ${Math.round(h * 0.034)}px Tajawal, Cairo, system-ui, sans-serif`;
-      ctx.fillText(v.sender, w * 0.28, h * 0.731, w * 0.5);
-    } else if (tpl.id === "khalij") {
-      ctx.direction = "rtl";
-      ctx.fillStyle = "#ffffff";
-      ctx.font = `900 ${Math.round(h * 0.032)}px Tajawal, system-ui, sans-serif`;
-      ctx.fillText(v.name, w * 0.275, h * 0.88, w * 0.45);
-      ctx.fillStyle = "#fada64";
-      ctx.font = `800 ${Math.round(h * 0.028)}px ui-monospace, Menlo, monospace`;
-      ctx.fillText(v.phone, w * 0.275, h * 0.93, w * 0.45);
-    } else {
-      const boxX = (NAME_BOX.leftPct / 100) * w;
-      const boxY = (NAME_BOX.topPct / 100) * h;
-      const boxW = (NAME_BOX.widthPct / 100) * w;
-      const boxH = (NAME_BOX.heightPct / 100) * h;
-      ctx.fillStyle = "#ffffff";
-      ctx.font = `900 ${Math.round(boxH * 0.38)}px Tajawal, system-ui, sans-serif`;
-      ctx.fillText(v.name, boxX + boxW / 2, boxY + boxH * 0.35, boxW * 0.95);
-      ctx.fillStyle = "#fada64";
-      ctx.font = `800 ${Math.round(boxH * 0.34)}px ui-monospace, Menlo, monospace`;
-      ctx.fillText(v.phone, boxX + boxW / 2, boxY + boxH * 0.75, boxW * 0.95);
+    for (const f of tpl.fields) {
+      const L = layout[f.key];
+      if (!L) continue;
+      const text = v[f.key];
+      if (!text) continue;
+      ctx.direction = L.dir;
+      ctx.fillStyle = L.color;
+      const family = L.mono ? "ui-monospace, Menlo, monospace" : "Tajawal, Cairo, system-ui, sans-serif";
+      ctx.font = `${L.weight ?? 800} ${Math.round((L.size / 100) * h)}px ${family}`;
+      const maxW = ((L.maxWidth ?? 50) / 100) * w;
+      ctx.fillText(text, (L.x / 100) * w, (L.y / 100) * h, maxW);
     }
 
     const a = document.createElement("a");
@@ -243,42 +269,43 @@ function TemplateModal({ tpl, onClose }: { tpl: Template; onClose: () => void })
           <p className="mb-3 text-right text-xs font-bold text-muted-foreground">معاينة مباشرة</p>
           <div className="relative overflow-hidden rounded-2xl" style={{ containerType: "inline-size" }}>
             <img ref={imgRef} src={tpl.src} alt={tpl.title} crossOrigin="anonymous" className="block h-auto w-full" />
-            {tpl.id === "mawloud" ? (
-              <>
-                <div className="pointer-events-none absolute flex items-center justify-center text-center" style={{ top: "60%", left: "6%", width: "46%", height: "10%" }}>
-                  <div className="w-full truncate font-bold leading-tight" style={{ fontSize: "4cqw", color: "#f4d28a", textShadow: "0 2px 6px rgba(0,0,0,0.5)" }} dir="rtl">
-                    {v.name}
+            {tpl.fields.map((f) => {
+              const L = layout[f.key];
+              if (!L) return null;
+              const text = v[f.key];
+              if (!text) return null;
+              // size is % of image height; cqw is % of container width.
+              // assume natural aspect ratio of image; approximate using img if available.
+              const ar = (imgRef.current?.naturalHeight ?? 1365) / (imgRef.current?.naturalWidth ?? 1024);
+              const cqw = L.size * ar;
+              const maxW = L.maxWidth ?? 50;
+              return (
+                <div
+                  key={f.key}
+                  className="pointer-events-none absolute flex items-center justify-center text-center"
+                  style={{
+                    top: `${L.y}%`,
+                    left: `${L.x - maxW / 2}%`,
+                    width: `${maxW}%`,
+                    transform: "translateY(-50%)",
+                  }}
+                >
+                  <div
+                    className="w-full truncate leading-tight"
+                    style={{
+                      fontSize: `${cqw}cqw`,
+                      color: L.color,
+                      fontWeight: L.weight ?? 800,
+                      fontFamily: L.mono ? "ui-monospace, Menlo, monospace" : "Tajawal, Cairo, system-ui, sans-serif",
+                      textShadow: "0 2px 6px rgba(0,0,0,0.5)",
+                    }}
+                    dir={L.dir}
+                  >
+                    {text}
                   </div>
                 </div>
-                <div className="pointer-events-none absolute flex items-center justify-center text-center" style={{ top: "73%", left: "6%", width: "46%", height: "10%" }}>
-                  <div className="w-full truncate font-bold leading-tight" style={{ fontSize: "3.6cqw", color: "#f4d28a", textShadow: "0 2px 6px rgba(0,0,0,0.5)" }} dir="rtl">
-                    {v.sender}
-                  </div>
-                </div>
-              </>
-            ) : tpl.id === "khalij" ? (
-              <>
-                <div className="pointer-events-none absolute flex items-center justify-center text-center" style={{ top: "88%", left: "5%", width: "45%", height: "6%" }}>
-                  <div className="w-full truncate font-black leading-tight text-white" style={{ fontSize: "3.5cqw", textShadow: "0 2px 6px rgba(0,0,0,0.5)" }} dir="rtl">
-                    {v.name}
-                  </div>
-                </div>
-                <div className="pointer-events-none absolute flex items-center justify-center text-center" style={{ top: "93%", left: "5%", width: "45%", height: "6%" }}>
-                  <div className="w-full truncate font-extrabold leading-tight" style={{ fontSize: "3cqw", color: "#fada64", textShadow: "0 2px 6px rgba(0,0,0,0.5)" }} dir="ltr">
-                    {v.phone}
-                  </div>
-                </div>
-              </>
-            ) : (
-              <div className="pointer-events-none absolute flex flex-col items-center justify-center text-center" style={{ top: `${NAME_BOX.topPct}%`, left: `${NAME_BOX.leftPct}%`, width: `${NAME_BOX.widthPct}%`, height: `${NAME_BOX.heightPct}%` }}>
-                <div className="w-full truncate font-black leading-tight text-white" style={{ fontSize: "5.2cqw", textShadow: "0 2px 6px rgba(0,0,0,0.5)" }} dir="rtl">
-                  {v.name}
-                </div>
-                <div className="w-full truncate font-extrabold leading-tight" style={{ fontSize: "4.6cqw", color: "#fada64", textShadow: "0 2px 6px rgba(0,0,0,0.5)", marginTop: "0.4cqw" }} dir="ltr">
-                  {v.phone}
-                </div>
-              </div>
-            )}
+              );
+            })}
           </div>
         </div>
 
@@ -321,6 +348,50 @@ function TemplateModal({ tpl, onClose }: { tpl: Template; onClose: () => void })
             ))}
           </div>
 
+          {/* Advanced layout controls */}
+          <div className="mt-5 rounded-xl border-2 border-dashed border-border p-3">
+            <button
+              type="button"
+              onClick={() => setShowAdvanced((s) => !s)}
+              className="flex w-full items-center justify-between gap-2 text-right text-sm font-bold text-primary"
+            >
+              <span className="inline-flex items-center gap-2">
+                <Settings2 className="h-4 w-4" />
+                التحكم بمكان النص وحجمه
+              </span>
+              <span className="text-xs text-muted-foreground">{showAdvanced ? "إخفاء" : "إظهار"}</span>
+            </button>
+
+            {showAdvanced && (
+              <div className="mt-3 space-y-4">
+                {tpl.fields.map((f) => {
+                  const L = layout[f.key];
+                  if (!L) return null;
+                  return (
+                    <div key={f.key} className="rounded-lg bg-background/60 p-3">
+                      <div className="mb-2 text-right text-xs font-bold text-foreground">{f.label}</div>
+                      <div className="grid grid-cols-3 gap-2">
+                        <NumberControl label="أفقي %" value={L.x} min={0} max={100} step={0.5}
+                          onChange={(x) => updateLayout(f.key, { x })} />
+                        <NumberControl label="رأسي %" value={L.y} min={0} max={100} step={0.5}
+                          onChange={(y) => updateLayout(f.key, { y })} />
+                        <NumberControl label="الحجم" value={L.size} min={1} max={15} step={0.1}
+                          onChange={(size) => updateLayout(f.key, { size })} />
+                      </div>
+                    </div>
+                  );
+                })}
+                <button
+                  type="button"
+                  onClick={resetLayout}
+                  className="w-full rounded-lg border border-border bg-secondary px-3 py-2 text-xs font-bold text-foreground hover:bg-primary/10 hover:text-primary"
+                >
+                  إعادة تعيين المواضع الافتراضية
+                </button>
+              </div>
+            )}
+          </div>
+
           <button
             type="button"
             onClick={() => void download()}
@@ -332,5 +403,27 @@ function TemplateModal({ tpl, onClose }: { tpl: Template; onClose: () => void })
         </div>
       </div>
     </div>
+  );
+}
+
+function NumberControl({
+  label, value, min, max, step, onChange,
+}: { label: string; value: number; min: number; max: number; step: number; onChange: (n: number) => void }) {
+  return (
+    <label className="block">
+      <span className="mb-1 block text-right text-[10px] font-bold text-muted-foreground">{label}</span>
+      <input
+        type="number"
+        value={value}
+        min={min}
+        max={max}
+        step={step}
+        onChange={(e) => {
+          const n = parseFloat(e.target.value);
+          if (!Number.isNaN(n)) onChange(n);
+        }}
+        className="block w-full rounded-md border border-border bg-background px-2 py-1.5 text-center text-xs font-bold text-foreground outline-none focus:border-primary"
+      />
+    </label>
   );
 }
