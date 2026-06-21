@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as WhatsappUnblockRouteImport } from './routes/whatsapp-unblock'
 import { Route as SpeedTestRouteImport } from './routes/speed-test'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as DialCodesRouteImport } from './routes/dial-codes'
@@ -18,6 +19,11 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as MawloudIndexRouteImport } from './routes/mawloud.index'
 import { Route as MawloudSettingsRouteImport } from './routes/mawloud.settings'
 
+const WhatsappUnblockRoute = WhatsappUnblockRouteImport.update({
+  id: '/whatsapp-unblock',
+  path: '/whatsapp-unblock',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SpeedTestRoute = SpeedTestRouteImport.update({
   id: '/speed-test',
   path: '/speed-test',
@@ -66,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/dial-codes': typeof DialCodesRoute
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
+  '/whatsapp-unblock': typeof WhatsappUnblockRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
 }
@@ -76,6 +83,7 @@ export interface FileRoutesByTo {
   '/dial-codes': typeof DialCodesRoute
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
+  '/whatsapp-unblock': typeof WhatsappUnblockRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud': typeof MawloudIndexRoute
 }
@@ -87,6 +95,7 @@ export interface FileRoutesById {
   '/dial-codes': typeof DialCodesRoute
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
+  '/whatsapp-unblock': typeof WhatsappUnblockRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
 }
@@ -99,6 +108,7 @@ export interface FileRouteTypes {
     | '/dial-codes'
     | '/services'
     | '/speed-test'
+    | '/whatsapp-unblock'
     | '/mawloud/settings'
     | '/mawloud/'
   fileRoutesByTo: FileRoutesByTo
@@ -109,6 +119,7 @@ export interface FileRouteTypes {
     | '/dial-codes'
     | '/services'
     | '/speed-test'
+    | '/whatsapp-unblock'
     | '/mawloud/settings'
     | '/mawloud'
   id:
@@ -119,6 +130,7 @@ export interface FileRouteTypes {
     | '/dial-codes'
     | '/services'
     | '/speed-test'
+    | '/whatsapp-unblock'
     | '/mawloud/settings'
     | '/mawloud/'
   fileRoutesById: FileRoutesById
@@ -130,12 +142,20 @@ export interface RootRouteChildren {
   DialCodesRoute: typeof DialCodesRoute
   ServicesRoute: typeof ServicesRoute
   SpeedTestRoute: typeof SpeedTestRoute
+  WhatsappUnblockRoute: typeof WhatsappUnblockRoute
   MawloudSettingsRoute: typeof MawloudSettingsRoute
   MawloudIndexRoute: typeof MawloudIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/whatsapp-unblock': {
+      id: '/whatsapp-unblock'
+      path: '/whatsapp-unblock'
+      fullPath: '/whatsapp-unblock'
+      preLoaderRoute: typeof WhatsappUnblockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/speed-test': {
       id: '/speed-test'
       path: '/speed-test'
@@ -202,6 +222,7 @@ const rootRouteChildren: RootRouteChildren = {
   DialCodesRoute: DialCodesRoute,
   ServicesRoute: ServicesRoute,
   SpeedTestRoute: SpeedTestRoute,
+  WhatsappUnblockRoute: WhatsappUnblockRoute,
   MawloudSettingsRoute: MawloudSettingsRoute,
   MawloudIndexRoute: MawloudIndexRoute,
 }
