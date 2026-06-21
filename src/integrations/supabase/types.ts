@@ -118,6 +118,42 @@ export type Database = {
           },
         ]
       }
+      ym_services: {
+        Row: {
+          code: string | null
+          created_at: string
+          description: string
+          group_key: string
+          icon: string
+          id: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          code?: string | null
+          created_at?: string
+          description?: string
+          group_key: string
+          icon?: string
+          id: string
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          code?: string | null
+          created_at?: string
+          description?: string
+          group_key?: string
+          icon?: string
+          id?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

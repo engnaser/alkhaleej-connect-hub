@@ -22,6 +22,7 @@ import { Route as AdslInquiryRouteImport } from './routes/adsl-inquiry'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MawloudIndexRouteImport } from './routes/mawloud.index'
 import { Route as MawloudSettingsRouteImport } from './routes/mawloud.settings'
+import { Route as AdminServicesRouteImport } from './routes/admin.services'
 import { Route as AdminPackagesRouteImport } from './routes/admin.packages'
 
 const Yemen4gInquiryRoute = Yemen4gInquiryRouteImport.update({
@@ -89,6 +90,11 @@ const MawloudSettingsRoute = MawloudSettingsRouteImport.update({
   path: '/mawloud/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminServicesRoute = AdminServicesRouteImport.update({
+  id: '/admin/services',
+  path: '/admin/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminPackagesRoute = AdminPackagesRouteImport.update({
   id: '/admin/packages',
   path: '/admin/packages',
@@ -108,6 +114,7 @@ export interface FileRoutesByFullPath {
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
   '/admin/packages': typeof AdminPackagesRoute
+  '/admin/services': typeof AdminServicesRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
 }
@@ -124,6 +131,7 @@ export interface FileRoutesByTo {
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
   '/admin/packages': typeof AdminPackagesRoute
+  '/admin/services': typeof AdminServicesRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud': typeof MawloudIndexRoute
 }
@@ -141,6 +149,7 @@ export interface FileRoutesById {
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
   '/admin/packages': typeof AdminPackagesRoute
+  '/admin/services': typeof AdminServicesRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
 }
@@ -159,6 +168,7 @@ export interface FileRouteTypes {
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
     | '/admin/packages'
+    | '/admin/services'
     | '/mawloud/settings'
     | '/mawloud/'
   fileRoutesByTo: FileRoutesByTo
@@ -175,6 +185,7 @@ export interface FileRouteTypes {
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
     | '/admin/packages'
+    | '/admin/services'
     | '/mawloud/settings'
     | '/mawloud'
   id:
@@ -191,6 +202,7 @@ export interface FileRouteTypes {
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
     | '/admin/packages'
+    | '/admin/services'
     | '/mawloud/settings'
     | '/mawloud/'
   fileRoutesById: FileRoutesById
@@ -208,6 +220,7 @@ export interface RootRouteChildren {
   YemenMobileRoute: typeof YemenMobileRoute
   Yemen4gInquiryRoute: typeof Yemen4gInquiryRoute
   AdminPackagesRoute: typeof AdminPackagesRoute
+  AdminServicesRoute: typeof AdminServicesRoute
   MawloudSettingsRoute: typeof MawloudSettingsRoute
   MawloudIndexRoute: typeof MawloudIndexRoute
 }
@@ -305,6 +318,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MawloudSettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/services': {
+      id: '/admin/services'
+      path: '/admin/services'
+      fullPath: '/admin/services'
+      preLoaderRoute: typeof AdminServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/packages': {
       id: '/admin/packages'
       path: '/admin/packages'
@@ -328,6 +348,7 @@ const rootRouteChildren: RootRouteChildren = {
   YemenMobileRoute: YemenMobileRoute,
   Yemen4gInquiryRoute: Yemen4gInquiryRoute,
   AdminPackagesRoute: AdminPackagesRoute,
+  AdminServicesRoute: AdminServicesRoute,
   MawloudSettingsRoute: MawloudSettingsRoute,
   MawloudIndexRoute: MawloudIndexRoute,
 }

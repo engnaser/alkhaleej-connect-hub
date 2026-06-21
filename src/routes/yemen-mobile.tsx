@@ -38,10 +38,11 @@ import {
 } from "@/data/yemenMobilePackages";
 import { usePackagesStore } from "@/lib/packagesStore";
 import {
-  YM_GENERAL_SERVICES,
-  YM_ACCOUNT_SERVICES,
-  type YMService,
-} from "@/data/yemenMobileServices";
+  useServicesStore,
+  iconFor,
+  type YMServiceRow,
+  type ServiceGroup,
+} from "@/lib/servicesStore";
 
 export const Route = createFileRoute("/yemen-mobile")({
   head: () => ({
@@ -168,10 +169,10 @@ function YemenMobilePage() {
               <PackagesTab />
             </TabsContent>
             <TabsContent value="services" className="mt-6">
-              <ServicesTab services={YM_GENERAL_SERVICES} />
+              <ServicesTab group="general" />
             </TabsContent>
             <TabsContent value="account" className="mt-6">
-              <ServicesTab services={YM_ACCOUNT_SERVICES} />
+              <ServicesTab group="account" />
             </TabsContent>
             <TabsContent value="internet" className="mt-6">
               <InternetTab />
@@ -363,19 +364,43 @@ function PackageCard({ pkg }: { pkg: YMPackage }) {
   );
 }
 
-function ServicesTab({ services }: { services: YMService[] }) {
+function ServicesTab({ group }: { group: ServiceGroup }) {
+  const { services, loading } = useServicesStore();
+  const list = services.filter((s) => s.group === group);
+
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {services.map((s) => (
-        <ServiceCard key={s.id} service={s} />
-      ))}
-    </div>
+    <>
+      <div className="mb-4 flex justify-end">
+        <Link
+          to="/admin/services"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-background px-3 py-2 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
+        >
+          <Settings2 className="h-3.5 w-3.5" />
+          إدارة الخدمات
+        </Link>
+      </div>
+      {loading && list.length === 0 ? (
+        <div className="rounded-2xl border border-dashed border-border bg-card p-8 text-center text-sm text-muted-foreground">
+          جاري تحميل الخدمات...
+        </div>
+      ) : list.length === 0 ? (
+        <div className="rounded-2xl border border-dashed border-border bg-card p-8 text-center text-sm text-muted-foreground">
+          لا توجد خدمات في هذا القسم.
+        </div>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {list.map((s) => (
+            <ServiceCard key={s.id} service={s} />
+          ))}
+        </div>
+      )}
+    </>
   );
 }
 
-function ServiceCard({ service }: { service: YMService }) {
+function ServiceCard({ service }: { service: YMServiceRow }) {
   const [copied, setCopied] = useState(false);
-  const Icon = service.icon;
+  const Icon = iconFor(service.icon);
 
   const handleCopy = async () => {
     if (!service.code) return;
@@ -401,7 +426,7 @@ function ServiceCard({ service }: { service: YMService }) {
         {service.title}
       </h4>
       <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted-foreground">
-        {service.desc}
+        {service.description}
       </p>
       {service.code && (
         <div className="mt-4 flex items-center justify-between rounded-lg border border-dashed border-border bg-secondary/40 px-3 py-2">
