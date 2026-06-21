@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/site-header";
 import { useState, useMemo, useEffect } from "react";
 import { SiteFooter } from "@/components/site-footer";
 import {
@@ -134,48 +135,8 @@ function ServicesPage() {
 
     <div dir="rtl" className="min-h-screen bg-background text-foreground">
       {/* HEADER */}
-      <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
-          <Link to="/" className="flex min-w-0 items-center gap-3">
-            <img
-              src={logoKhalij}
-              alt="الخليج تيليكوم"
-              className="h-10 w-10 shrink-0 rounded-full ring-2 ring-primary/40"
-            />
-            <span className="truncate text-sm font-extrabold text-primary sm:text-base">
-              الخليج تيليكوم
-            </span>
-          </Link>
-
-          <nav className="hidden items-center gap-1 md:flex">
-            <Link
-              to="/"
-              className="rounded-md px-3 py-2 text-sm font-semibold text-foreground/80 hover:bg-secondary hover:text-primary"
-            >
-              الرئيسية
-            </Link>
-            <Link
-              to="/designs"
-              className="rounded-md px-3 py-2 text-sm font-semibold text-foreground/80 hover:bg-secondary hover:text-primary"
-            >
-              التصاميم
-            </Link>
-            <Link
-              to="/services"
-              className="rounded-md px-3 py-2 text-sm font-semibold text-primary hover:bg-secondary"
-            >
-              الخدمات
-            </Link>
-            <a
-              href={`https://wa.me/${WHATSAPP}`}
-              target="_blank"
-              rel="noreferrer"
-              className="rounded-md px-3 py-2 text-sm font-semibold text-foreground/80 hover:bg-secondary hover:text-primary"
-            >
-              تواصل معنا
-            </a>
-          </nav>
-
+      <SiteHeader
+        cta={
           <Link
             to="/designs"
             className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-md transition-transform hover:scale-[1.03] sm:text-sm"
@@ -183,8 +144,8 @@ function ServicesPage() {
             <Sparkles className="h-4 w-4" />
             ابدأ الآن
           </Link>
-        </div>
-      </header>
+        }
+      />
 
       <main>
         {/* HERO */}
