@@ -15,6 +15,7 @@ import { Route as ServicesRouteImport } from './routes/services'
 import { Route as DialCodesRouteImport } from './routes/dial-codes'
 import { Route as DesignsRouteImport } from './routes/designs'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AdslInquiryRouteImport } from './routes/adsl-inquiry'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MawloudIndexRouteImport } from './routes/mawloud.index'
 import { Route as MawloudSettingsRouteImport } from './routes/mawloud.settings'
@@ -49,6 +50,11 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdslInquiryRoute = AdslInquiryRouteImport.update({
+  id: '/adsl-inquiry',
+  path: '/adsl-inquiry',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
@@ -67,6 +73,7 @@ const MawloudSettingsRoute = MawloudSettingsRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/adsl-inquiry': typeof AdslInquiryRoute
   '/auth': typeof AuthRoute
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
@@ -78,6 +85,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/adsl-inquiry': typeof AdslInquiryRoute
   '/auth': typeof AuthRoute
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
@@ -90,6 +98,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/adsl-inquiry': typeof AdslInquiryRoute
   '/auth': typeof AuthRoute
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
@@ -103,6 +112,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/adsl-inquiry'
     | '/auth'
     | '/designs'
     | '/dial-codes'
@@ -114,6 +124,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/adsl-inquiry'
     | '/auth'
     | '/designs'
     | '/dial-codes'
@@ -125,6 +136,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/adsl-inquiry'
     | '/auth'
     | '/designs'
     | '/dial-codes'
@@ -137,6 +149,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AdslInquiryRoute: typeof AdslInquiryRoute
   AuthRoute: typeof AuthRoute
   DesignsRoute: typeof DesignsRoute
   DialCodesRoute: typeof DialCodesRoute
@@ -191,6 +204,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/adsl-inquiry': {
+      id: '/adsl-inquiry'
+      path: '/adsl-inquiry'
+      fullPath: '/adsl-inquiry'
+      preLoaderRoute: typeof AdslInquiryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -217,6 +237,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AdslInquiryRoute: AdslInquiryRoute,
   AuthRoute: AuthRoute,
   DesignsRoute: DesignsRoute,
   DialCodesRoute: DialCodesRoute,

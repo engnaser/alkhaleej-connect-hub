@@ -9,7 +9,6 @@ import {
   AlertTriangle,
   Monitor,
   KeyRound,
-  Captcha,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 
