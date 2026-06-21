@@ -21,6 +21,9 @@ import { COUNTRIES } from "@/data/countries";
 
 
 export const Route = createFileRoute("/services")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    dial: typeof search.dial === "string" ? search.dial : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "جميع خدمات الموقع — الخليج تيليكوم" },
@@ -42,6 +45,7 @@ export const Route = createFileRoute("/services")({
   }),
   component: ServicesPage,
 });
+
 
 const WHATSAPP = "967775608601";
 
