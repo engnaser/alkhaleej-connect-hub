@@ -13,6 +13,7 @@ import {
   ShieldCheck,
   Gift,
   Star,
+  Gauge,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 
@@ -76,6 +77,13 @@ const SERVICES = [
     desc: "أرسل رسالة واتساب لأي رقم مباشرة دون الحاجة لإضافته إلى جهات الاتصال.",
     to: "#whatsapp-tool" as const,
     cta: "استخدم الأداة",
+  },
+  {
+    icon: Gauge,
+    title: "فحص سرعة الإنترنت",
+    desc: "اختبر سرعة اتصالك بالإنترنت واعرف سرعة التحميل والرفع وزمن الاستجابة بسهولة.",
+    to: "/speed-test" as const,
+    cta: "ابدأ الفحص",
   },
   {
     icon: Star,
