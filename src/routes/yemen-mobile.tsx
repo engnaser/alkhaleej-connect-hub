@@ -33,10 +33,10 @@ import {
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import {
-  YEMEN_MOBILE_CATEGORIES,
   APN_SETTINGS,
   type YMPackage,
 } from "@/data/yemenMobilePackages";
+import { usePackagesStore } from "@/lib/packagesStore";
 import {
   YM_GENERAL_SERVICES,
   YM_ACCOUNT_SERVICES,
@@ -186,45 +186,74 @@ function YemenMobilePage() {
 }
 
 function PackagesTab() {
+  const { categories } = usePackagesStore();
+  if (categories.length === 0) {
+    return (
+      <div className="rounded-2xl border border-dashed border-border bg-card p-8 text-center text-sm text-muted-foreground">
+        لا توجد باقات حالياً. يمكن للمسؤول إضافتها من{" "}
+        <Link to="/admin/packages" className="font-bold text-primary hover:underline">
+          لوحة التحكم
+        </Link>
+        .
+      </div>
+    );
+  }
   return (
-    <Accordion
-      type="multiple"
-      defaultValue={[YEMEN_MOBILE_CATEGORIES[0].id]}
-      className="space-y-3"
-    >
-      {YEMEN_MOBILE_CATEGORIES.map((cat) => (
-        <AccordionItem
-          key={cat.id}
-          value={cat.id}
-          className="overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]"
+    <>
+      <div className="mb-4 flex justify-end">
+        <Link
+          to="/admin/packages"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-background px-3 py-2 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
         >
-          <AccordionTrigger className="px-5 py-4 text-right hover:no-underline">
-            <div className="flex flex-1 items-center justify-between gap-3">
-              <div className="text-right">
-                <div className="text-base font-extrabold text-foreground">
-                  {cat.title}
-                </div>
-                {cat.description && (
-                  <div className="mt-1 text-xs text-muted-foreground">
-                    {cat.description}
+          <Settings2 className="h-3.5 w-3.5" />
+          إدارة الباقات
+        </Link>
+      </div>
+      <Accordion
+        type="multiple"
+        defaultValue={[categories[0].id]}
+        className="space-y-3"
+      >
+        {categories.map((cat) => (
+          <AccordionItem
+            key={cat.id}
+            value={cat.id}
+            className="overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]"
+          >
+            <AccordionTrigger className="px-5 py-4 text-right hover:no-underline">
+              <div className="flex flex-1 items-center justify-between gap-3">
+                <div className="text-right">
+                  <div className="text-base font-extrabold text-foreground">
+                    {cat.title}
                   </div>
-                )}
+                  {cat.description && (
+                    <div className="mt-1 text-xs text-muted-foreground">
+                      {cat.description}
+                    </div>
+                  )}
+                </div>
+                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+                  {cat.packages.length} باقات
+                </span>
               </div>
-              <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
-                {cat.packages.length} باقات
-              </span>
-            </div>
-          </AccordionTrigger>
-          <AccordionContent className="px-5 pb-5">
-            <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {cat.packages.map((pkg) => (
-                <PackageCard key={pkg.id} pkg={pkg} />
-              ))}
-            </div>
-          </AccordionContent>
-        </AccordionItem>
-      ))}
-    </Accordion>
+            </AccordionTrigger>
+            <AccordionContent className="px-5 pb-5">
+              {cat.packages.length === 0 ? (
+                <div className="rounded-xl border border-dashed border-border p-4 text-center text-xs text-muted-foreground">
+                  لا توجد باقات في هذا القسم.
+                </div>
+              ) : (
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {cat.packages.map((pkg) => (
+                    <PackageCard key={pkg.id} pkg={pkg} />
+                  ))}
+                </div>
+              )}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </>
   );
 }
 
