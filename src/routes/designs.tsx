@@ -103,36 +103,44 @@ const TEMPLATES: Template[] = [
   },
 ];
 
-const ADMIN_KEY = "khalij_admin_mode";
-
-function useAdminMode() {
-  const [admin, setAdmin] = useState(false);
+function useSession() {
+  const [userId, setUserId] = useState<string | null | undefined>(undefined);
+  const queryClient = useQueryClient();
   useEffect(() => {
-    try {
-      const params = new URLSearchParams(window.location.search);
-      if (params.get("admin") === "1") {
-        localStorage.setItem(ADMIN_KEY, "1");
-      } else if (params.get("admin") === "0") {
-        localStorage.removeItem(ADMIN_KEY);
-      }
-      setAdmin(localStorage.getItem(ADMIN_KEY) === "1");
-    } catch {
-      /* ignore */
-    }
-  }, []);
-  return admin;
+    supabase.auth.getSession().then(({ data }) => setUserId(data.session?.user.id ?? null));
+    const { data: sub } = supabase.auth.onAuthStateChange((event, session) => {
+      if (event !== "SIGNED_IN" && event !== "SIGNED_OUT" && event !== "USER_UPDATED") return;
+      setUserId(session?.user.id ?? null);
+      queryClient.invalidateQueries({ queryKey: ["admin-status"] });
+    });
+    return () => sub.subscription.unsubscribe();
+  }, [queryClient]);
+  return userId;
 }
 
 function DesignsPage() {
   const [openId, setOpenId] = useState<string | null>(null);
   const activeTpl = TEMPLATES.find((t) => t.id === openId) ?? null;
-  const adminMode = useAdminMode();
+  const navigate = useNavigate();
+  const userId = useSession();
+
+  const { data: adminData } = useQuery({
+    queryKey: ["admin-status", userId],
+    queryFn: () => getMyAdminStatus(),
+    enabled: !!userId,
+    staleTime: 60_000,
+  });
+  const adminMode = !!adminData?.isAdmin;
+
+  const signOut = async () => {
+    await supabase.auth.signOut();
+  };
 
   return (
     <div className="min-h-screen bg-background text-foreground">
       {adminMode && (
         <div className="bg-primary/10 px-4 py-2 text-center text-xs font-bold text-primary">
-          وضع المسؤول مفعّل — أدوات ضبط النصوص ظاهرة لك فقط. للإلغاء: أضف <code className="mx-1 rounded bg-background px-1">?admin=0</code> إلى الرابط.
+          وضع المسؤول مفعّل — أدوات ضبط النصوص ظاهرة لك فقط.
         </div>
       )}
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-xl">
