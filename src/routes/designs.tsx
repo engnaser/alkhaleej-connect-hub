@@ -62,6 +62,7 @@ const TEMPLATES: Template[] = [
   { id: "ramadan", title: "رمضان كريم", occasion: "حلَّ الشهر الفضيل", src: posterRamadan, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" } },
   { id: "eid", title: "عيد مبارك", occasion: "بمناسبة العيد السعيد", src: posterEid, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" } },
   { id: "mawloud", title: "مبارك المولود", occasion: "تهنئة بمناسبة المولود", src: posterMawloud, fields: MAWLOUD_FIELDS, defaults: { name: "اسم المولود", sender: "مقدم التهنئة", phone: "+967 7XX XXX XXX", note: "" } },
+  { id: "khalij", title: "وكيل معتمد", occasion: "بطاقة الوكيل المعتمد", src: posterKhalij.url, fields: SIMPLE_FIELDS, defaults: { name: "اسم الوكيل", phone: "+967 7XX XXX XXX" } },
 ];
 
 const NAME_BOX = { topPct: 52, leftPct: 6, widthPct: 46, heightPct: 13 };
