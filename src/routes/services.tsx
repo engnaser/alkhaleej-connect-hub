@@ -16,6 +16,7 @@ import {
   Gauge,
   Globe,
   Lock,
+  Wifi,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { COUNTRIES } from "@/data/countries";
@@ -85,6 +86,13 @@ const SERVICES = [
     desc: "جهّز رسالة طلب مراجعة حظر رقم واتساب وأرسلها بسهولة إلى الدعم.",
     to: "/whatsapp-unblock" as const,
     cta: "ابدأ الآن",
+  },
+  {
+    icon: Wifi,
+    title: "استعلام باقات الإنترنت الأرضي",
+    desc: "اختصار آمن للوصول إلى صفحة الاستعلام الرسمية لباقات الإنترنت الأرضي (يمن نت).",
+    to: "/adsl-inquiry" as const,
+    cta: "استعلم الآن",
   },
   {
     icon: Star,
