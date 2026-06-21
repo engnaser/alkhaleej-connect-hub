@@ -80,6 +80,7 @@ const TEMPLATES: Template[] = [
   { id: "sabah",   title: "صباح الخير",  occasion: "تحية الصباح",       src: posterSabah,   fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
   { id: "masaa",   title: "مساء الخير",  occasion: "تحية المساء",       src: posterMasaa,   fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
   { id: "jumaa",   title: "جمعة مباركة", occasion: "تذكير الجمعة",      src: posterJumaa,   fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
+  { id: "jumaa-gold", title: "جمعة مباركة", occasion: "تصميم ذهبي أبيض", src: posterJumaaGold.url, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
   { id: "ramadan", title: "رمضان كريم",  occasion: "حلَّ الشهر الفضيل", src: posterRamadan, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
   { id: "eid",     title: "عيد مبارك",   occasion: "بمناسبة العيد السعيد", src: posterEid,  fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
   {
