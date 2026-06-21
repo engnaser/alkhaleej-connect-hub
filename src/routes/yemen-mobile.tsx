@@ -364,19 +364,42 @@ function PackageCard({ pkg }: { pkg: YMPackage }) {
   );
 }
 
-function ServicesTab({ services }: { services: YMService[] }) {
+function ServicesTab({ group }: { group: ServiceGroup }) {
+  const { services, loading } = useServicesStore();
+  const list = services.filter((s) => s.group === group);
+
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-      {services.map((s) => (
-        <ServiceCard key={s.id} service={s} />
-      ))}
-    </div>
+    <>
+      <div className="mb-4 flex justify-end">
+        <Link
+          to="/admin/services"
+          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-background px-3 py-2 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
+        >
+          <Settings2 className="h-3.5 w-3.5" />
+          إدارة الخدمات
+        </Link>
+      </div>
+      {loading && list.length === 0 ? (
+        <div className="rounded-2xl border border-dashed border-border bg-card p-8 text-center text-sm text-muted-foreground">
+          جاري تحميل الخدمات...
+        </div>
+      ) : list.length === 0 ? (
+        <div className="rounded-2xl border border-dashed border-border bg-card p-8 text-center text-sm text-muted-foreground">
+          لا توجد خدمات في هذا القسم.
+        </div>
+      ) : (
+        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {list.map((s) => (
+            <ServiceCard key={s.id} service={s} />
+          ))}
+        </div>
+      )}
+    </>
   );
 }
 
-function ServiceCard({ service }: { service: YMService }) {
-  const [copied, setCopied] = useState(false);
-  const Icon = service.icon;
+function ServiceCard({ service }: { service: YMServiceRow }) {
+  const Icon = iconFor(service.icon);
 
   const handleCopy = async () => {
     if (!service.code) return;
