@@ -92,6 +92,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { name: "twitter:title", content: "الخليج تيليكوم لخدمات الشحن الإلكتروني" },
+      { name: "description", content: "Al-Khaleej Telecom Hub is a professional, modern, and responsive business landing page." },
+      { property: "og:description", content: "Al-Khaleej Telecom Hub is a professional, modern, and responsive business landing page." },
+      { name: "twitter:description", content: "Al-Khaleej Telecom Hub is a professional, modern, and responsive business landing page." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e8cf0f29-1e01-43ff-8118-40316c1121fd/id-preview-be3ec84b--b2c0f853-1534-4d24-83b5-35ff96482c70.lovable.app-1782051720010.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e8cf0f29-1e01-43ff-8118-40316c1121fd/id-preview-be3ec84b--b2c0f853-1534-4d24-83b5-35ff96482c70.lovable.app-1782051720010.png" },
     ],
     links: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
