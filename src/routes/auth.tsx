@@ -114,23 +114,13 @@ function AuthPage() {
               className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-primary px-5 py-3 text-sm font-black text-primary-foreground shadow-lg transition-transform hover:scale-[1.02] disabled:cursor-not-allowed disabled:opacity-60"
             >
               <LogIn className="h-4 w-4" />
-              {loading ? "..." : mode === "signin" ? "دخول" : "إنشاء الحساب"}
+              {loading ? "..." : "دخول"}
             </button>
           </form>
 
-          <button
-            type="button"
-            onClick={() => {
-              setError(null);
-              setInfo(null);
-              setMode(mode === "signin" ? "signup" : "signin");
-            }}
-            className="mt-4 w-full text-center text-xs font-bold text-muted-foreground hover:text-primary"
-          >
-            {mode === "signin"
-              ? "ليس لديك حساب؟ أنشئ حساباً جديداً (أول حساب يصبح المسؤول)"
-              : "لديك حساب بالفعل؟ سجّل الدخول"}
-          </button>
+          <p className="mt-4 text-center text-xs font-bold text-muted-foreground">
+            التسجيل مغلق. الدخول مخصص للمسؤول فقط.
+          </p>
         </div>
 
         <Link to="/designs" className="mt-6 text-center text-xs font-bold text-muted-foreground hover:text-primary">
