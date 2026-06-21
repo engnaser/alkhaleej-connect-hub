@@ -265,7 +265,7 @@ function ServicesPage() {
             </div>
 
             <div className="mt-8 rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)] sm:p-8">
-              <WhatsAppMessenger />
+              <WhatsAppMessenger initialCountry={dial} />
               <div className="mt-5 flex items-center justify-center gap-2 text-xs text-muted-foreground">
                 <ShieldCheck className="h-4 w-4 text-primary" />
                 لا يتم حفظ الرقم في جهات الاتصال ولا في قاعدة البيانات.
