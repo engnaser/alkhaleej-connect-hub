@@ -377,7 +377,7 @@ export function WhatsAppMessenger({
             aria-label="مفتاح الدولة"
           >
             {COUNTRY_CODES.map((c) => (
-              <option key={c.code} value={c.code}>
+              <option key={c.iso} value={c.code}>
                 {c.code} {c.label}
               </option>
             ))}
