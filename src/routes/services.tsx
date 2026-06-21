@@ -316,32 +316,25 @@ function ServicesPage() {
   );
 }
 
-const COUNTRY_CODES = [
-  { code: "+967", label: "اليمن" },
-  { code: "+966", label: "السعودية" },
-  { code: "+971", label: "الإمارات" },
-  { code: "+974", label: "قطر" },
-  { code: "+973", label: "البحرين" },
-  { code: "+965", label: "الكويت" },
-  { code: "+968", label: "عُمان" },
-  { code: "+20", label: "مصر" },
-  { code: "+962", label: "الأردن" },
-  { code: "+963", label: "سوريا" },
-  { code: "+964", label: "العراق" },
-  { code: "+212", label: "المغرب" },
-  { code: "+216", label: "تونس" },
-  { code: "+213", label: "الجزائر" },
-  { code: "+218", label: "ليبيا" },
-  { code: "+90", label: "تركيا" },
-  { code: "+1", label: "أمريكا/كندا" },
-  { code: "+44", label: "بريطانيا" },
-];
+const COUNTRY_CODES = COUNTRIES.map((c) => ({
+  code: c.dial,
+  label: `${c.flag} ${c.ar}`,
+  iso: c.iso,
+}));
 
-export function WhatsAppMessenger() {
-  const [country, setCountry] = useState("+967");
+export function WhatsAppMessenger({
+  initialCountry,
+}: {
+  initialCountry?: string;
+}) {
+  const [country, setCountry] = useState(initialCountry || "+967");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (initialCountry) setCountry(initialCountry);
+  }, [initialCountry]);
 
   const cleaned = useMemo(() => phone.replace(/\D+/g, ""), [phone]);
   const fullNumber = useMemo(
