@@ -17,6 +17,7 @@ import {
   Globe,
   Lock,
   Wifi,
+  Receipt,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { COUNTRIES } from "@/data/countries";
