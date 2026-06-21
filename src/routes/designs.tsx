@@ -8,6 +8,7 @@ import posterJumaa from "@/assets/poster-jumaa.jpg";
 import posterRamadan from "@/assets/poster-ramadan.jpg";
 import posterEid from "@/assets/poster-eid.jpg";
 import posterMawloud from "@/assets/poster-mawloud.png";
+import posterKhalij from "@/assets/poster-khalij.png.asset.json";
 
 export const Route = createFileRoute("/designs")({
   head: () => ({
@@ -61,6 +62,7 @@ const TEMPLATES: Template[] = [
   { id: "ramadan", title: "رمضان كريم", occasion: "حلَّ الشهر الفضيل", src: posterRamadan, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" } },
   { id: "eid", title: "عيد مبارك", occasion: "بمناسبة العيد السعيد", src: posterEid, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" } },
   { id: "mawloud", title: "مبارك المولود", occasion: "تهنئة بمناسبة المولود", src: posterMawloud, fields: MAWLOUD_FIELDS, defaults: { name: "اسم المولود", sender: "مقدم التهنئة", phone: "+967 7XX XXX XXX", note: "" } },
+  { id: "khalij", title: "وكيل معتمد", occasion: "بطاقة الوكيل المعتمد", src: posterKhalij.url, fields: SIMPLE_FIELDS, defaults: { name: "اسم الوكيل", phone: "+967 7XX XXX XXX" } },
 ];
 
 const NAME_BOX = { topPct: 52, leftPct: 6, widthPct: 46, heightPct: 13 };
@@ -194,6 +196,14 @@ function TemplateModal({ tpl, onClose }: { tpl: Template; onClose: () => void })
       ctx.fillText(v.name, w * 0.28, h * 0.606, w * 0.5);
       ctx.font = `bold ${Math.round(h * 0.034)}px Tajawal, Cairo, system-ui, sans-serif`;
       ctx.fillText(v.sender, w * 0.28, h * 0.731, w * 0.5);
+    } else if (tpl.id === "khalij") {
+      ctx.direction = "rtl";
+      ctx.fillStyle = "#ffffff";
+      ctx.font = `900 ${Math.round(h * 0.032)}px Tajawal, system-ui, sans-serif`;
+      ctx.fillText(v.name, w * 0.275, h * 0.77, w * 0.45);
+      ctx.fillStyle = "#fada64";
+      ctx.font = `800 ${Math.round(h * 0.028)}px ui-monospace, Menlo, monospace`;
+      ctx.fillText(v.phone, w * 0.275, h * 0.83, w * 0.45);
     } else {
       const boxX = (NAME_BOX.leftPct / 100) * w;
       const boxY = (NAME_BOX.topPct / 100) * h;
@@ -243,6 +253,19 @@ function TemplateModal({ tpl, onClose }: { tpl: Template; onClose: () => void })
                 <div className="pointer-events-none absolute flex items-center justify-center text-center" style={{ top: "73%", left: "6%", width: "46%", height: "10%" }}>
                   <div className="w-full truncate font-bold leading-tight" style={{ fontSize: "3.6cqw", color: "#f4d28a", textShadow: "0 2px 6px rgba(0,0,0,0.5)" }} dir="rtl">
                     {v.sender}
+                  </div>
+                </div>
+              </>
+            ) : tpl.id === "khalij" ? (
+              <>
+                <div className="pointer-events-none absolute flex items-center justify-center text-center" style={{ top: "77%", left: "5%", width: "45%", height: "6%" }}>
+                  <div className="w-full truncate font-black leading-tight text-white" style={{ fontSize: "3.5cqw", textShadow: "0 2px 6px rgba(0,0,0,0.5)" }} dir="rtl">
+                    {v.name}
+                  </div>
+                </div>
+                <div className="pointer-events-none absolute flex items-center justify-center text-center" style={{ top: "83%", left: "5%", width: "45%", height: "6%" }}>
+                  <div className="w-full truncate font-extrabold leading-tight" style={{ fontSize: "3cqw", color: "#fada64", textShadow: "0 2px 6px rgba(0,0,0,0.5)" }} dir="ltr">
+                    {v.phone}
                   </div>
                 </div>
               </>
