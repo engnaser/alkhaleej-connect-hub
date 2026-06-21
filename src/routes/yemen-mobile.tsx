@@ -186,7 +186,14 @@ function YemenMobilePage() {
 }
 
 function PackagesTab() {
-  const { categories } = usePackagesStore();
+  const { categories, loading } = usePackagesStore();
+  if (loading && categories.length === 0) {
+    return (
+      <div className="rounded-2xl border border-dashed border-border bg-card p-8 text-center text-sm text-muted-foreground">
+        جاري تحميل الباقات...
+      </div>
+    );
+  }
   if (categories.length === 0) {
     return (
       <div className="rounded-2xl border border-dashed border-border bg-card p-8 text-center text-sm text-muted-foreground">
@@ -198,6 +205,7 @@ function PackagesTab() {
       </div>
     );
   }
+
   return (
     <>
       <div className="mb-4 flex justify-end">
