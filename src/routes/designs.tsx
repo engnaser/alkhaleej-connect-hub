@@ -200,10 +200,10 @@ function TemplateModal({ tpl, onClose }: { tpl: Template; onClose: () => void })
       ctx.direction = "rtl";
       ctx.fillStyle = "#ffffff";
       ctx.font = `900 ${Math.round(h * 0.032)}px Tajawal, system-ui, sans-serif`;
-      ctx.fillText(v.name, w * 0.275, h * 0.77, w * 0.45);
+      ctx.fillText(v.name, w * 0.275, h * 0.88, w * 0.45);
       ctx.fillStyle = "#fada64";
       ctx.font = `800 ${Math.round(h * 0.028)}px ui-monospace, Menlo, monospace`;
-      ctx.fillText(v.phone, w * 0.275, h * 0.83, w * 0.45);
+      ctx.fillText(v.phone, w * 0.275, h * 0.93, w * 0.45);
     } else {
       const boxX = (NAME_BOX.leftPct / 100) * w;
       const boxY = (NAME_BOX.topPct / 100) * h;
@@ -258,12 +258,12 @@ function TemplateModal({ tpl, onClose }: { tpl: Template; onClose: () => void })
               </>
             ) : tpl.id === "khalij" ? (
               <>
-                <div className="pointer-events-none absolute flex items-center justify-center text-center" style={{ top: "77%", left: "5%", width: "45%", height: "6%" }}>
+                <div className="pointer-events-none absolute flex items-center justify-center text-center" style={{ top: "88%", left: "5%", width: "45%", height: "6%" }}>
                   <div className="w-full truncate font-black leading-tight text-white" style={{ fontSize: "3.5cqw", textShadow: "0 2px 6px rgba(0,0,0,0.5)" }} dir="rtl">
                     {v.name}
                   </div>
                 </div>
-                <div className="pointer-events-none absolute flex items-center justify-center text-center" style={{ top: "83%", left: "5%", width: "45%", height: "6%" }}>
+                <div className="pointer-events-none absolute flex items-center justify-center text-center" style={{ top: "93%", left: "5%", width: "45%", height: "6%" }}>
                   <div className="w-full truncate font-extrabold leading-tight" style={{ fontSize: "3cqw", color: "#fada64", textShadow: "0 2px 6px rgba(0,0,0,0.5)" }} dir="ltr">
                     {v.phone}
                   </div>
