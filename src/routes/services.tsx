@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/site-header";
 import { useState, useMemo, useEffect } from "react";
 import { SiteFooter } from "@/components/site-footer";
 import {

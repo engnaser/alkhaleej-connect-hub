@@ -1,4 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/site-header";
 import { useMemo, useState } from "react";
 import { SiteFooter } from "@/components/site-footer";
 import { toast } from "sonner";

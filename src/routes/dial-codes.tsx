@@ -1,4 +1,5 @@
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/site-header";
 import { useMemo, useState } from "react";
 import { SiteFooter } from "@/components/site-footer";
 import { Search, Copy, MessageCircle, Globe, Sparkles, ArrowLeft, Check } from "lucide-react";
