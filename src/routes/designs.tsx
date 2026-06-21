@@ -97,8 +97,8 @@ const TEMPLATES: Template[] = [
     fields: SIMPLE_FIELDS,
     defaults: { name: "اسم الوكيل", phone: "+967 7XX XXX XXX" },
     layout: {
-      name:  { x: 27.5, y: 88, size: 3.2, color: "#ffffff", dir: "rtl", weight: 900, maxWidth: 45 },
-      phone: { x: 27.5, y: 93, size: 2.8, color: "#fada64", dir: "ltr", weight: 800, mono: true, maxWidth: 45 },
+      name:  { x: 32, y: 59, size: 3, color: "#ffffff", dir: "rtl", weight: 900, maxWidth: 45 },
+      phone: { x: 31, y: 65, size: 3, color: "#fada64", dir: "ltr", weight: 800, mono: true, maxWidth: 45 },
     },
   },
 ];
