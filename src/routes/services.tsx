@@ -15,6 +15,7 @@ import {
   Star,
   Gauge,
   Globe,
+  Lock,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { COUNTRIES } from "@/data/countries";
@@ -77,6 +78,13 @@ const SERVICES = [
     desc: "ابحث عن مفتاح الاتصال الدولي لأي دولة في العالم وانسخه أو استخدمه في واتساب.",
     to: "/dial-codes" as const,
     cta: "افتح الدليل",
+  },
+  {
+    icon: Lock,
+    title: "فك حظر الواتساب",
+    desc: "جهّز رسالة طلب مراجعة حظر رقم واتساب وأرسلها بسهولة إلى الدعم.",
+    to: "/whatsapp-unblock" as const,
+    cta: "ابدأ الآن",
   },
   {
     icon: Star,
