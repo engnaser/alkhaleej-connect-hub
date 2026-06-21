@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { SiteFooter } from "@/components/site-footer";
 import {
   Sparkles,
@@ -14,10 +14,16 @@ import {
   Gift,
   Star,
   Gauge,
+  Globe,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
+import { COUNTRIES } from "@/data/countries";
+
 
 export const Route = createFileRoute("/services")({
+  validateSearch: (search: Record<string, unknown>) => ({
+    dial: typeof search.dial === "string" ? search.dial : undefined,
+  }),
   head: () => ({
     meta: [
       { title: "جميع خدمات الموقع — الخليج تيليكوم" },
@@ -39,6 +45,7 @@ export const Route = createFileRoute("/services")({
   }),
   component: ServicesPage,
 });
+
 
 const WHATSAPP = "967775608601";
 
@@ -86,6 +93,13 @@ const SERVICES = [
     cta: "ابدأ الفحص",
   },
   {
+    icon: Globe,
+    title: "مفاتيح دول العالم",
+    desc: "ابحث عن مفتاح الاتصال الدولي لأي دولة في العالم وانسخه أو استخدمه في واتساب.",
+    to: "/dial-codes" as const,
+    cta: "افتح الدليل",
+  },
+  {
     icon: Star,
     title: "دعم وتواصل مباشر",
     desc: "تواصل مع فريق الخليج تيليكوم عبر واتساب لأي طلب أو استفسار.",
@@ -96,7 +110,9 @@ const SERVICES = [
 ];
 
 function ServicesPage() {
+  const { dial } = Route.useSearch();
   return (
+
     <div dir="rtl" className="min-h-screen bg-background text-foreground">
       {/* HEADER */}
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-xl">
@@ -249,7 +265,7 @@ function ServicesPage() {
             </div>
 
             <div className="mt-8 rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)] sm:p-8">
-              <WhatsAppMessenger />
+              <WhatsAppMessenger initialCountry={dial} />
               <div className="mt-5 flex items-center justify-center gap-2 text-xs text-muted-foreground">
                 <ShieldCheck className="h-4 w-4 text-primary" />
                 لا يتم حفظ الرقم في جهات الاتصال ولا في قاعدة البيانات.
@@ -300,32 +316,25 @@ function ServicesPage() {
   );
 }
 
-const COUNTRY_CODES = [
-  { code: "+967", label: "اليمن" },
-  { code: "+966", label: "السعودية" },
-  { code: "+971", label: "الإمارات" },
-  { code: "+974", label: "قطر" },
-  { code: "+973", label: "البحرين" },
-  { code: "+965", label: "الكويت" },
-  { code: "+968", label: "عُمان" },
-  { code: "+20", label: "مصر" },
-  { code: "+962", label: "الأردن" },
-  { code: "+963", label: "سوريا" },
-  { code: "+964", label: "العراق" },
-  { code: "+212", label: "المغرب" },
-  { code: "+216", label: "تونس" },
-  { code: "+213", label: "الجزائر" },
-  { code: "+218", label: "ليبيا" },
-  { code: "+90", label: "تركيا" },
-  { code: "+1", label: "أمريكا/كندا" },
-  { code: "+44", label: "بريطانيا" },
-];
+const COUNTRY_CODES = COUNTRIES.map((c) => ({
+  code: c.dial,
+  label: `${c.flag} ${c.ar}`,
+  iso: c.iso,
+}));
 
-export function WhatsAppMessenger() {
-  const [country, setCountry] = useState("+967");
+export function WhatsAppMessenger({
+  initialCountry,
+}: {
+  initialCountry?: string;
+}) {
+  const [country, setCountry] = useState(initialCountry || "+967");
   const [phone, setPhone] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (initialCountry) setCountry(initialCountry);
+  }, [initialCountry]);
 
   const cleaned = useMemo(() => phone.replace(/\D+/g, ""), [phone]);
   const fullNumber = useMemo(
@@ -368,7 +377,7 @@ export function WhatsAppMessenger() {
             aria-label="مفتاح الدولة"
           >
             {COUNTRY_CODES.map((c) => (
-              <option key={c.code} value={c.code}>
+              <option key={c.iso} value={c.code}>
                 {c.code} {c.label}
               </option>
             ))}
