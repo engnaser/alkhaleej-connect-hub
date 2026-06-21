@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { SiteFooter } from "@/components/site-footer";
 import {
   Sparkles,
@@ -14,8 +14,11 @@ import {
   Gift,
   Star,
   Gauge,
+  Globe,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
+import { COUNTRIES } from "@/data/countries";
+
 
 export const Route = createFileRoute("/services")({
   head: () => ({
