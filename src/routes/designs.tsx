@@ -438,8 +438,8 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
             ))}
           </div>
 
-          {/* Advanced layout controls — admin only */}
-          {adminMode && (
+          {/* Advanced layout controls — admin only, hidden once layout is locked */}
+          {adminMode && !locked && (
             <div className="mt-5 rounded-xl border-2 border-dashed border-primary/40 bg-primary/5 p-3">
               <button
                 type="button"
@@ -475,19 +475,38 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
                       </div>
                     );
                   })}
-                  <button
-                    type="button"
-                    onClick={resetLayout}
-                    className="w-full rounded-lg border border-border bg-secondary px-3 py-2 text-xs font-bold text-foreground hover:bg-primary/10 hover:text-primary"
-                  >
-                    إعادة تعيين المواضع الافتراضية
-                  </button>
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={resetLayout}
+                      className="rounded-lg border border-border bg-secondary px-3 py-2 text-xs font-bold text-foreground hover:bg-primary/10 hover:text-primary"
+                    >
+                      إعادة تعيين
+                    </button>
+                    <button
+                      type="button"
+                      onClick={saveAndLock}
+                      className="rounded-lg bg-primary px-3 py-2 text-xs font-black text-primary-foreground shadow hover:bg-primary-glow"
+                    >
+                      حفظ وإخفاء الأداة
+                    </button>
+                  </div>
                   <p className="text-right text-[10px] text-muted-foreground">
-                    انسخ هذه الأرقام وضعها في القيم الافتراضية للقالب داخل الكود لتثبيتها لجميع الزبائن.
+                    سيتم حفظ الإحداثيات وإخفاء الأداة. لإعادة الضبط لاحقاً اضغط "إعادة فتح الأداة".
                   </p>
                 </div>
               )}
             </div>
+          )}
+
+          {adminMode && locked && (
+            <button
+              type="button"
+              onClick={unlock}
+              className="mt-5 w-full rounded-lg border border-dashed border-primary/40 bg-primary/5 px-3 py-2 text-xs font-bold text-primary hover:bg-primary/10"
+            >
+              إعادة فتح أداة ضبط النص
+            </button>
           )}
 
           <button
