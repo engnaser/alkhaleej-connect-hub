@@ -1,7 +1,7 @@
-import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Download, LogIn, LogOut, Settings2, Sparkles, Sun, X } from "lucide-react";
+import { Download, LogOut, Settings2, Sparkles, Sun, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getMyAdminStatus } from "@/lib/admin.functions";
 import logoKhalij from "@/assets/logo-khalij.png";
@@ -130,7 +130,6 @@ function useSession() {
 function DesignsPage() {
   const [openId, setOpenId] = useState<string | null>(null);
   const activeTpl = TEMPLATES.find((t) => t.id === openId) ?? null;
-  const navigate = useNavigate();
   const userId = useSession();
 
   const { data: adminData } = useQuery({
@@ -139,7 +138,7 @@ function DesignsPage() {
     enabled: !!userId,
     staleTime: 60_000,
   });
-  const adminMode = true;
+  const adminMode = Boolean(adminData?.isAdmin);
 
   const signOut = async () => {
     await supabase.auth.signOut();
@@ -171,7 +170,7 @@ function DesignsPage() {
             ))}
           </nav>
           <div className="flex items-center gap-2">
-            {userId ? (
+            {userId && (
               <button
                 type="button"
                 onClick={signOut}
@@ -180,16 +179,6 @@ function DesignsPage() {
               >
                 <LogOut className="h-3.5 w-3.5" />
                 خروج
-              </button>
-            ) : (
-              <button
-                type="button"
-                onClick={() => navigate({ to: "/auth" })}
-                title="تسجيل الدخول"
-                className="inline-flex h-10 items-center gap-1.5 rounded-full border border-border bg-secondary px-3 text-xs font-bold text-primary transition-colors hover:bg-primary/10"
-              >
-                <LogIn className="h-3.5 w-3.5" />
-                دخول
               </button>
             )}
             <Link to="/" aria-label="العودة" className="grid h-10 w-10 place-items-center rounded-full border border-border bg-secondary text-primary transition-colors hover:bg-primary/10">
