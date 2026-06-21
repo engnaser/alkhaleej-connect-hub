@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as SpeedTestRouteImport } from './routes/speed-test'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as DialCodesRouteImport } from './routes/dial-codes'
 import { Route as DesignsRouteImport } from './routes/designs'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as IndexRouteImport } from './routes/index'
@@ -25,6 +26,11 @@ const SpeedTestRoute = SpeedTestRouteImport.update({
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DialCodesRoute = DialCodesRouteImport.update({
+  id: '/dial-codes',
+  path: '/dial-codes',
   getParentRoute: () => rootRouteImport,
 } as any)
 const DesignsRoute = DesignsRouteImport.update({
@@ -57,6 +63,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/designs': typeof DesignsRoute
+  '/dial-codes': typeof DialCodesRoute
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
@@ -66,6 +73,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/designs': typeof DesignsRoute
+  '/dial-codes': typeof DialCodesRoute
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
@@ -76,6 +84,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/designs': typeof DesignsRoute
+  '/dial-codes': typeof DialCodesRoute
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
@@ -87,6 +96,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/designs'
+    | '/dial-codes'
     | '/services'
     | '/speed-test'
     | '/mawloud/settings'
@@ -96,6 +106,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/designs'
+    | '/dial-codes'
     | '/services'
     | '/speed-test'
     | '/mawloud/settings'
@@ -105,6 +116,7 @@ export interface FileRouteTypes {
     | '/'
     | '/auth'
     | '/designs'
+    | '/dial-codes'
     | '/services'
     | '/speed-test'
     | '/mawloud/settings'
@@ -115,6 +127,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AuthRoute: typeof AuthRoute
   DesignsRoute: typeof DesignsRoute
+  DialCodesRoute: typeof DialCodesRoute
   ServicesRoute: typeof ServicesRoute
   SpeedTestRoute: typeof SpeedTestRoute
   MawloudSettingsRoute: typeof MawloudSettingsRoute
@@ -135,6 +148,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dial-codes': {
+      id: '/dial-codes'
+      path: '/dial-codes'
+      fullPath: '/dial-codes'
+      preLoaderRoute: typeof DialCodesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/designs': {
@@ -179,6 +199,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AuthRoute: AuthRoute,
   DesignsRoute: DesignsRoute,
+  DialCodesRoute: DialCodesRoute,
   ServicesRoute: ServicesRoute,
   SpeedTestRoute: SpeedTestRoute,
   MawloudSettingsRoute: MawloudSettingsRoute,
