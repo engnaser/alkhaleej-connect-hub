@@ -412,7 +412,7 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
         </div>
 
         {/* Form */}
-        <div className="flex max-h-[92vh] flex-col overflow-y-auto p-5 sm:p-7">
+        <div className="flex flex-col p-5 sm:p-7 lg:max-h-[92vh] lg:overflow-y-auto">
           <div className="mb-5 text-right">
             <h2 className="text-xl font-black text-primary">{tpl.title}</h2>
             <p className="mt-1 text-xs text-muted-foreground">{tpl.occasion} — أدخل البيانات الخاصة بهذا التصميم</p>
