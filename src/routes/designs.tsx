@@ -246,46 +246,47 @@ function DesignsPage() {
   );
 }
 
-const LAYOUT_STORAGE_KEY = (id: string) => `khalij-layout-${id}`;
-const LAYOUT_LOCKED_KEY = (id: string) => `khalij-layout-locked-${id}`;
-
 function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: boolean; onClose: () => void }) {
   const [values, setValues] = useState<Record<string, string>>(() =>
     Object.fromEntries(tpl.fields.map((f) => [f.key, ""])),
   );
-  const [layout, setLayout] = useState<Record<string, FieldLayout>>(() => {
-    if (typeof window !== "undefined") {
-      try {
-        const saved = window.localStorage.getItem(LAYOUT_STORAGE_KEY(tpl.id));
-        if (saved) {
-          const parsed = JSON.parse(saved) as Record<string, FieldLayout>;
-          // merge with defaults so new fields still get layout
-          return { ...JSON.parse(JSON.stringify(tpl.layout)), ...parsed };
-        }
-      } catch { /* ignore */ }
-    }
-    return JSON.parse(JSON.stringify(tpl.layout)) as Record<string, FieldLayout>;
-  });
-  const [locked, setLocked] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    return window.localStorage.getItem(LAYOUT_LOCKED_KEY(tpl.id)) === "1";
-  });
+  const [layout, setLayout] = useState<Record<string, FieldLayout>>(
+    () => JSON.parse(JSON.stringify(tpl.layout)) as Record<string, FieldLayout>,
+  );
+  const [saving, setSaving] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(true);
   const imgRef = useRef<HTMLImageElement | null>(null);
 
-  const saveAndLock = () => {
+  // Load cloud-saved layout (shared across all visitors)
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const { data } = await supabase
+        .from("template_layouts")
+        .select("layout")
+        .eq("template_id", tpl.id)
+        .maybeSingle();
+      if (cancelled || !data?.layout) return;
+      const cloud = data.layout as Record<string, FieldLayout>;
+      setLayout((prev) => ({ ...prev, ...cloud }));
+    })();
+    return () => { cancelled = true; };
+  }, [tpl.id]);
+
+  const saveLayout = async () => {
+    setSaving(true);
     try {
-      window.localStorage.setItem(LAYOUT_STORAGE_KEY(tpl.id), JSON.stringify(layout));
-      window.localStorage.setItem(LAYOUT_LOCKED_KEY(tpl.id), "1");
-      setLocked(true);
+      const { error } = await supabase
+        .from("template_layouts")
+        .upsert({ template_id: tpl.id, layout: layout as never }, { onConflict: "template_id" });
+      if (error) throw error;
       setShowAdvanced(false);
-    } catch { /* ignore */ }
-  };
-  const unlock = () => {
-    try {
-      window.localStorage.removeItem(LAYOUT_LOCKED_KEY(tpl.id));
-      setLocked(false);
-    } catch { /* ignore */ }
+      alert("تم حفظ الإحداثيات لجميع الزوار.");
+    } catch (e) {
+      alert("تعذّر الحفظ: " + (e instanceof Error ? e.message : String(e)));
+    } finally {
+      setSaving(false);
+    }
   };
 
   useEffect(() => {
