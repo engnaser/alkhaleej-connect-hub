@@ -351,9 +351,9 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm p-3 sm:p-6" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto overscroll-contain bg-black/70 backdrop-blur-sm p-3 sm:items-center sm:p-6" onClick={onClose}>
       <div
-        className="relative grid max-h-[92vh] w-full max-w-5xl grid-cols-1 overflow-hidden rounded-3xl border border-border bg-card shadow-2xl lg:grid-cols-2"
+        className="relative grid w-full max-w-5xl grid-cols-1 rounded-3xl border border-border bg-card shadow-2xl lg:max-h-[92vh] lg:grid-cols-2 lg:overflow-hidden"
         onClick={(e) => e.stopPropagation()}
         dir="rtl"
       >
@@ -366,7 +366,8 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
         </button>
 
         {/* Preview */}
-        <div className="relative overflow-y-auto bg-background/40 p-5 sm:p-6">
+        <div className="relative bg-background/40 p-5 sm:p-6 lg:overflow-y-auto">
+
           <p className="mb-3 text-right text-xs font-bold text-muted-foreground">معاينة مباشرة</p>
           <div className="relative overflow-hidden rounded-2xl" style={{ containerType: "inline-size" }}>
             <img ref={imgRef} src={tpl.src} alt={tpl.title} crossOrigin="anonymous" className="block h-auto w-full" />
