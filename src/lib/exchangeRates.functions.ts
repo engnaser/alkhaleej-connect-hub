@@ -75,5 +75,14 @@ export const syncExchangeRates = createServerFn({ method: "POST" }).handler(asyn
     .from("exchange_rates")
     .upsert(rows, { onConflict: "city,currency_code" });
   if (error) throw new Error(error.message);
+  // Append a history snapshot for charting recent changes
+  const historyRows = rates.map((r) => ({
+    city: r.city,
+    currency_code: r.currency_code,
+    buy: r.buy,
+    sell: r.sell,
+    captured_at: now,
+  }));
+  await supabaseAdmin.from("exchange_rate_history").insert(historyRows);
   return { count: rows.length, fetched_at: now };
 });
