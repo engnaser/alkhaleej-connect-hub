@@ -21,6 +21,7 @@ import {
   Receipt,
   Radio,
   Smartphone,
+  Coins,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { COUNTRIES } from "@/data/countries";
@@ -118,6 +119,13 @@ const SERVICES = [
     desc: "باقات وخدمات يمن موبايل، إدارة الحساب، وإعدادات الإنترنت في مكان واحد.",
     to: "/yemen-mobile" as const,
     cta: "ابدأ الآن",
+  },
+  {
+    icon: Coins,
+    title: "أسعار صرف الريال اليمني",
+    desc: "أسعار العملات في صنعاء وعدن مأخوذة من المصدر مع زر تزامن لتحديث الأسعار لحظياً.",
+    to: "/exchange-rates" as const,
+    cta: "افتح الأسعار",
   },
   {
     icon: Star,
