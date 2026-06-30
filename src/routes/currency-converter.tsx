@@ -238,7 +238,7 @@ function CurrencyConverterPage() {
             </div>
           </div>
 
-          {involvesYer && (
+          {involvesLocal && (
             <div className="mt-5 rounded-xl border border-amber-500/30 bg-amber-500/5 p-4">
               <div className="mb-3 flex items-center gap-2 text-sm font-bold text-amber-700 dark:text-amber-400">
                 <MapPin className="h-4 w-4" />
@@ -278,7 +278,7 @@ function CurrencyConverterPage() {
               <p className="text-sm text-muted-foreground">جاري جلب الأسعار...</p>
             ) : error ? (
               <p className="text-sm font-semibold text-destructive">{error}</p>
-            ) : involvesYer && !yerRates[yerCity] ? (
+            ) : involvesLocal && !localRates[yerCity]["USD"] ? (
               <p className="text-sm font-semibold text-amber-600">
                 سعر الريال اليمني ({yerCity}) غير متوفر. حدّث الأسعار من صفحة "أسعار الصرف".
               </p>
@@ -295,7 +295,7 @@ function CurrencyConverterPage() {
                 {singleRate && (
                   <p className="mt-2 text-xs text-muted-foreground" dir="ltr">
                     1 {from} = {format(singleRate)} {to}
-                    {involvesYer ? ` (${yerCity})` : ""}
+                    {involvesLocal ? ` (${yerCity})` : ""}
                   </p>
                 )}
               </>
@@ -312,7 +312,7 @@ function CurrencyConverterPage() {
                   أسعار عالمية: {new Date(updatedAt).toLocaleString("ar")}
                 </div>
               )}
-              {involvesYer && yerUpdatedAt && (
+              {involvesLocal && yerUpdatedAt && (
                 <div className="block">
                   ريال يمني ({yerCity}): {new Date(yerUpdatedAt).toLocaleString("ar")}
                 </div>
