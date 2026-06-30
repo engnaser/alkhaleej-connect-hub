@@ -24,6 +24,7 @@ import {
   Coins,
   ArrowLeftRight,
   GraduationCap,
+  CalendarClock,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { COUNTRIES } from "@/data/countries";
@@ -141,6 +142,13 @@ const SERVICES = [
     title: "استعلام شهادة الثانوية العامة",
     desc: "اختصار آمن للموقع الرسمي للاستعلام عن نتائج وشهادات الثانوية العامة للمناطق المحررة.",
     to: "/secondary-certificate" as const,
+    cta: "استعلم الآن",
+  },
+  {
+    icon: CalendarClock,
+    title: "استعلام اشتراك بندر عدن",
+    desc: "اختصار آمن لبوابة بندر عدن لمعرفة تاريخ انتهاء اشتراكك في الإنترنت.",
+    to: "/bandar-aden-inquiry" as const,
     cta: "استعلم الآن",
   },
   {
