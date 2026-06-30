@@ -242,11 +242,12 @@ function CurrencyConverterPage() {
             <div className="mt-5 rounded-xl border border-amber-500/30 bg-amber-500/5 p-4">
               <div className="mb-3 flex items-center gap-2 text-sm font-bold text-amber-700 dark:text-amber-400">
                 <MapPin className="h-4 w-4" />
-                سعر صرف الريال اليمني (YER)
+                سعر الصرف المحلي (USD / SAR / YER)
               </div>
               <div className="grid grid-cols-2 gap-2">
                 {(["صنعاء", "عدن"] as YerCity[]).map((city) => {
-                  const r = yerRates[city];
+                  const r = localRates[city]["USD"];
+
                   const active = yerCity === city;
                   return (
                     <button
