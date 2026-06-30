@@ -23,6 +23,7 @@ import {
   Smartphone,
   Coins,
   ArrowLeftRight,
+  GraduationCap,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { COUNTRIES } from "@/data/countries";
@@ -134,6 +135,13 @@ const SERVICES = [
     desc: "حوّل أي مبلغ بين أكثر من 20 عملة عالمية (دولار، يورو، ريال، درهم، ...) بأحدث الأسعار.",
     to: "/currency-converter" as const,
     cta: "ابدأ التحويل",
+  },
+  {
+    icon: GraduationCap,
+    title: "استعلام شهادة الثانوية العامة",
+    desc: "اختصار آمن للموقع الرسمي للاستعلام عن نتائج وشهادات الثانوية العامة للمناطق المحررة.",
+    to: "/secondary-certificate" as const,
+    cta: "استعلم الآن",
   },
   {
     icon: Star,

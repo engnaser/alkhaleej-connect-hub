@@ -14,6 +14,7 @@ import { Route as YemenMobileRouteImport } from './routes/yemen-mobile'
 import { Route as WhatsappUnblockRouteImport } from './routes/whatsapp-unblock'
 import { Route as SpeedTestRouteImport } from './routes/speed-test'
 import { Route as ServicesRouteImport } from './routes/services'
+import { Route as SecondaryCertificateRouteImport } from './routes/secondary-certificate'
 import { Route as PhoneBillInquiryRouteImport } from './routes/phone-bill-inquiry'
 import { Route as ExchangeRatesRouteImport } from './routes/exchange-rates'
 import { Route as DialCodesRouteImport } from './routes/dial-codes'
@@ -50,6 +51,11 @@ const SpeedTestRoute = SpeedTestRouteImport.update({
 const ServicesRoute = ServicesRouteImport.update({
   id: '/services',
   path: '/services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SecondaryCertificateRoute = SecondaryCertificateRouteImport.update({
+  id: '/secondary-certificate',
+  path: '/secondary-certificate',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PhoneBillInquiryRoute = PhoneBillInquiryRouteImport.update({
@@ -122,6 +128,7 @@ export interface FileRoutesByFullPath {
   '/dial-codes': typeof DialCodesRoute
   '/exchange-rates': typeof ExchangeRatesRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
+  '/secondary-certificate': typeof SecondaryCertificateRoute
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
@@ -141,6 +148,7 @@ export interface FileRoutesByTo {
   '/dial-codes': typeof DialCodesRoute
   '/exchange-rates': typeof ExchangeRatesRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
+  '/secondary-certificate': typeof SecondaryCertificateRoute
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
@@ -161,6 +169,7 @@ export interface FileRoutesById {
   '/dial-codes': typeof DialCodesRoute
   '/exchange-rates': typeof ExchangeRatesRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
+  '/secondary-certificate': typeof SecondaryCertificateRoute
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
@@ -182,6 +191,7 @@ export interface FileRouteTypes {
     | '/dial-codes'
     | '/exchange-rates'
     | '/phone-bill-inquiry'
+    | '/secondary-certificate'
     | '/services'
     | '/speed-test'
     | '/whatsapp-unblock'
@@ -201,6 +211,7 @@ export interface FileRouteTypes {
     | '/dial-codes'
     | '/exchange-rates'
     | '/phone-bill-inquiry'
+    | '/secondary-certificate'
     | '/services'
     | '/speed-test'
     | '/whatsapp-unblock'
@@ -220,6 +231,7 @@ export interface FileRouteTypes {
     | '/dial-codes'
     | '/exchange-rates'
     | '/phone-bill-inquiry'
+    | '/secondary-certificate'
     | '/services'
     | '/speed-test'
     | '/whatsapp-unblock'
@@ -240,6 +252,7 @@ export interface RootRouteChildren {
   DialCodesRoute: typeof DialCodesRoute
   ExchangeRatesRoute: typeof ExchangeRatesRoute
   PhoneBillInquiryRoute: typeof PhoneBillInquiryRoute
+  SecondaryCertificateRoute: typeof SecondaryCertificateRoute
   ServicesRoute: typeof ServicesRoute
   SpeedTestRoute: typeof SpeedTestRoute
   WhatsappUnblockRoute: typeof WhatsappUnblockRoute
@@ -286,6 +299,13 @@ declare module '@tanstack/react-router' {
       path: '/services'
       fullPath: '/services'
       preLoaderRoute: typeof ServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/secondary-certificate': {
+      id: '/secondary-certificate'
+      path: '/secondary-certificate'
+      fullPath: '/secondary-certificate'
+      preLoaderRoute: typeof SecondaryCertificateRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/phone-bill-inquiry': {
@@ -384,6 +404,7 @@ const rootRouteChildren: RootRouteChildren = {
   DialCodesRoute: DialCodesRoute,
   ExchangeRatesRoute: ExchangeRatesRoute,
   PhoneBillInquiryRoute: PhoneBillInquiryRoute,
+  SecondaryCertificateRoute: SecondaryCertificateRoute,
   ServicesRoute: ServicesRoute,
   SpeedTestRoute: SpeedTestRoute,
   WhatsappUnblockRoute: WhatsappUnblockRoute,
