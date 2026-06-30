@@ -23,6 +23,7 @@ import {
   Smartphone,
   Coins,
   ArrowLeftRight,
+  GraduationCap,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { COUNTRIES } from "@/data/countries";
