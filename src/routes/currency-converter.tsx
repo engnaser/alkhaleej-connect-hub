@@ -60,13 +60,17 @@ function CurrencyConverterPage() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  // Local YER rates (per 1 USD) from our DB — separate Sanaa/Aden markets
+  // Local rates from our DB (ye-rial.com) — separate Sanaa/Aden markets.
+  // Stored as mid YER price per 1 unit of the given currency.
   const [yerCity, setYerCity] = useState<YerCity>("صنعاء");
-  const [yerRates, setYerRates] = useState<Record<YerCity, number | null>>({
-    "صنعاء": null,
-    "عدن": null,
+  const [localRates, setLocalRates] = useState<Record<YerCity, Record<string, number>>>({
+    "صنعاء": {},
+    "عدن": {},
   });
   const [yerUpdatedAt, setYerUpdatedAt] = useState<string | null>(null);
+
+  // Currencies we override from the local source (ye-rial.com)
+  const LOCAL_CODES = ["USD", "SAR"];
 
   async function fetchRates() {
     setLoading(true);
@@ -90,19 +94,24 @@ function CurrencyConverterPage() {
     const { data, error } = await supabase
       .from("exchange_rates")
       .select("city,currency_code,buy,sell,fetched_at")
-      .eq("currency_code", "USD")
+      .in("currency_code", LOCAL_CODES)
       .in("city", ["صنعاء", "عدن"]);
     if (error || !data) return;
-    const next: Record<YerCity, number | null> = { "صنعاء": null, "عدن": null };
+    const next: Record<YerCity, Record<string, number>> = { "صنعاء": {}, "عدن": {} };
     let latest: string | null = null;
-    for (const row of data as Array<{ city: string; buy: number; sell: number; fetched_at: string }>) {
+    for (const row of data as Array<{
+      city: string;
+      currency_code: string;
+      buy: number;
+      sell: number;
+      fetched_at: string;
+    }>) {
       if (row.city === "صنعاء" || row.city === "عدن") {
-        // mid-market rate between buy/sell
-        next[row.city] = (Number(row.buy) + Number(row.sell)) / 2;
+        next[row.city][row.currency_code] = (Number(row.buy) + Number(row.sell)) / 2;
         if (!latest || row.fetched_at > latest) latest = row.fetched_at;
       }
     }
-    setYerRates(next);
+    setLocalRates(next);
     setYerUpdatedAt(latest);
   }
 
@@ -111,17 +120,26 @@ function CurrencyConverterPage() {
     fetchYerRates();
   }, []);
 
-  // Build effective rates: override YER with local Sanaa/Aden rate when available
+  // Override USD, SAR, YER with local Sanaa/Aden rates when available.
+  // Local data gives YER per 1 USD and YER per 1 SAR (mid).
+  // Global rates map is code-per-USD; YER per USD ≈ local USD mid.
+  // For other currency C with local mid m_C (YER/C): C per USD = (YER/USD) / (YER/C).
   const effectiveRates = useMemo<Rates | null>(() => {
     if (!rates) return null;
-    const local = yerRates[yerCity];
-    if (local && local > 0) {
-      return { ...rates, YER: local };
+    const city = localRates[yerCity];
+    const usdYer = city["USD"];
+    if (!usdYer || usdYer <= 0) return rates;
+    const overrides: Rates = { YER: usdYer };
+    for (const code of LOCAL_CODES) {
+      if (code === "USD") continue; // base
+      const m = city[code];
+      if (m && m > 0) overrides[code] = usdYer / m; // code per 1 USD
     }
-    return rates;
-  }, [rates, yerRates, yerCity]);
+    return { ...rates, ...overrides };
+  }, [rates, localRates, yerCity]);
 
-  const involvesYer = from === "YER" || to === "YER";
+  const involvesLocal =
+    from === "YER" || to === "YER" || LOCAL_CODES.includes(from) || LOCAL_CODES.includes(to);
 
   const converted = useMemo(() => {
     if (!effectiveRates) return null;
@@ -140,6 +158,7 @@ function CurrencyConverterPage() {
     if (!fromRate || !toRate) return null;
     return (1 / fromRate) * toRate;
   }, [from, to, effectiveRates]);
+
 
   const swap = () => {
     setFrom(to);
@@ -219,15 +238,16 @@ function CurrencyConverterPage() {
             </div>
           </div>
 
-          {involvesYer && (
+          {involvesLocal && (
             <div className="mt-5 rounded-xl border border-amber-500/30 bg-amber-500/5 p-4">
               <div className="mb-3 flex items-center gap-2 text-sm font-bold text-amber-700 dark:text-amber-400">
                 <MapPin className="h-4 w-4" />
-                سعر صرف الريال اليمني (YER)
+                سعر الصرف المحلي (USD / SAR / YER)
               </div>
               <div className="grid grid-cols-2 gap-2">
                 {(["صنعاء", "عدن"] as YerCity[]).map((city) => {
-                  const r = yerRates[city];
+                  const r = localRates[city]["USD"];
+
                   const active = yerCity === city;
                   return (
                     <button
@@ -259,7 +279,7 @@ function CurrencyConverterPage() {
               <p className="text-sm text-muted-foreground">جاري جلب الأسعار...</p>
             ) : error ? (
               <p className="text-sm font-semibold text-destructive">{error}</p>
-            ) : involvesYer && !yerRates[yerCity] ? (
+            ) : involvesLocal && !localRates[yerCity]["USD"] ? (
               <p className="text-sm font-semibold text-amber-600">
                 سعر الريال اليمني ({yerCity}) غير متوفر. حدّث الأسعار من صفحة "أسعار الصرف".
               </p>
@@ -276,7 +296,7 @@ function CurrencyConverterPage() {
                 {singleRate && (
                   <p className="mt-2 text-xs text-muted-foreground" dir="ltr">
                     1 {from} = {format(singleRate)} {to}
-                    {involvesYer ? ` (${yerCity})` : ""}
+                    {involvesLocal ? ` (${yerCity})` : ""}
                   </p>
                 )}
               </>
@@ -293,7 +313,7 @@ function CurrencyConverterPage() {
                   أسعار عالمية: {new Date(updatedAt).toLocaleString("ar")}
                 </div>
               )}
-              {involvesYer && yerUpdatedAt && (
+              {involvesLocal && yerUpdatedAt && (
                 <div className="block">
                   ريال يمني ({yerCity}): {new Date(yerUpdatedAt).toLocaleString("ar")}
                 </div>
