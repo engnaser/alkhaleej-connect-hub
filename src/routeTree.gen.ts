@@ -18,6 +18,7 @@ import { Route as PhoneBillInquiryRouteImport } from './routes/phone-bill-inquir
 import { Route as ExchangeRatesRouteImport } from './routes/exchange-rates'
 import { Route as DialCodesRouteImport } from './routes/dial-codes'
 import { Route as DesignsRouteImport } from './routes/designs'
+import { Route as CurrencyConverterRouteImport } from './routes/currency-converter'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdslInquiryRouteImport } from './routes/adsl-inquiry'
 import { Route as IndexRouteImport } from './routes/index'
@@ -71,6 +72,11 @@ const DesignsRoute = DesignsRouteImport.update({
   path: '/designs',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CurrencyConverterRoute = CurrencyConverterRouteImport.update({
+  id: '/currency-converter',
+  path: '/currency-converter',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthRoute = AuthRouteImport.update({
   id: '/auth',
   path: '/auth',
@@ -111,6 +117,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/adsl-inquiry': typeof AdslInquiryRoute
   '/auth': typeof AuthRoute
+  '/currency-converter': typeof CurrencyConverterRoute
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
   '/exchange-rates': typeof ExchangeRatesRoute
@@ -129,6 +136,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/adsl-inquiry': typeof AdslInquiryRoute
   '/auth': typeof AuthRoute
+  '/currency-converter': typeof CurrencyConverterRoute
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
   '/exchange-rates': typeof ExchangeRatesRoute
@@ -148,6 +156,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/adsl-inquiry': typeof AdslInquiryRoute
   '/auth': typeof AuthRoute
+  '/currency-converter': typeof CurrencyConverterRoute
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
   '/exchange-rates': typeof ExchangeRatesRoute
@@ -168,6 +177,7 @@ export interface FileRouteTypes {
     | '/'
     | '/adsl-inquiry'
     | '/auth'
+    | '/currency-converter'
     | '/designs'
     | '/dial-codes'
     | '/exchange-rates'
@@ -186,6 +196,7 @@ export interface FileRouteTypes {
     | '/'
     | '/adsl-inquiry'
     | '/auth'
+    | '/currency-converter'
     | '/designs'
     | '/dial-codes'
     | '/exchange-rates'
@@ -204,6 +215,7 @@ export interface FileRouteTypes {
     | '/'
     | '/adsl-inquiry'
     | '/auth'
+    | '/currency-converter'
     | '/designs'
     | '/dial-codes'
     | '/exchange-rates'
@@ -223,6 +235,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdslInquiryRoute: typeof AdslInquiryRoute
   AuthRoute: typeof AuthRoute
+  CurrencyConverterRoute: typeof CurrencyConverterRoute
   DesignsRoute: typeof DesignsRoute
   DialCodesRoute: typeof DialCodesRoute
   ExchangeRatesRoute: typeof ExchangeRatesRoute
@@ -303,6 +316,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DesignsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/currency-converter': {
+      id: '/currency-converter'
+      path: '/currency-converter'
+      fullPath: '/currency-converter'
+      preLoaderRoute: typeof CurrencyConverterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/auth': {
       id: '/auth'
       path: '/auth'
@@ -359,6 +379,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdslInquiryRoute: AdslInquiryRoute,
   AuthRoute: AuthRoute,
+  CurrencyConverterRoute: CurrencyConverterRoute,
   DesignsRoute: DesignsRoute,
   DialCodesRoute: DialCodesRoute,
   ExchangeRatesRoute: ExchangeRatesRoute,

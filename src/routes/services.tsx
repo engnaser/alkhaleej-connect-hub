@@ -22,6 +22,7 @@ import {
   Radio,
   Smartphone,
   Coins,
+  ArrowLeftRight,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { COUNTRIES } from "@/data/countries";
@@ -126,6 +127,13 @@ const SERVICES = [
     desc: "أسعار العملات في صنعاء وعدن مأخوذة من المصدر مع زر تزامن لتحديث الأسعار لحظياً.",
     to: "/exchange-rates" as const,
     cta: "افتح الأسعار",
+  },
+  {
+    icon: ArrowLeftRight,
+    title: "محوّل العملات العالمية",
+    desc: "حوّل أي مبلغ بين أكثر من 20 عملة عالمية (دولار، يورو، ريال، درهم، ...) بأحدث الأسعار.",
+    to: "/currency-converter" as const,
+    cta: "ابدأ التحويل",
   },
   {
     icon: Star,
