@@ -41,7 +41,11 @@ export const Route = createFileRoute("/secondary-certificate")({
 
 const WHATSAPP_BRAND = "967775608601";
 const SUPPORT_WHATSAPP = "967781635755";
-const OFFICIAL_URL = "https://res-ye.net/";
+const OFFICIAL_URL = "https://res-ye.net/index.php";
+
+function openOfficialInquiry() {
+  window.location.assign(OFFICIAL_URL);
+}
 
 function SecondaryCertificatePage() {
   const handleCopy = async () => {
@@ -124,14 +128,23 @@ function SecondaryCertificatePage() {
             </p>
 
             <div className="mt-8 flex flex-col items-center gap-4">
-              <a
-                href={OFFICIAL_URL}
-                target="_blank"
-                rel="noreferrer"
+              <button
+                type="button"
+                onClick={openOfficialInquiry}
                 className="inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-full bg-primary px-8 py-3.5 text-sm font-extrabold text-primary-foreground shadow-md transition-transform hover:scale-[1.03]"
               >
                 <ExternalLink className="h-4 w-4" />
                 فتح الموقع الرسمي للاستعلام
+              </button>
+
+              <a
+                href={OFFICIAL_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex w-full max-w-sm items-center justify-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-8 py-3 text-sm font-extrabold text-primary transition-colors hover:bg-primary/15"
+              >
+                <ExternalLink className="h-4 w-4" />
+                فتح في نافذة خارجية
               </a>
 
               <a
@@ -169,7 +182,7 @@ function SecondaryCertificatePage() {
               <InfoItem
                 icon={<Monitor className="h-5 w-5" />}
                 title="الاستعلام يتم عبر الموقع الرسمي"
-                desc="الاستعلام يتم مباشرة عبر موقع res-ye.net الرسمي، وليس داخل موقعنا."
+                desc="الاستعلام يتم مباشرة عبر موقع res-ye.net الرسمي. إذا ظهرت رسالة خطأ داخل المتصفح المضمّن، استخدم زر فتح في نافذة خارجية."
               />
               <InfoItem
                 icon={<BookOpen className="h-5 w-5" />}
