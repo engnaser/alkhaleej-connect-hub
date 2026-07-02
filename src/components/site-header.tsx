@@ -62,7 +62,9 @@ export function SiteHeader({ cta }: { cta?: ReactNode }) {
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           {cta}
+
 
           <Sheet>
             <SheetTrigger asChild>
