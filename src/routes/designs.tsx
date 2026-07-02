@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Download, LogOut, Settings2, Sparkles, Sun, X } from "lucide-react";
+import { Download, LogOut, Settings2, Sparkles, X } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { supabase } from "@/integrations/supabase/client";
 import { getMyAdminStatus } from "@/lib/admin.functions";
 import { saveMyPhoto } from "@/lib/my-photos";
