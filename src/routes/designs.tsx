@@ -251,9 +251,12 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
   const [values, setValues] = useState<Record<string, string>>(() =>
     Object.fromEntries(tpl.fields.map((f) => [f.key, ""])),
   );
-  const [layout, setLayout] = useState<Record<string, FieldLayout>>(
-    () => JSON.parse(JSON.stringify(tpl.layout)) as Record<string, FieldLayout>,
-  );
+  const [layout, setLayout] = useState<Record<string, FieldLayout>>(() => {
+    const cloned = JSON.parse(JSON.stringify(tpl.layout)) as Record<string, FieldLayout>;
+    // Auto-unify phone color with name color across all templates
+    if (cloned.phone && cloned.name) cloned.phone.color = cloned.name.color;
+    return cloned;
+  });
   const [saving, setSaving] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(true);
   const imgRef = useRef<HTMLImageElement | null>(null);
