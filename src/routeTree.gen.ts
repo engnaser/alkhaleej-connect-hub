@@ -12,14 +12,19 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as Yemen4gInquiryRouteImport } from './routes/yemen4g-inquiry'
 import { Route as YemenMobileRouteImport } from './routes/yemen-mobile'
 import { Route as WhatsappUnblockRouteImport } from './routes/whatsapp-unblock'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SpeedTestRouteImport } from './routes/speed-test'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SecondaryCertificateRouteImport } from './routes/secondary-certificate'
+import { Route as SafetyRouteImport } from './routes/safety'
+import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PhoneBillInquiryRouteImport } from './routes/phone-bill-inquiry'
+import { Route as MyPhotosRouteImport } from './routes/my-photos'
 import { Route as ExchangeRatesRouteImport } from './routes/exchange-rates'
 import { Route as DialCodesRouteImport } from './routes/dial-codes'
 import { Route as DesignsRouteImport } from './routes/designs'
 import { Route as CurrencyConverterRouteImport } from './routes/currency-converter'
+import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BandarAdenInquiryRouteImport } from './routes/bandar-aden-inquiry'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AdslInquiryRouteImport } from './routes/adsl-inquiry'
@@ -44,6 +49,11 @@ const WhatsappUnblockRoute = WhatsappUnblockRouteImport.update({
   path: '/whatsapp-unblock',
   getParentRoute: () => rootRouteImport,
 } as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const SpeedTestRoute = SpeedTestRouteImport.update({
   id: '/speed-test',
   path: '/speed-test',
@@ -59,9 +69,24 @@ const SecondaryCertificateRoute = SecondaryCertificateRouteImport.update({
   path: '/secondary-certificate',
   getParentRoute: () => rootRouteImport,
 } as any)
+const SafetyRoute = SafetyRouteImport.update({
+  id: '/safety',
+  path: '/safety',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PhoneBillInquiryRoute = PhoneBillInquiryRouteImport.update({
   id: '/phone-bill-inquiry',
   path: '/phone-bill-inquiry',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MyPhotosRoute = MyPhotosRouteImport.update({
+  id: '/my-photos',
+  path: '/my-photos',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExchangeRatesRoute = ExchangeRatesRouteImport.update({
@@ -82,6 +107,11 @@ const DesignsRoute = DesignsRouteImport.update({
 const CurrencyConverterRoute = CurrencyConverterRouteImport.update({
   id: '/currency-converter',
   path: '/currency-converter',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ContactRoute = ContactRouteImport.update({
+  id: '/contact',
+  path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BandarAdenInquiryRoute = BandarAdenInquiryRouteImport.update({
@@ -130,14 +160,19 @@ export interface FileRoutesByFullPath {
   '/adsl-inquiry': typeof AdslInquiryRoute
   '/auth': typeof AuthRoute
   '/bandar-aden-inquiry': typeof BandarAdenInquiryRoute
+  '/contact': typeof ContactRoute
   '/currency-converter': typeof CurrencyConverterRoute
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
   '/exchange-rates': typeof ExchangeRatesRoute
+  '/my-photos': typeof MyPhotosRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
+  '/privacy': typeof PrivacyRoute
+  '/safety': typeof SafetyRoute
   '/secondary-certificate': typeof SecondaryCertificateRoute
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
+  '/terms': typeof TermsRoute
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
@@ -151,14 +186,19 @@ export interface FileRoutesByTo {
   '/adsl-inquiry': typeof AdslInquiryRoute
   '/auth': typeof AuthRoute
   '/bandar-aden-inquiry': typeof BandarAdenInquiryRoute
+  '/contact': typeof ContactRoute
   '/currency-converter': typeof CurrencyConverterRoute
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
   '/exchange-rates': typeof ExchangeRatesRoute
+  '/my-photos': typeof MyPhotosRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
+  '/privacy': typeof PrivacyRoute
+  '/safety': typeof SafetyRoute
   '/secondary-certificate': typeof SecondaryCertificateRoute
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
+  '/terms': typeof TermsRoute
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
@@ -173,14 +213,19 @@ export interface FileRoutesById {
   '/adsl-inquiry': typeof AdslInquiryRoute
   '/auth': typeof AuthRoute
   '/bandar-aden-inquiry': typeof BandarAdenInquiryRoute
+  '/contact': typeof ContactRoute
   '/currency-converter': typeof CurrencyConverterRoute
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
   '/exchange-rates': typeof ExchangeRatesRoute
+  '/my-photos': typeof MyPhotosRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
+  '/privacy': typeof PrivacyRoute
+  '/safety': typeof SafetyRoute
   '/secondary-certificate': typeof SecondaryCertificateRoute
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
+  '/terms': typeof TermsRoute
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
@@ -196,14 +241,19 @@ export interface FileRouteTypes {
     | '/adsl-inquiry'
     | '/auth'
     | '/bandar-aden-inquiry'
+    | '/contact'
     | '/currency-converter'
     | '/designs'
     | '/dial-codes'
     | '/exchange-rates'
+    | '/my-photos'
     | '/phone-bill-inquiry'
+    | '/privacy'
+    | '/safety'
     | '/secondary-certificate'
     | '/services'
     | '/speed-test'
+    | '/terms'
     | '/whatsapp-unblock'
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
@@ -217,14 +267,19 @@ export interface FileRouteTypes {
     | '/adsl-inquiry'
     | '/auth'
     | '/bandar-aden-inquiry'
+    | '/contact'
     | '/currency-converter'
     | '/designs'
     | '/dial-codes'
     | '/exchange-rates'
+    | '/my-photos'
     | '/phone-bill-inquiry'
+    | '/privacy'
+    | '/safety'
     | '/secondary-certificate'
     | '/services'
     | '/speed-test'
+    | '/terms'
     | '/whatsapp-unblock'
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
@@ -238,14 +293,19 @@ export interface FileRouteTypes {
     | '/adsl-inquiry'
     | '/auth'
     | '/bandar-aden-inquiry'
+    | '/contact'
     | '/currency-converter'
     | '/designs'
     | '/dial-codes'
     | '/exchange-rates'
+    | '/my-photos'
     | '/phone-bill-inquiry'
+    | '/privacy'
+    | '/safety'
     | '/secondary-certificate'
     | '/services'
     | '/speed-test'
+    | '/terms'
     | '/whatsapp-unblock'
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
@@ -260,14 +320,19 @@ export interface RootRouteChildren {
   AdslInquiryRoute: typeof AdslInquiryRoute
   AuthRoute: typeof AuthRoute
   BandarAdenInquiryRoute: typeof BandarAdenInquiryRoute
+  ContactRoute: typeof ContactRoute
   CurrencyConverterRoute: typeof CurrencyConverterRoute
   DesignsRoute: typeof DesignsRoute
   DialCodesRoute: typeof DialCodesRoute
   ExchangeRatesRoute: typeof ExchangeRatesRoute
+  MyPhotosRoute: typeof MyPhotosRoute
   PhoneBillInquiryRoute: typeof PhoneBillInquiryRoute
+  PrivacyRoute: typeof PrivacyRoute
+  SafetyRoute: typeof SafetyRoute
   SecondaryCertificateRoute: typeof SecondaryCertificateRoute
   ServicesRoute: typeof ServicesRoute
   SpeedTestRoute: typeof SpeedTestRoute
+  TermsRoute: typeof TermsRoute
   WhatsappUnblockRoute: typeof WhatsappUnblockRoute
   YemenMobileRoute: typeof YemenMobileRoute
   Yemen4gInquiryRoute: typeof Yemen4gInquiryRoute
@@ -300,6 +365,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WhatsappUnblockRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/speed-test': {
       id: '/speed-test'
       path: '/speed-test'
@@ -321,11 +393,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SecondaryCertificateRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/safety': {
+      id: '/safety'
+      path: '/safety'
+      fullPath: '/safety'
+      preLoaderRoute: typeof SafetyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/phone-bill-inquiry': {
       id: '/phone-bill-inquiry'
       path: '/phone-bill-inquiry'
       fullPath: '/phone-bill-inquiry'
       preLoaderRoute: typeof PhoneBillInquiryRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/my-photos': {
+      id: '/my-photos'
+      path: '/my-photos'
+      fullPath: '/my-photos'
+      preLoaderRoute: typeof MyPhotosRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/exchange-rates': {
@@ -354,6 +447,13 @@ declare module '@tanstack/react-router' {
       path: '/currency-converter'
       fullPath: '/currency-converter'
       preLoaderRoute: typeof CurrencyConverterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/contact': {
+      id: '/contact'
+      path: '/contact'
+      fullPath: '/contact'
+      preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/bandar-aden-inquiry': {
@@ -420,14 +520,19 @@ const rootRouteChildren: RootRouteChildren = {
   AdslInquiryRoute: AdslInquiryRoute,
   AuthRoute: AuthRoute,
   BandarAdenInquiryRoute: BandarAdenInquiryRoute,
+  ContactRoute: ContactRoute,
   CurrencyConverterRoute: CurrencyConverterRoute,
   DesignsRoute: DesignsRoute,
   DialCodesRoute: DialCodesRoute,
   ExchangeRatesRoute: ExchangeRatesRoute,
+  MyPhotosRoute: MyPhotosRoute,
   PhoneBillInquiryRoute: PhoneBillInquiryRoute,
+  PrivacyRoute: PrivacyRoute,
+  SafetyRoute: SafetyRoute,
   SecondaryCertificateRoute: SecondaryCertificateRoute,
   ServicesRoute: ServicesRoute,
   SpeedTestRoute: SpeedTestRoute,
+  TermsRoute: TermsRoute,
   WhatsappUnblockRoute: WhatsappUnblockRoute,
   YemenMobileRoute: YemenMobileRoute,
   Yemen4gInquiryRoute: Yemen4gInquiryRoute,
