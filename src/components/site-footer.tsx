@@ -54,7 +54,7 @@ export function SiteFooter() {
   return (
     <footer
       dir="rtl"
-      className="relative border-t border-primary/20 bg-[oklch(0.18_0.03_220)] text-foreground"
+      className="relative border-t border-primary/20 bg-surface text-foreground"
     >
       {/* top accent line */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-l from-transparent via-primary/60 to-transparent" />
