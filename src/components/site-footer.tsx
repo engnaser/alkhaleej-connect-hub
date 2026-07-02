@@ -43,11 +43,11 @@ const openExternalLink = (href: string) => (event: MouseEvent<HTMLAnchorElement>
 const QUICK_LINKS: { label: string; to: string }[] = [
   { label: "الرئيسية", to: "/" },
   { label: "التصاميم", to: "/designs" },
-  { label: "صوري", to: "/designs" },
-  { label: "سياسة الخصوصية", to: "/" },
-  { label: "الشروط والأحكام", to: "/" },
-  { label: "سياسة الأمان", to: "/" },
-  { label: "اتصل بنا", to: "/" },
+  { label: "صوري", to: "/my-photos" },
+  { label: "سياسة الخصوصية", to: "/privacy" },
+  { label: "الشروط والأحكام", to: "/terms" },
+  { label: "سياسة الأمان", to: "/safety" },
+  { label: "اتصل بنا", to: "/contact" },
 ];
 
 export function SiteFooter() {
