@@ -76,12 +76,12 @@ const MAWLOUD_FIELDS: FieldDef[] = [
 
 const SIMPLE_LAYOUT: Record<string, FieldLayout> = {
   name:  { x: 32, y: 56.5, size: 3, color: "#ffffff", dir: "rtl", weight: 900, maxWidth: 44 },
-  phone: { x: 32, y: 61.5, size: 3, color: "#fada64", dir: "ltr", weight: 800, mono: true, maxWidth: 44 },
+  phone: { x: 32, y: 61.5, size: 3, color: "#ffffff", dir: "ltr", weight: 800, mono: true, maxWidth: 44 },
 };
 
 const EID_MOSQUE_LAYOUT: Record<string, FieldLayout> = {
   name:  { x: 23.5, y: 83.5, size: 2.2, color: "#ffffff", dir: "rtl", weight: 900, maxWidth: 44 },
-  phone: { x: 23.5, y: 88,   size: 2.2, color: "#fada64", dir: "ltr", weight: 800, mono: true, maxWidth: 44 },
+  phone: { x: 23.5, y: 88,   size: 2.2, color: "#ffffff", dir: "ltr", weight: 800, mono: true, maxWidth: 44 },
 };
 
 const TEMPLATES: Template[] = [
@@ -109,7 +109,7 @@ const TEMPLATES: Template[] = [
     defaults: { name: "اسم الوكيل", phone: "+967 7XX XXX XXX" },
     layout: {
       name:  { x: 32, y: 59, size: 3, color: "#ffffff", dir: "rtl", weight: 900, maxWidth: 45 },
-      phone: { x: 31, y: 65, size: 3, color: "#fada64", dir: "ltr", weight: 800, mono: true, maxWidth: 45 },
+      phone: { x: 31, y: 65, size: 3, color: "#ffffff", dir: "ltr", weight: 800, mono: true, maxWidth: 45 },
     },
   },
 ];
@@ -251,9 +251,12 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
   const [values, setValues] = useState<Record<string, string>>(() =>
     Object.fromEntries(tpl.fields.map((f) => [f.key, ""])),
   );
-  const [layout, setLayout] = useState<Record<string, FieldLayout>>(
-    () => JSON.parse(JSON.stringify(tpl.layout)) as Record<string, FieldLayout>,
-  );
+  const [layout, setLayout] = useState<Record<string, FieldLayout>>(() => {
+    const cloned = JSON.parse(JSON.stringify(tpl.layout)) as Record<string, FieldLayout>;
+    // Auto-unify phone color with name color across all templates
+    if (cloned.phone && cloned.name) cloned.phone.color = cloned.name.color;
+    return cloned;
+  });
   const [saving, setSaving] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(true);
   const imgRef = useRef<HTMLImageElement | null>(null);
