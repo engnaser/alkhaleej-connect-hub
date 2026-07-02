@@ -183,9 +183,8 @@ function DesignsPage() {
                 خروج
               </button>
             )}
-            <Link to="/" aria-label="العودة" className="grid h-10 w-10 place-items-center rounded-full border border-border bg-secondary text-primary transition-colors hover:bg-primary/10">
-              <Sun className="h-4 w-4" />
-            </Link>
+            <ThemeToggle />
+
           </div>
         </div>
       </header>
