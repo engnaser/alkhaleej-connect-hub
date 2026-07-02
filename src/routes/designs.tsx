@@ -4,6 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { Download, LogOut, Settings2, Sparkles, Sun, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { getMyAdminStatus } from "@/lib/admin.functions";
+import { saveMyPhoto } from "@/lib/my-photos";
 import logoKhalij from "@/assets/logo-khalij.png";
 import posterSabah from "@/assets/poster-sabah.jpg";
 import posterMasaa from "@/assets/poster-masaa.jpg";
@@ -345,10 +346,19 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
       ctx.fillText(text, (L.x / 100) * w, (L.y / 100) * h, maxW);
     }
 
+    const dataUrl = canvas.toDataURL("image/png");
     const a = document.createElement("a");
-    a.href = canvas.toDataURL("image/png");
+    a.href = dataUrl;
     a.download = `khalij-${tpl.id}-${v.name || "design"}.png`;
     a.click();
+
+    saveMyPhoto({
+      templateId: tpl.id,
+      title: tpl.title,
+      occasion: tpl.occasion,
+      name: v.name || "",
+      dataUrl,
+    });
   };
 
   return (
