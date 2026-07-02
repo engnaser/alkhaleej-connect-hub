@@ -9,6 +9,7 @@ import {
   Twitter,
   Apple,
   Smartphone,
+  Youtube,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 
@@ -17,9 +18,13 @@ const ANDROID_URL =
 const IOS_URL = "https://alkhalijtw.yemoney.net/";
 const WHATSAPP_URL = "https://wa.me/967781635755";
 
+const FACEBOOK_URL = "https://www.facebook.com/share/18q6YkJuWY/";
+const YOUTUBE_URL = "https://youtube.com/channel/UCOeOItYdd6UQGOCPNc9OLTQ";
+
 const SOCIALS = [
   { label: "واتساب", href: WHATSAPP_URL, Icon: MessageCircle },
-  { label: "فيسبوك", href: "#", Icon: Facebook },
+  { label: "فيسبوك", href: FACEBOOK_URL, Icon: Facebook },
+  { label: "يوتيوب", href: YOUTUBE_URL, Icon: Youtube },
   { label: "تيليجرام", href: "#", Icon: Send },
   { label: "إنستجرام", href: "#", Icon: Instagram },
   { label: "تويتر", href: "#", Icon: Twitter },
