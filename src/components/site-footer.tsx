@@ -94,26 +94,13 @@ export function SiteFooter() {
             <ul className="space-y-3 text-sm">
               <li>
                 <a
-                  href={WHATSAPP_URL}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="flex items-center gap-3 text-foreground/80 transition-colors hover:text-primary"
-                >
-                  <span className="grid h-8 w-8 place-items-center rounded-full bg-primary/10 text-primary">
-                    <MessageCircle className="h-4 w-4" />
-                  </span>
-                  <span dir="ltr">واتساب: 781635755</span>
-                </a>
-              </li>
-              <li>
-                <a
                   href="tel:781635755"
                   className="flex items-center gap-3 text-foreground/80 transition-colors hover:text-primary"
                 >
                   <span className="grid h-8 w-8 place-items-center rounded-full bg-primary/10 text-primary">
                     <Phone className="h-4 w-4" />
                   </span>
-                  <span dir="ltr">اتصال: 781635755</span>
+                  <span dir="ltr">واتساب أو اتصال: 781635755</span>
                 </a>
               </li>
               <li>
@@ -124,7 +111,7 @@ export function SiteFooter() {
                   <span className="grid h-8 w-8 place-items-center rounded-full bg-primary/10 text-primary">
                     <Phone className="h-4 w-4" />
                   </span>
-                  <span dir="ltr">اتصال: 775608601</span>
+                  <span dir="ltr">واتساب أو اتصال: 775608601</span>
                 </a>
               </li>
               <li>
