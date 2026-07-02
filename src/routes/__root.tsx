@@ -135,6 +135,13 @@ function RootShell({ children }: { children: ReactNode }) {
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
+  useEffect(() => {
+    const saved = window.localStorage.getItem("khalij:theme");
+    const theme = saved === "light" ? "light" : "dark";
+    document.documentElement.classList.toggle("light", theme === "light");
+    document.documentElement.classList.toggle("dark", theme === "dark");
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <Outlet />
