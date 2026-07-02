@@ -9,6 +9,7 @@ import {
   Twitter,
   Apple,
   Smartphone,
+  Youtube,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 
