@@ -14,6 +14,7 @@ import logoKhalij from "@/assets/logo-khalij.png";
 const NAV_ITEMS = [
   { label: "الرئيسية", to: "/" },
   { label: "التصاميم", to: "/designs" },
+  { label: "صوري", to: "/my-photos" },
   { label: "الخدمات", to: "/services" },
   { label: "تواصل معنا", href: "https://wa.me/967775608601" },
 ];
