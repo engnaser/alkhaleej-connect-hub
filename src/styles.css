@@ -107,11 +107,11 @@
   --primary-foreground: #ffffff;
   --primary-glow: #14b8a6;
 
-  --secondary: #eef3f9;
+  --secondary: #e8f0f7;
   --secondary-foreground: #0a1322;
 
   --muted: #eef3f9;
-  --muted-foreground: #4b5b74;
+  --muted-foreground: #334155;
 
   --accent: #e6f7f4;
   --accent-foreground: #0d9488;
@@ -123,8 +123,8 @@
   --warning-border: #d97706;
   --warning-foreground: #78350f;
 
-  --border: #d8e0ec;
-  --input: #d8e0ec;
+  --border: #cbd7e6;
+  --input: #cbd7e6;
   --ring: #0d9488;
 }
 

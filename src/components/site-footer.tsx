@@ -54,7 +54,7 @@ export function SiteFooter() {
   return (
     <footer
       dir="rtl"
-      className="relative border-t border-primary/20 bg-surface text-foreground"
+      className="relative border-t border-primary/20 bg-secondary text-foreground sm:bg-surface"
     >
       {/* top accent line */}
       <div className="absolute inset-x-0 top-0 h-px bg-gradient-to-l from-transparent via-primary/60 to-transparent" />
@@ -73,7 +73,7 @@ export function SiteFooter() {
                 الخليج تيليكوم
               </h3>
             </div>
-            <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
+            <p className="mt-4 text-sm leading-relaxed text-foreground/80">
               منصة احترافية لتخصيص الصور وإدخال البيانات عليها بأسلوب عصري
               ومنظم.
             </p>
@@ -90,7 +90,7 @@ export function SiteFooter() {
                 <li key={l.label}>
                   <Link
                     to={l.to}
-                    className="group inline-flex items-center gap-2 text-foreground/75 transition-colors hover:text-primary"
+                    className="group inline-flex items-center gap-2 text-foreground/90 transition-colors hover:text-primary"
                   >
                     <span className="h-1.5 w-1.5 rounded-full bg-primary/50 transition-all group-hover:w-3 group-hover:bg-primary" />
                     {l.label}
@@ -110,7 +110,7 @@ export function SiteFooter() {
               <li>
                 <a
                   href="tel:781635755"
-                  className="flex items-center gap-3 text-foreground/80 transition-colors hover:text-primary"
+                  className="flex items-center gap-3 text-foreground/90 transition-colors hover:text-primary"
                 >
                   <span className="grid h-8 w-8 place-items-center rounded-full bg-primary/10 text-primary">
                     <Phone className="h-4 w-4" />
@@ -121,7 +121,7 @@ export function SiteFooter() {
               <li>
                 <a
                   href="tel:775608601"
-                  className="flex items-center gap-3 text-foreground/80 transition-colors hover:text-primary"
+                  className="flex items-center gap-3 text-foreground/90 transition-colors hover:text-primary"
                 >
                   <span className="grid h-8 w-8 place-items-center rounded-full bg-primary/10 text-primary">
                     <Phone className="h-4 w-4" />
@@ -132,7 +132,7 @@ export function SiteFooter() {
               <li>
                 <a
                   href="mailto:alkhalijtelecom2021@gmail.com"
-                  className="flex items-center gap-3 text-foreground/80 transition-colors hover:text-primary"
+                  className="flex items-center gap-3 text-foreground/90 transition-colors hover:text-primary"
                 >
                   <span className="grid h-8 w-8 place-items-center rounded-full bg-primary/10 text-primary">
                     <Mail className="h-4 w-4" />
@@ -180,7 +180,7 @@ export function SiteFooter() {
                   <Apple className="h-5 w-5" />
                 </span>
                 <span className="flex flex-col leading-tight">
-                  <span className="text-[11px] text-muted-foreground">
+                  <span className="text-[11px] text-foreground/75">
                     حمّل من
                   </span>
                   <span className="text-sm font-extrabold text-foreground">
@@ -200,7 +200,7 @@ export function SiteFooter() {
                   <Smartphone className="h-5 w-5" />
                 </span>
                 <span className="flex flex-col leading-tight">
-                  <span className="text-[11px] text-muted-foreground">
+                  <span className="text-[11px] text-foreground/75">
                     حمّل من
                   </span>
                   <span className="text-sm font-extrabold text-foreground">
@@ -214,7 +214,7 @@ export function SiteFooter() {
 
         {/* bottom bar */}
         <div className="mt-12 border-t border-primary/15 pt-6 text-center">
-          <p className="text-xs text-muted-foreground">
+          <p className="text-xs text-foreground/70">
             © {new Date().getFullYear()} جميع الحقوق محفوظة - الخليج تيليكوم
           </p>
         </div>
