@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import type { MouseEvent } from "react";
 import {
   Phone,
   Mail,
@@ -29,6 +30,14 @@ const SOCIALS = [
   { label: "إنستجرام", href: "#", Icon: Instagram },
   { label: "تويتر", href: "#", Icon: Twitter },
 ];
+
+const openExternalLink = (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+  if (!href || href === "#") return;
+
+  event.preventDefault();
+  const openedWindow = window.open(href, "_blank", "noopener,noreferrer");
+  openedWindow?.focus();
+};
 
 const QUICK_LINKS: { label: string; to: string }[] = [
   { label: "الرئيسية", to: "/" },
@@ -141,6 +150,7 @@ export function SiteFooter() {
                   href={href}
                   target="_blank"
                   rel="noreferrer"
+                  onClick={openExternalLink(href)}
                   aria-label={label}
                   className="grid h-10 w-10 place-items-center rounded-full border border-primary/30 bg-primary/5 text-primary transition-all hover:-translate-y-0.5 hover:border-primary hover:bg-primary hover:text-primary-foreground hover:shadow-[0_8px_20px_-8px_var(--primary)]"
                 >
@@ -162,6 +172,7 @@ export function SiteFooter() {
                 href={IOS_URL}
                 target="_blank"
                 rel="noreferrer"
+                onClick={openExternalLink(IOS_URL)}
                 className="group flex items-center gap-3 rounded-2xl border border-primary/20 bg-gradient-to-l from-primary/10 to-transparent p-3 transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_10px_30px_-12px_var(--primary)]"
               >
                 <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground">
@@ -181,6 +192,7 @@ export function SiteFooter() {
                 href={ANDROID_URL}
                 target="_blank"
                 rel="noreferrer"
+                onClick={openExternalLink(ANDROID_URL)}
                 className="group flex items-center gap-3 rounded-2xl border border-primary/20 bg-gradient-to-l from-primary/10 to-transparent p-3 transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_10px_30px_-12px_var(--primary)]"
               >
                 <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground">
