@@ -1,7 +1,8 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Download, LogOut, Settings2, Sparkles, Sun, X } from "lucide-react";
+import { Download, LogOut, Settings2, Sparkles, X } from "lucide-react";
+import { ThemeToggle } from "@/components/theme-toggle";
 import { supabase } from "@/integrations/supabase/client";
 import { getMyAdminStatus } from "@/lib/admin.functions";
 import { saveMyPhoto } from "@/lib/my-photos";
@@ -182,9 +183,8 @@ function DesignsPage() {
                 خروج
               </button>
             )}
-            <Link to="/" aria-label="العودة" className="grid h-10 w-10 place-items-center rounded-full border border-border bg-secondary text-primary transition-colors hover:bg-primary/10">
-              <Sun className="h-4 w-4" />
-            </Link>
+            <ThemeToggle />
+
           </div>
         </div>
       </header>

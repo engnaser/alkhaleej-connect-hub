@@ -9,6 +9,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
+import { ThemeToggle } from "@/components/theme-toggle";
 import logoKhalij from "@/assets/logo-khalij.png";
 
 const NAV_ITEMS = [
@@ -62,7 +63,9 @@ export function SiteHeader({ cta }: { cta?: ReactNode }) {
         </nav>
 
         <div className="flex items-center gap-2">
+          <ThemeToggle />
           {cta}
+
 
           <Sheet>
             <SheetTrigger asChild>

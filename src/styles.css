@@ -94,6 +94,40 @@
   --ring: #2dd4bf;
 }
 
+:root.light {
+  --background: #f6f9fc;
+  --foreground: #0a1322;
+  --surface: #ffffff;
+  --card: #ffffff;
+  --card-foreground: #0a1322;
+  --popover: #ffffff;
+  --popover-foreground: #0a1322;
+
+  --primary: #0d9488;
+  --primary-foreground: #ffffff;
+  --primary-glow: #14b8a6;
+
+  --secondary: #eef3f9;
+  --secondary-foreground: #0a1322;
+
+  --muted: #eef3f9;
+  --muted-foreground: #4b5b74;
+
+  --accent: #e6f7f4;
+  --accent-foreground: #0d9488;
+
+  --cyan: #ca8a04;
+  --cyan-foreground: #ffffff;
+
+  --warning-bg: #fef3c7;
+  --warning-border: #d97706;
+  --warning-foreground: #78350f;
+
+  --border: #d8e0ec;
+  --input: #d8e0ec;
+  --ring: #0d9488;
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
