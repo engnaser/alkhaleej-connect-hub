@@ -9,6 +9,7 @@ import {
   SheetTitle,
   SheetDescription,
 } from "@/components/ui/sheet";
+import { ThemeToggle } from "@/components/theme-toggle";
 import logoKhalij from "@/assets/logo-khalij.png";
 
 const NAV_ITEMS = [
