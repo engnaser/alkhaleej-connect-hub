@@ -161,9 +161,9 @@ function DesignsPage() {
           <nav className="hidden items-center gap-1 md:flex">
             {[
               { href: "/", label: "الرئيسية" },
-              { href: "/designs", label: "صوري" },
-              { href: "/#privacy", label: "سياسة الخصوصية" },
-              { href: "/#about", label: "اتصل بنا" },
+              { href: "/my-photos", label: "صوري" },
+              { href: "/privacy", label: "سياسة الخصوصية" },
+              { href: "/contact", label: "اتصل بنا" },
             ].map((l) => (
               <a key={l.label} href={l.href} className="rounded-md px-3 py-2 text-sm font-semibold text-foreground/80 transition-colors hover:bg-secondary hover:text-primary">
                 {l.label}
