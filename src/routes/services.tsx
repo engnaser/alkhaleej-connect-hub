@@ -21,6 +21,7 @@ import {
   Receipt,
   Radio,
   Smartphone,
+  Bot,
   Coins,
   ArrowLeftRight,
   GraduationCap,
