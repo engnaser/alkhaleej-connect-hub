@@ -21,6 +21,7 @@ import {
   Receipt,
   Radio,
   Smartphone,
+  Bot,
   Coins,
   ArrowLeftRight,
   GraduationCap,
@@ -73,6 +74,13 @@ const SERVICES = [
     desc: "أرسل رسالة واتساب لأي رقم مباشرة دون الحاجة لإضافته إلى جهات الاتصال.",
     to: "#whatsapp-tool" as const,
     cta: "استخدم الأداة",
+  },
+  {
+    icon: Bot,
+    title: "بوت الواتساب — ردود سريعة",
+    desc: "بوت ذكي للرد التلقائي على استفسارات العملاء عبر الواتساب مع قوالب ردود جاهزة.",
+    to: "/whatsapp-bot" as const,
+    cta: "افتح البوت",
   },
   {
     icon: Gauge,

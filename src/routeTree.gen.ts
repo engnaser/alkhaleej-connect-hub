@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as Yemen4gInquiryRouteImport } from './routes/yemen4g-inquiry'
 import { Route as YemenMobileRouteImport } from './routes/yemen-mobile'
 import { Route as WhatsappUnblockRouteImport } from './routes/whatsapp-unblock'
+import { Route as WhatsappBotRouteImport } from './routes/whatsapp-bot'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SpeedTestRouteImport } from './routes/speed-test'
 import { Route as ServicesRouteImport } from './routes/services'
@@ -47,6 +48,11 @@ const YemenMobileRoute = YemenMobileRouteImport.update({
 const WhatsappUnblockRoute = WhatsappUnblockRouteImport.update({
   id: '/whatsapp-unblock',
   path: '/whatsapp-unblock',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WhatsappBotRoute = WhatsappBotRouteImport.update({
+  id: '/whatsapp-bot',
+  path: '/whatsapp-bot',
   getParentRoute: () => rootRouteImport,
 } as any)
 const TermsRoute = TermsRouteImport.update({
@@ -173,6 +179,7 @@ export interface FileRoutesByFullPath {
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
   '/terms': typeof TermsRoute
+  '/whatsapp-bot': typeof WhatsappBotRoute
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
@@ -199,6 +206,7 @@ export interface FileRoutesByTo {
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
   '/terms': typeof TermsRoute
+  '/whatsapp-bot': typeof WhatsappBotRoute
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
@@ -226,6 +234,7 @@ export interface FileRoutesById {
   '/services': typeof ServicesRoute
   '/speed-test': typeof SpeedTestRoute
   '/terms': typeof TermsRoute
+  '/whatsapp-bot': typeof WhatsappBotRoute
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
@@ -254,6 +263,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/speed-test'
     | '/terms'
+    | '/whatsapp-bot'
     | '/whatsapp-unblock'
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
@@ -280,6 +290,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/speed-test'
     | '/terms'
+    | '/whatsapp-bot'
     | '/whatsapp-unblock'
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
@@ -306,6 +317,7 @@ export interface FileRouteTypes {
     | '/services'
     | '/speed-test'
     | '/terms'
+    | '/whatsapp-bot'
     | '/whatsapp-unblock'
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
@@ -333,6 +345,7 @@ export interface RootRouteChildren {
   ServicesRoute: typeof ServicesRoute
   SpeedTestRoute: typeof SpeedTestRoute
   TermsRoute: typeof TermsRoute
+  WhatsappBotRoute: typeof WhatsappBotRoute
   WhatsappUnblockRoute: typeof WhatsappUnblockRoute
   YemenMobileRoute: typeof YemenMobileRoute
   Yemen4gInquiryRoute: typeof Yemen4gInquiryRoute
@@ -363,6 +376,13 @@ declare module '@tanstack/react-router' {
       path: '/whatsapp-unblock'
       fullPath: '/whatsapp-unblock'
       preLoaderRoute: typeof WhatsappUnblockRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/whatsapp-bot': {
+      id: '/whatsapp-bot'
+      path: '/whatsapp-bot'
+      fullPath: '/whatsapp-bot'
+      preLoaderRoute: typeof WhatsappBotRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/terms': {
@@ -533,6 +553,7 @@ const rootRouteChildren: RootRouteChildren = {
   ServicesRoute: ServicesRoute,
   SpeedTestRoute: SpeedTestRoute,
   TermsRoute: TermsRoute,
+  WhatsappBotRoute: WhatsappBotRoute,
   WhatsappUnblockRoute: WhatsappUnblockRoute,
   YemenMobileRoute: YemenMobileRoute,
   Yemen4gInquiryRoute: Yemen4gInquiryRoute,
