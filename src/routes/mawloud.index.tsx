@@ -7,8 +7,10 @@ export const Route = createFileRoute("/mawloud/")({
   head: () => ({
     meta: [
       { title: "بطاقة تهنئة بالمولود | الخليج تيليكوم" },
-      { name: "description", content: "صمّم بطاقة تهنئة بالمولود بنفس هوية الخليج تيليكوم وحمّلها كصورة PNG فوراً." },
+      { name: "description", content: "صمّم بطاقة تهنئة بالمولود بنفس هوية الخليج تيليكوم وحمّلها كصورة PNG فوراً." },,
+      { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/mawloud" },
     ],
+      links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/mawloud" }],
   }),
   component: MawloudPage,
 });

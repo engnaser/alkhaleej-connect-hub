@@ -28,8 +28,10 @@ export const Route = createFileRoute("/speed-test")({
         property: "og:description",
         content:
           "أداة احترافية لقياس سرعة الإنترنت من داخل المتصفح بدون تسجيل دخول.",
-      },
+      },,
+      { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/speed-test" },
     ],
+      links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/speed-test" }],
   }),
   component: SpeedTestPage,
 });

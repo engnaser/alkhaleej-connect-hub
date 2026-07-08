@@ -30,8 +30,10 @@ export const Route = createFileRoute("/adsl-inquiry")({
         property: "og:description",
         content:
           "خدمة توجيه آمن لصفحة الاستعلام الرسمية لباقات الإنترنت الأرضي.",
-      },
+      },,
+      { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/adsl-inquiry" },
     ],
+      links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/adsl-inquiry" }],
   }),
   component: AdslInquiryPage,
 });

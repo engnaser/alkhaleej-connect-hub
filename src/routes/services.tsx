@@ -51,8 +51,10 @@ export const Route = createFileRoute("/services")({
         property: "og:description",
         content:
           "كل خدمات التصميم والتخصيص في مكان واحد، إضافة إلى أداة مراسلة واتساب بدون حفظ الرقم.",
-      },
+      },,
+      { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/services" },
     ],
+      links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/services" }],
   }),
   component: ServicesPage,
 });

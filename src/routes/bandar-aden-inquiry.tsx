@@ -34,8 +34,10 @@ export const Route = createFileRoute("/bandar-aden-inquiry")({
         property: "og:description",
         content:
           "ادخل إلى بوابة بندر عدن الرسمية وتعرّف على تاريخ انتهاء اشتراكك بسهولة وأمان.",
-      },
+      },,
+      { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/bandar-aden-inquiry" },
     ],
+      links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/bandar-aden-inquiry" }],
   }),
   component: BandarAdenPage,
 });

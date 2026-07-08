@@ -33,8 +33,10 @@ export const Route = createFileRoute("/secondary-certificate")({
         property: "og:description",
         content:
           "اختصار آمن لصفحة الاستعلام الرسمية عن نتائج وشهادات الثانوية العامة للمناطق المحررة.",
-      },
+      },,
+      { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/secondary-certificate" },
     ],
+      links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/secondary-certificate" }],
   }),
   component: SecondaryCertificatePage,
 });
