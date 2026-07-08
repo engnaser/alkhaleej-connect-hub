@@ -11,6 +11,7 @@ import { useEffect, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
+import { installGlobalErrorListeners } from "../lib/global-error-listeners";
 
 function NotFoundComponent() {
   return (
@@ -161,6 +162,7 @@ function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   useEffect(() => {
+    installGlobalErrorListeners();
     const saved = window.localStorage.getItem("khalij:theme");
     const theme = saved === "dark" ? "dark" : "light";
     document.documentElement.classList.toggle("light", theme === "light");
