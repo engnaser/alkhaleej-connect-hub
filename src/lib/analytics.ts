@@ -42,7 +42,8 @@ export function trackEvent(payload: TrackPayload): void {
   // Best-effort insert; ignore failures so tracking never breaks the page.
   void supabase
     .from("analytics_events")
-    .insert(row)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    .insert(row as any)
     .then(({ error }) => {
       if (error && import.meta.env.DEV) {
         console.warn("[analytics] insert failed", error.message);
