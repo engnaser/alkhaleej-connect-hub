@@ -59,7 +59,7 @@ export const Route = createFileRoute("/yemen-mobile")({
         property: "og:description",
         content:
           "كل ما تحتاجه من باقات وخدمات يمن موبايل وإعدادات الإنترنت بواجهة عربية حديثة.",
-      },,
+      },
       { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/yemen-mobile" },
     ],
       links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/yemen-mobile" }],

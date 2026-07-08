@@ -19,7 +19,7 @@ export const Route = createFileRoute("/currency-converter")({
       {
         property: "og:description",
         content: "أداة سريعة لتحويل أي مبلغ بين العملات العالمية بأحدث الأسعار.",
-      },,
+      },
       { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/currency-converter" },
     ],
       links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/currency-converter" }],

@@ -13,7 +13,7 @@ export const Route = createFileRoute("/safety")({
       {
         property: "og:description",
         content: "كيف نحمي حسابك وبياناتك على منصة الخليج تيليكوم.",
-      },,
+      },
       { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/safety" },
     ],
       links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/safety" }],

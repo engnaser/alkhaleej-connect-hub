@@ -18,7 +18,7 @@ export const Route = createFileRoute("/whatsapp-bot")({
       {
         property: "og:description",
         content: "بوت واتساب ذكي للرد التلقائي على الاستفسارات.",
-      },,
+      },
       { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/whatsapp-bot" },
     ],
       links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/whatsapp-bot" }],

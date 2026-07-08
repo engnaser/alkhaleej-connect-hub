@@ -35,7 +35,7 @@ export const Route = createFileRoute("/yemen4g-inquiry")({
         property: "og:description",
         content:
           "خدمة توجيه آمن لصفحة الاستعلام الرسمية عن رصيد يمن فورجي.",
-      },,
+      },
       { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/yemen4g-inquiry" },
     ],
       links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/yemen4g-inquiry" }],

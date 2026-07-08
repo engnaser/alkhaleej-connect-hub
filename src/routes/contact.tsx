@@ -13,7 +13,7 @@ export const Route = createFileRoute("/contact")({
       {
         property: "og:description",
         content: "جميع وسائل التواصل مع منصة الخليج تيليكوم.",
-      },,
+      },
       { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/contact" },
     ],
       links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/contact" }],

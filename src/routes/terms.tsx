@@ -13,7 +13,7 @@ export const Route = createFileRoute("/terms")({
       {
         property: "og:description",
         content: "قواعد وشروط استخدام منصة الخليج تيليكوم.",
-      },,
+      },
       { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/terms" },
     ],
       links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/terms" }],

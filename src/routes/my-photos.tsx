@@ -21,7 +21,7 @@ export const Route = createFileRoute("/my-photos")({
       {
         property: "og:description",
         content: "استعرض جميع تصاميمك المحفوظة وأعد تنزيلها في أي وقت.",
-      },,
+      },
       { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/my-photos" },
     ],
       links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/my-photos" }],
