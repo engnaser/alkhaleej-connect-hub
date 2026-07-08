@@ -95,8 +95,10 @@ const STEPS = [
 ];
 
 function HomePage() {
+  const { isAdmin } = useIsAdmin();
   return (
     <div dir="rtl" className="min-h-screen bg-background text-foreground">
+
       {/* HEADER */}
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
