@@ -38,95 +38,100 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
   --color-surface: var(--surface);
-  --font-sans: "Tajawal", system-ui, sans-serif;
-  --shadow-card: 0 4px 20px -6px color-mix(in oklab, var(--primary) 12%, transparent);
-  --shadow-elevated: 0 18px 48px -18px color-mix(in oklab, var(--primary) 28%, transparent);
-  --gradient-primary: linear-gradient(135deg, var(--primary), var(--cyan));
-  --gradient-hero: radial-gradient(at 80% 0%, color-mix(in oklab, var(--cyan) 18%, transparent) 0px, transparent 50%),
-    radial-gradient(at 0% 50%, color-mix(in oklab, var(--primary) 15%, transparent) 0px, transparent 50%);
+  --font-sans: "DM Sans", "Tajawal", system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Tajawal", system-ui, sans-serif;
+  --shadow-card: 0 6px 24px -10px color-mix(in oklab, var(--primary) 22%, transparent);
+  --shadow-elevated: 0 24px 60px -20px color-mix(in oklab, var(--primary) 36%, transparent);
+  --shadow-gold: 0 12px 40px -14px color-mix(in oklab, var(--cyan) 45%, transparent);
+  --gradient-primary: linear-gradient(135deg, var(--primary), var(--primary-glow));
+  --gradient-gold: linear-gradient(135deg, var(--cyan), color-mix(in oklab, var(--cyan) 60%, #fff));
+  --gradient-hero: radial-gradient(at 80% 0%, color-mix(in oklab, var(--primary) 22%, transparent) 0px, transparent 55%),
+    radial-gradient(at 0% 60%, color-mix(in oklab, var(--cyan) 14%, transparent) 0px, transparent 50%);
 }
 
+
 :root {
-  --radius: 0.75rem;
+  --radius: 1rem;
 
-  /* Dark theme — inspired by reference UI */
-  --background: #0a1322;
-  --foreground: #e6edf6;
+  /* Dark theme — Emerald Prestige */
+  --background: #04160f;
+  --foreground: #f2ecd7;
 
-  --surface: #0f1a2d;
+  --surface: #0a2419;
 
-  --card: #111d33;
-  --card-foreground: #e6edf6;
+  --card: #0d2b1f;
+  --card-foreground: #f2ecd7;
 
-  --popover: #111d33;
-  --popover-foreground: #e6edf6;
+  --popover: #0d2b1f;
+  --popover-foreground: #f2ecd7;
 
-  /* Brand teal/mint accent */
-  --primary: #2dd4bf;
-  --primary-foreground: #052e2b;
-  --primary-glow: #5eead4;
+  /* Emerald primary */
+  --primary: #10b981;
+  --primary-foreground: #04160f;
+  --primary-glow: #34d399;
 
-  --secondary: #18243b;
-  --secondary-foreground: #e6edf6;
+  --secondary: #123528;
+  --secondary-foreground: #f2ecd7;
 
-  --muted: #18243b;
-  --muted-foreground: #8aa0bd;
+  --muted: #123528;
+  --muted-foreground: #a8b5aa;
 
-  --accent: #18243b;
-  --accent-foreground: #2dd4bf;
+  --accent: #123528;
+  --accent-foreground: #c9a84c;
 
-  /* Secondary accent (gold) */
-  --cyan: #fada64;
-  --cyan-foreground: #0e4754;
+  /* Gold accent */
+  --cyan: #c9a84c;
+  --cyan-foreground: #04160f;
 
   --whatsapp: oklch(0.68 0.17 150);
   --whatsapp-foreground: oklch(0.99 0 0);
 
   --warning-bg: #2a2410;
-  --warning-border: #b8902a;
-  --warning-foreground: #fde68a;
+  --warning-border: #c9a84c;
+  --warning-foreground: #f0d78c;
 
   --destructive: oklch(0.6 0.22 27);
   --destructive-foreground: oklch(0.99 0 0);
 
-  --border: #1f2c44;
-  --input: #1f2c44;
-  --ring: #2dd4bf;
+  --border: #17402f;
+  --input: #17402f;
+  --ring: #c9a84c;
 }
 
 :root.light {
-  --background: #f6f9fc;
-  --foreground: #0a1322;
-  --surface: #ffffff;
+  --background: #f5f0e0;
+  --foreground: #04160f;
+  --surface: #fbf8ec;
   --card: #ffffff;
-  --card-foreground: #0a1322;
+  --card-foreground: #04160f;
   --popover: #ffffff;
-  --popover-foreground: #0a1322;
+  --popover-foreground: #04160f;
 
-  --primary: #0d9488;
-  --primary-foreground: #ffffff;
-  --primary-glow: #14b8a6;
+  --primary: #0d7a5f;
+  --primary-foreground: #f5f0e0;
+  --primary-glow: #10b981;
 
-  --secondary: #e8f0f7;
-  --secondary-foreground: #0a1322;
+  --secondary: #e8e3d0;
+  --secondary-foreground: #04160f;
 
-  --muted: #eef3f9;
-  --muted-foreground: #334155;
+  --muted: #ece7d3;
+  --muted-foreground: #4a5a4f;
 
-  --accent: #e6f7f4;
-  --accent-foreground: #0d9488;
+  --accent: #f0e6c4;
+  --accent-foreground: #0d7a5f;
 
-  --cyan: #ca8a04;
-  --cyan-foreground: #ffffff;
+  --cyan: #a8862a;
+  --cyan-foreground: #f5f0e0;
 
-  --warning-bg: #fef3c7;
-  --warning-border: #d97706;
-  --warning-foreground: #78350f;
+  --warning-bg: #f5eccb;
+  --warning-border: #a8862a;
+  --warning-foreground: #4a3a10;
 
-  --border: #cbd7e6;
-  --input: #cbd7e6;
-  --ring: #0d9488;
+  --border: #d8cfa8;
+  --input: #d8cfa8;
+  --ring: #a8862a;
 }
+
 
 @layer base {
   * {
@@ -144,4 +149,10 @@
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
   }
+
+  h1, h2, h3, .font-display {
+    font-family: var(--font-display);
+    letter-spacing: -0.01em;
+  }
 }
+

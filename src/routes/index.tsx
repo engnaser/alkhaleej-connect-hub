@@ -358,31 +358,43 @@ function HomePage() {
             </Link>
           </div>
 
-          <div className="mt-10 grid grid-cols-2 gap-5 sm:grid-cols-3 lg:grid-cols-4">
-            {PREVIEW_POSTERS.map((p) => (
-              <Link
-                key={p.title}
-                to="/designs"
-                className="group overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)] transition-all hover:-translate-y-1 hover:shadow-[var(--shadow-elevated)]"
-              >
-                <div className="aspect-[3/4] w-full overflow-hidden">
+          <div className="mt-10 grid auto-rows-[180px] grid-cols-2 gap-4 sm:auto-rows-[220px] sm:grid-cols-4 sm:gap-5">
+            {PREVIEW_POSTERS.map((p, i) => {
+              const spans = [
+                "col-span-2 row-span-2",
+                "col-span-1 row-span-1",
+                "col-span-1 row-span-2",
+                "col-span-1 row-span-1",
+                "col-span-1 row-span-1",
+                "col-span-2 row-span-1",
+              ];
+              return (
+                <Link
+                  key={p.title}
+                  to="/designs"
+                  className={`group relative overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-card)] transition-all hover:-translate-y-1 hover:border-primary/50 hover:shadow-[var(--shadow-elevated)] ${spans[i]}`}
+                >
                   <img
                     src={p.src}
                     alt={p.title}
                     loading="lazy"
                     decoding="async"
-                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+                    className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                   />
-                </div>
-                <div className="flex items-center justify-between gap-2 p-3">
-                  <span className="truncate text-sm font-extrabold text-foreground">
-                    {p.title}
-                  </span>
-                  <Download className="h-4 w-4 shrink-0 text-primary" />
-                </div>
-              </Link>
-            ))}
+                  <div className="absolute inset-0 bg-linear-to-t from-background/95 via-background/30 to-transparent" />
+                  <div className="absolute bottom-0 left-0 right-0 flex items-center justify-between gap-2 p-4">
+                    <span className="truncate text-sm font-extrabold text-foreground drop-shadow-lg sm:text-base">
+                      {p.title}
+                    </span>
+                    <span className="grid h-8 w-8 shrink-0 place-items-center rounded-full bg-primary text-primary-foreground shadow-md">
+                      <Download className="h-3.5 w-3.5" />
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
+
         </section>
 
         {/* CTA */}
