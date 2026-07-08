@@ -77,27 +77,47 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "الخليج تيليكوم لخدمات الشحن الإلكتروني" },
+      { title: "الخليج تيليكوم — خدمات الاتصالات والشحن الإلكتروني" },
       {
         name: "description",
         content:
-          "المنصة الرسمية للخليج تيليكوم لخدمات الشحن الإلكتروني وعمليات الاتصالات الموثوقة في الجمهورية اليمنية.",
+          "منصة الخليج تيليكوم اليمنية: تصاميم تهاني باسمك، استعلامات فواتير ADSL و4G، أسعار عملات، ومفاتيح اتصال دولية.",
       },
       { name: "author", content: "الخليج تيليكوم" },
-      { property: "og:title", content: "الخليج تيليكوم لخدمات الشحن الإلكتروني" },
-      {
-        property: "og:description",
-        content:
-          "المنصة الرسمية للخليج تيليكوم لخدمات الشحن الإلكتروني وعمليات الاتصالات الموثوقة.",
-      },
+      { property: "og:site_name", content: "الخليج تيليكوم" },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:title", content: "الخليج تيليكوم لخدمات الشحن الإلكتروني" },
-      { name: "description", content: "Al-Khaleej Telecom Hub is a professional, modern, and responsive business landing page." },
-      { property: "og:description", content: "Al-Khaleej Telecom Hub is a professional, modern, and responsive business landing page." },
-      { name: "twitter:description", content: "Al-Khaleej Telecom Hub is a professional, modern, and responsive business landing page." },
-      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e8cf0f29-1e01-43ff-8118-40316c1121fd/id-preview-be3ec84b--b2c0f853-1534-4d24-83b5-35ff96482c70.lovable.app-1782051720010.png" },
-      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/e8cf0f29-1e01-43ff-8118-40316c1121fd/id-preview-be3ec84b--b2c0f853-1534-4d24-83b5-35ff96482c70.lovable.app-1782051720010.png" },
+      { property: "og:locale", content: "ar_YE" },
+      { name: "twitter:card", content: "summary_large_image" },
+    ],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Organization",
+          name: "الخليج تيليكوم",
+          alternateName: "Al-Khaleej Telecom",
+          url: "https://alkhaleej-connect-hub.lovable.app",
+          logo: "https://alkhaleej-connect-hub.lovable.app/favicon.png",
+          contactPoint: {
+            "@type": "ContactPoint",
+            telephone: "+967-775-608-601",
+            contactType: "customer service",
+            areaServed: "YE",
+            availableLanguage: ["Arabic"],
+          },
+        }),
+      },
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: "الخليج تيليكوم",
+          url: "https://alkhaleej-connect-hub.lovable.app",
+          inLanguage: "ar",
+        }),
+      },
     ],
     links: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
