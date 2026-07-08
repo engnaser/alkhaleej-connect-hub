@@ -14,6 +14,42 @@ export type Database = {
   }
   public: {
     Tables: {
+      analytics_events: {
+        Row: {
+          created_at: string
+          event_type: string
+          id: string
+          meta: Json | null
+          path: string | null
+          referrer: string | null
+          service_id: string | null
+          session_id: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_type: string
+          id?: string
+          meta?: Json | null
+          path?: string | null
+          referrer?: string | null
+          service_id?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_type?: string
+          id?: string
+          meta?: Json | null
+          path?: string | null
+          referrer?: string | null
+          service_id?: string | null
+          session_id?: string | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
       exchange_rate_history: {
         Row: {
           buy: number

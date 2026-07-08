@@ -160,6 +160,7 @@ function RootShell({ children }: { children: ReactNode }) {
 
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
+  const router = useRouter();
 
   useEffect(() => {
     installGlobalErrorListeners();
@@ -168,6 +169,24 @@ function RootComponent() {
     document.documentElement.classList.toggle("light", theme === "light");
     document.documentElement.classList.toggle("dark", theme === "dark");
   }, []);
+
+  useEffect(() => {
+    // Log initial view + subsequent client-side navigations.
+    let last = "";
+    const log = (path: string) => {
+      if (!path || path === last) return;
+      if (path.startsWith("/admin")) return; // skip admin surfaces
+      last = path;
+      void import("../lib/analytics").then((m) => m.trackPageView(path));
+    };
+    log(window.location.pathname);
+    const unsub = router.subscribe("onResolved", ({ toLocation }) => {
+      log(toLocation.pathname);
+    });
+    return () => {
+      unsub();
+    };
+  }, [router]);
 
   return (
     <QueryClientProvider client={queryClient}>
