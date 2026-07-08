@@ -10,7 +10,10 @@ import {
   ArrowLeft,
   CheckCircle2,
   Menu,
+  LayoutDashboard,
 } from "lucide-react";
+import { useIsAdmin } from "@/hooks/use-is-admin";
+
 import {
   Sheet,
   SheetContent,
@@ -92,8 +95,10 @@ const STEPS = [
 ];
 
 function HomePage() {
+  const { isAdmin } = useIsAdmin();
   return (
     <div dir="rtl" className="min-h-screen bg-background text-foreground">
+
       {/* HEADER */}
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-xl">
         <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3 sm:px-6 lg:px-8">
@@ -139,6 +144,16 @@ function HomePage() {
           </nav>
 
           <div className="flex items-center gap-2">
+            {isAdmin && (
+              <Link
+                to="/admin/analytics"
+                className="inline-flex items-center gap-1.5 rounded-full border-2 border-primary/40 bg-card px-3 py-2 text-xs font-bold text-primary shadow-sm transition-colors hover:bg-primary/10 sm:text-sm"
+                title="لوحة التحكم"
+              >
+                <LayoutDashboard className="h-4 w-4" />
+                <span className="hidden sm:inline">لوحة التحكم</span>
+              </Link>
+            )}
             <Link
               to="/designs"
               className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-md transition-transform hover:scale-[1.03] sm:text-sm"
@@ -146,6 +161,8 @@ function HomePage() {
               <Sparkles className="h-4 w-4" />
               ابدأ الآن
             </Link>
+
+
 
             <Sheet>
               <SheetTrigger asChild>
