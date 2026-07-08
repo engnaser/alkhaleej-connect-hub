@@ -120,12 +120,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
 
 function RootShell({ children }: { children: ReactNode }) {
   return (
-    <html lang="ar" dir="rtl" className="dark">
+    <html lang="ar" dir="rtl" className="light">
       <head>
         <HeadContent />
         <script
           dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('khalij:theme');var c=document.documentElement.classList;c.remove('light','dark');c.add(t==='light'?'light':'dark');}catch(e){}})();`,
+            __html: `(function(){try{var t=localStorage.getItem('khalij:theme');var c=document.documentElement.classList;c.remove('light','dark');c.add(t==='dark'?'dark':'light');}catch(e){}})();`,
           }}
         />
       </head>
@@ -142,7 +142,7 @@ function RootComponent() {
 
   useEffect(() => {
     const saved = window.localStorage.getItem("khalij:theme");
-    const theme = saved === "light" ? "light" : "dark";
+    const theme = saved === "dark" ? "dark" : "light";
     document.documentElement.classList.toggle("light", theme === "light");
     document.documentElement.classList.toggle("dark", theme === "dark");
   }, []);
