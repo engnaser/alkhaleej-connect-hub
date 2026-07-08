@@ -17,19 +17,31 @@ import posterKhalij from "@/assets/poster-khalij.png.asset.json";
 import posterJumaaGold from "@/assets/poster-jumaa-gold.png.asset.json";
 import posterEidMosque from "@/assets/poster-eid-mosque.png.asset.json";
 
+const SITE = "https://alkhaleej-connect-hub.lovable.app";
+
 export const Route = createFileRoute("/designs")({
   head: () => ({
     meta: [
-      { title: "التصاميم الدعائية للمناسبات | الخليج تيليكوم" },
+      { title: "قوالب تهاني جاهزة باسمك — الخليج تيليكوم" },
       {
         name: "description",
         content:
-          "تصاميم دعائية حصرية بهوية الخليج تيليكوم — أضف اسمك ورقم جوالك وحمّل البطاقة فوراً.",
+          "تصاميم دعائية حصرية بهوية الخليج تيليكوم — أضف اسمك ورقم جوالك وحمّل البطاقة فوراً مجاناً.",
       },
+      { property: "og:title", content: "قوالب تهاني جاهزة باسمك — الخليج تيليكوم" },
+      {
+        property: "og:description",
+        content: "مكتبة قوالب تهاني للمناسبات — خصّصها باسمك وحمّلها بضغطة.",
+      },
+      { property: "og:url", content: `${SITE}/designs` },
+      { property: "og:image", content: `${SITE}${posterEid}` },
+      { name: "twitter:image", content: `${SITE}${posterEid}` },
     ],
+    links: [{ rel: "canonical", href: `${SITE}/designs` }],
   }),
   component: DesignsPage,
 });
+
 
 type FieldDef = {
   key: string;
