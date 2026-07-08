@@ -99,38 +99,39 @@
 }
 
 :root.light {
-  --background: #f5f0e0;
-  --foreground: #04160f;
-  --surface: #fbf8ec;
+  --background: #fbfaf3;
+  --foreground: #082018;
+  --surface: #ffffff;
   --card: #ffffff;
-  --card-foreground: #04160f;
+  --card-foreground: #082018;
   --popover: #ffffff;
-  --popover-foreground: #04160f;
+  --popover-foreground: #082018;
 
   --primary: #0d7a5f;
-  --primary-foreground: #f5f0e0;
+  --primary-foreground: #ffffff;
   --primary-glow: #10b981;
 
-  --secondary: #e8e3d0;
-  --secondary-foreground: #04160f;
+  --secondary: #eef4ee;
+  --secondary-foreground: #082018;
 
-  --muted: #ece7d3;
+  --muted: #f2f0e4;
   --muted-foreground: #4a5a4f;
 
-  --accent: #f0e6c4;
+  --accent: #f6efd5;
   --accent-foreground: #0d7a5f;
 
-  --cyan: #a8862a;
-  --cyan-foreground: #f5f0e0;
+  --cyan: #b48a26;
+  --cyan-foreground: #ffffff;
 
-  --warning-bg: #f5eccb;
-  --warning-border: #a8862a;
+  --warning-bg: #fbf1cf;
+  --warning-border: #b48a26;
   --warning-foreground: #4a3a10;
 
-  --border: #d8cfa8;
-  --input: #d8cfa8;
-  --ring: #a8862a;
+  --border: #e5e0c9;
+  --input: #e5e0c9;
+  --ring: #b48a26;
 }
+
 
 
 @layer base {
