@@ -53,19 +53,55 @@
 :root {
   --radius: 1rem;
 
-  /* Dark theme — Emerald Prestige */
+  /* Light theme — White */
+  --background: #ffffff;
+  --foreground: #082018;
+  --surface: #ffffff;
+  --card: #ffffff;
+  --card-foreground: #082018;
+  --popover: #ffffff;
+  --popover-foreground: #082018;
+
+  --primary: #0d7a5f;
+  --primary-foreground: #ffffff;
+  --primary-glow: #10b981;
+
+  --secondary: #f4f7f5;
+  --secondary-foreground: #082018;
+
+  --muted: #f5f5f0;
+  --muted-foreground: #4a5a4f;
+
+  --accent: #f6efd5;
+  --accent-foreground: #0d7a5f;
+
+  --cyan: #b48a26;
+  --cyan-foreground: #ffffff;
+
+  --whatsapp: oklch(0.68 0.17 150);
+  --whatsapp-foreground: oklch(0.99 0 0);
+
+  --warning-bg: #fbf1cf;
+  --warning-border: #b48a26;
+  --warning-foreground: #4a3a10;
+
+  --destructive: oklch(0.6 0.22 27);
+  --destructive-foreground: oklch(0.99 0 0);
+
+  --border: #e8e8e0;
+  --input: #e8e8e0;
+  --ring: #b48a26;
+}
+
+:root.dark {
   --background: #04160f;
   --foreground: #f2ecd7;
-
   --surface: #0a2419;
-
   --card: #0d2b1f;
   --card-foreground: #f2ecd7;
-
   --popover: #0d2b1f;
   --popover-foreground: #f2ecd7;
 
-  /* Emerald primary */
   --primary: #10b981;
   --primary-foreground: #04160f;
   --primary-glow: #34d399;
@@ -79,58 +115,18 @@
   --accent: #123528;
   --accent-foreground: #c9a84c;
 
-  /* Gold accent */
   --cyan: #c9a84c;
   --cyan-foreground: #04160f;
-
-  --whatsapp: oklch(0.68 0.17 150);
-  --whatsapp-foreground: oklch(0.99 0 0);
 
   --warning-bg: #2a2410;
   --warning-border: #c9a84c;
   --warning-foreground: #f0d78c;
-
-  --destructive: oklch(0.6 0.22 27);
-  --destructive-foreground: oklch(0.99 0 0);
 
   --border: #17402f;
   --input: #17402f;
   --ring: #c9a84c;
 }
 
-:root.light {
-  --background: #fbfaf3;
-  --foreground: #082018;
-  --surface: #ffffff;
-  --card: #ffffff;
-  --card-foreground: #082018;
-  --popover: #ffffff;
-  --popover-foreground: #082018;
-
-  --primary: #0d7a5f;
-  --primary-foreground: #ffffff;
-  --primary-glow: #10b981;
-
-  --secondary: #eef4ee;
-  --secondary-foreground: #082018;
-
-  --muted: #f2f0e4;
-  --muted-foreground: #4a5a4f;
-
-  --accent: #f6efd5;
-  --accent-foreground: #0d7a5f;
-
-  --cyan: #b48a26;
-  --cyan-foreground: #ffffff;
-
-  --warning-bg: #fbf1cf;
-  --warning-border: #b48a26;
-  --warning-foreground: #4a3a10;
-
-  --border: #e5e0c9;
-  --input: #e5e0c9;
-  --ring: #b48a26;
-}
 
 
 
