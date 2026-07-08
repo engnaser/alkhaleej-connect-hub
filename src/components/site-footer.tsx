@@ -32,10 +32,13 @@ const SOCIALS = [
   { label: "تويتر", href: "#", Icon: Twitter },
 ];
 
-const openExternalLink = (href: string) => (event: MouseEvent<HTMLAnchorElement>) => {
+const openExternalLink = (href: string, label?: string) => (event: MouseEvent<HTMLAnchorElement>) => {
   if (!href || href === "#") return;
 
   event.preventDefault();
+  void import("@/lib/analytics").then((m) =>
+    m.trackEvent({ event_type: "external_link", meta: { href, label: label ?? null } }),
+  );
   const openedWindow = window.open(href, "_blank", "noopener,noreferrer");
   openedWindow?.focus();
 };
