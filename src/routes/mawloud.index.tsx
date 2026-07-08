@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { Download, RefreshCw, Baby, User, Gift, Settings as SettingsIcon } from "lucide-react";
-import posterMawloud from "@/assets/poster-mawloud.png";
+import posterMawloud from "@/assets/poster-mawloud.png?format=webp&quality=78&as=src";
 
 export const Route = createFileRoute("/mawloud/")({
   head: () => ({
