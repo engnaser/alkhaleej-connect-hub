@@ -279,6 +279,8 @@ function HomePage() {
                       src={posterEid}
                       alt="نموذج تصميم"
                       className="h-full w-full object-cover"
+                      decoding="async"
+                      fetchPriority="high"
                     />
                   </div>
                   <div className="absolute bottom-0 left-0 h-[88%] w-[78%] rotate-3 overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-elevated)]">
@@ -286,6 +288,8 @@ function HomePage() {
                       src={posterMawloud}
                       alt="نموذج تصميم"
                       className="h-full w-full object-cover"
+                      decoding="async"
+                      loading="lazy"
                     />
                   </div>
                   <div className="absolute left-1/2 top-1/2 grid h-20 w-20 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-primary text-primary-foreground shadow-[var(--shadow-elevated)]">
@@ -366,6 +370,7 @@ function HomePage() {
                     src={p.src}
                     alt={p.title}
                     loading="lazy"
+                    decoding="async"
                     className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
