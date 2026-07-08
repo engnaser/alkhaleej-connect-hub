@@ -196,9 +196,10 @@ function ServicesPage() {
             className="absolute inset-0 -z-10"
             style={{
               background:
-                "radial-gradient(900px 500px at 80% -10%, color-mix(in oklab, var(--primary) 18%, transparent), transparent 60%)",
+                "radial-gradient(1200px 600px at 80% -10%, color-mix(in oklab, var(--primary) 18%, transparent), transparent 60%), radial-gradient(900px 500px at 10% 10%, color-mix(in oklab, var(--primary) 12%, transparent), transparent 60%)",
             }}
           />
+
           <div className="mx-auto max-w-7xl px-4 py-14 text-center sm:px-6 lg:px-8">
             <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-bold text-primary">
               <Sparkles className="h-3.5 w-3.5" />
