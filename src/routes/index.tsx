@@ -20,12 +20,12 @@ import {
   SheetDescription,
 } from "@/components/ui/sheet";
 import logoKhalij from "@/assets/logo-khalij.png";
-import posterSabah from "@/assets/poster-sabah.jpg";
-import posterMasaa from "@/assets/poster-masaa.jpg";
-import posterJumaa from "@/assets/poster-jumaa.jpg";
-import posterRamadan from "@/assets/poster-ramadan.jpg";
-import posterEid from "@/assets/poster-eid.jpg";
-import posterMawloud from "@/assets/poster-mawloud.png";
+import posterSabah from "@/assets/poster-sabah.jpg?format=webp&quality=72&as=src";
+import posterMasaa from "@/assets/poster-masaa.jpg?format=webp&quality=72&as=src";
+import posterJumaa from "@/assets/poster-jumaa.jpg?format=webp&quality=72&as=src";
+import posterRamadan from "@/assets/poster-ramadan.jpg?format=webp&quality=72&as=src";
+import posterEid from "@/assets/poster-eid.jpg?format=webp&quality=72&as=src";
+import posterMawloud from "@/assets/poster-mawloud.png?format=webp&quality=78&as=src";
 
 export const Route = createFileRoute("/")({
   head: () => ({

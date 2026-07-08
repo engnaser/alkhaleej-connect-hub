@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useRef, useState } from "react";
 import { ArrowRight, Save, RotateCcw } from "lucide-react";
-import posterMawloud from "@/assets/poster-mawloud.png";
+import posterMawloud from "@/assets/poster-mawloud.png?format=webp&quality=78&as=src";
 import { drawCard, loadSettings, saveSettings } from "./mawloud.index";
 
 export const Route = createFileRoute("/mawloud/settings")({
