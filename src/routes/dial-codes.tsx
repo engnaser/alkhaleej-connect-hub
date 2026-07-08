@@ -13,7 +13,9 @@ export const Route = createFileRoute("/dial-codes")({
       { name: "description", content: "ابحث عن مفتاح الاتصال الدولي لأي دولة في العالم بسرعة وسهولة." },
       { property: "og:title", content: "مفاتيح دول العالم — الخليج تيليكوم" },
       { property: "og:description", content: "دليل شامل لمفاتيح الاتصال الدولية لجميع دول العالم." },
+      { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/dial-codes" },
     ],
+      links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/dial-codes" }],
   }),
   component: DialCodesPage,
 });

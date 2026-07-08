@@ -42,7 +42,9 @@ export const Route = createFileRoute("/exchange-rates")({
         property: "og:description",
         content: "جدول واضح للأسعار، رسم بياني للتغيرات، ومصدر مباشر من ye-rial.com.",
       },
+      { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/exchange-rates" },
     ],
+      links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/exchange-rates" }],
   }),
   component: ExchangeRatesPage,
 });

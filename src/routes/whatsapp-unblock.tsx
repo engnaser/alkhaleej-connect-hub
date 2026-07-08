@@ -37,7 +37,9 @@ export const Route = createFileRoute("/whatsapp-unblock")({
         content:
           "أداة عربية لتجهيز رسالة بريد رسمية إلى دعم واتساب لمراجعة حظر رقمك.",
       },
+      { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/whatsapp-unblock" },
     ],
+      links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/whatsapp-unblock" }],
   }),
   component: WhatsappUnblockPage,
 });

@@ -33,7 +33,9 @@ export const Route = createFileRoute("/phone-bill-inquiry")({
         content:
           "خدمة توجيه آمن لصفحة الاستعلام الرسمية عن فاتورة الهاتف الثابت.",
       },
+      { property: "og:url", content: "https://alkhaleej-connect-hub.lovable.app/phone-bill-inquiry" },
     ],
+      links: [{ rel: "canonical", href: "https://alkhaleej-connect-hub.lovable.app/phone-bill-inquiry" }],
   }),
   component: PhoneBillInquiryPage,
 });

@@ -15,6 +15,7 @@ import { Route as WhatsappUnblockRouteImport } from './routes/whatsapp-unblock'
 import { Route as WhatsappBotRouteImport } from './routes/whatsapp-bot'
 import { Route as TermsRouteImport } from './routes/terms'
 import { Route as SpeedTestRouteImport } from './routes/speed-test'
+import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SecondaryCertificateRouteImport } from './routes/secondary-certificate'
 import { Route as SafetyRouteImport } from './routes/safety'
@@ -63,6 +64,11 @@ const TermsRoute = TermsRouteImport.update({
 const SpeedTestRoute = SpeedTestRouteImport.update({
   id: '/speed-test',
   path: '/speed-test',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SitemapDotxmlRoute = SitemapDotxmlRouteImport.update({
+  id: '/sitemap.xml',
+  path: '/sitemap.xml',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ServicesRoute = ServicesRouteImport.update({
@@ -177,6 +183,7 @@ export interface FileRoutesByFullPath {
   '/safety': typeof SafetyRoute
   '/secondary-certificate': typeof SecondaryCertificateRoute
   '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speed-test': typeof SpeedTestRoute
   '/terms': typeof TermsRoute
   '/whatsapp-bot': typeof WhatsappBotRoute
@@ -204,6 +211,7 @@ export interface FileRoutesByTo {
   '/safety': typeof SafetyRoute
   '/secondary-certificate': typeof SecondaryCertificateRoute
   '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speed-test': typeof SpeedTestRoute
   '/terms': typeof TermsRoute
   '/whatsapp-bot': typeof WhatsappBotRoute
@@ -232,6 +240,7 @@ export interface FileRoutesById {
   '/safety': typeof SafetyRoute
   '/secondary-certificate': typeof SecondaryCertificateRoute
   '/services': typeof ServicesRoute
+  '/sitemap.xml': typeof SitemapDotxmlRoute
   '/speed-test': typeof SpeedTestRoute
   '/terms': typeof TermsRoute
   '/whatsapp-bot': typeof WhatsappBotRoute
@@ -261,6 +270,7 @@ export interface FileRouteTypes {
     | '/safety'
     | '/secondary-certificate'
     | '/services'
+    | '/sitemap.xml'
     | '/speed-test'
     | '/terms'
     | '/whatsapp-bot'
@@ -288,6 +298,7 @@ export interface FileRouteTypes {
     | '/safety'
     | '/secondary-certificate'
     | '/services'
+    | '/sitemap.xml'
     | '/speed-test'
     | '/terms'
     | '/whatsapp-bot'
@@ -315,6 +326,7 @@ export interface FileRouteTypes {
     | '/safety'
     | '/secondary-certificate'
     | '/services'
+    | '/sitemap.xml'
     | '/speed-test'
     | '/terms'
     | '/whatsapp-bot'
@@ -343,6 +355,7 @@ export interface RootRouteChildren {
   SafetyRoute: typeof SafetyRoute
   SecondaryCertificateRoute: typeof SecondaryCertificateRoute
   ServicesRoute: typeof ServicesRoute
+  SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   SpeedTestRoute: typeof SpeedTestRoute
   TermsRoute: typeof TermsRoute
   WhatsappBotRoute: typeof WhatsappBotRoute
@@ -397,6 +410,13 @@ declare module '@tanstack/react-router' {
       path: '/speed-test'
       fullPath: '/speed-test'
       preLoaderRoute: typeof SpeedTestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sitemap.xml': {
+      id: '/sitemap.xml'
+      path: '/sitemap.xml'
+      fullPath: '/sitemap.xml'
+      preLoaderRoute: typeof SitemapDotxmlRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/services': {
@@ -551,6 +571,7 @@ const rootRouteChildren: RootRouteChildren = {
   SafetyRoute: SafetyRoute,
   SecondaryCertificateRoute: SecondaryCertificateRoute,
   ServicesRoute: ServicesRoute,
+  SitemapDotxmlRoute: SitemapDotxmlRoute,
   SpeedTestRoute: SpeedTestRoute,
   TermsRoute: TermsRoute,
   WhatsappBotRoute: WhatsappBotRoute,
@@ -565,3 +586,13 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
