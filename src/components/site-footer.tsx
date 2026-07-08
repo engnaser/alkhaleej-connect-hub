@@ -154,7 +154,7 @@ export function SiteFooter() {
                   href={href}
                   target="_blank"
                   rel="noreferrer"
-                  onClick={openExternalLink(href)}
+                  onClick={openExternalLink(href, `social:${label}`)}
                   aria-label={label}
                   className="grid h-10 w-10 place-items-center rounded-full border border-primary/30 bg-primary/5 text-primary transition-all hover:-translate-y-0.5 hover:border-primary hover:bg-primary hover:text-primary-foreground hover:shadow-[0_8px_20px_-8px_var(--primary)]"
                 >
@@ -176,7 +176,7 @@ export function SiteFooter() {
                 href={IOS_URL}
                 target="_blank"
                 rel="noreferrer"
-                onClick={openExternalLink(IOS_URL)}
+                onClick={openExternalLink(IOS_URL, "app_download:ios")}
                 className="group flex items-center gap-3 rounded-2xl border border-primary/20 bg-gradient-to-l from-primary/10 to-transparent p-3 transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_10px_30px_-12px_var(--primary)]"
               >
                 <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground">
@@ -196,7 +196,7 @@ export function SiteFooter() {
                 href={ANDROID_URL}
                 target="_blank"
                 rel="noreferrer"
-                onClick={openExternalLink(ANDROID_URL)}
+                onClick={openExternalLink(ANDROID_URL, "app_download:android")}
                 className="group flex items-center gap-3 rounded-2xl border border-primary/20 bg-gradient-to-l from-primary/10 to-transparent p-3 transition-all hover:-translate-y-0.5 hover:border-primary/60 hover:shadow-[0_10px_30px_-12px_var(--primary)]"
               >
                 <span className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary text-primary-foreground">
