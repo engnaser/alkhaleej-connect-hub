@@ -10,7 +10,10 @@ import {
   ArrowLeft,
   CheckCircle2,
   Menu,
+  LayoutDashboard,
 } from "lucide-react";
+import { useIsAdmin } from "@/hooks/use-is-admin";
+
 import {
   Sheet,
   SheetContent,
