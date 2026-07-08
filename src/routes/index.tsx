@@ -27,6 +27,8 @@ import posterRamadan from "@/assets/poster-ramadan.jpg?format=webp&quality=72&as
 import posterEid from "@/assets/poster-eid.jpg?format=webp&quality=72&as=src";
 import posterMawloud from "@/assets/poster-mawloud.png?format=webp&quality=78&as=src";
 
+const SITE = "https://alkhaleej-connect-hub.lovable.app";
+
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
@@ -34,7 +36,7 @@ export const Route = createFileRoute("/")({
       {
         name: "description",
         content:
-          "اختر قالب التهنئة المناسب، أضف اسمك ورقم جوالك، وحمّل تصميمك الاحترافي فوراً مجاناً.",
+          "اختر قالب التهنئة المناسب، أضف اسمك ورقم جوالك، وحمّل تصميمك الاحترافي فوراً مجاناً من الخليج تيليكوم.",
       },
       {
         property: "og:title",
@@ -42,13 +44,20 @@ export const Route = createFileRoute("/")({
       },
       {
         property: "og:description",
-        content:
-          "قوالب جاهزة لكل مناسبة. أدخل بياناتك واحصل على تصميمك الخاص بضغطة زر.",
+        content: "قوالب جاهزة لكل مناسبة. أدخل بياناتك واحصل على تصميمك الخاص بضغطة زر.",
       },
+      { property: "og:url", content: `${SITE}/` },
+      { property: "og:image", content: `${SITE}${posterEid}` },
+      { name: "twitter:image", content: `${SITE}${posterEid}` },
+    ],
+    links: [
+      { rel: "canonical", href: `${SITE}/` },
+      { rel: "preload", as: "image", href: posterEid, fetchpriority: "high" } as unknown as { rel: string; href: string },
     ],
   }),
   component: HomePage,
 });
+
 
 const WHATSAPP = "967775608601";
 
