@@ -44,7 +44,7 @@ export const getRouter = () => {
     defaultPreloadStaleTime: 30_000,
     defaultPreloadDelay: 50,
     defaultErrorComponent: ErrorFallback,
-    defaultNotFoundComponent: NotFoundFallback,
+    defaultNotFoundComponent: () => <NotFoundFallback />,
   });
 
   return router;
