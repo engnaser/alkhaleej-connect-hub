@@ -25,6 +25,7 @@ import {
   createCategory,
   updateCategory,
   deleteCategory,
+  reorderCategories,
   createPackage,
   updatePackage,
   deletePackage,
