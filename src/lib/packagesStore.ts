@@ -94,7 +94,13 @@ export async function createCategory(input: {
   description?: string;
 }) {
   const id = makeId("cat");
-  const sort_order = Date.now();
+  const { data: maxRow } = await supabase
+    .from("ym_categories")
+    .select("sort_order")
+    .order("sort_order", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const sort_order = (maxRow?.sort_order ?? 0) + 1;
   const { error } = await supabase.from("ym_categories").insert({
     id,
     title: input.title,
@@ -104,6 +110,7 @@ export async function createCategory(input: {
   if (error) throw error;
   emitChange();
 }
+
 
 export async function updateCategory(
   id: string,
@@ -159,12 +166,21 @@ function pkgPayload(catId: string, pkg: YMPackage, sortOrder?: number) {
 }
 
 export async function createPackage(catId: string, pkg: YMPackage) {
+  const { data: maxRow } = await supabase
+    .from("ym_packages")
+    .select("sort_order")
+    .eq("category_id", catId)
+    .order("sort_order", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const nextSort = (maxRow?.sort_order ?? 0) + 1;
   const { error } = await supabase
     .from("ym_packages")
-    .insert(pkgPayload(catId, pkg, Date.now()));
+    .insert(pkgPayload(catId, pkg, nextSort));
   if (error) throw error;
   emitChange();
 }
+
 
 export async function updatePackage(catId: string, pkg: YMPackage) {
   const { error } = await supabase
