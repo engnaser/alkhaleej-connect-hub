@@ -128,6 +128,20 @@ export async function deleteCategory(id: string) {
   emitChange();
 }
 
+export async function reorderCategories(orderedIds: string[]) {
+  // Update sort_order sequentially so order is deterministic.
+  const updates = orderedIds.map((id, index) =>
+    supabase
+      .from("ym_categories")
+      .update({ sort_order: index + 1 })
+      .eq("id", id),
+  );
+  const results = await Promise.all(updates);
+  const failed = results.find((r) => r.error);
+  if (failed?.error) throw failed.error;
+  emitChange();
+}
+
 function pkgPayload(catId: string, pkg: YMPackage, sortOrder?: number) {
   return {
     id: pkg.id,

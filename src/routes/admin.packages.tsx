@@ -12,6 +12,7 @@ import {
   Shield,
   LogOut,
   Loader2,
+  GripVertical,
 } from "lucide-react";
 import { SiteFooter } from "@/components/site-footer";
 import logoKhalij from "@/assets/logo-khalij.png";
@@ -24,6 +25,7 @@ import {
   createCategory,
   updateCategory,
   deleteCategory,
+  reorderCategories,
   createPackage,
   updatePackage,
   deletePackage,
@@ -74,6 +76,39 @@ function AdminPackagesPage() {
   const [adding, setAdding] = useState<string | null>(null);
   const [newCatOpen, setNewCatOpen] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [dragId, setDragId] = useState<string | null>(null);
+  const [overId, setOverId] = useState<string | null>(null);
+
+  const handleDropCategory = (targetId: string) => {
+    if (!dragId || dragId === targetId) {
+      setDragId(null);
+      setOverId(null);
+      return;
+    }
+    const ids = categories.map((c) => c.id);
+    const from = ids.indexOf(dragId);
+    const to = ids.indexOf(targetId);
+    setDragId(null);
+    setOverId(null);
+    if (from < 0 || to < 0) return;
+    ids.splice(to, 0, ids.splice(from, 1)[0]);
+    guard(async () => {
+      await reorderCategories(ids);
+      await refresh();
+    });
+  };
+
+  const moveCategory = (id: string, dir: -1 | 1) => {
+    const ids = categories.map((c) => c.id);
+    const idx = ids.indexOf(id);
+    const target = idx + dir;
+    if (idx < 0 || target < 0 || target >= ids.length) return;
+    [ids[idx], ids[target]] = [ids[target], ids[idx]];
+    guard(async () => {
+      await reorderCategories(ids);
+      await refresh();
+    });
+  };
 
   useEffect(() => {
     let active = true;
@@ -250,10 +285,29 @@ function AdminPackagesPage() {
           </div>
         ) : (
           <div className="space-y-5">
-            {categories.map((cat) => (
+            {categories.map((cat, idx) => (
               <section
                 key={cat.id}
-                className="rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]"
+                onDragOver={(e) => {
+                  if (dragId) {
+                    e.preventDefault();
+                    if (overId !== cat.id) setOverId(cat.id);
+                  }
+                }}
+                onDragLeave={() => {
+                  if (overId === cat.id) setOverId(null);
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  handleDropCategory(cat.id);
+                }}
+                className={`rounded-2xl border bg-card shadow-[var(--shadow-card)] transition ${
+                  dragId === cat.id
+                    ? "opacity-50"
+                    : overId === cat.id
+                      ? "border-primary ring-2 ring-primary/40"
+                      : "border-border"
+                }`}
               >
                 <div className="flex flex-col gap-3 border-b border-border p-5 sm:flex-row sm:items-start sm:justify-between">
                   {editingCat === cat.id ? (
@@ -277,20 +331,57 @@ function AdminPackagesPage() {
                     />
                   ) : (
                     <>
-                      <div>
-                        <h2 className="text-lg font-extrabold text-foreground">
-                          {cat.title}
-                        </h2>
-                        {cat.description && (
-                          <p className="mt-1 text-sm text-muted-foreground">
-                            {cat.description}
-                          </p>
-                        )}
-                        <span className="mt-2 inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-bold text-primary">
-                          {cat.packages.length} باقات
-                        </span>
+                      <div className="flex items-start gap-3">
+                        <button
+                          type="button"
+                          draggable
+                          onDragStart={() => setDragId(cat.id)}
+                          onDragEnd={() => {
+                            setDragId(null);
+                            setOverId(null);
+                          }}
+                          title="اسحب لإعادة الترتيب"
+                          aria-label="مقبض السحب"
+                          className="mt-1 cursor-grab touch-none rounded-md border border-border bg-background p-1.5 text-muted-foreground hover:border-primary/40 hover:text-primary active:cursor-grabbing"
+                        >
+                          <GripVertical className="h-4 w-4" />
+                        </button>
+                        <div>
+                          <h2 className="text-lg font-extrabold text-foreground">
+                            {cat.title}
+                          </h2>
+                          {cat.description && (
+                            <p className="mt-1 text-sm text-muted-foreground">
+                              {cat.description}
+                            </p>
+                          )}
+                          <span className="mt-2 inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-bold text-primary">
+                            {cat.packages.length} باقات
+                          </span>
+                        </div>
                       </div>
+
                       <div className="flex flex-wrap gap-2">
+                        <div className="inline-flex overflow-hidden rounded-lg border border-border bg-background">
+                          <button
+                            onClick={() => moveCategory(cat.id, -1)}
+                            disabled={busy || idx === 0}
+                            title="نقل للأعلى"
+                            aria-label="نقل للأعلى"
+                            className="px-2 py-2 text-xs font-bold text-foreground hover:bg-primary/10 hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+                          >
+                            ▲
+                          </button>
+                          <button
+                            onClick={() => moveCategory(cat.id, 1)}
+                            disabled={busy || idx === categories.length - 1}
+                            title="نقل للأسفل"
+                            aria-label="نقل للأسفل"
+                            className="border-r border-border px-2 py-2 text-xs font-bold text-foreground hover:bg-primary/10 hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+                          >
+                            ▼
+                          </button>
+                        </div>
                         <button
                           onClick={() => setAdding(cat.id)}
                           className="inline-flex items-center gap-1.5 rounded-lg bg-primary/10 px-3 py-2 text-xs font-bold text-primary hover:bg-primary/20"
