@@ -28,6 +28,8 @@ import {
   CalendarClock,
   Megaphone,
   Wand2,
+  Gem,
+
 
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
