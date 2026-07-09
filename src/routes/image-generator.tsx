@@ -96,10 +96,11 @@ function ImageGeneratorPage() {
     a.remove();
     try {
       saveMyPhoto({
-        id: `ai-${Date.now()}`,
+        templateId: "ai-generator",
         title: prompt.slice(0, 60) || "صورة AI",
+        occasion: "AI",
+        name: "",
         dataUrl: src,
-        createdAt: Date.now(),
       });
     } catch {
       /* ignore */
