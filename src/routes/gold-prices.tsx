@@ -245,7 +245,7 @@ function GoldPricesPage() {
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <a
-              href="https://gold-price-today.com/yemen"
+              href="https://gold-price-yemen.com/"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-4 py-2 text-xs font-bold text-foreground hover:border-primary/40"
