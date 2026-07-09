@@ -26,6 +26,7 @@ import {
   ArrowLeftRight,
   GraduationCap,
   CalendarClock,
+  Megaphone,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { COUNTRIES } from "@/data/countries";
@@ -160,6 +161,13 @@ const SERVICES = [
     desc: "اختصار آمن لبوابة بندر عدن لمعرفة تاريخ انتهاء اشتراكك في الإنترنت.",
     to: "/bandar-aden-inquiry" as const,
     cta: "استعلم الآن",
+  },
+  {
+    icon: Megaphone,
+    title: "مساعد كتابة المحتوى التسويقي",
+    desc: "أداة ذكية لصياغة نصوص إعلانية جذابة لمنتجاتك جاهزة للنشر على واتساب والسوشيال ميديا.",
+    to: "/marketing-writer" as const,
+    cta: "ابدأ الكتابة",
   },
   {
     icon: Star,
