@@ -535,6 +535,31 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
               helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: الكاشف الذكي")}`}
             />
           )}
+          {group === "general" && (
+            <UnifiedServiceCard
+              title="تحويل المكالمات لرقم آخر في حالة الخروج عن التغطية أو إغلاق الجهاز"
+              description="لتفعيل خدمة تحويل المكالمات لرقم آخر في حالة انشغال الخط، قم بإدخال الرقم المراد التحويل إليه ثم اضغط زر التفعيل. وللإلغاء قم بالضغط على زر إلغاء التفعيل."
+              icon={PhoneForwarded}
+              requiresInput
+              inputPlaceholder="أدخل الرقم هنا..."
+              buildCodeFromInput={(n) => `*68*${n}#`}
+              activationMethods={[
+                {
+                  type: "call",
+                  label: "تفعيل عادي",
+                  buildCode: (n) => `*68*${n}#`,
+                },
+                {
+                  type: "call",
+                  label: "تفعيل VoLTE",
+                  buildCode: (n) => `*68999*${n}#`,
+                },
+              ]}
+              deactivationCode="*680#"
+              helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: تحويل المكالمات")}`}
+            />
+          )}
+
           {list.map((s) => (
             <ServiceCard key={s.id} service={s} />
           ))}
