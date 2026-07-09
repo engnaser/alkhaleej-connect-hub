@@ -525,6 +525,16 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {group === "general" && <CallMeCard />}
           {group === "general" && <AbsherCard />}
+          {group === "general" && (
+            <UnifiedServiceCard
+              title="الكاشف الذكي"
+              description="مميزات الخدمة: في حال كان هاتفك مغلقا أو خارج نطاق التغطية، خدمة الكاشف الذكي تسهل عليك التعرف على المتصل مباشرة عبر وصول رسالة (المكالمة المفقودة من رقم المتصل نفسه). الخدمة مجانية."
+              icon={Radar}
+              activationCode="*122#"
+              deactivationCode="*123#"
+              helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: الكاشف الذكي")}`}
+            />
+          )}
           {list.map((s) => (
             <ServiceCard key={s.id} service={s} />
           ))}
