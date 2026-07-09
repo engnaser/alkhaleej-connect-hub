@@ -559,6 +559,23 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
               helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: تحويل المكالمات")}`}
             />
           )}
+          {group === "general" && (
+            <UnifiedServiceCard
+              title="تحويل المكالمات لرقم آخر في حالة انشغال الخط"
+              description="لتفعيل خدمة تحويل المكالمات لرقم آخر في حالة انشغال الخط، قم بإدخال الرقم المراد التحويل إليه ثم اضغط زر التفعيل. ولإلغاء التفعيل قم بالضغط على زر الإلغاء."
+              icon={PhoneForwarded}
+              requiresInput
+              inputPlaceholder="أدخل الرقم..."
+              buildCodeFromInput={(n) => `*90*${n}#`}
+              activationMethods={[
+                { type: "call", label: "تفعيل عادي", buildCode: (n) => `*90*${n}#` },
+                { type: "call", label: "تفعيل VoLTE", buildCode: (n) => `*90999*${n}#` },
+              ]}
+              deactivationCode="*900#"
+              helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: تحويل المكالمات عند الانشغال")}`}
+            />
+          )}
+
 
           {list.map((s) => (
             <ServiceCard key={s.id} service={s} />
