@@ -656,6 +656,16 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
               helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: رنات")}`}
             />
           )}
+          {group === "general" && (
+            <UnifiedServiceCard
+              title="للحصول على الرقم ( السري/الشخصي )"
+              description="للحصول على الرقم ( السري/الشخصي ) اتصل بالرقم (188) ، واتبع التعليمات الصوتية."
+              icon={PhoneCall}
+              activationCode="188"
+              deactivationCode=""
+              helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: الحصول على الرقم السري")}`}
+            />
+          )}
 
 
 
