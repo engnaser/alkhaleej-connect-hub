@@ -616,6 +616,17 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
               helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: إلغاء تحويل جميع المكالمات")}`}
             />
           )}
+          {group === "general" && (
+            <UnifiedServiceCard
+              title="خدمة التنبية بوجود مكالمة"
+              description="تمكنك من وصول المكالمة إلى رقمك أثناء انشغال رقمك بمكالمة أخرى."
+              icon={PhoneCall}
+              activationCode="*74#"
+              deactivationCode="*740#"
+              helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: التنبيه بوجود مكالمة")}`}
+            />
+          )}
+
 
 
 
