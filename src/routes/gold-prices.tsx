@@ -278,6 +278,24 @@ function GoldPricesPage() {
           </div>
         )}
 
+        {/* City tabs */}
+        <div className="mb-6 inline-flex rounded-full border border-border bg-card p-1 shadow-sm">
+          {CITIES.map((c) => (
+            <button
+              key={c}
+              onClick={() => setCity(c)}
+              className={`rounded-full px-5 py-2 text-sm font-extrabold transition-colors ${
+                city === c
+                  ? "bg-primary text-primary-foreground shadow"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+
+
         {/* Highlighted karats */}
         {rows.length > 0 && (
           <div className="mb-6 grid gap-4 sm:grid-cols-3">
