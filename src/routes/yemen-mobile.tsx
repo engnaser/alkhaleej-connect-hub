@@ -32,19 +32,39 @@ import {
   Phone,
   MessageSquare,
   PhoneCall,
+  Pencil,
+  Loader2,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import {
   APN_SETTINGS,
   type YMPackage,
 } from "@/data/yemenMobilePackages";
-import { usePackagesStore } from "@/lib/packagesStore";
+import {
+  usePackagesStore,
+  updatePackage,
+  NETWORK_OPTIONS,
+  type NetworkType,
+} from "@/lib/packagesStore";
 import {
   useServicesStore,
   iconFor,
   type YMServiceRow,
   type ServiceGroup,
 } from "@/lib/servicesStore";
+import { useIsAdmin } from "@/hooks/use-is-admin";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/yemen-mobile")({
   head: () => ({
