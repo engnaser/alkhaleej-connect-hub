@@ -54,6 +54,7 @@ import {
   type ServiceGroup,
 } from "@/lib/servicesStore";
 import { useIsAdmin } from "@/hooks/use-is-admin";
+import { CallMeCard } from "@/components/call-me-card";
 import {
   Dialog,
   DialogContent,
@@ -519,6 +520,7 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
         </div>
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          {group === "general" && <CallMeCard />}
           {list.map((s) => (
             <ServiceCard key={s.id} service={s} />
           ))}
