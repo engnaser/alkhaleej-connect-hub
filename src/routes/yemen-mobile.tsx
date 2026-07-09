@@ -724,6 +724,18 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
               helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص: التحويل من فورجي إلى VoLTE")}`}
             />
           )}
+          {group === "general" && (
+            <UnifiedServiceCard
+              title="خدمة التحويل من VoLTE إلى فورجي"
+              description={`خدمة لترقية أو إرجاع حالة رقمك من تقنية VoLTE إلى شبكة فورجي التقليدية.
+
+لتحويل رقمك من VoLTE إلى فورجي اتصل من نفس الرقم على 121 ثم اضغط رمز النجمة (*) ليوصلكم بخدمة العملاء.`}
+              icon={PhoneCall}
+              activationCode="121"
+              deactivationCode=""
+              helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص: التحويل من VoLTE إلى فورجي")}`}
+            />
+          )}
 
 
 
