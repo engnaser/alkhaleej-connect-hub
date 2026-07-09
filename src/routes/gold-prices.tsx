@@ -60,6 +60,7 @@ type GoldRow = {
   id: string;
   karat: string;
   label: string;
+  city: string;
   price_yer: number;
   price_usd: number | null;
   fetched_at: string;
@@ -68,9 +69,14 @@ type GoldRow = {
 
 type HistoryRow = {
   karat: string;
+  city: string;
   price_yer: number;
   captured_at: string;
 };
+
+const CITIES = ["صنعاء", "عدن"] as const;
+type City = (typeof CITIES)[number];
+
 
 const HIGHLIGHTED_KARATS = new Set(["24", "21", "18"]);
 
