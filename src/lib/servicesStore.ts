@@ -29,6 +29,7 @@ export type YMServiceRow = {
   title: string;
   description: string;
   code?: string | null;
+  deactivation_code?: string | null;
   sort_order: number;
 };
 
@@ -73,7 +74,7 @@ export function makeServiceId() {
 async function fetchServices(): Promise<YMServiceRow[]> {
   const { data, error } = await supabase
     .from("ym_services")
-    .select("id,group_key,icon,title,description,code,sort_order")
+    .select("id,group_key,icon,title,description,code,deactivation_code,sort_order")
     .order("group_key", { ascending: true })
     .order("sort_order", { ascending: true });
   if (error) throw error;
@@ -84,6 +85,7 @@ async function fetchServices(): Promise<YMServiceRow[]> {
     title: r.title,
     description: r.description,
     code: r.code,
+    deactivation_code: (r as { deactivation_code?: string | null }).deactivation_code ?? null,
     sort_order: r.sort_order,
   }));
 }
@@ -123,6 +125,10 @@ function payload(s: YMServiceRow) {
     title: s.title,
     description: s.description ?? "",
     code: s.code && s.code.trim() ? s.code : null,
+    deactivation_code:
+      s.deactivation_code && s.deactivation_code.trim()
+        ? s.deactivation_code
+        : null,
     sort_order: s.sort_order,
   };
 }

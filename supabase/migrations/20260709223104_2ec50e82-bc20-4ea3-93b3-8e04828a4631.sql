@@ -1,0 +1,1 @@
+ALTER TABLE public.ym_services ADD COLUMN IF NOT EXISTS deactivation_code text;

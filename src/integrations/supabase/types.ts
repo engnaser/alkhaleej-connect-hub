@@ -317,6 +317,7 @@ export type Database = {
         Row: {
           code: string | null
           created_at: string
+          deactivation_code: string | null
           description: string
           group_key: string
           icon: string
@@ -328,6 +329,7 @@ export type Database = {
         Insert: {
           code?: string | null
           created_at?: string
+          deactivation_code?: string | null
           description?: string
           group_key: string
           icon?: string
@@ -339,6 +341,7 @@ export type Database = {
         Update: {
           code?: string | null
           created_at?: string
+          deactivation_code?: string | null
           description?: string
           group_key?: string
           icon?: string

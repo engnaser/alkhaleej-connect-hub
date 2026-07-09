@@ -34,6 +34,7 @@ import {
   PhoneCall,
   Pencil,
   Loader2,
+  PhoneOff,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import {
@@ -557,12 +558,24 @@ function ServiceCard({ service }: { service: YMServiceRow }) {
       <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted-foreground">
         {service.description}
       </p>
-      {service.code && (
-        <div className="mt-4 flex items-center justify-between rounded-lg border border-dashed border-border bg-secondary/40 px-3 py-2">
-          <span className="text-xs text-muted-foreground">الكود</span>
-          <span dir="ltr" className="font-mono text-sm font-bold text-primary">
-            {service.code}
-          </span>
+      {(service.code || service.deactivation_code) && (
+        <div className="mt-4 space-y-1.5">
+          {service.code && (
+            <div className="flex items-center justify-between rounded-lg border border-dashed border-border bg-secondary/40 px-3 py-2">
+              <span className="text-xs text-muted-foreground">كود التفعيل</span>
+              <span dir="ltr" className="font-mono text-sm font-bold text-primary">
+                {service.code}
+              </span>
+            </div>
+          )}
+          {service.deactivation_code && (
+            <div className="flex items-center justify-between rounded-lg border border-dashed border-destructive/30 bg-destructive/5 px-3 py-2">
+              <span className="text-xs text-muted-foreground">كود إلغاء التفعيل</span>
+              <span dir="ltr" className="font-mono text-sm font-bold text-destructive">
+                {service.deactivation_code}
+              </span>
+            </div>
+          )}
         </div>
       )}
       <div className="mt-4 grid grid-cols-2 gap-2">
@@ -588,6 +601,24 @@ function ServiceCard({ service }: { service: YMServiceRow }) {
           <MessageCircle className="h-3.5 w-3.5" />
           مساعدة
         </a>
+        {service.code && (
+          <a
+            href={`tel:${encodeURIComponent(service.code)}`}
+            className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-primary/10 px-3 py-2 text-xs font-extrabold text-primary hover:bg-primary/20"
+          >
+            <PhoneCall className="h-3.5 w-3.5" />
+            اتصل للتفعيل
+          </a>
+        )}
+        {service.deactivation_code && (
+          <a
+            href={`tel:${encodeURIComponent(service.deactivation_code)}`}
+            className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-destructive/10 px-3 py-2 text-xs font-extrabold text-destructive hover:bg-destructive/20"
+          >
+            <PhoneOff className="h-3.5 w-3.5" />
+            إلغاء التفعيل
+          </a>
+        )}
       </div>
     </div>
   );
