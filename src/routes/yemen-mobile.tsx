@@ -607,6 +607,16 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
               helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: تحويل جميع المكالمات")}`}
             />
           )}
+          {group === "general" && (
+            <UnifiedServiceCard
+              title="خدمة إلغاء تحويل جميع المكالمات"
+              description="تمكنك هذه الخدمة من إلغاء تحويل مكالماتك إلى رقم آخر."
+              icon={PhoneForwarded}
+              deactivationCode="*730#"
+              helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: إلغاء تحويل جميع المكالمات")}`}
+            />
+          )}
+
 
 
 
