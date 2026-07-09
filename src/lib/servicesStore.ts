@@ -125,6 +125,10 @@ function payload(s: YMServiceRow) {
     title: s.title,
     description: s.description ?? "",
     code: s.code && s.code.trim() ? s.code : null,
+    deactivation_code:
+      s.deactivation_code && s.deactivation_code.trim()
+        ? s.deactivation_code
+        : null,
     sort_order: s.sort_order,
   };
 }
