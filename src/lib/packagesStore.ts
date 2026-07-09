@@ -94,7 +94,13 @@ export async function createCategory(input: {
   description?: string;
 }) {
   const id = makeId("cat");
-  const sort_order = Date.now();
+  const { data: maxRow } = await supabase
+    .from("ym_categories")
+    .select("sort_order")
+    .order("sort_order", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const sort_order = (maxRow?.sort_order ?? 0) + 1;
   const { error } = await supabase.from("ym_categories").insert({
     id,
     title: input.title,
@@ -104,6 +110,7 @@ export async function createCategory(input: {
   if (error) throw error;
   emitChange();
 }
+
 
 export async function updateCategory(
   id: string,
