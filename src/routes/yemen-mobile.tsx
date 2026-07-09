@@ -535,13 +535,36 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
 function ServiceCard({ service }: { service: YMServiceRow }) {
   const [copied, setCopied] = useState(false);
   const [expanded, setExpanded] = useState(false);
+  const [phone, setPhone] = useState("");
   const Icon = iconFor(service.icon);
 
+  const PHONE_TOKEN = /\{phone\}|\{رقم\}|#PHONE#/gi;
+  const requiresPhone = !!service.code && PHONE_TOKEN.test(service.code);
+  // Reset regex lastIndex after test with /g flag
+  PHONE_TOKEN.lastIndex = 0;
+
+  const trimmedPhone = phone.trim().replace(/\s|-/g, "");
+  const phoneValid = /^\d{6,}$/.test(trimmedPhone);
+
+  const resolvedCode = requiresPhone
+    ? phoneValid
+      ? service.code!.replace(PHONE_TOKEN, trimmedPhone)
+      : ""
+    : service.code ?? "";
+
+  const displayCode = requiresPhone
+    ? service.code!.replace(PHONE_TOKEN, trimmedPhone || "رقم_الهاتف")
+    : service.code;
+
   const handleCopy = async () => {
-    if (!service.code) return;
+    if (!resolvedCode) {
+      if (requiresPhone) toast.error("يرجى إدخال رقم الهاتف أولاً");
+      return;
+    }
     try {
-      await navigator.clipboard.writeText(service.code);
+      await navigator.clipboard.writeText(resolvedCode);
       setCopied(true);
+      toast.success("تم نسخ الكود");
       setTimeout(() => setCopied(false), 1800);
     } catch {
       /* noop */
@@ -551,6 +574,10 @@ function ServiceCard({ service }: { service: YMServiceRow }) {
   const helpUrl = `https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent(
     `مرحبًا، أحتاج مساعدة بخصوص خدمة: ${service.title}`,
   )}`;
+
+  const callHref = resolvedCode
+    ? `tel:${encodeURIComponent(resolvedCode)}`
+    : undefined;
 
   return (
     <div className="flex flex-col rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-primary/40">
@@ -576,13 +603,35 @@ function ServiceCard({ service }: { service: YMServiceRow }) {
           </button>
         )}
       </div>
+
+      {requiresPhone && (
+        <div className="mt-4">
+          <Label htmlFor={`phone-${service.id}`} className="text-xs font-bold text-foreground">
+            رقم الهاتف المستفيد
+          </Label>
+          <Input
+            id={`phone-${service.id}`}
+            type="tel"
+            inputMode="numeric"
+            dir="ltr"
+            placeholder="7XXXXXXXX"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            className="mt-1.5 text-left font-mono"
+          />
+          {phone && !phoneValid && (
+            <p className="mt-1 text-[11px] text-destructive">أدخل رقماً صحيحاً</p>
+          )}
+        </div>
+      )}
+
       {(service.code || service.deactivation_code) && (
         <div className="mt-4 space-y-1.5">
           {service.code && (
             <div className="flex items-center justify-between rounded-lg border border-dashed border-border bg-secondary/40 px-3 py-2">
               <span className="text-xs text-muted-foreground">كود التفعيل</span>
               <span dir="ltr" className="font-mono text-sm font-bold text-primary">
-                {service.code}
+                {displayCode}
               </span>
             </div>
           )}
@@ -621,8 +670,17 @@ function ServiceCard({ service }: { service: YMServiceRow }) {
         </a>
         {service.code && (
           <a
-            href={`tel:${encodeURIComponent(service.code)}`}
-            className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-primary/10 px-3 py-2 text-xs font-extrabold text-primary hover:bg-primary/20"
+            href={callHref}
+            aria-disabled={!callHref}
+            onClick={(e) => {
+              if (!callHref) {
+                e.preventDefault();
+                toast.error("يرجى إدخال رقم الهاتف أولاً");
+              }
+            }}
+            className={`inline-flex items-center justify-center gap-1.5 rounded-lg bg-primary/10 px-3 py-2 text-xs font-extrabold text-primary hover:bg-primary/20 ${
+              !callHref ? "opacity-60" : ""
+            }`}
           >
             <PhoneCall className="h-3.5 w-3.5" />
             اتصل للتفعيل
@@ -630,7 +688,7 @@ function ServiceCard({ service }: { service: YMServiceRow }) {
         )}
         {(service.deactivation_code || service.code) && (
           <a
-            href={`tel:${encodeURIComponent(service.deactivation_code || (service.code as string).replace(/^\*/, "#"))}`}
+            href={`tel:${encodeURIComponent(service.deactivation_code || (service.code as string).replace(PHONE_TOKEN, trimmedPhone || "").replace(/^\*/, "#"))}`}
             className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-destructive/10 px-3 py-2 text-xs font-extrabold text-destructive hover:bg-destructive/20"
           >
             <PhoneOff className="h-3.5 w-3.5" />
@@ -641,6 +699,7 @@ function ServiceCard({ service }: { service: YMServiceRow }) {
     </div>
   );
 }
+
 
 function InternetTab() {
   const [copied, setCopied] = useState(false);
