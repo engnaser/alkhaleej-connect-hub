@@ -16,6 +16,7 @@ const ENTRIES: SitemapEntry[] = [
   { path: "/contact", changefreq: "monthly", priority: "0.6" },
   { path: "/currency-converter", changefreq: "daily", priority: "0.8" },
   { path: "/exchange-rates", changefreq: "daily", priority: "0.8" },
+  { path: "/gold-prices", changefreq: "daily", priority: "0.8" },
   { path: "/dial-codes", changefreq: "monthly", priority: "0.7" },
   { path: "/yemen-mobile", changefreq: "weekly", priority: "0.8" },
   { path: "/speed-test", changefreq: "monthly", priority: "0.7" },

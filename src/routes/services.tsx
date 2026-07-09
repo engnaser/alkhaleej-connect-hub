@@ -28,6 +28,8 @@ import {
   CalendarClock,
   Megaphone,
   Wand2,
+  Gem,
+
 
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
@@ -141,6 +143,13 @@ const SERVICES = [
     title: "أسعار صرف الريال اليمني",
     desc: "أسعار العملات في صنعاء وعدن مأخوذة من المصدر مع زر تزامن لتحديث الأسعار لحظياً.",
     to: "/exchange-rates" as const,
+    cta: "افتح الأسعار",
+  },
+  {
+    icon: Gem,
+    title: "أسعار الذهب في اليمن",
+    desc: "أسعار عيار 24 و 21 و 18 بالريال اليمني والدولار مع رسم بياني للتغيرات وزر تزامن مباشر.",
+    to: "/gold-prices" as const,
     cta: "افتح الأسعار",
   },
   {
