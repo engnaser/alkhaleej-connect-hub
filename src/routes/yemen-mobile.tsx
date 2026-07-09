@@ -55,6 +55,7 @@ import {
 } from "@/lib/servicesStore";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 import { CallMeCard } from "@/components/call-me-card";
+import { AbsherCard } from "@/components/absher-card";
 import {
   Dialog,
   DialogContent,
