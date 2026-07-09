@@ -122,6 +122,7 @@ export type Database = {
       gold_price_history: {
         Row: {
           captured_at: string
+          city: string
           id: string
           karat: string
           price_usd: number | null
@@ -129,6 +130,7 @@ export type Database = {
         }
         Insert: {
           captured_at?: string
+          city: string
           id?: string
           karat: string
           price_usd?: number | null
@@ -136,6 +138,7 @@ export type Database = {
         }
         Update: {
           captured_at?: string
+          city?: string
           id?: string
           karat?: string
           price_usd?: number | null
@@ -145,6 +148,7 @@ export type Database = {
       }
       gold_prices: {
         Row: {
+          city: string
           created_at: string
           fetched_at: string
           id: string
@@ -157,6 +161,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          city: string
           created_at?: string
           fetched_at?: string
           id?: string
@@ -169,6 +174,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          city?: string
           created_at?: string
           fetched_at?: string
           id?: string
