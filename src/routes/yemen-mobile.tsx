@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { SiteFooter } from "@/components/site-footer";
 import {
   Tabs,
@@ -32,19 +32,39 @@ import {
   Phone,
   MessageSquare,
   PhoneCall,
+  Pencil,
+  Loader2,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import {
   APN_SETTINGS,
   type YMPackage,
 } from "@/data/yemenMobilePackages";
-import { usePackagesStore } from "@/lib/packagesStore";
+import {
+  usePackagesStore,
+  updatePackage,
+  NETWORK_OPTIONS,
+  type NetworkType,
+} from "@/lib/packagesStore";
 import {
   useServicesStore,
   iconFor,
   type YMServiceRow,
   type ServiceGroup,
 } from "@/lib/servicesStore";
+import { useIsAdmin } from "@/hooks/use-is-admin";
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "sonner";
+
 
 export const Route = createFileRoute("/yemen-mobile")({
   head: () => ({
@@ -242,8 +262,9 @@ function PackagesTab() {
               ) : (
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {cat.packages.map((pkg) => (
-                    <PackageCard key={pkg.id} pkg={pkg} />
+                    <PackageCard key={pkg.id} pkg={pkg} catId={cat.id} />
                   ))}
+
                 </div>
               )}
             </AccordionContent>
@@ -254,8 +275,10 @@ function PackagesTab() {
   );
 }
 
-function PackageCard({ pkg }: { pkg: YMPackage }) {
+function PackageCard({ pkg, catId }: { pkg: YMPackage; catId: string }) {
   const [copied, setCopied] = useState(false);
+  const { isAdmin } = useIsAdmin();
+  const [editOpen, setEditOpen] = useState(false);
 
   const details = [
     `📦 ${pkg.name}`,
@@ -281,12 +304,19 @@ function PackageCard({ pkg }: { pkg: YMPackage }) {
   };
 
   const shareUrl = `https://wa.me/?text=${encodeURIComponent(details)}`;
-  const requestUrl = `https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent(
-    `مرحبًا، أرغب بتفعيل الباقة التالية:\n\n${details}`,
-  )}`;
 
   return (
-    <div className="flex flex-col rounded-2xl border border-border bg-secondary/30 p-5 transition-all hover:-translate-y-0.5 hover:border-primary/40">
+    <div className="relative flex flex-col rounded-2xl border border-border bg-secondary/30 p-5 transition-all hover:-translate-y-0.5 hover:border-primary/40">
+      {isAdmin && (
+        <button
+          type="button"
+          onClick={() => setEditOpen(true)}
+          aria-label="تعديل الباقة"
+          className="absolute left-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground shadow-sm backdrop-blur transition-colors hover:border-primary/50 hover:text-primary"
+        >
+          <Pencil className="h-4 w-4" />
+        </button>
+      )}
       <div className="mb-3 flex items-center justify-between gap-2">
         <h4 className="text-base font-extrabold text-foreground">{pkg.name}</h4>
         <span className="rounded-full bg-primary/15 px-2.5 py-0.5 text-[11px] font-bold text-primary">
@@ -348,9 +378,120 @@ function PackageCard({ pkg }: { pkg: YMPackage }) {
           اضغط لتفعيل الباقة
         </a>
       )}
+
+      {isAdmin && (
+        <EditPackageDialog
+          open={editOpen}
+          onOpenChange={setEditOpen}
+          pkg={pkg}
+          catId={catId}
+        />
+      )}
     </div>
   );
 }
+
+function EditPackageDialog({
+  open,
+  onOpenChange,
+  pkg,
+  catId,
+}: {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+  pkg: YMPackage;
+  catId: string;
+}) {
+  const [form, setForm] = useState<YMPackage>(pkg);
+  const [saving, setSaving] = useState(false);
+
+  // Reset when opened for a different pkg
+  useEffect(() => {
+    if (open) setForm(pkg);
+  }, [open, pkg]);
+
+  const set = <K extends keyof YMPackage>(k: K, v: YMPackage[K]) =>
+    setForm((f) => ({ ...f, [k]: v }));
+
+  const handleSave = async () => {
+    setSaving(true);
+    try {
+      await updatePackage(catId, { ...form, code: form.code || undefined });
+      toast.success("تم حفظ التعديلات");
+      onOpenChange(false);
+    } catch (e) {
+      toast.error(e instanceof Error ? e.message : "تعذّر حفظ التعديلات");
+    } finally {
+      setSaving(false);
+    }
+  };
+
+  const fields: Array<{ k: keyof YMPackage; label: string; dir?: "ltr" }> = [
+    { k: "name", label: "اسم الباقة" },
+    { k: "price", label: "السعر" },
+    { k: "internet", label: "الإنترنت" },
+    { k: "minutes", label: "الدقائق" },
+    { k: "sms", label: "الرسائل" },
+    { k: "validity", label: "الصلاحية" },
+    { k: "code", label: "كود التفعيل", dir: "ltr" },
+  ];
+
+  return (
+    <Dialog open={open} onOpenChange={onOpenChange}>
+      <DialogContent dir="rtl" className="max-w-md">
+        <DialogHeader>
+          <DialogTitle className="text-right">تعديل الباقة</DialogTitle>
+        </DialogHeader>
+        <div className="grid gap-3">
+          {fields.map((f) => (
+            <div key={f.k} className="grid gap-1.5">
+              <Label htmlFor={`edit-${f.k}`} className="text-right text-xs">
+                {f.label}
+              </Label>
+              <Input
+                id={`edit-${f.k}`}
+                dir={f.dir}
+                value={(form[f.k] as string) ?? ""}
+                onChange={(e) => set(f.k, e.target.value as YMPackage[typeof f.k])}
+              />
+            </div>
+          ))}
+          <div className="grid gap-1.5">
+            <Label className="text-right text-xs">نوع الشبكة</Label>
+            <select
+              value={form.network}
+              onChange={(e) => set("network", e.target.value as NetworkType)}
+              className="h-9 rounded-md border border-input bg-background px-3 text-sm"
+            >
+              {NETWORK_OPTIONS.map((n) => (
+                <option key={n} value={n}>
+                  {n}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+        <DialogFooter className="gap-2 sm:justify-start">
+          <button
+            onClick={handleSave}
+            disabled={saving}
+            className="inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-extrabold text-primary-foreground hover:scale-[1.02] disabled:opacity-60"
+          >
+            {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : <Check className="h-4 w-4" />}
+            حفظ التعديلات
+          </button>
+          <button
+            onClick={() => onOpenChange(false)}
+            className="inline-flex items-center justify-center gap-2 rounded-lg border border-border bg-background px-4 py-2 text-sm font-bold text-foreground"
+          >
+            إلغاء
+          </button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
 
 function ServicesTab({ group }: { group: ServiceGroup }) {
   const { services, loading } = useServicesStore();
