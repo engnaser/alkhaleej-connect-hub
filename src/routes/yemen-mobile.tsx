@@ -646,6 +646,16 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
               helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: تغيير الرمز السري")}`}
             />
           )}
+          {group === "general" && (
+            <UnifiedServiceCard
+              title="خدمة رنات"
+              description="نغمتك عنوان تميزك .. اختر اروع النغمات واجعل حياتك اكثر متعه تسمح خدمة رنات لمشتركي يمن موبايل باستبدال نغمة الرنين العادية بنغمات يسمعها المتصل بك مع العديد من الخيارات. وتتنوع النغمات ما بين ادعيه واناشيد وتواشيح واغاني وموسيقي رسوم الخدمة (100) ريال اشتراك شهري للخدمة تكلفة الاتصال (5) ريال للدقيقة."
+              icon={PhoneCall}
+              activationCode="9900"
+              deactivationCode=""
+              helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: رنات")}`}
+            />
+          )}
 
 
 
