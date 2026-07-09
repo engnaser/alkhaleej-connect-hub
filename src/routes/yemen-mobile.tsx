@@ -591,6 +591,23 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
               helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: تحويل المكالمات عند عدم الرد")}`}
             />
           )}
+          {group === "general" && (
+            <UnifiedServiceCard
+              title="تحويل جميع المكالمات لرقم آخر"
+              description="تمكنك هذه الخدمة من تحويل جميع مكالماتك إلى رقم آخر."
+              icon={PhoneForwarded}
+              requiresInput
+              inputPlaceholder="أدخل الرقم..."
+              buildCodeFromInput={(n) => `*72*${n}#`}
+              activationMethods={[
+                { type: "call", label: "تفعيل عادي", buildCode: (n) => `*72*${n}#` },
+                { type: "call", label: "تفعيل VoLTE", buildCode: (n) => `*72999*${n}#` },
+              ]}
+              deactivationCode="*720#"
+              helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: تحويل جميع المكالمات")}`}
+            />
+          )}
+
 
 
 
