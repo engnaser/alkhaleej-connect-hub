@@ -626,6 +626,16 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
               helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: التنبيه بوجود مكالمة")}`}
             />
           )}
+          {group === "general" && (
+            <UnifiedServiceCard
+              title="خدمة معرفة رقم حسابك"
+              description="لحماية رقمك عند تعبئة الرصيد تمكنك خدمة سداد من معرفة رقم حسابك لرقم تلفونك. يمكنك استخدام رقم الحساب في تعبئة رصيد عبر نقاط البيع ومكاتب البريد. اضغط تفعيل وسوف يتم ارسال رسالة تحتوي على رقم حسابك."
+              icon={PhoneCall}
+              activationCode="1003"
+              deactivationCode=""
+              helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: معرفة رقم الحساب")}`}
+            />
+          )}
 
 
 
