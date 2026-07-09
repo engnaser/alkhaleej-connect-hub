@@ -530,6 +530,7 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
 
 function ServiceCard({ service }: { service: YMServiceRow }) {
   const [copied, setCopied] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const Icon = iconFor(service.icon);
 
   const handleCopy = async () => {
