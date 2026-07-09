@@ -119,6 +119,69 @@ export type Database = {
         }
         Relationships: []
       }
+      gold_price_history: {
+        Row: {
+          captured_at: string
+          id: string
+          karat: string
+          price_usd: number | null
+          price_yer: number
+        }
+        Insert: {
+          captured_at?: string
+          id?: string
+          karat: string
+          price_usd?: number | null
+          price_yer: number
+        }
+        Update: {
+          captured_at?: string
+          id?: string
+          karat?: string
+          price_usd?: number | null
+          price_yer?: number
+        }
+        Relationships: []
+      }
+      gold_prices: {
+        Row: {
+          created_at: string
+          fetched_at: string
+          id: string
+          karat: string
+          label: string
+          price_usd: number | null
+          price_yer: number
+          sort_order: number
+          source: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          fetched_at?: string
+          id?: string
+          karat: string
+          label: string
+          price_usd?: number | null
+          price_yer: number
+          sort_order?: number
+          source?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          fetched_at?: string
+          id?: string
+          karat?: string
+          label?: string
+          price_usd?: number | null
+          price_yer?: number
+          sort_order?: number
+          source?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       template_layouts: {
         Row: {
           created_at: string
