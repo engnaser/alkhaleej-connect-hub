@@ -60,6 +60,7 @@ type GoldRow = {
   id: string;
   karat: string;
   label: string;
+  city: string;
   price_yer: number;
   price_usd: number | null;
   fetched_at: string;
@@ -68,9 +69,14 @@ type GoldRow = {
 
 type HistoryRow = {
   karat: string;
+  city: string;
   price_yer: number;
   captured_at: string;
 };
+
+const CITIES = ["صنعاء", "عدن"] as const;
+type City = (typeof CITIES)[number];
+
 
 const HIGHLIGHTED_KARATS = new Set(["24", "21", "18"]);
 
@@ -104,7 +110,7 @@ function timeAgo(iso: string) {
 }
 
 function GoldPricesPage() {
-  const [rows, setRows] = useState<GoldRow[]>([]);
+  const [allRows, setAllRows] = useState<GoldRow[]>([]);
   const [history, setHistory] = useState<HistoryRow[]>([]);
   const [loading, setLoading] = useState(true);
   const [syncing, setSyncing] = useState(false);
@@ -112,29 +118,31 @@ function GoldPricesPage() {
   const [message, setMessage] = useState<string | null>(null);
   const [copied, setCopied] = useState<string | null>(null);
   const [selectedKarat, setSelectedKarat] = useState("24");
+  const [city, setCity] = useState<City>("صنعاء");
   const sync = useServerFn(syncGoldPrices);
 
   const load = useCallback(async () => {
     setError(null);
     const { data, error: e } = await supabase
       .from("gold_prices")
-      .select("id,karat,label,price_yer,price_usd,fetched_at,sort_order")
+      .select("id,karat,label,city,price_yer,price_usd,fetched_at,sort_order")
       .order("sort_order", { ascending: true });
     if (e) {
       setError(e.message);
     } else {
-      setRows((data as GoldRow[]) ?? []);
+      setAllRows((data as GoldRow[]) ?? []);
     }
 
     const sinceIso = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
     const { data: hist } = await supabase
       .from("gold_price_history")
-      .select("karat,price_yer,captured_at")
+      .select("karat,city,price_yer,captured_at")
       .gte("captured_at", sinceIso)
       .order("captured_at", { ascending: true });
     if (hist) setHistory(hist as HistoryRow[]);
     setLoading(false);
   }, []);
+
 
   useEffect(() => {
     load();
@@ -165,10 +173,17 @@ function GoldPricesPage() {
     }
   };
 
-  const lastUpdated = rows[0]?.fetched_at;
+  const rows = useMemo(
+    () => allRows.filter((r) => r.city === city),
+    [allRows, city],
+  );
+
+  const lastUpdated = rows[0]?.fetched_at ?? allRows[0]?.fetched_at;
 
   const chartData = useMemo(() => {
-    const filtered = history.filter((h) => h.karat === selectedKarat);
+    const filtered = history.filter(
+      (h) => h.karat === selectedKarat && h.city === city,
+    );
     return filtered.map((h) => ({
       date: new Date(h.captured_at).toLocaleDateString("ar", {
         month: "short",
@@ -176,12 +191,13 @@ function GoldPricesPage() {
       }),
       price: h.price_yer,
     }));
-  }, [history, selectedKarat]);
+  }, [history, selectedKarat, city]);
 
   const availableKarats = useMemo(
     () => rows.map((r) => ({ karat: r.karat, label: r.label })),
     [rows],
   );
+
 
   return (
     <div dir="rtl" className="min-h-screen bg-background text-foreground">
@@ -229,7 +245,7 @@ function GoldPricesPage() {
           </div>
           <div className="flex flex-wrap items-center gap-2">
             <a
-              href="https://gold-price-today.com/yemen"
+              href="https://gold-price-yemen.com/"
               target="_blank"
               rel="noreferrer"
               className="inline-flex items-center gap-1.5 rounded-full border border-border bg-background px-4 py-2 text-xs font-bold text-foreground hover:border-primary/40"
@@ -261,6 +277,24 @@ function GoldPricesPage() {
             {message}
           </div>
         )}
+
+        {/* City tabs */}
+        <div className="mb-6 inline-flex rounded-full border border-border bg-card p-1 shadow-sm">
+          {CITIES.map((c) => (
+            <button
+              key={c}
+              onClick={() => setCity(c)}
+              className={`rounded-full px-5 py-2 text-sm font-extrabold transition-colors ${
+                city === c
+                  ? "bg-primary text-primary-foreground shadow"
+                  : "text-muted-foreground hover:text-foreground"
+              }`}
+            >
+              {c}
+            </button>
+          ))}
+        </div>
+
 
         {/* Highlighted karats */}
         {rows.length > 0 && (
