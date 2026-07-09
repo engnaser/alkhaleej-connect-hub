@@ -19,10 +19,13 @@ import {
 
 export type ActivationMethod = {
   type: "call" | "sms";
-  code: string;
+  code?: string;
   smsTo?: string;
   label?: string;
+  /** If provided (and card requiresInput), builds the code from user input */
+  buildCode?: (input: string) => string;
 };
+
 
 export type ServiceCardProps = {
   title: string;
