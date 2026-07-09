@@ -636,6 +636,16 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
               helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: معرفة رقم الحساب")}`}
             />
           )}
+          {group === "general" && (
+            <UnifiedServiceCard
+              title="تغيير الرمز السري"
+              description="تغيير الرمز السري يتم استخدامه في عملية تحويل الرصيد لرقم أخرى أو خدمات أخرى. اضغط تفعيل واتبع التعليمات الصوتية واضغط رقم 9 ثم الرقم 5 ثم إدخال الرمز الجديد."
+              icon={PhoneCall}
+              activationCode="95"
+              deactivationCode=""
+              helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: تغيير الرمز السري")}`}
+            />
+          )}
 
 
 
