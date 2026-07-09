@@ -29,6 +29,9 @@ import {
   Megaphone,
   Wand2,
   Gem,
+  PhoneCall,
+
+
 
 
 } from "lucide-react";
@@ -137,6 +140,13 @@ const SERVICES = [
     desc: "باقات وخدمات يمن موبايل، إدارة الحساب، وإعدادات الإنترنت في مكان واحد.",
     to: "/yemen-mobile" as const,
     cta: "ابدأ الآن",
+  },
+  {
+    icon: PhoneCall,
+    title: "خدمات الاتصالات (أكواد الشبكة)",
+    desc: "فعّل أو ألغِ خدمات: عدم الإزعاج، اتصل بي، البريد الصوتي، تحويل المكالمات بضغطة زر.",
+    to: "/telecom-services" as const,
+    cta: "افتح الخدمات",
   },
   {
     icon: Coins,
