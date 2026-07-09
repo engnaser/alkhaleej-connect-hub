@@ -204,7 +204,7 @@ export function ServiceCard({
             مساعدة
           </a>
         )}
-        {(activationCode || requiresInput) && (
+        {(activationCode || requiresInput || derivedDeactivation) && (
           <button
             type="button"
             onClick={handleCopy}
@@ -218,6 +218,7 @@ export function ServiceCard({
             {copied ? "تم النسخ" : "نسخ الكود"}
           </button>
         )}
+
         {(activationCode || requiresInput) &&
           (hasMethodDialog ? (
             <button
