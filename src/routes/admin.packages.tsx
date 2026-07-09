@@ -285,10 +285,29 @@ function AdminPackagesPage() {
           </div>
         ) : (
           <div className="space-y-5">
-            {categories.map((cat) => (
+            {categories.map((cat, idx) => (
               <section
                 key={cat.id}
-                className="rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]"
+                onDragOver={(e) => {
+                  if (dragId) {
+                    e.preventDefault();
+                    if (overId !== cat.id) setOverId(cat.id);
+                  }
+                }}
+                onDragLeave={() => {
+                  if (overId === cat.id) setOverId(null);
+                }}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  handleDropCategory(cat.id);
+                }}
+                className={`rounded-2xl border bg-card shadow-[var(--shadow-card)] transition ${
+                  dragId === cat.id
+                    ? "opacity-50"
+                    : overId === cat.id
+                      ? "border-primary ring-2 ring-primary/40"
+                      : "border-border"
+                }`}
               >
                 <div className="flex flex-col gap-3 border-b border-border p-5 sm:flex-row sm:items-start sm:justify-between">
                   {editingCat === cat.id ? (
@@ -312,19 +331,36 @@ function AdminPackagesPage() {
                     />
                   ) : (
                     <>
-                      <div>
-                        <h2 className="text-lg font-extrabold text-foreground">
-                          {cat.title}
-                        </h2>
-                        {cat.description && (
-                          <p className="mt-1 text-sm text-muted-foreground">
-                            {cat.description}
-                          </p>
-                        )}
-                        <span className="mt-2 inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-bold text-primary">
-                          {cat.packages.length} باقات
-                        </span>
+                      <div className="flex items-start gap-3">
+                        <button
+                          type="button"
+                          draggable
+                          onDragStart={() => setDragId(cat.id)}
+                          onDragEnd={() => {
+                            setDragId(null);
+                            setOverId(null);
+                          }}
+                          title="اسحب لإعادة الترتيب"
+                          aria-label="مقبض السحب"
+                          className="mt-1 cursor-grab touch-none rounded-md border border-border bg-background p-1.5 text-muted-foreground hover:border-primary/40 hover:text-primary active:cursor-grabbing"
+                        >
+                          <GripVertical className="h-4 w-4" />
+                        </button>
+                        <div>
+                          <h2 className="text-lg font-extrabold text-foreground">
+                            {cat.title}
+                          </h2>
+                          {cat.description && (
+                            <p className="mt-1 text-sm text-muted-foreground">
+                              {cat.description}
+                            </p>
+                          )}
+                          <span className="mt-2 inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-bold text-primary">
+                            {cat.packages.length} باقات
+                          </span>
+                        </div>
                       </div>
+
                       <div className="flex flex-wrap gap-2">
                         <button
                           onClick={() => setAdding(cat.id)}
