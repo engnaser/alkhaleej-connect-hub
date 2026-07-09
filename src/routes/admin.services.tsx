@@ -382,13 +382,22 @@ function ServiceForm({
             placeholder="اسم الخدمة"
           />
         </Field>
-        <Field label="الكود (اختياري)">
+        <Field label="كود التفعيل (اختياري)">
           <input
             value={s.code ?? ""}
             onChange={(e) => setS({ ...s, code: e.target.value })}
             dir="ltr"
             className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm font-mono"
             placeholder="*111#"
+          />
+        </Field>
+        <Field label="كود إلغاء التفعيل (اختياري)">
+          <input
+            value={s.deactivation_code ?? ""}
+            onChange={(e) => setS({ ...s, deactivation_code: e.target.value })}
+            dir="ltr"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm font-mono"
+            placeholder="*111*0#"
           />
         </Field>
         <Field label="الأيقونة">
