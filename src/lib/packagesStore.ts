@@ -166,12 +166,21 @@ function pkgPayload(catId: string, pkg: YMPackage, sortOrder?: number) {
 }
 
 export async function createPackage(catId: string, pkg: YMPackage) {
+  const { data: maxRow } = await supabase
+    .from("ym_packages")
+    .select("sort_order")
+    .eq("category_id", catId)
+    .order("sort_order", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  const nextSort = (maxRow?.sort_order ?? 0) + 1;
   const { error } = await supabase
     .from("ym_packages")
-    .insert(pkgPayload(catId, pkg, Date.now()));
+    .insert(pkgPayload(catId, pkg, nextSort));
   if (error) throw error;
   emitChange();
 }
+
 
 export async function updatePackage(catId: string, pkg: YMPackage) {
   const { error } = await supabase
