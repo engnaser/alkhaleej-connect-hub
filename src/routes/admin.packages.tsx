@@ -362,6 +362,26 @@ function AdminPackagesPage() {
                       </div>
 
                       <div className="flex flex-wrap gap-2">
+                        <div className="inline-flex overflow-hidden rounded-lg border border-border bg-background">
+                          <button
+                            onClick={() => moveCategory(cat.id, -1)}
+                            disabled={busy || idx === 0}
+                            title="نقل للأعلى"
+                            aria-label="نقل للأعلى"
+                            className="px-2 py-2 text-xs font-bold text-foreground hover:bg-primary/10 hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+                          >
+                            ▲
+                          </button>
+                          <button
+                            onClick={() => moveCategory(cat.id, 1)}
+                            disabled={busy || idx === categories.length - 1}
+                            title="نقل للأسفل"
+                            aria-label="نقل للأسفل"
+                            className="border-r border-border px-2 py-2 text-xs font-bold text-foreground hover:bg-primary/10 hover:text-primary disabled:cursor-not-allowed disabled:opacity-40"
+                          >
+                            ▼
+                          </button>
+                        </div>
                         <button
                           onClick={() => setAdding(cat.id)}
                           className="inline-flex items-center gap-1.5 rounded-lg bg-primary/10 px-3 py-2 text-xs font-bold text-primary hover:bg-primary/20"
