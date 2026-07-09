@@ -262,8 +262,9 @@ function PackagesTab() {
               ) : (
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {cat.packages.map((pkg) => (
-                    <PackageCard key={pkg.id} pkg={pkg} />
+                    <PackageCard key={pkg.id} pkg={pkg} catId={cat.id} />
                   ))}
+
                 </div>
               )}
             </AccordionContent>
