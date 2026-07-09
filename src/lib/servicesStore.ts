@@ -29,6 +29,7 @@ export type YMServiceRow = {
   title: string;
   description: string;
   code?: string | null;
+  deactivation_code?: string | null;
   sort_order: number;
 };
 
