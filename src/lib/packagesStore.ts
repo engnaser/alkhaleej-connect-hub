@@ -200,8 +200,8 @@ export async function resetToDefaults() {
 /* ---------- Auth helpers ---------- */
 
 export async function getCurrentAdminState() {
-  const { data: userData } = await supabase.auth.getUser();
-  const user = userData.user;
+  const { data: sessionData } = await supabase.auth.getSession();
+  const user = sessionData.session?.user ?? null;
   if (!user) return { user: null, isAdmin: false };
   const { data, error } = await supabase.rpc("has_role", {
     _user_id: user.id,
@@ -210,3 +210,4 @@ export async function getCurrentAdminState() {
   if (error) return { user, isAdmin: false };
   return { user, isAdmin: Boolean(data) };
 }
+
