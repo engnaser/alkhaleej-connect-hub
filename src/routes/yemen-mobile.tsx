@@ -575,6 +575,23 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
               helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: تحويل المكالمات عند الانشغال")}`}
             />
           )}
+          {group === "general" && (
+            <UnifiedServiceCard
+              title="تحويل المكالمات لرقم آخر في حالة عدم الرد"
+              description="لتفعيل خدمة تحويل المكالمات لرقم آخر في حالة عدم الرد، قم بإدخال الرقم المراد التحويل إليه ثم اضغط زر التفعيل. ولإلغاء التفعيل قم بالضغط على زر الإلغاء."
+              icon={PhoneForwarded}
+              requiresInput
+              inputPlaceholder="أدخل الرقم..."
+              buildCodeFromInput={(n) => `*92*${n}#`}
+              activationMethods={[
+                { type: "call", label: "تفعيل عادي", buildCode: (n) => `*92*${n}#` },
+                { type: "call", label: "تفعيل VoLTE", buildCode: (n) => `*92999*${n}#` },
+              ]}
+              deactivationCode="*920#"
+              helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص خدمة: تحويل المكالمات عند عدم الرد")}`}
+            />
+          )}
+
 
 
           {list.map((s) => (
