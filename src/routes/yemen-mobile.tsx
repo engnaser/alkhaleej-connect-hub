@@ -31,6 +31,7 @@ import {
   Wifi,
   Phone,
   MessageSquare,
+  PhoneCall,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import {
