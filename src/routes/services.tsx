@@ -27,6 +27,8 @@ import {
   GraduationCap,
   CalendarClock,
   Megaphone,
+  Wand2,
+
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { COUNTRIES } from "@/data/countries";
@@ -161,6 +163,13 @@ const SERVICES = [
     desc: "اختصار آمن لبوابة بندر عدن لمعرفة تاريخ انتهاء اشتراكك في الإنترنت.",
     to: "/bandar-aden-inquiry" as const,
     cta: "استعلم الآن",
+  },
+  {
+    icon: Wand2,
+    title: "توليد الصور بالذكاء الاصطناعي",
+    desc: "أنشئ صوراً احترافية من وصف نصي بالعربية خلال ثوانٍ، بمعاينة مباشرة أثناء التوليد.",
+    to: "/image-generator" as const,
+    cta: "ابدأ التوليد",
   },
   {
     icon: Megaphone,

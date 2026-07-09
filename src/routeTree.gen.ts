@@ -23,6 +23,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PhoneBillInquiryRouteImport } from './routes/phone-bill-inquiry'
 import { Route as MyPhotosRouteImport } from './routes/my-photos'
 import { Route as MarketingWriterRouteImport } from './routes/marketing-writer'
+import { Route as ImageGeneratorRouteImport } from './routes/image-generator'
 import { Route as ExchangeRatesRouteImport } from './routes/exchange-rates'
 import { Route as DialCodesRouteImport } from './routes/dial-codes'
 import { Route as DesignsRouteImport } from './routes/designs'
@@ -34,6 +35,7 @@ import { Route as AdslInquiryRouteImport } from './routes/adsl-inquiry'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MawloudIndexRouteImport } from './routes/mawloud.index'
 import { Route as MawloudSettingsRouteImport } from './routes/mawloud.settings'
+import { Route as ApiGenerateImageRouteImport } from './routes/api/generate-image'
 import { Route as AdminServicesRouteImport } from './routes/admin.services'
 import { Route as AdminPackagesRouteImport } from './routes/admin.packages'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
@@ -108,6 +110,11 @@ const MarketingWriterRoute = MarketingWriterRouteImport.update({
   path: '/marketing-writer',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ImageGeneratorRoute = ImageGeneratorRouteImport.update({
+  id: '/image-generator',
+  path: '/image-generator',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ExchangeRatesRoute = ExchangeRatesRouteImport.update({
   id: '/exchange-rates',
   path: '/exchange-rates',
@@ -163,6 +170,11 @@ const MawloudSettingsRoute = MawloudSettingsRouteImport.update({
   path: '/mawloud/settings',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiGenerateImageRoute = ApiGenerateImageRouteImport.update({
+  id: '/api/generate-image',
+  path: '/api/generate-image',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminServicesRoute = AdminServicesRouteImport.update({
   id: '/admin/services',
   path: '/admin/services',
@@ -189,6 +201,7 @@ export interface FileRoutesByFullPath {
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
   '/exchange-rates': typeof ExchangeRatesRoute
+  '/image-generator': typeof ImageGeneratorRoute
   '/marketing-writer': typeof MarketingWriterRoute
   '/my-photos': typeof MyPhotosRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
@@ -206,6 +219,7 @@ export interface FileRoutesByFullPath {
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
   '/admin/services': typeof AdminServicesRoute
+  '/api/generate-image': typeof ApiGenerateImageRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
 }
@@ -219,6 +233,7 @@ export interface FileRoutesByTo {
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
   '/exchange-rates': typeof ExchangeRatesRoute
+  '/image-generator': typeof ImageGeneratorRoute
   '/marketing-writer': typeof MarketingWriterRoute
   '/my-photos': typeof MyPhotosRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
@@ -236,6 +251,7 @@ export interface FileRoutesByTo {
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
   '/admin/services': typeof AdminServicesRoute
+  '/api/generate-image': typeof ApiGenerateImageRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud': typeof MawloudIndexRoute
 }
@@ -250,6 +266,7 @@ export interface FileRoutesById {
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
   '/exchange-rates': typeof ExchangeRatesRoute
+  '/image-generator': typeof ImageGeneratorRoute
   '/marketing-writer': typeof MarketingWriterRoute
   '/my-photos': typeof MyPhotosRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
@@ -267,6 +284,7 @@ export interface FileRoutesById {
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
   '/admin/services': typeof AdminServicesRoute
+  '/api/generate-image': typeof ApiGenerateImageRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
 }
@@ -282,6 +300,7 @@ export interface FileRouteTypes {
     | '/designs'
     | '/dial-codes'
     | '/exchange-rates'
+    | '/image-generator'
     | '/marketing-writer'
     | '/my-photos'
     | '/phone-bill-inquiry'
@@ -299,6 +318,7 @@ export interface FileRouteTypes {
     | '/admin/analytics'
     | '/admin/packages'
     | '/admin/services'
+    | '/api/generate-image'
     | '/mawloud/settings'
     | '/mawloud/'
   fileRoutesByTo: FileRoutesByTo
@@ -312,6 +332,7 @@ export interface FileRouteTypes {
     | '/designs'
     | '/dial-codes'
     | '/exchange-rates'
+    | '/image-generator'
     | '/marketing-writer'
     | '/my-photos'
     | '/phone-bill-inquiry'
@@ -329,6 +350,7 @@ export interface FileRouteTypes {
     | '/admin/analytics'
     | '/admin/packages'
     | '/admin/services'
+    | '/api/generate-image'
     | '/mawloud/settings'
     | '/mawloud'
   id:
@@ -342,6 +364,7 @@ export interface FileRouteTypes {
     | '/designs'
     | '/dial-codes'
     | '/exchange-rates'
+    | '/image-generator'
     | '/marketing-writer'
     | '/my-photos'
     | '/phone-bill-inquiry'
@@ -359,6 +382,7 @@ export interface FileRouteTypes {
     | '/admin/analytics'
     | '/admin/packages'
     | '/admin/services'
+    | '/api/generate-image'
     | '/mawloud/settings'
     | '/mawloud/'
   fileRoutesById: FileRoutesById
@@ -373,6 +397,7 @@ export interface RootRouteChildren {
   DesignsRoute: typeof DesignsRoute
   DialCodesRoute: typeof DialCodesRoute
   ExchangeRatesRoute: typeof ExchangeRatesRoute
+  ImageGeneratorRoute: typeof ImageGeneratorRoute
   MarketingWriterRoute: typeof MarketingWriterRoute
   MyPhotosRoute: typeof MyPhotosRoute
   PhoneBillInquiryRoute: typeof PhoneBillInquiryRoute
@@ -390,6 +415,7 @@ export interface RootRouteChildren {
   AdminAnalyticsRoute: typeof AdminAnalyticsRoute
   AdminPackagesRoute: typeof AdminPackagesRoute
   AdminServicesRoute: typeof AdminServicesRoute
+  ApiGenerateImageRoute: typeof ApiGenerateImageRoute
   MawloudSettingsRoute: typeof MawloudSettingsRoute
   MawloudIndexRoute: typeof MawloudIndexRoute
 }
@@ -494,6 +520,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketingWriterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/image-generator': {
+      id: '/image-generator'
+      path: '/image-generator'
+      fullPath: '/image-generator'
+      preLoaderRoute: typeof ImageGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/exchange-rates': {
       id: '/exchange-rates'
       path: '/exchange-rates'
@@ -571,6 +604,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MawloudSettingsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/generate-image': {
+      id: '/api/generate-image'
+      path: '/api/generate-image'
+      fullPath: '/api/generate-image'
+      preLoaderRoute: typeof ApiGenerateImageRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/services': {
       id: '/admin/services'
       path: '/admin/services'
@@ -605,6 +645,7 @@ const rootRouteChildren: RootRouteChildren = {
   DesignsRoute: DesignsRoute,
   DialCodesRoute: DialCodesRoute,
   ExchangeRatesRoute: ExchangeRatesRoute,
+  ImageGeneratorRoute: ImageGeneratorRoute,
   MarketingWriterRoute: MarketingWriterRoute,
   MyPhotosRoute: MyPhotosRoute,
   PhoneBillInquiryRoute: PhoneBillInquiryRoute,
@@ -622,6 +663,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminAnalyticsRoute: AdminAnalyticsRoute,
   AdminPackagesRoute: AdminPackagesRoute,
   AdminServicesRoute: AdminServicesRoute,
+  ApiGenerateImageRoute: ApiGenerateImageRoute,
   MawloudSettingsRoute: MawloudSettingsRoute,
   MawloudIndexRoute: MawloudIndexRoute,
 }
