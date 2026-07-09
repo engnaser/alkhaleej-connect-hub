@@ -522,6 +522,7 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
       ) : (
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {group === "general" && <CallMeCard />}
+          {group === "general" && <AbsherCard />}
           {list.map((s) => (
             <ServiceCard key={s.id} service={s} />
           ))}
