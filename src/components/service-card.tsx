@@ -74,13 +74,15 @@ export function ServiceCard({
     deactivationCode ??
     (activationCode ? activationCode.replace(/^\*/, "#") : "");
 
+  const copyTarget = resolvedCode || derivedDeactivation;
+
   const handleCopy = async () => {
-    if (!resolvedCode) {
+    if (!copyTarget) {
       toast.error("لا يوجد كود للنسخ");
       return;
     }
     try {
-      await navigator.clipboard.writeText(resolvedCode);
+      await navigator.clipboard.writeText(copyTarget);
       setCopied(true);
       toast.success("تم نسخ الكود");
       setTimeout(() => setCopied(false), 1800);
@@ -88,6 +90,7 @@ export function ServiceCard({
       toast.error("تعذّر النسخ");
     }
   };
+
 
   const callHref = resolvedCode ? `tel:${encodeUssd(resolvedCode)}` : undefined;
   const deactivateHref = derivedDeactivation
