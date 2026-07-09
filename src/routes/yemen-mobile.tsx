@@ -530,6 +530,7 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
 
 function ServiceCard({ service }: { service: YMServiceRow }) {
   const [copied, setCopied] = useState(false);
+  const [expanded, setExpanded] = useState(false);
   const Icon = iconFor(service.icon);
 
   const handleCopy = async () => {
@@ -555,9 +556,22 @@ function ServiceCard({ service }: { service: YMServiceRow }) {
       <h4 className="text-base font-extrabold text-foreground">
         {service.title}
       </h4>
-      <p className="mt-1.5 flex-1 text-sm leading-relaxed text-muted-foreground">
-        {service.description}
-      </p>
+      <div className="mt-1.5 flex-1">
+        <p
+          className={`text-sm leading-relaxed text-muted-foreground ${expanded ? "" : "line-clamp-3"}`}
+        >
+          {service.description}
+        </p>
+        {(service.description?.length ?? 0) > 120 && (
+          <button
+            type="button"
+            onClick={() => setExpanded((v) => !v)}
+            className="mt-1 text-xs font-bold text-primary hover:underline"
+          >
+            {expanded ? "عرض أقل" : "عرض المزيد"}
+          </button>
+        )}
+      </div>
       {(service.code || service.deactivation_code) && (
         <div className="mt-4 space-y-1.5">
           {service.code && (
