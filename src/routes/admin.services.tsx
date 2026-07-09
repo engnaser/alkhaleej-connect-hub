@@ -53,6 +53,7 @@ const emptyService = (group: ServiceGroup): YMServiceRow => ({
   title: "",
   description: "",
   code: "",
+  deactivation_code: "",
   sort_order: Date.now(),
 });
 
