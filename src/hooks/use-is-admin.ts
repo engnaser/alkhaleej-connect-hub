@@ -10,8 +10,8 @@ export function useIsAdmin() {
 
     const check = async () => {
       try {
-        const { data: userData } = await supabase.auth.getUser();
-        const user = userData.user;
+        const { data: sessionData } = await supabase.auth.getSession();
+        const user = sessionData.session?.user ?? null;
         if (!user) {
           if (active) {
             setIsAdmin(false);
