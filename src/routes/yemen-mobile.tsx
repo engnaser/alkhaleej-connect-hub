@@ -348,15 +348,6 @@ function PackageCard({ pkg }: { pkg: YMPackage }) {
           اتصال لتفعيل الكود
         </a>
       )}
-      <a
-        href={requestUrl}
-        target="_blank"
-        rel="noreferrer"
-        className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg bg-primary px-3 py-2.5 text-xs font-extrabold text-primary-foreground shadow-sm transition-transform hover:scale-[1.02]"
-      >
-        <Send className="h-3.5 w-3.5" />
-        طلب تفعيل الباقة
-      </a>
     </div>
   );
 }
