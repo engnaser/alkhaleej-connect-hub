@@ -27,6 +27,8 @@ import {
   GraduationCap,
   CalendarClock,
   Megaphone,
+  Wand2,
+
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { COUNTRIES } from "@/data/countries";
