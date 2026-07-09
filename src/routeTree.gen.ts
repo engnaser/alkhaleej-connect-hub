@@ -32,6 +32,7 @@ import { Route as CurrencyConverterRouteImport } from './routes/currency-convert
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as BandarAdenInquiryRouteImport } from './routes/bandar-aden-inquiry'
 import { Route as AuthRouteImport } from './routes/auth'
+import { Route as AiPromptToolsRouteImport } from './routes/ai-prompt-tools'
 import { Route as AdslInquiryRouteImport } from './routes/adsl-inquiry'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as MawloudIndexRouteImport } from './routes/mawloud.index'
@@ -156,6 +157,11 @@ const AuthRoute = AuthRouteImport.update({
   path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AiPromptToolsRoute = AiPromptToolsRouteImport.update({
+  id: '/ai-prompt-tools',
+  path: '/ai-prompt-tools',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdslInquiryRoute = AdslInquiryRouteImport.update({
   id: '/adsl-inquiry',
   path: '/adsl-inquiry',
@@ -200,6 +206,7 @@ const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/adsl-inquiry': typeof AdslInquiryRoute
+  '/ai-prompt-tools': typeof AiPromptToolsRoute
   '/auth': typeof AuthRoute
   '/bandar-aden-inquiry': typeof BandarAdenInquiryRoute
   '/contact': typeof ContactRoute
@@ -233,6 +240,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/adsl-inquiry': typeof AdslInquiryRoute
+  '/ai-prompt-tools': typeof AiPromptToolsRoute
   '/auth': typeof AuthRoute
   '/bandar-aden-inquiry': typeof BandarAdenInquiryRoute
   '/contact': typeof ContactRoute
@@ -267,6 +275,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/adsl-inquiry': typeof AdslInquiryRoute
+  '/ai-prompt-tools': typeof AiPromptToolsRoute
   '/auth': typeof AuthRoute
   '/bandar-aden-inquiry': typeof BandarAdenInquiryRoute
   '/contact': typeof ContactRoute
@@ -302,6 +311,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/adsl-inquiry'
+    | '/ai-prompt-tools'
     | '/auth'
     | '/bandar-aden-inquiry'
     | '/contact'
@@ -335,6 +345,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/adsl-inquiry'
+    | '/ai-prompt-tools'
     | '/auth'
     | '/bandar-aden-inquiry'
     | '/contact'
@@ -368,6 +379,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/adsl-inquiry'
+    | '/ai-prompt-tools'
     | '/auth'
     | '/bandar-aden-inquiry'
     | '/contact'
@@ -402,6 +414,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AdslInquiryRoute: typeof AdslInquiryRoute
+  AiPromptToolsRoute: typeof AiPromptToolsRoute
   AuthRoute: typeof AuthRoute
   BandarAdenInquiryRoute: typeof BandarAdenInquiryRoute
   ContactRoute: typeof ContactRoute
@@ -596,6 +609,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/ai-prompt-tools': {
+      id: '/ai-prompt-tools'
+      path: '/ai-prompt-tools'
+      fullPath: '/ai-prompt-tools'
+      preLoaderRoute: typeof AiPromptToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/adsl-inquiry': {
       id: '/adsl-inquiry'
       path: '/adsl-inquiry'
@@ -658,6 +678,7 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AdslInquiryRoute: AdslInquiryRoute,
+  AiPromptToolsRoute: AiPromptToolsRoute,
   AuthRoute: AuthRoute,
   BandarAdenInquiryRoute: BandarAdenInquiryRoute,
   ContactRoute: ContactRoute,

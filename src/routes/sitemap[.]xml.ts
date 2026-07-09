@@ -21,6 +21,7 @@ const ENTRIES: SitemapEntry[] = [
   { path: "/yemen-mobile", changefreq: "weekly", priority: "0.8" },
   { path: "/speed-test", changefreq: "monthly", priority: "0.7" },
   { path: "/whatsapp-bot", changefreq: "monthly", priority: "0.6" },
+  { path: "/ai-prompt-tools", changefreq: "monthly", priority: "0.7" },
   { path: "/whatsapp-unblock", changefreq: "monthly", priority: "0.6" },
   { path: "/adsl-inquiry", changefreq: "weekly", priority: "0.8" },
   { path: "/yemen4g-inquiry", changefreq: "weekly", priority: "0.8" },
