@@ -151,6 +151,7 @@ const SERVICES = [
     desc: "أسعار عيار 24 و 21 و 18 بالريال اليمني والدولار مع رسم بياني للتغيرات وزر تزامن مباشر.",
     to: "/gold-prices" as const,
     cta: "افتح الأسعار",
+  },
   {
     icon: ArrowLeftRight,
     title: "محوّل العملات العالمية",
