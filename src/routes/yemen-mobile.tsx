@@ -31,6 +31,7 @@ import {
   Wifi,
   Phone,
   MessageSquare,
+  PhoneCall,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import {
@@ -338,6 +339,15 @@ function PackageCard({ pkg }: { pkg: YMPackage }) {
           مشاركة
         </a>
       </div>
+      {pkg.code && (
+        <a
+          href={`tel:${encodeURIComponent(pkg.code)}`}
+          className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg border-2 border-primary bg-primary/10 px-3 py-2.5 text-xs font-extrabold text-primary transition-transform hover:scale-[1.02]"
+        >
+          <PhoneCall className="h-3.5 w-3.5" />
+          اتصال لتفعيل الكود
+        </a>
+      )}
       <a
         href={requestUrl}
         target="_blank"
