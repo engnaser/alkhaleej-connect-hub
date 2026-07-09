@@ -23,6 +23,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PhoneBillInquiryRouteImport } from './routes/phone-bill-inquiry'
 import { Route as MyPhotosRouteImport } from './routes/my-photos'
 import { Route as MarketingWriterRouteImport } from './routes/marketing-writer'
+import { Route as ImageGeneratorRouteImport } from './routes/image-generator'
 import { Route as ExchangeRatesRouteImport } from './routes/exchange-rates'
 import { Route as DialCodesRouteImport } from './routes/dial-codes'
 import { Route as DesignsRouteImport } from './routes/designs'
@@ -107,6 +108,11 @@ const MyPhotosRoute = MyPhotosRouteImport.update({
 const MarketingWriterRoute = MarketingWriterRouteImport.update({
   id: '/marketing-writer',
   path: '/marketing-writer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ImageGeneratorRoute = ImageGeneratorRouteImport.update({
+  id: '/image-generator',
+  path: '/image-generator',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ExchangeRatesRoute = ExchangeRatesRouteImport.update({
@@ -195,6 +201,7 @@ export interface FileRoutesByFullPath {
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
   '/exchange-rates': typeof ExchangeRatesRoute
+  '/image-generator': typeof ImageGeneratorRoute
   '/marketing-writer': typeof MarketingWriterRoute
   '/my-photos': typeof MyPhotosRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
@@ -226,6 +233,7 @@ export interface FileRoutesByTo {
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
   '/exchange-rates': typeof ExchangeRatesRoute
+  '/image-generator': typeof ImageGeneratorRoute
   '/marketing-writer': typeof MarketingWriterRoute
   '/my-photos': typeof MyPhotosRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
@@ -258,6 +266,7 @@ export interface FileRoutesById {
   '/designs': typeof DesignsRoute
   '/dial-codes': typeof DialCodesRoute
   '/exchange-rates': typeof ExchangeRatesRoute
+  '/image-generator': typeof ImageGeneratorRoute
   '/marketing-writer': typeof MarketingWriterRoute
   '/my-photos': typeof MyPhotosRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
@@ -291,6 +300,7 @@ export interface FileRouteTypes {
     | '/designs'
     | '/dial-codes'
     | '/exchange-rates'
+    | '/image-generator'
     | '/marketing-writer'
     | '/my-photos'
     | '/phone-bill-inquiry'
@@ -322,6 +332,7 @@ export interface FileRouteTypes {
     | '/designs'
     | '/dial-codes'
     | '/exchange-rates'
+    | '/image-generator'
     | '/marketing-writer'
     | '/my-photos'
     | '/phone-bill-inquiry'
@@ -353,6 +364,7 @@ export interface FileRouteTypes {
     | '/designs'
     | '/dial-codes'
     | '/exchange-rates'
+    | '/image-generator'
     | '/marketing-writer'
     | '/my-photos'
     | '/phone-bill-inquiry'
@@ -385,6 +397,7 @@ export interface RootRouteChildren {
   DesignsRoute: typeof DesignsRoute
   DialCodesRoute: typeof DialCodesRoute
   ExchangeRatesRoute: typeof ExchangeRatesRoute
+  ImageGeneratorRoute: typeof ImageGeneratorRoute
   MarketingWriterRoute: typeof MarketingWriterRoute
   MyPhotosRoute: typeof MyPhotosRoute
   PhoneBillInquiryRoute: typeof PhoneBillInquiryRoute
@@ -507,6 +520,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MarketingWriterRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/image-generator': {
+      id: '/image-generator'
+      path: '/image-generator'
+      fullPath: '/image-generator'
+      preLoaderRoute: typeof ImageGeneratorRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/exchange-rates': {
       id: '/exchange-rates'
       path: '/exchange-rates'
@@ -625,6 +645,7 @@ const rootRouteChildren: RootRouteChildren = {
   DesignsRoute: DesignsRoute,
   DialCodesRoute: DialCodesRoute,
   ExchangeRatesRoute: ExchangeRatesRoute,
+  ImageGeneratorRoute: ImageGeneratorRoute,
   MarketingWriterRoute: MarketingWriterRoute,
   MyPhotosRoute: MyPhotosRoute,
   PhoneBillInquiryRoute: PhoneBillInquiryRoute,
