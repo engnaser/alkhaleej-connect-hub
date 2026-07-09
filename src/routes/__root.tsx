@@ -144,17 +144,13 @@ function RootShell({ children }: { children: ReactNode }) {
     <html lang="ar" dir="rtl" className="light">
       <head>
         <HeadContent />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `(function(){try{var t=localStorage.getItem('khalij:theme');var c=document.documentElement.classList;c.remove('light','dark');c.add(t==='dark'?'dark':'light');}catch(e){}})();`,
-          }}
-        />
       </head>
       <body>
         {children}
         <Scripts />
       </body>
     </html>
+
   );
 }
 
@@ -164,11 +160,11 @@ function RootComponent() {
 
   useEffect(() => {
     installGlobalErrorListeners();
-    const saved = window.localStorage.getItem("khalij:theme");
-    const theme = saved === "dark" ? "dark" : "light";
-    document.documentElement.classList.toggle("light", theme === "light");
-    document.documentElement.classList.toggle("dark", theme === "dark");
+    try { window.localStorage.removeItem("khalij:theme"); } catch {}
+    document.documentElement.classList.remove("dark");
+    document.documentElement.classList.add("light");
   }, []);
+
 
   useEffect(() => {
     // Log initial view + subsequent client-side navigations.
