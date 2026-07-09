@@ -76,6 +76,39 @@ function AdminPackagesPage() {
   const [adding, setAdding] = useState<string | null>(null);
   const [newCatOpen, setNewCatOpen] = useState(false);
   const [busy, setBusy] = useState(false);
+  const [dragId, setDragId] = useState<string | null>(null);
+  const [overId, setOverId] = useState<string | null>(null);
+
+  const handleDropCategory = (targetId: string) => {
+    if (!dragId || dragId === targetId) {
+      setDragId(null);
+      setOverId(null);
+      return;
+    }
+    const ids = categories.map((c) => c.id);
+    const from = ids.indexOf(dragId);
+    const to = ids.indexOf(targetId);
+    setDragId(null);
+    setOverId(null);
+    if (from < 0 || to < 0) return;
+    ids.splice(to, 0, ids.splice(from, 1)[0]);
+    guard(async () => {
+      await reorderCategories(ids);
+      await refresh();
+    });
+  };
+
+  const moveCategory = (id: string, dir: -1 | 1) => {
+    const ids = categories.map((c) => c.id);
+    const idx = ids.indexOf(id);
+    const target = idx + dir;
+    if (idx < 0 || target < 0 || target >= ids.length) return;
+    [ids[idx], ids[target]] = [ids[target], ids[idx]];
+    guard(async () => {
+      await reorderCategories(ids);
+      await refresh();
+    });
+  };
 
   useEffect(() => {
     let active = true;
