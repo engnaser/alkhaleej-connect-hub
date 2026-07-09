@@ -173,10 +173,17 @@ function GoldPricesPage() {
     }
   };
 
-  const lastUpdated = rows[0]?.fetched_at;
+  const rows = useMemo(
+    () => allRows.filter((r) => r.city === city),
+    [allRows, city],
+  );
+
+  const lastUpdated = rows[0]?.fetched_at ?? allRows[0]?.fetched_at;
 
   const chartData = useMemo(() => {
-    const filtered = history.filter((h) => h.karat === selectedKarat);
+    const filtered = history.filter(
+      (h) => h.karat === selectedKarat && h.city === city,
+    );
     return filtered.map((h) => ({
       date: new Date(h.captured_at).toLocaleDateString("ar", {
         month: "short",
@@ -184,12 +191,13 @@ function GoldPricesPage() {
       }),
       price: h.price_yer,
     }));
-  }, [history, selectedKarat]);
+  }, [history, selectedKarat, city]);
 
   const availableKarats = useMemo(
     () => rows.map((r) => ({ karat: r.karat, label: r.label })),
     [rows],
   );
+
 
   return (
     <div dir="rtl" className="min-h-screen bg-background text-foreground">
