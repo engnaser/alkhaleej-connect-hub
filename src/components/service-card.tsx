@@ -265,24 +265,39 @@ export function ServiceCard({
             </DialogHeader>
             <div className="mt-2 grid gap-3">
               {activationMethods!.map((m, i) => {
+                const built =
+                  m.buildCode && input.trim()
+                    ? m.buildCode(input.trim())
+                    : m.code ?? "";
+                const disabled = !built;
                 const href =
                   m.type === "call"
-                    ? `tel:${encodeUssd(m.code)}`
-                    : `sms:${m.smsTo ?? ""}?body=${encodeUssd(m.code)}`;
+                    ? `tel:${encodeUssd(built)}`
+                    : `sms:${m.smsTo ?? ""}?body=${encodeUssd(built)}`;
                 const isCall = m.type === "call";
                 return (
                   <a
                     key={i}
-                    href={href}
-                    onClick={() => setMethodOpen(false)}
+                    href={disabled ? undefined : href}
+                    aria-disabled={disabled}
+                    onClick={(e) => {
+                      if (disabled) {
+                        e.preventDefault();
+                        toast.error("أدخل الرقم أولاً");
+                        return;
+                      }
+                      setMethodOpen(false);
+                    }}
                     className={
-                      isCall
+                      (isCall
                         ? "inline-flex items-center justify-center gap-2 rounded-full bg-[#2f785b] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#28684f]"
-                        : "inline-flex items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-sm font-bold text-gray-800 hover:bg-gray-50"
+                        : "inline-flex items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-sm font-bold text-gray-800 hover:bg-gray-50") +
+                      (disabled ? " opacity-60 pointer-events-none" : "")
                     }
                   >
                     {isCall ? (
                       <PhoneCall className="h-4 w-4" />
+
                     ) : (
                       <MessageSquare className="h-4 w-4" />
                     )}
