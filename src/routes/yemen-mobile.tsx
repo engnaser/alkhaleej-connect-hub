@@ -610,9 +610,9 @@ function ServiceCard({ service }: { service: YMServiceRow }) {
             اتصل للتفعيل
           </a>
         )}
-        {service.deactivation_code && (
+        {(service.deactivation_code || service.code) && (
           <a
-            href={`tel:${encodeURIComponent(service.deactivation_code)}`}
+            href={`tel:${encodeURIComponent(service.deactivation_code || (service.code as string).replace(/^\*/, "#"))}`}
             className="inline-flex items-center justify-center gap-1.5 rounded-lg bg-destructive/10 px-3 py-2 text-xs font-extrabold text-destructive hover:bg-destructive/20"
           >
             <PhoneOff className="h-3.5 w-3.5" />
