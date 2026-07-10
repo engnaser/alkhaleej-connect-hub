@@ -318,4 +318,6 @@ function ServiceCardImpl({
   );
 }
 
+export const ServiceCard = memo(ServiceCardImpl);
 export default ServiceCard;
+
