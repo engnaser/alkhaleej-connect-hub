@@ -189,6 +189,8 @@ function YemenMobilePage() {
               <PrepaidTariffTableGray />
               <PrepaidMmsTariffTable />
               <InternationalRoamingTariff />
+              <RoamingSmsTariffTable />
+
 
 
               <ServicesTab group="account" />
@@ -313,6 +315,40 @@ function PrepaidMmsTariffTable() {
     </div>
   );
 }
+
+function RoamingSmsTariffTable() {
+  const rows = [
+    { type: "الرسائل الواحدة الصادرة", price: "140 ريال" },
+    { type: "الرسائل الواردة إلى الهاتف", price: "40 ريال" },
+  ];
+  return (
+    <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+      <h3 className="mb-4 text-center text-lg font-bold text-foreground md:text-xl">
+        تعرفة تكلفة الرسائل أثناء التجوال الدولي من الرصيد الأساسي
+      </h3>
+      <div className="overflow-hidden rounded-xl border border-border">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-gray-50 text-foreground">
+              <th className="border-b border-border px-4 py-3 text-center font-bold">نوع الرسالة</th>
+              <th className="border-b border-border px-4 py-3 text-center font-bold">التكلفة</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.type} className="bg-background hover:bg-muted/40 transition-colors">
+                <td className="border-b border-border px-4 py-3 text-center text-foreground">{r.type}</td>
+                <td className="border-b border-border px-4 py-3 text-center text-foreground">{r.price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+
 
 const ROAMING_ZONES = [
   {
