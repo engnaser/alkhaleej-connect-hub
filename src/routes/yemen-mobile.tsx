@@ -159,7 +159,7 @@ function YemenMobilePage() {
                 className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
               >
                 <UserCog className="h-4 w-4" />
-                إدارة الحساب والرصيد
+                أسعار ومعلومات
               </TabsTrigger>
               <TabsTrigger
                 value="internet"
