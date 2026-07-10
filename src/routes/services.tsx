@@ -199,6 +199,13 @@ const SERVICES = [
     cta: "ابدأ التوليد",
   },
   {
+    icon: Palette,
+    title: "توليد صور مجاني (Pollinations)",
+    desc: "خدمة سريعة ومجانية لتوليد الصور من وصف نصي عبر Pollinations AI بدون تسجيل أو مفاتيح.",
+    to: "/pollinations-image" as const,
+    cta: "جرّب مجاناً",
+  },
+  {
     icon: Megaphone,
     title: "مساعد كتابة المحتوى التسويقي",
     desc: "أداة ذكية لصياغة نصوص إعلانية جذابة لمنتجاتك جاهزة للنشر على واتساب والسوشيال ميديا.",
