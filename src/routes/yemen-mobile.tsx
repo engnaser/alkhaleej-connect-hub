@@ -1580,7 +1580,9 @@ function InternetTab() {
           ]}
         />
       </div>
+      </div>
     </div>
+
   );
 }
 
