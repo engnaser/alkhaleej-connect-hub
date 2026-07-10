@@ -13,7 +13,10 @@ export const getRouter = () => {
           if (status && status >= 400 && status < 500) return false;
           return failureCount < 2;
         },
-        staleTime: 30_000,
+        staleTime: 5 * 60_000,
+        gcTime: 30 * 60_000,
+        refetchOnWindowFocus: false,
+
       },
       mutations: {
         retry: false,
