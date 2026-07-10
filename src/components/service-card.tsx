@@ -1,4 +1,6 @@
-import { useState, type ComponentType } from "react";
+import * as React from "react";
+import { memo, useState, type ComponentType } from "react";
+
 import { toast } from "sonner";
 import {
   Copy,
@@ -45,7 +47,7 @@ export type ServiceCardProps = {
 
 const encodeUssd = (code: string) => code.replace(/#/g, "%23");
 
-export function ServiceCard({
+function ServiceCardImpl({
   title,
   description,
   icon: Icon,
@@ -318,4 +320,7 @@ export function ServiceCard({
   );
 }
 
+export const ServiceCard = memo(ServiceCardImpl) as unknown as (props: ServiceCardProps) => React.ReactElement;
 export default ServiceCard;
+
+
