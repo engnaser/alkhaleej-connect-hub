@@ -352,6 +352,42 @@ export type Database = {
         }
         Relationships: []
       }
+      you_services_items: {
+        Row: {
+          code: string | null
+          created_at: string
+          description: string | null
+          id: string
+          price: string | null
+          section: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          code?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          price?: string | null
+          section: string
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          code?: string | null
+          created_at?: string
+          description?: string | null
+          id?: string
+          price?: string | null
+          section?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
