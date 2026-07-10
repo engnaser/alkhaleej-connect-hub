@@ -1507,6 +1507,14 @@ function InternetTab() {
         helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص تفعيل خدمة الإنترنت 3G")}`}
       />
 
+      <UnifiedServiceCard
+        title="تفعيل خدمة الإنترنت 4G"
+        description="خدمة لتفعيل تقنية الإنترنت عالي السرعة (4G) على رقمك. للتفعيل، قم بالاتصال بالرمز *444 واتباع التعليمات الصوتية. يرجى التأكد من أن شريحتك تدعم تقنية 4G وأن هاتفك يدعم هذه الخدمة لضمان أفضل تجربة إنترنت."
+        icon={Wifi}
+        activationCode="*444"
+        helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص تفعيل خدمة الإنترنت 4G")}`}
+      />
+
       <div className="grid gap-5 lg:grid-cols-2">
 
       <div className="rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)]">
