@@ -1516,6 +1516,7 @@ function InternetTab() {
       />
 
       <ApnSetupGuide />
+      <Apn4GSetupCard />
 
 
       <div className="grid gap-5 lg:grid-cols-2">
