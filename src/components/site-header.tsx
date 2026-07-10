@@ -65,7 +65,9 @@ export function SiteHeader({ cta }: { cta?: ReactNode }) {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
+          <LanguageSwitcher />
           {cta}
+
 
 
           <Sheet>
