@@ -188,6 +188,8 @@ function YemenMobilePage() {
               <PrepaidTariffTable />
               <PrepaidTariffTableGray />
               <PrepaidMmsTariffTable />
+              <InternationalRoamingTariff />
+
 
               <ServicesTab group="account" />
             </TabsContent>
