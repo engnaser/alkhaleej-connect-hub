@@ -190,6 +190,8 @@ function YemenMobilePage() {
               <PrepaidMmsTariffTable />
               <InternationalRoamingTariff />
               <RoamingSmsTariffTable />
+              <SabahiServiceCard />
+
 
 
 
@@ -347,6 +349,59 @@ function RoamingSmsTariffTable() {
     </div>
   );
 }
+
+function SabahiServiceCard() {
+  const rows = [
+    { s: "عند الاتصال ضمن شبكة يمن موبايل", d: "1 ريال فقط للدقيقة الواحدة" },
+    { s: "عند الاتصال إلى الثابت", d: "3 ريال للدقيقة الواحدة" },
+    { s: "الاتصال إلى الشبكات المحلية الأخرى (GSM)", d: "7 ريال للدقيقة الواحدة" },
+    { s: "الرسائل SMS ضمن شبكة يمن موبايل وإلى الشبكات المحلية الأخرى", d: "1 ريال للرسالة الواحدة" },
+    { s: "استخدام الانترنت", d: "3 ريال للميجا الواحد" },
+  ];
+  return (
+    <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+      <h3 className="mb-3 text-center text-lg font-bold text-foreground md:text-xl">
+        خدمة صباحي
+      </h3>
+      <div className="space-y-3 text-sm leading-relaxed text-foreground">
+        <p>
+          تمنحك تخفيض في تعرفة الاتصال والرسائل النصية إلى جميع الشبكات المحلية والانترنت،
+          وذلك من الساعة 3:00 فجراً وحتى الساعة 7:00 صباحاً.
+          <span className="text-muted-foreground"> (ما عدا شهر رمضان فتبدأ من الساعة 5 فجراً وحتى الساعة 9 صباحاً).</span>
+        </p>
+        <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 px-3 py-2 text-emerald-900">
+          الخدمة مفعلة لدى جميع مشتركي يمن موبايل وبشكل آلي.
+        </div>
+        <p className="text-muted-foreground">
+          العرض بدون أي اشتراك شهري؛ حيث أنها مفعلة بشكل آلي، وعند الاتصال في الأوقات المذكورة أعلاه
+          تحسب الخدمة بتخفيض كما هو موضح بالجدول التالي:
+        </p>
+      </div>
+
+      <h4 className="mb-2 mt-5 text-center text-base font-bold text-foreground">جدول التخفيضات</h4>
+      <div className="overflow-hidden rounded-xl border border-border">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-gray-50 text-foreground">
+              <th className="border-b border-border px-4 py-3 text-center font-bold">الخدمة</th>
+              <th className="border-b border-border px-4 py-3 text-center font-bold">التخفيض</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.s} className="bg-background hover:bg-muted/40 transition-colors">
+                <td className="border-b border-border px-4 py-3 text-center text-foreground">{r.s}</td>
+                <td className="border-b border-border px-4 py-3 text-center font-medium text-emerald-800">{r.d}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+
 
 
 
