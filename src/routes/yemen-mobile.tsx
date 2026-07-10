@@ -201,6 +201,45 @@ function YemenMobilePage() {
   );
 }
 
+function PrepaidTariffTable() {
+  const rows = [
+    { to: "داخل الشبكة", call: "9 ريال", sms: "4 ريال" },
+    { to: "يمن موبايل إلى الثابت", call: "5 ريال", sms: "---" },
+    { to: "من يمن موبايل إلى GSM", call: "20 ريال", sms: "8 ريال" },
+    { to: "من ثابت إلى يمن موبايل", call: "5 ريال", sms: "---" },
+    { to: "من يمن موبايل إلى خارج اليمن", call: "بحسب تعرفة تيليمن", sms: "20 ريال" },
+  ];
+  return (
+    <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
+      <h3 className="mb-4 text-center text-base font-bold text-foreground md:text-lg">
+        تعرفة المكالمات والرسائل لنظام الدفع المسبق
+      </h3>
+      <div className="overflow-hidden rounded-lg border border-border">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-emerald-50 text-emerald-900">
+              <th className="border-b border-border px-3 py-2.5 text-center font-bold">جهة الاتصال</th>
+              <th className="border-b border-border px-3 py-2.5 text-center font-bold">الاتصال (دقيقة)</th>
+              <th className="border-b border-border px-3 py-2.5 text-center font-bold">رسائل</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r, i) => (
+              <tr key={r.to} className={i % 2 === 0 ? "bg-background" : "bg-muted/30"}>
+                <td className="border-b border-border px-3 py-2.5 text-center text-foreground">{r.to}</td>
+                <td className="border-b border-border px-3 py-2.5 text-center text-foreground">{r.call}</td>
+                <td className="border-b border-border px-3 py-2.5 text-center text-foreground">{r.sms}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+
+
 function PackagesTab() {
   const { categories, loading } = usePackagesStore();
   if (loading && categories.length === 0) {
