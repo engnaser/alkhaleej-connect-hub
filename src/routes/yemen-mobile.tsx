@@ -191,6 +191,7 @@ function YemenMobilePage() {
               <InternationalRoamingTariff />
               <RoamingSmsTariffTable />
               <SabahiServiceCard />
+              <SalifniServiceCard />
 
 
 
@@ -397,6 +398,91 @@ function SabahiServiceCard() {
           </tbody>
         </table>
       </div>
+    </div>
+  );
+}
+
+function SalifniServiceCard() {
+  const [open, setOpen] = useState(false);
+  const rows = [
+    { a: "100 ريال", f: "10 ريال", t: "110 ريال" },
+    { a: "200 ريال", f: "20 ريال", t: "220 ريال" },
+    { a: "300 ريال", f: "30 ريال", t: "330 ريال" },
+    { a: "400 ريال", f: "40 ريال", t: "440 ريال" },
+    { a: "500 ريال", f: "50 ريال", t: "550 ريال" },
+  ];
+  return (
+    <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+      <h3 className="mb-3 text-center text-lg font-bold text-foreground md:text-xl">
+        خدمة سلفني
+      </h3>
+      <div className="space-y-3 text-sm leading-relaxed text-foreground">
+        <p>
+          خدمة تمكن مشتركي الدفع المسبق من الحصول على رصيد إضافي عند نفاذ رصيدهم الأساسي،
+          ليتم استقطاع المبلغ عند قيام المشترك بعملية الشحن التالية.
+        </p>
+        <div className="rounded-lg border border-emerald-200 bg-emerald-50/60 px-3 py-2 text-emerald-900">
+          شرط التفعيل: يجب أن يكون قد مر على تفعيل الرقم أكثر من 3 أشهر.
+        </div>
+      </div>
+
+      <h4 className="mb-2 mt-5 text-center text-base font-bold text-foreground">قائمة مبالغ سلفني</h4>
+      <div className="overflow-hidden rounded-xl border border-border">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-gray-50 text-foreground">
+              <th className="border-b border-border px-4 py-3 text-center font-bold">المبلغ</th>
+              <th className="border-b border-border px-4 py-3 text-center font-bold">رسوم الخدمة</th>
+              <th className="border-b border-border px-4 py-3 text-center font-bold">المبلغ الإجمالي المستحق</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.a} className="bg-background hover:bg-muted/40 transition-colors">
+                <td className="border-b border-border px-4 py-3 text-center text-foreground">{r.a}</td>
+                <td className="border-b border-border px-4 py-3 text-center text-foreground">{r.f}</td>
+                <td className="border-b border-border px-4 py-3 text-center font-medium text-emerald-800">{r.t}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="mt-5 flex justify-center">
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-5 py-2.5 text-sm font-bold text-emerald-800 border border-emerald-200 hover:bg-emerald-100 transition-colors"
+        >
+          <span aria-hidden>⚡</span>
+          تفعيل الخدمة
+        </button>
+      </div>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent dir="rtl" className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-right">تفعيل خدمة سلفني</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-3 text-sm text-foreground">
+            <p>للحصول على سلفة رصيد، اتصل بالرقم التالي واتبع التعليمات الصوتية:</p>
+            <div className="rounded-full border-2 border-dashed border-emerald-300 bg-emerald-50 px-4 py-3 text-center text-2xl font-extrabold tracking-widest text-emerald-800">
+              333
+            </div>
+            <p className="text-muted-foreground text-xs">
+              سيتم استقطاع المبلغ الإجمالي (المبلغ + الرسوم) تلقائياً عند عملية الشحن التالية.
+            </p>
+          </div>
+          <DialogFooter className="gap-2 sm:justify-start">
+            <a
+              href="tel:333"
+              className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-5 py-2.5 text-sm font-bold text-white hover:bg-emerald-700 transition-colors"
+            >
+              📞 اتصل الآن بـ 333
+            </a>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
