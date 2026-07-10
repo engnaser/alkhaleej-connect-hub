@@ -187,6 +187,8 @@ function YemenMobilePage() {
             <TabsContent value="account" className="mt-6 space-y-6">
               <PrepaidTariffTable />
               <PrepaidTariffTableGray />
+              <PrepaidMmsTariffTable />
+
               <ServicesTab group="account" />
             </TabsContent>
 
@@ -276,6 +278,40 @@ function PrepaidTariffTableGray() {
     </div>
   );
 }
+
+function PrepaidMmsTariffTable() {
+  const rows = [
+    { to: "رسالة وسائط (MMS) داخل الشبكة", price: "20 ريال" },
+    { to: "رسالة وسائط (MMS) إلى خارج الشبكة (GSM)", price: "30 ريال" },
+    { to: "استقبال رسالة وسائط (MMS)", price: "مجاناً" },
+  ];
+  return (
+    <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+      <h3 className="mb-4 text-center text-lg font-bold text-foreground md:text-xl">
+        تعرفة رسائل الوسائط المتعددة (MMS)
+      </h3>
+      <div className="overflow-hidden rounded-xl border border-border">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-gray-50 text-foreground">
+              <th className="border-b border-border px-4 py-3 text-center font-bold">جهة الاتصال</th>
+              <th className="border-b border-border px-4 py-3 text-center font-bold">التعرفة</th>
+            </tr>
+          </thead>
+          <tbody>
+            {rows.map((r) => (
+              <tr key={r.to} className="bg-background hover:bg-muted/40 transition-colors">
+                <td className="border-b border-border px-4 py-3 text-center text-foreground">{r.to}</td>
+                <td className="border-b border-border px-4 py-3 text-center text-foreground">{r.price}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
 
 
 
