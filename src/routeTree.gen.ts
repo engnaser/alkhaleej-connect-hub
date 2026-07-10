@@ -9,6 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as YouServicesRouteImport } from './routes/you-services'
 import { Route as Yemen4gInquiryRouteImport } from './routes/yemen4g-inquiry'
 import { Route as YemenMobileRouteImport } from './routes/yemen-mobile'
 import { Route as WhatsappUnblockRouteImport } from './routes/whatsapp-unblock'
@@ -43,6 +44,11 @@ import { Route as AdminServicesRouteImport } from './routes/admin.services'
 import { Route as AdminPackagesRouteImport } from './routes/admin.packages'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
 
+const YouServicesRoute = YouServicesRouteImport.update({
+  id: '/you-services',
+  path: '/you-services',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const Yemen4gInquiryRoute = Yemen4gInquiryRouteImport.update({
   id: '/yemen4g-inquiry',
   path: '/yemen4g-inquiry',
@@ -237,6 +243,7 @@ export interface FileRoutesByFullPath {
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
+  '/you-services': typeof YouServicesRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
   '/admin/services': typeof AdminServicesRoute
@@ -272,6 +279,7 @@ export interface FileRoutesByTo {
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
+  '/you-services': typeof YouServicesRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
   '/admin/services': typeof AdminServicesRoute
@@ -308,6 +316,7 @@ export interface FileRoutesById {
   '/whatsapp-unblock': typeof WhatsappUnblockRoute
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
+  '/you-services': typeof YouServicesRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
   '/admin/services': typeof AdminServicesRoute
@@ -345,6 +354,7 @@ export interface FileRouteTypes {
     | '/whatsapp-unblock'
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
+    | '/you-services'
     | '/admin/analytics'
     | '/admin/packages'
     | '/admin/services'
@@ -380,6 +390,7 @@ export interface FileRouteTypes {
     | '/whatsapp-unblock'
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
+    | '/you-services'
     | '/admin/analytics'
     | '/admin/packages'
     | '/admin/services'
@@ -415,6 +426,7 @@ export interface FileRouteTypes {
     | '/whatsapp-unblock'
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
+    | '/you-services'
     | '/admin/analytics'
     | '/admin/packages'
     | '/admin/services'
@@ -451,6 +463,7 @@ export interface RootRouteChildren {
   WhatsappUnblockRoute: typeof WhatsappUnblockRoute
   YemenMobileRoute: typeof YemenMobileRoute
   Yemen4gInquiryRoute: typeof Yemen4gInquiryRoute
+  YouServicesRoute: typeof YouServicesRoute
   AdminAnalyticsRoute: typeof AdminAnalyticsRoute
   AdminPackagesRoute: typeof AdminPackagesRoute
   AdminServicesRoute: typeof AdminServicesRoute
@@ -461,6 +474,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/you-services': {
+      id: '/you-services'
+      path: '/you-services'
+      fullPath: '/you-services'
+      preLoaderRoute: typeof YouServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/yemen4g-inquiry': {
       id: '/yemen4g-inquiry'
       path: '/yemen4g-inquiry'
@@ -723,6 +743,7 @@ const rootRouteChildren: RootRouteChildren = {
   WhatsappUnblockRoute: WhatsappUnblockRoute,
   YemenMobileRoute: YemenMobileRoute,
   Yemen4gInquiryRoute: Yemen4gInquiryRoute,
+  YouServicesRoute: YouServicesRoute,
   AdminAnalyticsRoute: AdminAnalyticsRoute,
   AdminPackagesRoute: AdminPackagesRoute,
   AdminServicesRoute: AdminServicesRoute,
