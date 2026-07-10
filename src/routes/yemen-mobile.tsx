@@ -1940,3 +1940,136 @@ function Apn4GSetupCard() {
   );
 }
 
+function ApnVolteSetupCard() {
+  const [open, setOpen] = useState(false);
+  const [copiedField, setCopiedField] = useState<string | null>(null);
+
+  const accessPoints = [
+    {
+      title: "نقطة الوصول 1",
+      fields: [
+        { key: "Name", value: "ims" },
+        { key: "APN", value: "ims" },
+        { key: "APN Type", value: "ims" },
+      ],
+    },
+    {
+      title: "نقطة الوصول 2",
+      fields: [
+        { key: "Name", value: "ymdata" },
+        { key: "APN", value: "ymdata" },
+        { key: "APN Type", value: "ymdata" },
+      ],
+    },
+  ];
+
+  const copy = async (text: string, key: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopiedField(key);
+      setTimeout(() => setCopiedField((k) => (k === key ? null : k)), 1600);
+    } catch {
+      /* noop */
+    }
+  };
+
+  return (
+    <div className="rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)]">
+      <div className="mb-4 flex items-center gap-3">
+        <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary">
+          <Wifi className="h-5 w-5" />
+        </div>
+        <h3 className="text-lg font-extrabold text-foreground md:text-xl">
+          إعداد نقاط الوصول بنظام الفولتي (VoLTE)
+        </h3>
+      </div>
+      <p className="text-sm text-muted-foreground leading-relaxed">
+        إعدادات نقاط الوصول اللازمة لتفعيل مكالمات VoLTE عالية الجودة على شبكة يمن موبايل.
+      </p>
+
+      <div className="mt-5 flex justify-center">
+        <button
+          type="button"
+          onClick={() => setOpen(true)}
+          className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-5 py-2.5 text-sm font-bold text-emerald-800 border border-emerald-200 hover:bg-emerald-100 transition-colors"
+        >
+          <span aria-hidden>ℹ️</span>
+          عرض التفاصيل
+        </button>
+      </div>
+
+      <Dialog open={open} onOpenChange={setOpen}>
+        <DialogContent dir="rtl" className="max-w-2xl max-h-[85vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle className="text-right">
+              إعداد نقاط الوصول بنظام الفولتي (VoLTE)
+            </DialogTitle>
+          </DialogHeader>
+
+          <div className="space-y-5 text-sm text-foreground">
+            {accessPoints.map((ap, idx) => (
+              <section
+                key={ap.title}
+                className="rounded-xl border border-border bg-secondary/30 p-4"
+              >
+                <div className="mb-3 flex items-center gap-2">
+                  <span className="grid h-6 w-6 place-items-center rounded-full bg-primary/15 text-xs font-bold text-primary">
+                    {idx + 1}
+                  </span>
+                  <h4 className="text-base font-bold text-foreground">{ap.title}</h4>
+                </div>
+
+                <div className="overflow-hidden rounded-lg border border-border">
+                  <table className="w-full border-collapse text-sm">
+                    <thead>
+                      <tr className="bg-gray-50 text-foreground">
+                        <th className="border-b border-border px-3 py-2 text-right font-bold">الحقل</th>
+                        <th className="border-b border-border px-3 py-2 text-right font-bold">القيمة</th>
+                        <th className="border-b border-border px-3 py-2 text-center font-bold w-20">نسخ</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {ap.fields.map((f) => {
+                        const fieldId = `${ap.title}-${f.key}`;
+                        return (
+                          <tr key={f.key} className="bg-background hover:bg-muted/40 transition-colors">
+                            <td className="border-b border-border px-3 py-2 text-right font-bold text-foreground" dir="ltr">
+                              {f.key}
+                            </td>
+                            <td className="border-b border-border px-3 py-2 text-right font-mono font-bold text-foreground" dir="ltr">
+                              {f.value}
+                            </td>
+                            <td className="border-b border-border px-3 py-2 text-center">
+                              <button
+                                type="button"
+                                onClick={() => copy(f.value, fieldId)}
+                                className="inline-flex items-center justify-center gap-1 rounded-lg border border-border bg-background px-2 py-1.5 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
+                              >
+                                {copiedField === fieldId ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                                {copiedField === fieldId ? "تم" : "نسخ"}
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            ))}
+
+            <div className="rounded-lg border border-amber-200 bg-amber-50 px-4 py-3 text-amber-900">
+              <div className="mb-1 flex items-center gap-2 font-bold">
+                <span aria-hidden>⚠️</span> تنبيه هام
+              </div>
+              <p className="leading-relaxed">
+                هذه الإعدادات ضرورية لتفعيل مكالمات VoLTE عالية الجودة. يرجى إدخال البيانات بدقة كما هي، وحفظ كل نقطة وصول على حدة، ثم إعادة تشغيل الهاتف لتفعيل الخدمة.
+              </p>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </div>
+  );
+}
+
