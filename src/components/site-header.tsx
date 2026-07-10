@@ -48,7 +48,7 @@ function LanguageSwitcher() {
         onClick={() => setOpen((v) => !v)}
         aria-haspopup="listbox"
         aria-expanded={open}
-        className="relative inline-flex items-center gap-1.5 rounded-lg border-2 border-primary bg-background px-3 py-1.5 text-xs font-extrabold text-primary shadow-[3px_3px_0_0_hsl(var(--primary))] transition-transform hover:-translate-x-[1px] hover:-translate-y-[1px] hover:shadow-[4px_4px_0_0_hsl(var(--primary))] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0_0_hsl(var(--primary))] sm:text-sm"
+        className="relative inline-flex items-center gap-1.5 rounded-lg border-2 border-primary bg-background px-3 py-1.5 text-xs font-extrabold text-primary shadow-[3px_3px_0_0_var(--primary)] transition-transform hover:-translate-x-[1px] hover:-translate-y-[1px] hover:shadow-[4px_4px_0_0_var(--primary)] active:translate-x-0 active:translate-y-0 active:shadow-[2px_2px_0_0_var(--primary)] sm:text-sm"
       >
         <ChevronDown
           className={`h-3.5 w-3.5 transition-transform ${open ? "rotate-180" : ""}`}
@@ -59,7 +59,7 @@ function LanguageSwitcher() {
       {open && (
         <ul
           role="listbox"
-          className="absolute end-0 mt-2 w-36 overflow-hidden rounded-lg border-2 border-primary bg-card shadow-[3px_3px_0_0_hsl(var(--primary))]"
+          className="absolute end-0 mt-2 w-36 overflow-hidden rounded-lg border-2 border-primary bg-card shadow-[3px_3px_0_0_var(--primary)]"
         >
           {LANGUAGES.map((l) => {
             const active = l.code === lang;
