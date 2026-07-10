@@ -1,4 +1,6 @@
+import * as React from "react";
 import { memo, useState, type ComponentType } from "react";
+
 import { toast } from "sonner";
 import {
   Copy,
