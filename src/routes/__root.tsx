@@ -164,6 +164,35 @@ function RootComponent() {
     try { window.localStorage.removeItem("khalij:theme"); } catch {}
     document.documentElement.classList.remove("dark");
     document.documentElement.classList.add("light");
+
+    // Google Translate: hidden widget that reads the `googtrans` cookie
+    // Trigger from LanguageSwitcher by setting cookie + reloading.
+    if (!document.getElementById("google-translate-script")) {
+      const host = document.createElement("div");
+      host.id = "google_translate_element";
+      host.style.display = "none";
+      document.body.appendChild(host);
+
+      (window as unknown as { googleTranslateElementInit: () => void }).googleTranslateElementInit = () => {
+        const g = (window as unknown as { google?: { translate?: { TranslateElement: new (o: object, el: string) => void; TranslateElement: { InlineLayout: { SIMPLE: number } } } } }).google;
+        if (g?.translate?.TranslateElement) {
+          new g.translate.TranslateElement(
+            {
+              pageLanguage: "ar",
+              includedLanguages: "ar,en",
+              autoDisplay: false,
+            },
+            "google_translate_element",
+          );
+        }
+      };
+
+      const s = document.createElement("script");
+      s.id = "google-translate-script";
+      s.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      s.async = true;
+      document.body.appendChild(s);
+    }
   }, []);
 
 
