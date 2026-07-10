@@ -318,6 +318,7 @@ function ServiceCardImpl({
   );
 }
 
-export const ServiceCard = memo(ServiceCardImpl);
+export const ServiceCard: (props: ServiceCardProps) => JSX.Element = memo(ServiceCardImpl) as unknown as (props: ServiceCardProps) => JSX.Element;
 export default ServiceCard;
+
 
