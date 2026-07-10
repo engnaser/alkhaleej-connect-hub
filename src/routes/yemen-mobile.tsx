@@ -1641,3 +1641,126 @@ function GuideCard({
     </div>
   );
 }
+
+function ApnSetupGuide() {
+  const [copiedField, setCopiedField] = useState<string | null>(null);
+  const [copiedAll, setCopiedAll] = useState(false);
+
+  const steps = [
+    "الذهاب إلى الإعدادات (Settings).",
+    "الاتصالات (Connections).",
+    "شبكات الهاتف المحمول (Mobile Networks).",
+    "أسماء نقاط الوصول (Access Point Names).",
+    "إضافة نقطة وصول جديدة (Add/New APN).",
+  ];
+
+  const fields: { label: string; en: string; value: string; mono?: boolean }[] = [
+    { label: "الاسم", en: "Name", value: "ym3g" },
+    { label: "APN", en: "APN", value: "#777", mono: true },
+    { label: "اسم المستخدم", en: "Username", value: "ymobile" },
+    { label: "كلمة المرور", en: "Password", value: "ymobile" },
+    { label: "نوع المصادقة", en: "Authentication type", value: "CHAP", mono: true },
+    { label: "نوع APN", en: "APN type", value: "default", mono: true },
+  ];
+
+  const allText = fields.map((f) => `${f.en}: ${f.value}`).join("\n");
+
+  const copy = async (text: string, key: string) => {
+    try {
+      await navigator.clipboard.writeText(text);
+      if (key === "__all") {
+        setCopiedAll(true);
+        setTimeout(() => setCopiedAll(false), 1600);
+      } else {
+        setCopiedField(key);
+        setTimeout(() => setCopiedField((k) => (k === key ? null : k)), 1600);
+      }
+    } catch {
+      /* noop */
+    }
+  };
+
+  return (
+    <div className="rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)]">
+      <div className="mb-4 flex items-center gap-3">
+        <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary">
+          <Settings2 className="h-5 w-5" />
+        </div>
+        <h3 className="text-lg font-extrabold text-foreground md:text-xl">
+          إعداد نقاط الوصول (APN) - يمن موبايل
+        </h3>
+      </div>
+
+      <h4 className="mb-2 text-sm font-bold text-foreground">خطوات الضبط</h4>
+      <ol className="mb-5 space-y-2 text-sm text-foreground/85">
+        {steps.map((s, i) => (
+          <li key={i} className="flex gap-2.5">
+            <span className="grid h-5 w-5 shrink-0 place-items-center rounded-full bg-primary/15 text-[11px] font-bold text-primary">
+              {i + 1}
+            </span>
+            <span className="leading-relaxed">{s}</span>
+          </li>
+        ))}
+      </ol>
+
+      <h4 className="mb-2 text-sm font-bold text-foreground">إعدادات نقطة الوصول</h4>
+      <div className="overflow-hidden rounded-xl border border-border">
+        <table className="w-full border-collapse text-sm">
+          <thead>
+            <tr className="bg-gray-50 text-foreground">
+              <th className="border-b border-border px-3 py-2.5 text-right font-bold">الحقل</th>
+              <th className="border-b border-border px-3 py-2.5 text-right font-bold">القيمة</th>
+              <th className="border-b border-border px-3 py-2.5 text-center font-bold w-24">نسخ</th>
+            </tr>
+          </thead>
+          <tbody>
+            {fields.map((f) => (
+              <tr key={f.en} className="bg-background hover:bg-muted/40 transition-colors">
+                <td className="border-b border-border px-3 py-2.5 text-right text-foreground">
+                  <div className="font-bold">{f.label}</div>
+                  <div className="text-xs text-muted-foreground">{f.en}</div>
+                </td>
+                <td
+                  className={`border-b border-border px-3 py-2.5 text-right font-bold text-foreground ${f.mono ? "font-mono" : ""}`}
+                  dir={f.mono ? "ltr" : undefined}
+                >
+                  {f.value}
+                </td>
+                <td className="border-b border-border px-3 py-2.5 text-center">
+                  <button
+                    type="button"
+                    onClick={() => copy(f.value, f.en)}
+                    className="inline-flex items-center justify-center gap-1 rounded-lg border border-border bg-background px-2 py-1.5 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
+                  >
+                    {copiedField === f.en ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+                    {copiedField === f.en ? "تم" : "نسخ"}
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="mt-4 flex justify-center">
+        <button
+          type="button"
+          onClick={() => copy(allText, "__all")}
+          className="inline-flex items-center gap-2 rounded-full bg-emerald-50 px-5 py-2.5 text-sm font-bold text-emerald-800 border border-emerald-200 hover:bg-emerald-100 transition-colors"
+        >
+          {copiedAll ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}
+          {copiedAll ? "تم نسخ الإعدادات" : "نسخ الإعدادات كاملة"}
+        </button>
+      </div>
+
+      <div className="mt-5 rounded-lg border border-emerald-200 bg-emerald-50/60 px-4 py-3 text-sm text-emerald-900">
+        <div className="mb-1 font-bold">نصيحة تقنية</div>
+        <p className="leading-relaxed">
+          بعد حفظ الإعدادات، تأكد من اختيار النقطة الجديدة من قائمة نقاط الوصول،
+          ثم قم بإعادة تشغيل البيانات (Data) أو إعادة تشغيل الهاتف لضمان تفعيل الخدمة.
+        </p>
+      </div>
+    </div>
+  );
+}
+
