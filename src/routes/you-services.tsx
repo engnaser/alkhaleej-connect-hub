@@ -16,7 +16,11 @@ import {
   Settings2,
   AlertTriangle,
   Clock,
+  Phone,
+  Settings,
 } from "lucide-react";
+import { useYouItems, type YouSection, type YouItem } from "@/lib/youServicesStore";
+import { useIsAdmin } from "@/hooks/use-is-admin";
 
 export const Route = createFileRoute("/you-services")({
   head: () => ({
@@ -39,17 +43,29 @@ export const Route = createFileRoute("/you-services")({
 });
 
 function YouServicesPage() {
+  const { isAdmin } = useIsAdmin();
   return (
     <div dir="rtl" className="min-h-screen bg-background text-foreground">
       <SiteHeader
         cta={
-          <Link
-            to="/services"
-            className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-md transition-transform hover:scale-[1.03] sm:text-sm"
-          >
-            <ArrowLeft className="h-4 w-4" />
-            كل الخدمات
-          </Link>
+          <div className="flex items-center gap-2">
+            {isAdmin && (
+              <Link
+                to="/admin/you-services"
+                className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-2 text-xs font-bold text-primary hover:bg-primary/20"
+              >
+                <Settings className="h-3.5 w-3.5" />
+                لوحة التحكم
+              </Link>
+            )}
+            <Link
+              to="/services"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-md transition-transform hover:scale-[1.03] sm:text-sm"
+            >
+              <ArrowLeft className="h-4 w-4" />
+              كل الخدمات
+            </Link>
+          </div>
         }
       />
 
@@ -120,16 +136,16 @@ function YouServicesPage() {
             </div>
 
             <TabsContent value="packages" className="mt-6">
-              <ComingSoon title="باقات شركة يو" />
+              <SectionList section="packages" />
             </TabsContent>
             <TabsContent value="services" className="mt-6">
-              <ComingSoon title="خدمات شركة يو" />
+              <SectionList section="services" />
             </TabsContent>
             <TabsContent value="account" className="mt-6">
-              <ComingSoon title="أسعار ومعلومات شركة يو" />
+              <SectionList section="account" />
             </TabsContent>
             <TabsContent value="internet" className="mt-6">
-              <ComingSoon title="ضبط الإنترنت لشركة يو" />
+              <SectionList section="internet" />
             </TabsContent>
           </Tabs>
         </section>
@@ -140,16 +156,71 @@ function YouServicesPage() {
   );
 }
 
-function ComingSoon({ title }: { title: string }) {
-  return (
-    <div className="rounded-2xl border border-border bg-card p-10 text-center shadow-[var(--shadow-card)]">
-      <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-primary/10 text-primary">
-        <Clock className="h-7 w-7" />
+function SectionList({ section }: { section: YouSection }) {
+  const { items, loading } = useYouItems(section);
+
+  if (loading) {
+    return (
+      <div className="rounded-2xl border border-border bg-card p-10 text-center text-sm text-muted-foreground">
+        جاري التحميل...
       </div>
-      <h3 className="text-xl font-black text-foreground">{title}</h3>
-      <p className="mt-2 text-sm text-muted-foreground">
-        سيتم إضافة المحتوى قريباً بإذن الله.
-      </p>
+    );
+  }
+
+  if (items.length === 0) {
+    return (
+      <div className="rounded-2xl border border-border bg-card p-10 text-center shadow-[var(--shadow-card)]">
+        <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-primary/10 text-primary">
+          <Clock className="h-7 w-7" />
+        </div>
+        <h3 className="text-xl font-black text-foreground">قريباً</h3>
+        <p className="mt-2 text-sm text-muted-foreground">
+          سيتم إضافة المحتوى قريباً بإذن الله.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="grid gap-4 sm:grid-cols-2">
+      {items.map((item) => (
+        <YouItemCard key={item.id} item={item} />
+      ))}
+    </div>
+  );
+}
+
+function YouItemCard({ item }: { item: YouItem }) {
+  const dialCode = item.code?.trim();
+  return (
+    <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
+      <div className="flex items-start justify-between gap-3">
+        <h3 className="text-base font-black text-foreground">{item.title}</h3>
+        {item.price && (
+          <span className="shrink-0 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+            {item.price}
+          </span>
+        )}
+      </div>
+      {item.description && (
+        <p className="text-sm leading-relaxed text-muted-foreground">
+          {item.description}
+        </p>
+      )}
+      {dialCode && (
+        <div className="mt-auto flex items-center justify-between gap-3 rounded-xl border border-border bg-background/60 p-3">
+          <span className="font-mono text-sm font-bold text-foreground" dir="ltr">
+            {dialCode}
+          </span>
+          <a
+            href={`tel:${encodeURIComponent(dialCode)}`}
+            className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground hover:scale-[1.02]"
+          >
+            <Phone className="h-3.5 w-3.5" />
+            اتصل
+          </a>
+        </div>
+      )}
     </div>
   );
 }

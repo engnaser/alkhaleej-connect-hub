@@ -40,6 +40,7 @@ import { Route as IndexRouteImport } from './routes/index'
 import { Route as MawloudIndexRouteImport } from './routes/mawloud.index'
 import { Route as MawloudSettingsRouteImport } from './routes/mawloud.settings'
 import { Route as ApiGenerateImageRouteImport } from './routes/api/generate-image'
+import { Route as AdminYouServicesRouteImport } from './routes/admin.you-services'
 import { Route as AdminServicesRouteImport } from './routes/admin.services'
 import { Route as AdminPackagesRouteImport } from './routes/admin.packages'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
@@ -199,6 +200,11 @@ const ApiGenerateImageRoute = ApiGenerateImageRouteImport.update({
   path: '/api/generate-image',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminYouServicesRoute = AdminYouServicesRouteImport.update({
+  id: '/admin/you-services',
+  path: '/admin/you-services',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminServicesRoute = AdminServicesRouteImport.update({
   id: '/admin/services',
   path: '/admin/services',
@@ -247,6 +253,7 @@ export interface FileRoutesByFullPath {
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
   '/admin/services': typeof AdminServicesRoute
+  '/admin/you-services': typeof AdminYouServicesRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
@@ -283,6 +290,7 @@ export interface FileRoutesByTo {
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
   '/admin/services': typeof AdminServicesRoute
+  '/admin/you-services': typeof AdminYouServicesRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud': typeof MawloudIndexRoute
@@ -320,6 +328,7 @@ export interface FileRoutesById {
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
   '/admin/services': typeof AdminServicesRoute
+  '/admin/you-services': typeof AdminYouServicesRoute
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
@@ -358,6 +367,7 @@ export interface FileRouteTypes {
     | '/admin/analytics'
     | '/admin/packages'
     | '/admin/services'
+    | '/admin/you-services'
     | '/api/generate-image'
     | '/mawloud/settings'
     | '/mawloud/'
@@ -394,6 +404,7 @@ export interface FileRouteTypes {
     | '/admin/analytics'
     | '/admin/packages'
     | '/admin/services'
+    | '/admin/you-services'
     | '/api/generate-image'
     | '/mawloud/settings'
     | '/mawloud'
@@ -430,6 +441,7 @@ export interface FileRouteTypes {
     | '/admin/analytics'
     | '/admin/packages'
     | '/admin/services'
+    | '/admin/you-services'
     | '/api/generate-image'
     | '/mawloud/settings'
     | '/mawloud/'
@@ -467,6 +479,7 @@ export interface RootRouteChildren {
   AdminAnalyticsRoute: typeof AdminAnalyticsRoute
   AdminPackagesRoute: typeof AdminPackagesRoute
   AdminServicesRoute: typeof AdminServicesRoute
+  AdminYouServicesRoute: typeof AdminYouServicesRoute
   ApiGenerateImageRoute: typeof ApiGenerateImageRoute
   MawloudSettingsRoute: typeof MawloudSettingsRoute
   MawloudIndexRoute: typeof MawloudIndexRoute
@@ -691,6 +704,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiGenerateImageRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/you-services': {
+      id: '/admin/you-services'
+      path: '/admin/you-services'
+      fullPath: '/admin/you-services'
+      preLoaderRoute: typeof AdminYouServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/services': {
       id: '/admin/services'
       path: '/admin/services'
@@ -747,6 +767,7 @@ const rootRouteChildren: RootRouteChildren = {
   AdminAnalyticsRoute: AdminAnalyticsRoute,
   AdminPackagesRoute: AdminPackagesRoute,
   AdminServicesRoute: AdminServicesRoute,
+  AdminYouServicesRoute: AdminYouServicesRoute,
   ApiGenerateImageRoute: ApiGenerateImageRoute,
   MawloudSettingsRoute: MawloudSettingsRoute,
   MawloudIndexRoute: MawloudIndexRoute,
