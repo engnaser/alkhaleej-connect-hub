@@ -45,7 +45,7 @@ export type ServiceCardProps = {
 
 const encodeUssd = (code: string) => code.replace(/#/g, "%23");
 
-export function ServiceCard({
+function ServiceCardImpl({
   title,
   description,
   icon: Icon,
