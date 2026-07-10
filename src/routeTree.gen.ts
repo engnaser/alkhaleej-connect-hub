@@ -22,6 +22,7 @@ import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SecondaryCertificateRouteImport } from './routes/secondary-certificate'
 import { Route as SafetyRouteImport } from './routes/safety'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as PollinationsImageRouteImport } from './routes/pollinations-image'
 import { Route as PhoneBillInquiryRouteImport } from './routes/phone-bill-inquiry'
 import { Route as MyPhotosRouteImport } from './routes/my-photos'
 import { Route as MarketingWriterRouteImport } from './routes/marketing-writer'
@@ -108,6 +109,11 @@ const SafetyRoute = SafetyRouteImport.update({
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PollinationsImageRoute = PollinationsImageRouteImport.update({
+  id: '/pollinations-image',
+  path: '/pollinations-image',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PhoneBillInquiryRoute = PhoneBillInquiryRouteImport.update({
@@ -237,6 +243,7 @@ export interface FileRoutesByFullPath {
   '/marketing-writer': typeof MarketingWriterRoute
   '/my-photos': typeof MyPhotosRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
+  '/pollinations-image': typeof PollinationsImageRoute
   '/privacy': typeof PrivacyRoute
   '/safety': typeof SafetyRoute
   '/secondary-certificate': typeof SecondaryCertificateRoute
@@ -274,6 +281,7 @@ export interface FileRoutesByTo {
   '/marketing-writer': typeof MarketingWriterRoute
   '/my-photos': typeof MyPhotosRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
+  '/pollinations-image': typeof PollinationsImageRoute
   '/privacy': typeof PrivacyRoute
   '/safety': typeof SafetyRoute
   '/secondary-certificate': typeof SecondaryCertificateRoute
@@ -312,6 +320,7 @@ export interface FileRoutesById {
   '/marketing-writer': typeof MarketingWriterRoute
   '/my-photos': typeof MyPhotosRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
+  '/pollinations-image': typeof PollinationsImageRoute
   '/privacy': typeof PrivacyRoute
   '/safety': typeof SafetyRoute
   '/secondary-certificate': typeof SecondaryCertificateRoute
@@ -351,6 +360,7 @@ export interface FileRouteTypes {
     | '/marketing-writer'
     | '/my-photos'
     | '/phone-bill-inquiry'
+    | '/pollinations-image'
     | '/privacy'
     | '/safety'
     | '/secondary-certificate'
@@ -388,6 +398,7 @@ export interface FileRouteTypes {
     | '/marketing-writer'
     | '/my-photos'
     | '/phone-bill-inquiry'
+    | '/pollinations-image'
     | '/privacy'
     | '/safety'
     | '/secondary-certificate'
@@ -425,6 +436,7 @@ export interface FileRouteTypes {
     | '/marketing-writer'
     | '/my-photos'
     | '/phone-bill-inquiry'
+    | '/pollinations-image'
     | '/privacy'
     | '/safety'
     | '/secondary-certificate'
@@ -463,6 +475,7 @@ export interface RootRouteChildren {
   MarketingWriterRoute: typeof MarketingWriterRoute
   MyPhotosRoute: typeof MyPhotosRoute
   PhoneBillInquiryRoute: typeof PhoneBillInquiryRoute
+  PollinationsImageRoute: typeof PollinationsImageRoute
   PrivacyRoute: typeof PrivacyRoute
   SafetyRoute: typeof SafetyRoute
   SecondaryCertificateRoute: typeof SecondaryCertificateRoute
@@ -576,6 +589,13 @@ declare module '@tanstack/react-router' {
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/pollinations-image': {
+      id: '/pollinations-image'
+      path: '/pollinations-image'
+      fullPath: '/pollinations-image'
+      preLoaderRoute: typeof PollinationsImageRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/phone-bill-inquiry': {
@@ -751,6 +771,7 @@ const rootRouteChildren: RootRouteChildren = {
   MarketingWriterRoute: MarketingWriterRoute,
   MyPhotosRoute: MyPhotosRoute,
   PhoneBillInquiryRoute: PhoneBillInquiryRoute,
+  PollinationsImageRoute: PollinationsImageRoute,
   PrivacyRoute: PrivacyRoute,
   SafetyRoute: SafetyRoute,
   SecondaryCertificateRoute: SecondaryCertificateRoute,
