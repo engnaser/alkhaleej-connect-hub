@@ -1,5 +1,6 @@
 import { Link, useRouter } from "@tanstack/react-router";
-import { Menu } from "lucide-react";
+import { Menu, ChevronDown, Check } from "lucide-react";
+import { useState, useRef, useEffect } from "react";
 import type { ReactNode } from "react";
 import {
   Sheet,
