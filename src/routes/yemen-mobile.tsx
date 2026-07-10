@@ -184,9 +184,11 @@ function YemenMobilePage() {
             <TabsContent value="services" className="mt-6">
               <ServicesTab group="general" />
             </TabsContent>
-            <TabsContent value="account" className="mt-6">
+            <TabsContent value="account" className="mt-6 space-y-6">
+              <PrepaidTariffTable />
               <ServicesTab group="account" />
             </TabsContent>
+
             <TabsContent value="internet" className="mt-6">
               <InternetTab />
             </TabsContent>
