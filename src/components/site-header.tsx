@@ -95,8 +95,8 @@ function LanguageSwitcher() {
                   role="option"
                   aria-selected={active}
                   onClick={() => {
-                    setLang(l.code);
                     setOpen(false);
+                    if (l.code !== lang) setLanguage(l.code);
                   }}
                   className={`flex w-full items-center justify-between gap-2 px-3 py-2 text-right text-sm font-bold transition-colors ${
                     active
