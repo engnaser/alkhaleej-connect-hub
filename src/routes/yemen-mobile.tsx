@@ -187,6 +187,8 @@ function YemenMobilePage() {
             <TabsContent value="account" className="mt-6 space-y-6">
               <PrepaidTariffTable />
               <PrepaidTariffTableGray />
+              <PrepaidMmsTariffTable />
+
               <ServicesTab group="account" />
             </TabsContent>
 
