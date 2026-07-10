@@ -43,7 +43,7 @@ export const Route = createFileRoute("/admin/services")({
 
 const GROUP_LABELS: Record<ServiceGroup, string> = {
   general: "الخدمات العامة",
-  account: "إدارة الحساب والرصيد",
+  account: "أسعار ومعلومات",
 };
 
 const emptyService = (group: ServiceGroup): YMServiceRow => ({
@@ -427,7 +427,7 @@ function ServiceForm({
             className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
           >
             <option value="general">الخدمات العامة</option>
-            <option value="account">إدارة الحساب والرصيد</option>
+            <option value="account">أسعار ومعلومات</option>
           </select>
         </Field>
         <div className="sm:col-span-2">
