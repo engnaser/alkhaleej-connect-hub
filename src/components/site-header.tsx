@@ -26,12 +26,37 @@ const LANGUAGES = [
   { code: "en", label: "English" },
 ] as const;
 
+function readCurrentLang(): "ar" | "en" {
+  if (typeof document === "undefined") return "ar";
+  const m = document.cookie.match(/googtrans=\/[a-z]+\/([a-z-]+)/i);
+  return m && m[1].startsWith("en") ? "en" : "ar";
+}
+
+function setLanguage(code: "ar" | "en") {
+  if (typeof document === "undefined") return;
+  // Clear on both host and root domain so switching sticks
+  const host = window.location.hostname;
+  const rootDomain = host.split(".").slice(-2).join(".");
+  const expire = "expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/";
+  document.cookie = `googtrans=; ${expire}`;
+  document.cookie = `googtrans=; ${expire}; domain=${host}`;
+  document.cookie = `googtrans=; ${expire}; domain=.${rootDomain}`;
+  if (code === "en") {
+    const value = "/ar/en";
+    document.cookie = `googtrans=${value}; path=/`;
+    document.cookie = `googtrans=${value}; path=/; domain=${host}`;
+    document.cookie = `googtrans=${value}; path=/; domain=.${rootDomain}`;
+  }
+  window.location.reload();
+}
+
 function LanguageSwitcher() {
   const [open, setOpen] = useState(false);
   const [lang, setLang] = useState<"ar" | "en">("ar");
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    setLang(readCurrentLang());
     const onClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
     };
