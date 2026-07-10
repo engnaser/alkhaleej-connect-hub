@@ -242,27 +242,21 @@ function HomePage() {
 
       <main>
         {/* HERO */}
-        <section className="relative overflow-hidden">
-          <div
-            className="absolute inset-0 -z-10"
-            style={{
-              background:
-                "radial-gradient(1200px 600px at 80% -10%, color-mix(in oklab, var(--primary) 18%, transparent), transparent 60%), radial-gradient(900px 500px at 10% 10%, color-mix(in oklab, var(--primary) 12%, transparent), transparent 60%)",
-            }}
-          />
-          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 lg:px-8 lg:py-24">
-            <div className="grid items-center gap-12 lg:grid-cols-2">
-              <div className="text-center lg:text-right">
-                <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-bold text-primary">
+        <section className="relative overflow-hidden bg-background">
+          <div className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-24 lg:px-8 lg:py-28">
+            <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-16">
+              {/* Text column (right in RTL) */}
+              <div className="order-2 text-center lg:order-1 lg:text-right">
+                <div className="mb-6 inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-1.5 text-xs font-bold text-primary">
                   <Sparkles className="h-3.5 w-3.5" />
                   خدمة مجانية من الخليج تيليكوم
                 </div>
-                <h1 className="text-balance text-4xl font-black leading-tight text-primary sm:text-5xl lg:text-6xl">
+                <h1 className="text-balance text-4xl font-black leading-[1.15] tracking-tight text-foreground sm:text-5xl lg:text-6xl">
                   تصاميم تهاني ومناسبات
                   <br />
-                  <span className="text-foreground">باسمك أنت</span>
+                  <span className="text-primary">باسمك أنت</span>
                 </h1>
-                <p className="mx-auto mt-5 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg lg:mx-0">
+                <p className="mx-auto mt-6 max-w-xl text-base leading-relaxed text-muted-foreground sm:text-lg lg:mx-0">
                   اختر القالب المناسب لمناسبتك، أدخل اسمك ورقم جوالك، وسيقوم
                   الموقع بإضافتهما تلقائياً على التصميم — ثم حمّل صورتك
                   الاحترافية بضغطة واحدة.
@@ -289,46 +283,53 @@ function HomePage() {
                   </a>
                 </div>
 
-                <ul className="mt-8 grid gap-3 text-right sm:grid-cols-3">
-                  {[
-                    "قوالب احترافية",
-                    "تحميل فوري ومجاني",
-                    "بدون تسجيل دخول",
-                  ].map((t) => (
-                    <li
-                      key={t}
-                      className="flex items-center gap-2 text-sm font-semibold text-foreground/80"
-                    >
-                      <CheckCircle2 className="h-4 w-4 shrink-0 text-primary" />
-                      {t}
-                    </li>
-                  ))}
-                </ul>
+                {/* Author footer */}
+                <div className="mt-10 flex items-center justify-center gap-3 border-t border-border pt-6 lg:justify-start">
+                  <img
+                    src={logoKhalij}
+                    alt="الخليج تيليكوم"
+                    width={44}
+                    height={44}
+                    decoding="async"
+                    className="h-11 w-11 shrink-0 rounded-full object-cover ring-2 ring-primary/30"
+                  />
+                  <div className="text-right">
+                    <div className="text-sm font-extrabold text-foreground">
+                      فريق الخليج تيليكوم
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      آخر تحديث: 8 يناير 2026
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              {/* Stacked preview cards */}
-              <div className="relative mx-auto w-full max-w-md">
-                <div className="relative aspect-[3/4] w-full">
-                  <div className="absolute right-0 top-0 h-[88%] w-[78%] -rotate-3 overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-card)]">
+              {/* Image column (left in RTL) with layered accent shapes */}
+              <div className="relative order-1 mx-auto w-full max-w-md lg:order-2 lg:max-w-none">
+                <div className="relative aspect-[4/5] w-full">
+                  {/* Accent shape — top left */}
+                  <div
+                    aria-hidden
+                    className="absolute -left-6 -top-6 h-40 w-40 rounded-3xl bg-primary/15 sm:-left-10 sm:-top-10 sm:h-56 sm:w-56"
+                  />
+                  {/* Accent shape — bottom right */}
+                  <div
+                    aria-hidden
+                    className="absolute -bottom-8 -right-6 h-48 w-48 rounded-3xl bg-accent/40 sm:-bottom-10 sm:-right-10 sm:h-64 sm:w-64"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, color-mix(in oklab, var(--primary) 22%, transparent), color-mix(in oklab, var(--primary) 6%, transparent))",
+                    }}
+                  />
+                  {/* Main image */}
+                  <div className="relative h-full w-full overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-elevated)]">
                     <img
                       src={posterEid}
-                      alt="نموذج تصميم"
+                      alt="نموذج تصميم احترافي من الخليج تيليكوم"
                       className="h-full w-full object-cover"
                       decoding="async"
                       fetchPriority="high"
                     />
-                  </div>
-                  <div className="absolute bottom-0 left-0 h-[88%] w-[78%] rotate-3 overflow-hidden rounded-3xl border border-border bg-card shadow-[var(--shadow-elevated)]">
-                    <img
-                      src={posterMawloud}
-                      alt="نموذج تصميم"
-                      className="h-full w-full object-cover"
-                      decoding="async"
-                      loading="lazy"
-                    />
-                  </div>
-                  <div className="absolute left-1/2 top-1/2 grid h-20 w-20 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-primary text-primary-foreground shadow-[var(--shadow-elevated)]">
-                    <Sparkles className="h-8 w-8" />
                   </div>
                 </div>
               </div>
