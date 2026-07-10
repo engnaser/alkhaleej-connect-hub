@@ -186,8 +186,13 @@ function HomePage() {
                     <img
                       src={logoKhalij}
                       alt="الخليج تيليكوم"
+                      width={40}
+                      height={40}
+                      decoding="async"
+                      loading="lazy"
                       className="h-10 w-10 rounded-full ring-2 ring-primary/40"
                     />
+
                     <span className="text-base font-extrabold text-primary">
                       الخليج تيليكوم
                     </span>
