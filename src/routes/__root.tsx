@@ -174,7 +174,7 @@ function RootComponent() {
       document.body.appendChild(host);
 
       (window as unknown as { googleTranslateElementInit: () => void }).googleTranslateElementInit = () => {
-        const g = (window as unknown as { google?: { translate?: { TranslateElement: new (o: object, el: string) => void; TranslateElement: { InlineLayout: { SIMPLE: number } } } } }).google;
+        const g = (window as unknown as { google?: { translate?: { TranslateElement: new (o: object, el: string) => void } } }).google;
         if (g?.translate?.TranslateElement) {
           new g.translate.TranslateElement(
             {
