@@ -153,3 +153,12 @@
   }
 }
 
+
+/* Google Translate: hide toolbar/banner and prevent body shift */
+.goog-te-banner-frame,
+.goog-te-gadget,
+#goog-gt-tt,
+.goog-te-balloon-frame { display: none !important; }
+body { top: 0 !important; position: static !important; }
+.skiptranslate { display: none !important; }
+font.goog-te-menu-value { display: inline !important; }
