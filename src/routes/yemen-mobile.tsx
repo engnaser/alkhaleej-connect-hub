@@ -57,7 +57,7 @@ import { useIsAdmin } from "@/hooks/use-is-admin";
 import { CallMeCard } from "@/components/call-me-card";
 import { AbsherCard } from "@/components/absher-card";
 import { ServiceCard as UnifiedServiceCard } from "@/components/service-card";
-import { Radar, PhoneForwarded } from "lucide-react";
+import { Radar, PhoneForwarded, Globe, PhoneIncoming, PhoneOutgoing, MapPin } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -188,6 +188,8 @@ function YemenMobilePage() {
               <PrepaidTariffTable />
               <PrepaidTariffTableGray />
               <PrepaidMmsTariffTable />
+              <InternationalRoamingTariff />
+
 
               <ServicesTab group="account" />
             </TabsContent>
@@ -311,6 +313,165 @@ function PrepaidMmsTariffTable() {
     </div>
   );
 }
+
+const ROAMING_ZONES = [
+  {
+    id: 1,
+    label: "نطاق جغرافي 1",
+    code: "أ",
+    tariff: { outYemen: "150", incoming: "100", a: "60", b: "200", c: "400" },
+    countries: [
+      "السعودية", "الإمارات", "الكويت", "قطر", "البحرين", "عُمان", "الأردن",
+      "مصر", "سوريا", "لبنان", "العراق", "السودان",
+    ],
+  },
+  {
+    id: 2,
+    label: "نطاق جغرافي 2",
+    code: "ب",
+    tariff: { outYemen: "200", incoming: "150", a: "250", b: "80", c: "500" },
+    countries: [
+      "تركيا", "المغرب", "تونس", "الجزائر", "ليبيا", "موريتانيا",
+      "الصومال", "جيبوتي", "فلسطين",
+    ],
+  },
+  {
+    id: 3,
+    label: "نطاق جغرافي 3",
+    code: "ج",
+    tariff: { outYemen: "400", incoming: "250", a: "500", b: "350", c: "120" },
+    countries: [
+      "بريطانيا", "فرنسا", "ألمانيا", "إيطاليا", "إسبانيا", "هولندا",
+      "الولايات المتحدة", "كندا", "الصين", "ماليزيا", "إندونيسيا", "الهند",
+    ],
+  },
+  {
+    id: 4,
+    label: "نطاق جغرافي 4",
+    code: "ش",
+    tariff: { outYemen: "600", incoming: "400", a: "700", b: "500", c: "300" },
+    countries: [
+      "أستراليا", "نيوزيلندا", "اليابان", "كوريا الجنوبية", "البرازيل",
+      "الأرجنتين", "جنوب أفريقيا", "روسيا", "المكسيك", "باقي دول العالم",
+    ],
+  },
+] as const;
+
+function InternationalRoamingTariff() {
+  const [activeZone, setActiveZone] = useState<number>(1);
+  const zone = ROAMING_ZONES.find((z) => z.id === activeZone)!;
+
+  return (
+    <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+      <div className="mb-4 flex items-center justify-center gap-2 text-center">
+        <Globe className="h-5 w-5 shrink-0 text-emerald-600" />
+        <h3 className="text-base font-bold text-foreground md:text-lg">
+          تعرفة تكلفة المكالمات أثناء التجوال الدولي من الرصيد الأساسي
+        </h3>
+      </div>
+
+      <div className="overflow-x-auto rounded-xl border border-border">
+        <table className="w-full min-w-[640px] border-collapse text-sm">
+          <thead>
+            <tr className="bg-gray-50 text-foreground">
+              <th className="border-b border-l border-border px-3 py-3 text-center font-bold">
+                <div className="flex items-center justify-center gap-1.5">
+                  <MapPin className="h-4 w-4 text-emerald-600" />
+                  <span>النطاق الجغرافي</span>
+                </div>
+              </th>
+              <th className="border-b border-l border-border px-3 py-3 text-center font-bold">
+                <div className="flex items-center justify-center gap-1.5">
+                  <PhoneOutgoing className="h-4 w-4 text-emerald-600" />
+                  <span>صادرة لليمن</span>
+                </div>
+              </th>
+              <th className="border-b border-l border-border px-3 py-3 text-center font-bold">
+                <div className="flex items-center justify-center gap-1.5">
+                  <PhoneIncoming className="h-4 w-4 text-emerald-600" />
+                  <span>واردة للهاتف</span>
+                </div>
+              </th>
+              <th className="border-b border-l border-border px-3 py-3 text-center font-bold">صادر من "أ"</th>
+              <th className="border-b border-l border-border px-3 py-3 text-center font-bold">صادر من "ب"</th>
+              <th className="border-b border-border px-3 py-3 text-center font-bold">صادر من "ج"</th>
+            </tr>
+          </thead>
+          <tbody>
+            {ROAMING_ZONES.map((z) => {
+              const isActive = z.id === activeZone;
+              return (
+                <tr
+                  key={z.id}
+                  className={
+                    isActive
+                      ? "bg-emerald-50/70 font-bold text-emerald-900"
+                      : "bg-background hover:bg-muted/40 transition-colors"
+                  }
+                >
+                  <td className="border-b border-l border-border px-3 py-3 text-center">
+                    النطاق {z.id} ({z.code})
+                  </td>
+                  <td className="border-b border-l border-border px-3 py-3 text-center">{z.tariff.outYemen}</td>
+                  <td className="border-b border-l border-border px-3 py-3 text-center">{z.tariff.incoming}</td>
+                  <td className="border-b border-l border-border px-3 py-3 text-center">{z.tariff.a}</td>
+                  <td className="border-b border-l border-border px-3 py-3 text-center">{z.tariff.b}</td>
+                  <td className="border-b border-border px-3 py-3 text-center">{z.tariff.c}</td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+
+      <p className="mt-3 text-center text-xs text-muted-foreground">
+        الأسعار بالريال اليمني للدقيقة الواحدة، وقد تتغير حسب تعرفة الشركة.
+      </p>
+
+      <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
+        {ROAMING_ZONES.map((z) => {
+          const isActive = z.id === activeZone;
+          return (
+            <button
+              key={z.id}
+              type="button"
+              onClick={() => setActiveZone(z.id)}
+              className={
+                "rounded-full border px-4 py-2 text-xs font-bold transition-all sm:text-sm " +
+                (isActive
+                  ? "border-emerald-700 bg-emerald-700 text-white shadow-md"
+                  : "border-border bg-background text-foreground hover:border-emerald-500 hover:text-emerald-700")
+              }
+            >
+              {z.label}
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="mt-5 rounded-xl border border-border bg-muted/30 p-4">
+        <div className="mb-3 flex items-center gap-2">
+          <Globe className="h-4 w-4 text-emerald-600" />
+          <h4 className="text-sm font-bold text-foreground">
+            دول {zone.label} ({zone.code})
+          </h4>
+        </div>
+        <div className="grid grid-cols-2 gap-2 sm:grid-cols-3 md:grid-cols-4">
+          {zone.countries.map((country) => (
+            <div
+              key={country}
+              className="rounded-lg border border-border bg-card px-3 py-2 text-center text-xs font-medium text-foreground shadow-sm sm:text-sm"
+            >
+              {country}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+
 
 
 
