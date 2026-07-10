@@ -190,6 +190,8 @@ function YemenMobilePage() {
               <PrepaidMmsTariffTable />
               <InternationalRoamingTariff />
               <RoamingSmsTariffTable />
+              <SabahiServiceCard />
+
 
 
 
