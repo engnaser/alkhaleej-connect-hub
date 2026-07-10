@@ -1498,8 +1498,17 @@ function InternetTab() {
   const shareUrl = `https://wa.me/?text=${encodeURIComponent(apnText)}`;
 
   return (
-    <div className="grid gap-5 lg:grid-cols-2">
-      {/* APN Card */}
+    <div className="space-y-5">
+      <UnifiedServiceCard
+        title="تفعيل خدمة الإنترنت 3G"
+        description="خدمة لتفعيل الاتصال بإنترنت الجيل الثالث (3G) على رقمك. للتفعيل، قم بالاتصال بالرقم 1112 واتباع التعليمات الصوتية. يرجى التأكد من ضبط إعدادات APN في هاتفك بعد تفعيل الخدمة لضمان عمل الإنترنت بشكل صحيح."
+        icon={Wifi}
+        activationCode="1112"
+        helpUrl={`https://wa.me/${WHATSAPP_BRAND}?text=${encodeURIComponent("مرحبًا، أحتاج مساعدة بخصوص تفعيل خدمة الإنترنت 3G")}`}
+      />
+
+      <div className="grid gap-5 lg:grid-cols-2">
+
       <div className="rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)]">
         <div className="mb-4 flex items-center gap-3">
           <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary">
@@ -1571,7 +1580,9 @@ function InternetTab() {
           ]}
         />
       </div>
+      </div>
     </div>
+
   );
 }
 
