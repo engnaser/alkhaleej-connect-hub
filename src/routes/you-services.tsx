@@ -375,28 +375,32 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
   const shareUrl = `https://wa.me/?text=${encodeURIComponent(details)}`;
 
   return (
-    <div className="relative flex flex-col rounded-2xl border border-border bg-secondary/30 p-5 transition-all hover:-translate-y-0.5 hover:border-primary/40">
-      <div className="mb-3 flex items-center justify-between gap-2">
-        <h4 className="text-base font-extrabold text-foreground">{pkg.name}</h4>
-        <span className="rounded-full bg-primary/15 px-2.5 py-0.5 text-[11px] font-bold text-primary">
+    <div className="relative flex flex-col rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-primary/40">
+      <div className="mb-3 flex items-start justify-between gap-2">
+        <h4 className="text-base font-extrabold leading-tight text-foreground">
+          {pkg.name}
+        </h4>
+        <span className="shrink-0 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-bold text-primary">
           {pkg.network}
         </span>
       </div>
-      <div className="mb-4 text-2xl font-black text-primary">{pkg.price}</div>
-      <ul className="space-y-1.5 text-sm text-foreground/85">
-        <li className="flex items-center justify-between">
+      <div className="mb-4 text-3xl font-black text-primary" dir="rtl">
+        ريال {pkg.price}
+      </div>
+      <ul className="space-y-2 text-sm text-foreground/85">
+        <li className="flex items-center justify-between border-b border-border/50 pb-1.5">
           <span className="text-muted-foreground">الإنترنت</span>
           <span className="font-bold">{pkg.internet}</span>
         </li>
-        <li className="flex items-center justify-between">
+        <li className="flex items-center justify-between border-b border-border/50 pb-1.5">
           <span className="text-muted-foreground">الدقائق</span>
           <span className="font-bold">{pkg.minutes}</span>
         </li>
-        <li className="flex items-center justify-between">
+        <li className="flex items-center justify-between border-b border-border/50 pb-1.5">
           <span className="text-muted-foreground">الرسائل</span>
           <span className="font-bold">{pkg.sms}</span>
         </li>
-        <li className="flex items-center justify-between">
+        <li className="flex items-center justify-between border-b border-border/50 pb-1.5">
           <span className="text-muted-foreground">الصلاحية</span>
           <span className="font-bold">{pkg.validity}</span>
         </li>
@@ -413,7 +417,7 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
       <div className="mt-5 grid grid-cols-2 gap-2">
         <button
           onClick={handleCopy}
-          className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border bg-background px-3 py-2 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
+          className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-background px-3 py-2 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
         >
           {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
           {copied ? "تم النسخ" : "نسخ التفاصيل"}
@@ -422,7 +426,7 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
           href={shareUrl}
           target="_blank"
           rel="noreferrer"
-          className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border bg-background px-3 py-2 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
+          className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-background px-3 py-2 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
         >
           <Share2 className="h-3.5 w-3.5" />
           مشاركة
@@ -431,9 +435,9 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
       {dialCode && (
         <a
           href={`tel:${encodeURIComponent(dialCode)}`}
-          className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg border-2 border-primary bg-primary/10 px-3 py-2.5 text-xs font-extrabold text-primary transition-transform hover:scale-[1.02]"
+          className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary bg-primary/10 px-3 py-2.5 text-sm font-extrabold text-primary transition-transform hover:scale-[1.02]"
         >
-          <PhoneCall className="h-3.5 w-3.5" />
+          <PhoneCall className="h-4 w-4" />
           اضغط لتفعيل الباقة
         </a>
       )}
