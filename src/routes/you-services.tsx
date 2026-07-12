@@ -238,9 +238,9 @@ function YouItemCard({ item }: { item: YouItem }) {
       )}
       {dialCode && (
         <div className="mt-auto flex items-center justify-between gap-3 rounded-xl border border-border bg-background/60 p-3">
-          <span className="font-mono text-sm font-bold text-foreground" dir="ltr">
+          <bdi className="font-mono text-sm font-bold text-foreground" dir="ltr" style={{ unicodeBidi: "isolate" }}>
             {dialCode}
-          </span>
+          </bdi>
           <a
             href={`tel:${encodeURIComponent(dialCode)}`}
             className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground hover:scale-[1.02]"
