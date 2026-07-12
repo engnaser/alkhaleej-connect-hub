@@ -353,6 +353,14 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
   const [codeDraft, setCodeDraft] = useState(pkg.code ?? "");
   const [saving, setSaving] = useState(false);
   const dialCode = (pkg.code ?? "").trim();
+  const smsMatch = dialCode.match(/^SMS:([^:]+):(.+)$/i);
+  const smsInfo = smsMatch ? { number: smsMatch[1].trim(), body: smsMatch[2].trim() } : null;
+  const displayCode = smsInfo ? `أرسل ${smsInfo.body} إلى ${smsInfo.number}` : dialCode;
+  const activationHref = smsInfo
+    ? `sms:${encodeURIComponent(smsInfo.number)}?body=${encodeURIComponent(smsInfo.body)}`
+    : dialCode
+    ? `tel:${encodeURIComponent(dialCode)}`
+    : "";
 
   const saveCode = async () => {
     const value = codeDraft.trim().slice(0, 32);
