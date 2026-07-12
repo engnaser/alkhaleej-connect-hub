@@ -377,6 +377,17 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
 
   return (
     <div className="relative flex flex-col rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-primary/40">
+      {isAdmin && (
+        <Link
+          to="/admin/you-packages"
+          hash={pkg.id}
+          className="absolute left-3 top-3 inline-flex items-center gap-1 rounded-full border border-amber-400/50 bg-amber-50 px-2.5 py-1 text-[11px] font-bold text-amber-700 shadow-sm hover:bg-amber-100"
+          title="تعديل الباقة"
+        >
+          <Settings className="h-3 w-3" />
+          تعديل
+        </Link>
+      )}
       <div className="mb-3 flex items-start justify-between gap-2">
         <h4 className="text-base font-extrabold leading-tight text-foreground">
           {pkg.name}
