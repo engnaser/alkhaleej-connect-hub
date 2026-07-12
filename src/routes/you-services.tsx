@@ -353,6 +353,14 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
   const [codeDraft, setCodeDraft] = useState(pkg.code ?? "");
   const [saving, setSaving] = useState(false);
   const dialCode = (pkg.code ?? "").trim();
+  const smsMatch = dialCode.match(/^SMS:([^:]+):(.+)$/i);
+  const smsInfo = smsMatch ? { number: smsMatch[1].trim(), body: smsMatch[2].trim() } : null;
+  const displayCode = smsInfo ? `أرسل ${smsInfo.body} إلى ${smsInfo.number}` : dialCode;
+  const activationHref = smsInfo
+    ? `sms:${encodeURIComponent(smsInfo.number)}?body=${encodeURIComponent(smsInfo.body)}`
+    : dialCode
+    ? `tel:${encodeURIComponent(dialCode)}`
+    : "";
 
   const saveCode = async () => {
     const value = codeDraft.trim().slice(0, 32);
@@ -479,7 +487,7 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
                 </button>
               )}
               <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>
-                {dialCode || "غير محدد"}
+                {displayCode || "غير محدد"}
               </bdi>
             </span>
           )}
@@ -504,13 +512,13 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
           مشاركة
         </a>
       </div>
-      {dialCode ? (
+      {activationHref ? (
         <a
-          href={`tel:${encodeURIComponent(dialCode)}`}
+          href={activationHref}
           className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary bg-primary/10 px-3 py-2.5 text-sm font-extrabold text-primary transition-transform hover:scale-[1.02]"
         >
           <PhoneCall className="h-4 w-4" />
-          اضغط لتفعيل الباقة
+          {smsInfo ? `أرسل ${smsInfo.body} إلى ${smsInfo.number} للتفعيل` : "اضغط لتفعيل الباقة"}
         </a>
       ) : (
         <button
