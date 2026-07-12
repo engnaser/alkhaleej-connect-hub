@@ -467,9 +467,9 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
             </div>
           ) : (
             <span className="flex items-center gap-2">
-              <span dir="ltr" className="font-mono font-bold text-primary">
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>
                 {dialCode || "غير محدد"}
-              </span>
+              </bdi>
               {isAdmin && (
                 <button
                   onClick={() => setEditing(true)}
