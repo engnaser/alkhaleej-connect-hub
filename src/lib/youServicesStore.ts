@@ -1,4 +1,23 @@
 import { useEffect, useState } from "react";
+import {
+  Hash,
+  Wallet,
+  Send,
+  Globe2,
+  MessageSquare,
+  CreditCard,
+  PhoneCall,
+  RefreshCw,
+  Gauge,
+  HelpCircle,
+  Wifi,
+  Phone,
+  Smartphone,
+  Settings2,
+  Sparkles,
+  Package,
+  type LucideIcon,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 
 export type YouSection = "packages" | "services" | "account" | "internet";
@@ -10,7 +29,40 @@ export interface YouItem {
   description: string | null;
   code: string | null;
   price: string | null;
+  icon: string;
+  deactivation_code: string | null;
   sort_order: number;
+}
+
+export const YOU_SERVICE_ICONS: Record<string, LucideIcon> = {
+  Hash,
+  Wallet,
+  Send,
+  Globe2,
+  MessageSquare,
+  CreditCard,
+  PhoneCall,
+  RefreshCw,
+  Gauge,
+  HelpCircle,
+  Wifi,
+  Phone,
+  Smartphone,
+  Settings2,
+  Sparkles,
+  Package,
+};
+
+export const YOU_ICON_OPTIONS = Object.keys(YOU_SERVICE_ICONS);
+
+export function youIconFor(name: string): LucideIcon {
+  return YOU_SERVICE_ICONS[name] ?? HelpCircle;
+}
+
+export function makeYouItemId() {
+  return `you-svc-${Date.now().toString(36)}-${Math.random()
+    .toString(36)
+    .slice(2, 7)}`;
 }
 
 let cache: YouItem[] | null = null;
@@ -19,11 +71,24 @@ const listeners = new Set<() => void>();
 async function fetchAll(): Promise<YouItem[]> {
   const { data, error } = await supabase
     .from("you_services_items")
-    .select("id, section, title, description, code, price, sort_order")
+    .select(
+      "id, section, title, description, code, price, icon, deactivation_code, sort_order",
+    )
     .order("section", { ascending: true })
     .order("sort_order", { ascending: true });
   if (error) throw error;
-  return (data ?? []) as YouItem[];
+  return (data ?? []).map((r) => ({
+    id: r.id,
+    section: r.section as YouSection,
+    title: r.title,
+    description: r.description,
+    code: r.code,
+    price: r.price,
+    icon: (r as { icon?: string | null }).icon ?? "HelpCircle",
+    deactivation_code:
+      (r as { deactivation_code?: string | null }).deactivation_code ?? null,
+    sort_order: r.sort_order,
+  }));
 }
 
 export async function refreshYouItems() {
@@ -65,23 +130,45 @@ export function useYouItems(section?: YouSection) {
   return { items: filtered, loading, refresh: refreshYouItems };
 }
 
-export async function createYouItem(input: Omit<YouItem, "id" | "sort_order"> & { sort_order?: number }) {
+function payload(input: Partial<YouItem>) {
+  return {
+    section: input.section,
+    title: input.title,
+    description: input.description ?? null,
+    code: input.code && input.code.trim() ? input.code : null,
+    price: input.price && input.price.trim() ? input.price : null,
+    icon: input.icon || "HelpCircle",
+    deactivation_code:
+      input.deactivation_code && input.deactivation_code.trim()
+        ? input.deactivation_code
+        : null,
+  };
+}
+
+export async function createYouItem(
+  input: Omit<YouItem, "id" | "sort_order"> & { sort_order?: number },
+) {
   const { error } = await supabase.from("you_services_items").insert({
     section: input.section,
     title: input.title,
-    description: input.description,
-    code: input.code,
-    price: input.price,
+    description: input.description ?? null,
+    code: input.code && input.code.trim() ? input.code : null,
+    price: input.price && input.price.trim() ? input.price : null,
+    icon: input.icon || "HelpCircle",
+    deactivation_code:
+      input.deactivation_code && input.deactivation_code.trim()
+        ? input.deactivation_code
+        : null,
     sort_order: input.sort_order ?? Date.now(),
   });
   if (error) throw error;
   await refreshYouItems();
 }
 
-export async function updateYouItem(id: string, patch: Partial<Omit<YouItem, "id">>) {
+export async function updateYouItem(id: string, patch: Partial<YouItem>) {
   const { error } = await supabase
     .from("you_services_items")
-    .update(patch)
+    .update(payload(patch))
     .eq("id", id);
   if (error) throw error;
   await refreshYouItems();
@@ -99,3 +186,4 @@ export const SECTION_LABELS: Record<YouSection, string> = {
   account: "أسعار ومعلومات",
   internet: "ضبط الإنترنت",
 };
+

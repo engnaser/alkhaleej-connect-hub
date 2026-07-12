@@ -30,7 +30,7 @@ import {
   PhoneCall,
 } from "lucide-react";
 import { useState } from "react";
-import { useYouItems, type YouSection, type YouItem } from "@/lib/youServicesStore";
+import { useYouItems, youIconFor, type YouSection, type YouItem } from "@/lib/youServicesStore";
 import { useYouPackagesStore, type YouPackage } from "@/lib/youPackagesStore";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 
@@ -213,10 +213,17 @@ function SectionList({ section }: { section: YouSection }) {
 
 function YouItemCard({ item }: { item: YouItem }) {
   const dialCode = item.code?.trim();
+  const deactivateCode = item.deactivation_code?.trim();
+  const Icon = youIconFor(item.icon);
   return (
     <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
       <div className="flex items-start justify-between gap-3">
-        <h3 className="text-base font-black text-foreground">{item.title}</h3>
+        <div className="flex items-start gap-3">
+          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+            <Icon className="h-5 w-5" />
+          </div>
+          <h3 className="text-base font-black text-foreground">{item.title}</h3>
+        </div>
         {item.price && (
           <span className="shrink-0 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
             {item.price}
@@ -238,7 +245,21 @@ function YouItemCard({ item }: { item: YouItem }) {
             className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground hover:scale-[1.02]"
           >
             <Phone className="h-3.5 w-3.5" />
-            اتصل
+            تفعيل
+          </a>
+        </div>
+      )}
+      {deactivateCode && (
+        <div className="flex items-center justify-between gap-3 rounded-xl border border-destructive/30 bg-destructive/5 p-3">
+          <span className="font-mono text-sm font-bold text-destructive" dir="ltr">
+            {deactivateCode}
+          </span>
+          <a
+            href={`tel:${encodeURIComponent(deactivateCode)}`}
+            className="inline-flex items-center gap-1.5 rounded-lg border border-destructive/40 bg-background px-3 py-1.5 text-xs font-bold text-destructive hover:bg-destructive/10"
+          >
+            <Phone className="h-3.5 w-3.5" />
+            إلغاء
           </a>
         </div>
       )}

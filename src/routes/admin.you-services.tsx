@@ -10,63 +10,73 @@ import {
   Shield,
   LogOut,
   Loader2,
-  Phone,
 } from "lucide-react";
 import { SiteFooter } from "@/components/site-footer";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { supabase } from "@/integrations/supabase/client";
+import { getCurrentAdminState } from "@/lib/packagesStore";
 import {
   useYouItems,
   createYouItem,
   updateYouItem,
   deleteYouItem,
+  makeYouItemId,
+  youIconFor,
+  YOU_ICON_OPTIONS,
   SECTION_LABELS,
   type YouItem,
   type YouSection,
 } from "@/lib/youServicesStore";
-import { toast } from "sonner";
 
 export const Route = createFileRoute("/admin/you-services")({
   head: () => ({
     meta: [
       { title: "إدارة خدمات شركة يو — الخليج تيليكوم" },
+      {
+        name: "description",
+        content: "لوحة تحكم لإضافة وتعديل وحذف خدمات شركة يو.",
+      },
       { name: "robots", content: "noindex,nofollow" },
     ],
   }),
   component: AdminYouServicesPage,
 });
 
-type AuthState =
-  | { status: "loading" }
-  | { status: "guest" }
-  | { status: "no-admin"; email: string }
-  | { status: "admin"; email: string };
+const emptyItem = (section: YouSection): YouItem => ({
+  id: makeYouItemId(),
+  section,
+  icon: "HelpCircle",
+  title: "",
+  description: "",
+  code: "",
+  price: "",
+  deactivation_code: "",
+  sort_order: Date.now(),
+});
 
 function AdminYouServicesPage() {
   const navigate = useNavigate();
-  const { items, loading } = useYouItems();
-  const [authState, setAuthState] = useState<AuthState>({ status: "loading" });
+  const { items, loading, refresh } = useYouItems();
+  const [authState, setAuthState] = useState<
+    | { status: "loading" }
+    | { status: "guest" }
+    | { status: "no-admin"; email: string }
+    | { status: "admin"; email: string }
+  >({ status: "loading" });
+
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [addingSection, setAddingSection] = useState<YouSection | null>(null);
   const [busy, setBusy] = useState(false);
-  const [editing, setEditing] = useState<string | null>(null);
-  const [addingIn, setAddingIn] = useState<YouSection | null>(null);
-  const [form, setForm] = useState<Partial<YouItem>>({});
 
   useEffect(() => {
     let active = true;
     const check = async () => {
-      const { data: sessionData } = await supabase.auth.getSession();
-      const user = sessionData.session?.user ?? null;
+      const { user, isAdmin } = await getCurrentAdminState();
       if (!active) return;
-      if (!user) return setAuthState({ status: "guest" });
-      const { data } = await supabase
-        .from("user_roles")
-        .select("role")
-        .eq("user_id", user.id)
-        .eq("role", "admin")
-        .maybeSingle();
-      if (!active) return;
-      if (data) setAuthState({ status: "admin", email: user.email ?? "" });
-      else setAuthState({ status: "no-admin", email: user.email ?? "" });
+      if (!user) setAuthState({ status: "guest" });
+      else if (!isAdmin)
+        setAuthState({ status: "no-admin", email: user.email ?? "" });
+      else setAuthState({ status: "admin", email: user.email ?? "" });
     };
     check();
     const { data: sub } = supabase.auth.onAuthStateChange(() => check());
@@ -81,64 +91,10 @@ function AdminYouServicesPage() {
     try {
       await fn();
     } catch (e) {
-      toast.error(e instanceof Error ? e.message : "حدث خطأ غير متوقع");
+      alert(e instanceof Error ? e.message : "حدث خطأ غير متوقع");
     } finally {
       setBusy(false);
     }
-  };
-
-  const startAdd = (section: YouSection) => {
-    setEditing(null);
-    setAddingIn(section);
-    setForm({ section, title: "", description: "", code: "", price: "" });
-  };
-
-  const startEdit = (item: YouItem) => {
-    setAddingIn(null);
-    setEditing(item.id);
-    setForm(item);
-  };
-
-  const cancel = () => {
-    setEditing(null);
-    setAddingIn(null);
-    setForm({});
-  };
-
-  const save = () => {
-    if (!form.title?.trim()) {
-      toast.error("العنوان مطلوب");
-      return;
-    }
-    guard(async () => {
-      if (editing) {
-        await updateYouItem(editing, {
-          title: form.title!,
-          description: form.description ?? null,
-          code: form.code ?? null,
-          price: form.price ?? null,
-        });
-        toast.success("تم الحفظ");
-      } else if (addingIn) {
-        await createYouItem({
-          section: addingIn,
-          title: form.title!,
-          description: form.description ?? null,
-          code: form.code ?? null,
-          price: form.price ?? null,
-        });
-        toast.success("تمت الإضافة");
-      }
-      cancel();
-    });
-  };
-
-  const remove = (id: string) => {
-    if (!confirm("حذف هذا العنصر؟")) return;
-    guard(async () => {
-      await deleteYouItem(id);
-      toast.success("تم الحذف");
-    });
   };
 
   const handleLogout = async () => {
@@ -154,12 +110,13 @@ function AdminYouServicesPage() {
       </CenterMessage>
     );
   }
-
   if (authState.status === "guest") {
     return (
       <CenterMessage>
         <Shield className="h-6 w-6 text-primary" />
-        <p className="text-sm font-bold">لوحة الإدارة محمية. سجّل الدخول كمشرف أولًا.</p>
+        <p className="text-sm font-bold">
+          لوحة الإدارة محمية. سجّل الدخول كمشرف أولًا.
+        </p>
         <Link
           to="/auth"
           className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground"
@@ -169,7 +126,6 @@ function AdminYouServicesPage() {
       </CenterMessage>
     );
   }
-
   if (authState.status === "no-admin") {
     return (
       <CenterMessage>
@@ -197,8 +153,6 @@ function AdminYouServicesPage() {
             <img
               src={logoKhalij}
               alt="الخليج تيليكوم"
-              width={40}
-              height={40}
               className="h-10 w-10 shrink-0 rounded-full ring-2 ring-primary/40"
             />
             <span className="truncate text-sm font-extrabold text-primary sm:text-base">
@@ -218,14 +172,14 @@ function AdminYouServicesPage() {
               className="inline-flex items-center gap-2 rounded-full bg-primary px-4 py-2 text-xs font-bold text-primary-foreground shadow-md hover:scale-[1.03] sm:text-sm"
             >
               <ArrowLeft className="h-4 w-4" />
-              عودة لصفحة يو
+              عودة لخدمات شركة يو
             </Link>
           </div>
         </div>
       </header>
 
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-        <div className="mb-8">
+        <div className="mb-6">
           <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
             <Shield className="h-3.5 w-3.5" />
             تخزين سحابي — يظهر لكل الزوار
@@ -238,64 +192,106 @@ function AdminYouServicesPage() {
           </p>
         </div>
 
-        {loading ? (
-          <div className="flex items-center justify-center py-16 text-muted-foreground">
-            <Loader2 className="ml-2 h-5 w-5 animate-spin" /> جاري التحميل...
+        {loading && items.length === 0 ? (
+          <div className="rounded-xl border border-dashed border-border p-10 text-center text-sm text-muted-foreground">
+            جاري التحميل...
           </div>
         ) : (
-          <div className="space-y-8">
+          <div className="space-y-6">
             {sections.map((section) => {
-              const rows = items.filter((i) => i.section === section);
+              const list = items.filter((s) => s.section === section);
               return (
                 <section
                   key={section}
-                  className="rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]"
+                  className="rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]"
                 >
-                  <div className="mb-4 flex items-center justify-between gap-3">
-                    <h2 className="text-lg font-black text-foreground">
-                      {SECTION_LABELS[section]}
-                      <span className="mr-2 text-sm font-bold text-muted-foreground">
-                        ({rows.length})
+                  <div className="flex flex-col gap-3 border-b border-border p-5 sm:flex-row sm:items-center sm:justify-between">
+                    <div>
+                      <h2 className="text-lg font-extrabold text-foreground">
+                        {SECTION_LABELS[section]}
+                      </h2>
+                      <span className="mt-1 inline-block rounded-full bg-primary/10 px-2.5 py-0.5 text-xs font-bold text-primary">
+                        {list.length} عناصر
                       </span>
-                    </h2>
+                    </div>
                     <button
-                      onClick={() => startAdd(section)}
-                      disabled={busy || addingIn !== null || editing !== null}
-                      className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground hover:scale-[1.02] disabled:opacity-60"
+                      onClick={() => setAddingSection(section)}
+                      disabled={busy}
+                      className="inline-flex items-center gap-2 rounded-lg bg-primary px-4 py-2 text-sm font-bold text-primary-foreground hover:scale-[1.02] disabled:opacity-60"
                     >
-                      <Plus className="h-3.5 w-3.5" /> إضافة
+                      <Plus className="h-4 w-4" />
+                      إضافة عنصر
                     </button>
                   </div>
 
-                  {addingIn === section && (
-                    <ItemForm form={form} setForm={setForm} onCancel={cancel} onSave={save} busy={busy} />
-                  )}
-
-                  <div className="space-y-2">
-                    {rows.length === 0 && addingIn !== section && (
-                      <p className="rounded-lg border border-dashed border-border py-6 text-center text-sm text-muted-foreground">
-                        لا توجد عناصر بعد.
-                      </p>
+                  <div className="space-y-3 p-5">
+                    {addingSection === section && (
+                      <ItemForm
+                        initial={emptyItem(section)}
+                        onCancel={() => setAddingSection(null)}
+                        onSave={(s) =>
+                          guard(async () => {
+                            await createYouItem({
+                              section: s.section,
+                              icon: s.icon,
+                              title: s.title,
+                              description: s.description,
+                              code: s.code,
+                              price: s.price,
+                              deactivation_code: s.deactivation_code,
+                            });
+                            await refresh();
+                            setAddingSection(null);
+                          })
+                        }
+                      />
                     )}
-                    {rows.map((item) =>
-                      editing === item.id ? (
-                        <ItemForm
-                          key={item.id}
-                          form={form}
-                          setForm={setForm}
-                          onCancel={cancel}
-                          onSave={save}
-                          busy={busy}
-                        />
-                      ) : (
-                        <ItemRow
-                          key={item.id}
-                          item={item}
-                          onEdit={() => startEdit(item)}
-                          onDelete={() => remove(item.id)}
-                          disabled={busy}
-                        />
-                      ),
+
+                    {list.length === 0 && addingSection !== section ? (
+                      <div className="rounded-xl border border-dashed border-border p-6 text-center text-xs text-muted-foreground">
+                        لا توجد عناصر بعد.
+                      </div>
+                    ) : (
+                      <div className="grid gap-3 md:grid-cols-2">
+                        {list.map((s) =>
+                          editingId === s.id ? (
+                            <ItemForm
+                              key={s.id}
+                              initial={s}
+                              onCancel={() => setEditingId(null)}
+                              onSave={(updated) =>
+                                guard(async () => {
+                                  await updateYouItem(updated.id, {
+                                    section: updated.section,
+                                    icon: updated.icon,
+                                    title: updated.title,
+                                    description: updated.description,
+                                    code: updated.code,
+                                    price: updated.price,
+                                    deactivation_code: updated.deactivation_code,
+                                  });
+                                  await refresh();
+                                  setEditingId(null);
+                                })
+                              }
+                            />
+                          ) : (
+                            <ItemRow
+                              key={s.id}
+                              item={s}
+                              onEdit={() => setEditingId(s.id)}
+                              onDelete={() =>
+                                guard(async () => {
+                                  if (!confirm("هل أنت متأكد من حذف هذا العنصر؟"))
+                                    return;
+                                  await deleteYouItem(s.id);
+                                  await refresh();
+                                })
+                              }
+                            />
+                          ),
+                        )}
+                      </div>
                     )}
                   </div>
                 </section>
@@ -310,51 +306,75 @@ function AdminYouServicesPage() {
   );
 }
 
+function CenterMessage({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      dir="rtl"
+      className="grid min-h-screen place-items-center bg-background px-4 text-foreground"
+    >
+      <div className="flex max-w-sm flex-col items-center gap-3 rounded-2xl border border-border bg-card p-8 text-center shadow-[var(--shadow-card)]">
+        {children}
+      </div>
+    </div>
+  );
+}
+
 function ItemRow({
   item,
   onEdit,
   onDelete,
-  disabled,
 }: {
   item: YouItem;
   onEdit: () => void;
   onDelete: () => void;
-  disabled: boolean;
 }) {
+  const Icon = youIconFor(item.icon);
   return (
-    <div className="grid grid-cols-[minmax(0,1fr)_auto] items-start gap-3 rounded-xl border border-border bg-background/60 p-3">
-      <div className="min-w-0">
-        <div className="flex flex-wrap items-center gap-2">
-          <h3 className="truncate text-sm font-bold text-foreground">{item.title}</h3>
-          {item.price && (
-            <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-bold text-primary">
-              {item.price}
-            </span>
-          )}
-          {item.code && (
-            <span className="inline-flex items-center gap-1 rounded-full bg-muted px-2 py-0.5 text-[11px] font-bold text-foreground">
-              <Phone className="h-3 w-3" /> {item.code}
-            </span>
-          )}
+    <div className="rounded-xl border border-border bg-secondary/30 p-4">
+      <div className="mb-2 flex items-start justify-between gap-2">
+        <div className="flex items-center gap-3">
+          <div className="grid h-10 w-10 place-items-center rounded-lg bg-primary/10 text-primary">
+            <Icon className="h-5 w-5" />
+          </div>
+          <div>
+            <div className="font-extrabold text-foreground">{item.title}</div>
+            <div className="mt-0.5 flex flex-wrap gap-1.5">
+              {item.code && (
+                <span
+                  dir="ltr"
+                  className="font-mono text-xs font-bold text-primary"
+                >
+                  {item.code}
+                </span>
+              )}
+              {item.price && (
+                <span className="rounded-full bg-primary/10 px-2 py-0.5 text-[11px] font-bold text-primary">
+                  {item.price}
+                </span>
+              )}
+            </div>
+          </div>
         </div>
-        {item.description && (
-          <p className="mt-1 line-clamp-2 text-xs text-muted-foreground">{item.description}</p>
-        )}
       </div>
-      <div className="flex shrink-0 gap-1.5">
+      {item.description && (
+        <p className="text-xs leading-relaxed text-muted-foreground">
+          {item.description}
+        </p>
+      )}
+      <div className="mt-3 flex gap-2">
         <button
           onClick={onEdit}
-          disabled={disabled}
-          className="grid h-8 w-8 place-items-center rounded-lg border border-border bg-background text-foreground hover:border-primary/50 hover:text-primary disabled:opacity-60"
+          className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
         >
           <Pencil className="h-3.5 w-3.5" />
+          تعديل
         </button>
         <button
           onClick={onDelete}
-          disabled={disabled}
-          className="grid h-8 w-8 place-items-center rounded-lg border border-border bg-background text-foreground hover:border-destructive/50 hover:text-destructive disabled:opacity-60"
+          className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-bold text-destructive hover:border-destructive/50"
         >
           <Trash2 className="h-3.5 w-3.5" />
+          حذف
         </button>
       </div>
     </div>
@@ -362,80 +382,138 @@ function ItemRow({
 }
 
 function ItemForm({
-  form,
-  setForm,
+  initial,
   onCancel,
   onSave,
-  busy,
 }: {
-  form: Partial<YouItem>;
-  setForm: (f: Partial<YouItem>) => void;
+  initial: YouItem;
   onCancel: () => void;
-  onSave: () => void;
-  busy: boolean;
+  onSave: (s: YouItem) => void;
 }) {
+  const [s, setS] = useState<YouItem>(initial);
+  const PreviewIcon = youIconFor(s.icon);
+
   return (
-    <div className="mb-3 space-y-2 rounded-xl border border-primary/40 bg-primary/5 p-3">
-      <input
-        type="text"
-        placeholder="العنوان *"
-        value={form.title ?? ""}
-        onChange={(e) => setForm({ ...form, title: e.target.value })}
-        className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
-      />
-      <textarea
-        placeholder="الوصف"
-        value={form.description ?? ""}
-        onChange={(e) => setForm({ ...form, description: e.target.value })}
-        rows={2}
-        className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
-      />
-      <div className="grid grid-cols-2 gap-2">
-        <input
-          type="text"
-          placeholder="الكود (مثال: *151#)"
-          value={form.code ?? ""}
-          onChange={(e) => setForm({ ...form, code: e.target.value })}
-          className="rounded-lg border border-border bg-background px-3 py-2 text-sm"
-        />
-        <input
-          type="text"
-          placeholder="السعر (مثال: 500 ريال)"
-          value={form.price ?? ""}
-          onChange={(e) => setForm({ ...form, price: e.target.value })}
-          className="rounded-lg border border-border bg-background px-3 py-2 text-sm"
-        />
+    <div className="rounded-xl border border-primary/30 bg-background p-4">
+      <div className="grid gap-3 sm:grid-cols-2">
+        <Field label="العنوان">
+          <input
+            value={s.title}
+            onChange={(e) => setS({ ...s, title: e.target.value })}
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+            placeholder="اسم الخدمة"
+          />
+        </Field>
+        <Field label="السعر (اختياري)">
+          <input
+            value={s.price ?? ""}
+            onChange={(e) => setS({ ...s, price: e.target.value })}
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+            placeholder="500 ريال"
+          />
+        </Field>
+        <Field label="كود التفعيل (اختياري)">
+          <input
+            value={s.code ?? ""}
+            onChange={(e) => setS({ ...s, code: e.target.value })}
+            dir="ltr"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm font-mono"
+            placeholder="*111#"
+          />
+        </Field>
+        <Field label="كود إلغاء التفعيل (اختياري)">
+          <input
+            value={s.deactivation_code ?? ""}
+            onChange={(e) =>
+              setS({ ...s, deactivation_code: e.target.value })
+            }
+            dir="ltr"
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm font-mono"
+            placeholder="*111*0#"
+          />
+        </Field>
+        <Field label="الأيقونة">
+          <div className="flex items-center gap-2">
+            <div className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-primary/10 text-primary">
+              <PreviewIcon className="h-5 w-5" />
+            </div>
+            <select
+              value={s.icon}
+              onChange={(e) => setS({ ...s, icon: e.target.value })}
+              className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+            >
+              {YOU_ICON_OPTIONS.map((name) => (
+                <option key={name} value={name}>
+                  {name}
+                </option>
+              ))}
+            </select>
+          </div>
+        </Field>
+        <Field label="القسم">
+          <select
+            value={s.section}
+            onChange={(e) =>
+              setS({ ...s, section: e.target.value as YouSection })
+            }
+            className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+          >
+            {(Object.keys(SECTION_LABELS) as YouSection[]).map((k) => (
+              <option key={k} value={k}>
+                {SECTION_LABELS[k]}
+              </option>
+            ))}
+          </select>
+        </Field>
+        <div className="sm:col-span-2">
+          <Field label="الوصف">
+            <textarea
+              value={s.description ?? ""}
+              onChange={(e) => setS({ ...s, description: e.target.value })}
+              rows={2}
+              className="w-full rounded-lg border border-border bg-background px-3 py-2 text-sm"
+              placeholder="وصف مختصر للخدمة"
+            />
+          </Field>
+        </div>
       </div>
-      <div className="flex justify-end gap-2 pt-1">
+      <div className="mt-4 flex gap-2">
         <button
-          onClick={onCancel}
-          disabled={busy}
-          className="inline-flex items-center gap-1.5 rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-bold"
+          onClick={() => {
+            if (!s.title.trim()) {
+              alert("الرجاء إدخال عنوان الخدمة");
+              return;
+            }
+            onSave(s);
+          }}
+          className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-sm font-bold text-primary-foreground hover:scale-[1.02]"
         >
-          <X className="h-3.5 w-3.5" /> إلغاء
+          <Save className="h-4 w-4" />
+          حفظ
         </button>
         <button
-          onClick={onSave}
-          disabled={busy}
-          className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground disabled:opacity-60"
+          onClick={onCancel}
+          className="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-border bg-background px-3 py-2 text-sm font-bold text-foreground hover:border-destructive/40 hover:text-destructive"
         >
-          {busy ? <Loader2 className="h-3.5 w-3.5 animate-spin" /> : <Save className="h-3.5 w-3.5" />}
-          حفظ
+          <X className="h-4 w-4" />
+          إلغاء
         </button>
       </div>
     </div>
   );
 }
 
-function CenterMessage({ children }: { children: React.ReactNode }) {
+function Field({
+  label,
+  children,
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
-    <div
-      dir="rtl"
-      className="grid min-h-screen place-items-center bg-background px-4 text-center"
-    >
-      <div className="flex max-w-md flex-col items-center gap-4 rounded-2xl border border-border bg-card p-8 shadow-[var(--shadow-card)]">
-        {children}
-      </div>
-    </div>
+    <label className="block text-xs font-bold text-muted-foreground">
+      <span className="mb-1 block">{label}</span>
+      {children}
+    </label>
   );
 }

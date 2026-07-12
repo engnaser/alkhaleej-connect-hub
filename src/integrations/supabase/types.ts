@@ -439,7 +439,9 @@ export type Database = {
         Row: {
           code: string | null
           created_at: string
+          deactivation_code: string | null
           description: string | null
+          icon: string
           id: string
           price: string | null
           section: string
@@ -450,7 +452,9 @@ export type Database = {
         Insert: {
           code?: string | null
           created_at?: string
+          deactivation_code?: string | null
           description?: string | null
+          icon?: string
           id?: string
           price?: string | null
           section: string
@@ -461,7 +465,9 @@ export type Database = {
         Update: {
           code?: string | null
           created_at?: string
+          deactivation_code?: string | null
           description?: string | null
+          icon?: string
           id?: string
           price?: string | null
           section?: string
