@@ -238,9 +238,9 @@ function YouItemCard({ item }: { item: YouItem }) {
       )}
       {dialCode && (
         <div className="mt-auto flex items-center justify-between gap-3 rounded-xl border border-border bg-background/60 p-3">
-          <span className="font-mono text-sm font-bold text-foreground" dir="ltr">
+          <bdi className="font-mono text-sm font-bold text-foreground" dir="ltr" style={{ unicodeBidi: "isolate" }}>
             {dialCode}
-          </span>
+          </bdi>
           <a
             href={`tel:${encodeURIComponent(dialCode)}`}
             className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground hover:scale-[1.02]"
@@ -252,9 +252,9 @@ function YouItemCard({ item }: { item: YouItem }) {
       )}
       {deactivateCode && (
         <div className="flex items-center justify-between gap-3 rounded-xl border border-destructive/30 bg-destructive/5 p-3">
-          <span className="font-mono text-sm font-bold text-destructive" dir="ltr">
+          <bdi className="font-mono text-sm font-bold text-destructive" dir="ltr" style={{ unicodeBidi: "isolate" }}>
             {deactivateCode}
-          </span>
+          </bdi>
           <a
             href={`tel:${encodeURIComponent(deactivateCode)}`}
             className="inline-flex items-center gap-1.5 rounded-lg border border-destructive/40 bg-background px-3 py-1.5 text-xs font-bold text-destructive hover:bg-destructive/10"
@@ -467,9 +467,9 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
             </div>
           ) : (
             <span className="flex items-center gap-2">
-              <span dir="ltr" className="font-mono font-bold text-primary">
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>
                 {dialCode || "غير محدد"}
-              </span>
+              </bdi>
               {isAdmin && (
                 <button
                   onClick={() => setEditing(true)}
