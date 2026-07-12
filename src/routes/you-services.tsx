@@ -8,6 +8,12 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
   ArrowLeft,
   Sparkles,
   Package,
@@ -18,7 +24,12 @@ import {
   Clock,
   Phone,
   Settings,
+  Copy,
+  Check,
+  Share2,
+  PhoneCall,
 } from "lucide-react";
+import { useState } from "react";
 import { useYouItems, type YouSection, type YouItem } from "@/lib/youServicesStore";
 import { useYouPackagesStore, type YouPackage, type YouCategory } from "@/lib/youPackagesStore";
 import { useIsAdmin } from "@/hooks/use-is-admin";
