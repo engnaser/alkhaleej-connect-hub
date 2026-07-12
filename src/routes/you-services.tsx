@@ -487,7 +487,7 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
                 </button>
               )}
               <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>
-                {dialCode || "غير محدد"}
+                {displayCode || "غير محدد"}
               </bdi>
             </span>
           )}
@@ -512,13 +512,13 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
           مشاركة
         </a>
       </div>
-      {dialCode ? (
+      {activationHref ? (
         <a
-          href={`tel:${encodeURIComponent(dialCode)}`}
+          href={activationHref}
           className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary bg-primary/10 px-3 py-2.5 text-sm font-extrabold text-primary transition-transform hover:scale-[1.02]"
         >
           <PhoneCall className="h-4 w-4" />
-          اضغط لتفعيل الباقة
+          {smsInfo ? `أرسل ${smsInfo.body} إلى ${smsInfo.number} للتفعيل` : "اضغط لتفعيل الباقة"}
         </a>
       ) : (
         <button
