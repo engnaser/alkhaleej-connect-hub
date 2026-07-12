@@ -146,7 +146,7 @@ function YouServicesPage() {
             </div>
 
             <TabsContent value="packages" className="mt-6">
-              <SectionList section="packages" />
+              <PackagesPanel />
             </TabsContent>
             <TabsContent value="services" className="mt-6">
               <SectionList section="services" />
