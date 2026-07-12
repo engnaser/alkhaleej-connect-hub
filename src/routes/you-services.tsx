@@ -8,6 +8,12 @@ import {
   TabsTrigger,
 } from "@/components/ui/tabs";
 import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
   ArrowLeft,
   Sparkles,
   Package,
@@ -18,9 +24,14 @@ import {
   Clock,
   Phone,
   Settings,
+  Copy,
+  Check,
+  Share2,
+  PhoneCall,
 } from "lucide-react";
+import { useState } from "react";
 import { useYouItems, type YouSection, type YouItem } from "@/lib/youServicesStore";
-import { useYouPackagesStore, type YouPackage, type YouCategory } from "@/lib/youPackagesStore";
+import { useYouPackagesStore, type YouPackage } from "@/lib/youPackagesStore";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 
 export const Route = createFileRoute("/you-services")({
@@ -261,70 +272,149 @@ function PackagesPanel() {
   }
 
   return (
-    <div className="space-y-8">
-      {categories.map((cat) => (
-        <YouCategorySection key={cat.id} category={cat} />
-      ))}
-    </div>
-  );
-}
-
-function YouCategorySection({ category }: { category: YouCategory }) {
-  return (
-    <section>
-      <div className="mb-3">
-        <h2 className="text-xl font-black text-primary">{category.title}</h2>
-        {category.description && (
-          <p className="mt-1 text-sm text-muted-foreground">{category.description}</p>
-        )}
+    <>
+      <div className="mb-4 flex justify-end">
+        {/* placeholder to preserve layout parity */}
       </div>
-      {category.packages.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-border p-6 text-center text-xs text-muted-foreground">
-          لا توجد باقات في هذا القسم بعد.
-        </div>
-      ) : (
-        <div className="grid gap-3 sm:grid-cols-2">
-          {category.packages.map((pkg) => (
-            <YouPackageCard key={pkg.id} pkg={pkg} />
-          ))}
-        </div>
-      )}
-    </section>
+      <Accordion
+        type="multiple"
+        defaultValue={[categories[0].id]}
+        className="space-y-3"
+      >
+        {categories.map((cat) => (
+          <AccordionItem
+            key={cat.id}
+            value={cat.id}
+            className="overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]"
+          >
+            <AccordionTrigger className="px-5 py-4 text-right hover:no-underline">
+              <div className="flex flex-1 items-center justify-between gap-3">
+                <div className="text-right">
+                  <div className="text-base font-extrabold text-foreground">
+                    {cat.title}
+                  </div>
+                  {cat.description && (
+                    <div className="mt-1 text-xs text-muted-foreground">
+                      {cat.description}
+                    </div>
+                  )}
+                </div>
+                <span className="rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+                  {cat.packages.length} باقات
+                </span>
+              </div>
+            </AccordionTrigger>
+            <AccordionContent className="px-5 pb-5">
+              {cat.packages.length === 0 ? (
+                <div className="rounded-xl border border-dashed border-border p-4 text-center text-xs text-muted-foreground">
+                  لا توجد باقات في هذا القسم.
+                </div>
+              ) : (
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {cat.packages.map((pkg) => (
+                    <YouPackageCard key={pkg.id} pkg={pkg} />
+                  ))}
+                </div>
+              )}
+            </AccordionContent>
+          </AccordionItem>
+        ))}
+      </Accordion>
+    </>
   );
 }
 
 function YouPackageCard({ pkg }: { pkg: YouPackage }) {
+  const [copied, setCopied] = useState(false);
   const dialCode = pkg.code?.trim();
+
+  const details = [
+    `📦 ${pkg.name}`,
+    `💰 السعر: ${pkg.price}`,
+    `🌐 الإنترنت: ${pkg.internet}`,
+    `📞 الدقائق: ${pkg.minutes}`,
+    `✉️ الرسائل: ${pkg.sms}`,
+    `⏳ الصلاحية: ${pkg.validity}`,
+    `📶 الشبكة: ${pkg.network}`,
+    dialCode ? `🔢 كود التفعيل: ${dialCode}` : "",
+  ]
+    .filter(Boolean)
+    .join("\n");
+
+  const handleCopy = async () => {
+    try {
+      await navigator.clipboard.writeText(details);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1800);
+    } catch {
+      /* noop */
+    }
+  };
+
+  const shareUrl = `https://wa.me/?text=${encodeURIComponent(details)}`;
+
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
-      <div className="flex items-start justify-between gap-3">
-        <div>
-          <h3 className="text-base font-black text-foreground">{pkg.name}</h3>
-          <div className="mt-1 text-lg font-black text-primary">{pkg.price}</div>
-        </div>
-        <span className="shrink-0 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+    <div className="relative flex flex-col rounded-2xl border border-border bg-secondary/30 p-5 transition-all hover:-translate-y-0.5 hover:border-primary/40">
+      <div className="mb-3 flex items-center justify-between gap-2">
+        <h4 className="text-base font-extrabold text-foreground">{pkg.name}</h4>
+        <span className="rounded-full bg-primary/15 px-2.5 py-0.5 text-[11px] font-bold text-primary">
           {pkg.network}
         </span>
       </div>
-      <ul className="grid grid-cols-2 gap-2 text-xs text-foreground/80">
-        <li>الإنترنت: <span className="font-bold">{pkg.internet}</span></li>
-        <li>الدقائق: <span className="font-bold">{pkg.minutes}</span></li>
-        <li>الرسائل: <span className="font-bold">{pkg.sms}</span></li>
-        <li>الصلاحية: <span className="font-bold">{pkg.validity}</span></li>
+      <div className="mb-4 text-2xl font-black text-primary">{pkg.price}</div>
+      <ul className="space-y-1.5 text-sm text-foreground/85">
+        <li className="flex items-center justify-between">
+          <span className="text-muted-foreground">الإنترنت</span>
+          <span className="font-bold">{pkg.internet}</span>
+        </li>
+        <li className="flex items-center justify-between">
+          <span className="text-muted-foreground">الدقائق</span>
+          <span className="font-bold">{pkg.minutes}</span>
+        </li>
+        <li className="flex items-center justify-between">
+          <span className="text-muted-foreground">الرسائل</span>
+          <span className="font-bold">{pkg.sms}</span>
+        </li>
+        <li className="flex items-center justify-between">
+          <span className="text-muted-foreground">الصلاحية</span>
+          <span className="font-bold">{pkg.validity}</span>
+        </li>
+        {dialCode && (
+          <li className="flex items-center justify-between">
+            <span className="text-muted-foreground">كود التفعيل</span>
+            <span dir="ltr" className="font-mono font-bold text-primary">
+              {dialCode}
+            </span>
+          </li>
+        )}
       </ul>
+
+      <div className="mt-5 grid grid-cols-2 gap-2">
+        <button
+          onClick={handleCopy}
+          className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border bg-background px-3 py-2 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
+        >
+          {copied ? <Check className="h-3.5 w-3.5" /> : <Copy className="h-3.5 w-3.5" />}
+          {copied ? "تم النسخ" : "نسخ التفاصيل"}
+        </button>
+        <a
+          href={shareUrl}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex items-center justify-center gap-1.5 rounded-lg border border-border bg-background px-3 py-2 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
+        >
+          <Share2 className="h-3.5 w-3.5" />
+          مشاركة
+        </a>
+      </div>
       {dialCode && (
-        <div className="mt-auto flex items-center justify-between gap-3 rounded-xl border border-border bg-background/60 p-3">
-          <span className="font-mono text-sm font-bold text-foreground" dir="ltr">
-            {dialCode}
-          </span>
-          <a
-            href={`tel:${encodeURIComponent(dialCode)}`}
-            className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground hover:scale-[1.02]"
-          >
-            <Phone className="h-3.5 w-3.5" />
-            تفعيل
-          </a>
-        </div>
+        <a
+          href={`tel:${encodeURIComponent(dialCode)}`}
+          className="mt-2 inline-flex items-center justify-center gap-2 rounded-lg border-2 border-primary bg-primary/10 px-3 py-2.5 text-xs font-extrabold text-primary transition-transform hover:scale-[1.02]"
+        >
+          <PhoneCall className="h-3.5 w-3.5" />
+          اضغط لتفعيل الباقة
+        </a>
       )}
     </div>
   );
