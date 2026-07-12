@@ -51,13 +51,22 @@ function YouServicesPage() {
         cta={
           <div className="flex items-center gap-2">
             {isAdmin && (
-              <Link
-                to="/admin/you-services"
-                className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-2 text-xs font-bold text-primary hover:bg-primary/20"
-              >
-                <Settings className="h-3.5 w-3.5" />
-                لوحة التحكم
-              </Link>
+              <>
+                <Link
+                  to="/admin/you-packages"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-2 text-xs font-bold text-primary hover:bg-primary/20"
+                >
+                  <Package className="h-3.5 w-3.5" />
+                  إدارة الباقات
+                </Link>
+                <Link
+                  to="/admin/you-services"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-2 text-xs font-bold text-primary hover:bg-primary/20"
+                >
+                  <Settings className="h-3.5 w-3.5" />
+                  إدارة الخدمات
+                </Link>
+              </>
             )}
             <Link
               to="/services"
