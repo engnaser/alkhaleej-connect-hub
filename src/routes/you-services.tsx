@@ -432,7 +432,7 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
           مشاركة
         </a>
       </div>
-      {dialCode && (
+      {dialCode ? (
         <a
           href={`tel:${encodeURIComponent(dialCode)}`}
           className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary bg-primary/10 px-3 py-2.5 text-sm font-extrabold text-primary transition-transform hover:scale-[1.02]"
@@ -440,6 +440,16 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
           <PhoneCall className="h-4 w-4" />
           اضغط لتفعيل الباقة
         </a>
+      ) : (
+        <button
+          type="button"
+          disabled
+          title="لم يتم تحديد كود تفعيل لهذه الباقة"
+          className="mt-2 inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-full border-2 border-dashed border-border bg-muted/40 px-3 py-2.5 text-sm font-extrabold text-muted-foreground"
+        >
+          <PhoneCall className="h-4 w-4" />
+          كود التفعيل غير متوفر
+        </button>
       )}
     </div>
   );
