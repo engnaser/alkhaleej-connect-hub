@@ -149,7 +149,16 @@ export async function createYouItem(
   input: Omit<YouItem, "id" | "sort_order"> & { sort_order?: number },
 ) {
   const { error } = await supabase.from("you_services_items").insert({
-    ...payload(input),
+    section: input.section,
+    title: input.title,
+    description: input.description ?? null,
+    code: input.code && input.code.trim() ? input.code : null,
+    price: input.price && input.price.trim() ? input.price : null,
+    icon: input.icon || "HelpCircle",
+    deactivation_code:
+      input.deactivation_code && input.deactivation_code.trim()
+        ? input.deactivation_code
+        : null,
     sort_order: input.sort_order ?? Date.now(),
   });
   if (error) throw error;
