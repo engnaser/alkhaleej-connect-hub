@@ -32,6 +32,7 @@ import {
 import { useState } from "react";
 import { useYouItems, youIconFor, type YouSection, type YouItem } from "@/lib/youServicesStore";
 import { useYouPackagesStore, type YouPackage } from "@/lib/youPackagesStore";
+import { supabase } from "@/integrations/supabase/client";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 
 export const Route = createFileRoute("/you-services")({
