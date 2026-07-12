@@ -252,9 +252,9 @@ function YouItemCard({ item }: { item: YouItem }) {
       )}
       {deactivateCode && (
         <div className="flex items-center justify-between gap-3 rounded-xl border border-destructive/30 bg-destructive/5 p-3">
-          <span className="font-mono text-sm font-bold text-destructive" dir="ltr">
+          <bdi className="font-mono text-sm font-bold text-destructive" dir="ltr" style={{ unicodeBidi: "isolate" }}>
             {deactivateCode}
-          </span>
+          </bdi>
           <a
             href={`tel:${encodeURIComponent(deactivateCode)}`}
             className="inline-flex items-center gap-1.5 rounded-lg border border-destructive/40 bg-background px-3 py-1.5 text-xs font-bold text-destructive hover:bg-destructive/10"
