@@ -32,6 +32,7 @@ import {
 import { useState } from "react";
 import { useYouItems, youIconFor, type YouSection, type YouItem } from "@/lib/youServicesStore";
 import { useYouPackagesStore, type YouPackage } from "@/lib/youPackagesStore";
+import { supabase } from "@/integrations/supabase/client";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 
 export const Route = createFileRoute("/you-services")({
@@ -347,8 +348,27 @@ function PackagesPanel() {
 
 function YouPackageCard({ pkg }: { pkg: YouPackage }) {
   const [copied, setCopied] = useState(false);
-  const dialCode = pkg.code?.trim();
   const { isAdmin } = useIsAdmin();
+  const [editing, setEditing] = useState(false);
+  const [codeDraft, setCodeDraft] = useState(pkg.code ?? "");
+  const [saving, setSaving] = useState(false);
+  const dialCode = (pkg.code ?? "").trim();
+
+  const saveCode = async () => {
+    const value = codeDraft.trim().slice(0, 32);
+    setSaving(true);
+    const { error } = await supabase
+      .from("you_packages")
+      .update({ code: value || null })
+      .eq("id", pkg.id);
+    setSaving(false);
+    if (!error) {
+      setEditing(false);
+      window.dispatchEvent(new CustomEvent("you_packages_changed"));
+    } else {
+      alert("تعذّر حفظ الكود: " + error.message);
+    }
+  };
 
   const details = [
     `📦 ${pkg.name}`,
@@ -416,14 +436,52 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
           <span className="text-muted-foreground">الصلاحية</span>
           <span className="font-bold">{pkg.validity}</span>
         </li>
-        {dialCode && (
-          <li className="flex items-center justify-between">
-            <span className="text-muted-foreground">كود التفعيل</span>
-            <span dir="ltr" className="font-mono font-bold text-primary">
-              {dialCode}
+        <li className="flex items-center justify-between gap-2">
+          <span className="text-muted-foreground shrink-0">كود التفعيل</span>
+          {isAdmin && editing ? (
+            <div className="flex items-center gap-1">
+              <input
+                dir="ltr"
+                value={codeDraft}
+                onChange={(e) => setCodeDraft(e.target.value)}
+                maxLength={32}
+                placeholder="*250#"
+                className="w-28 rounded-md border border-primary/40 bg-background px-2 py-1 font-mono text-sm text-primary outline-none focus:border-primary"
+              />
+              <button
+                onClick={saveCode}
+                disabled={saving}
+                className="rounded-md bg-primary px-2 py-1 text-[11px] font-bold text-primary-foreground disabled:opacity-50"
+              >
+                {saving ? "..." : "حفظ"}
+              </button>
+              <button
+                onClick={() => {
+                  setEditing(false);
+                  setCodeDraft(pkg.code ?? "");
+                }}
+                className="rounded-md border border-border px-2 py-1 text-[11px] font-bold text-muted-foreground"
+              >
+                إلغاء
+              </button>
+            </div>
+          ) : (
+            <span className="flex items-center gap-2">
+              <span dir="ltr" className="font-mono font-bold text-primary">
+                {dialCode || "غير محدد"}
+              </span>
+              {isAdmin && (
+                <button
+                  onClick={() => setEditing(true)}
+                  className="rounded-md border border-amber-400/60 bg-amber-50 px-2 py-0.5 text-[11px] font-bold text-amber-700 hover:bg-amber-100"
+                  title="تعديل كود التفعيل"
+                >
+                  تعديل
+                </button>
+              )}
             </span>
-          </li>
-        )}
+          )}
+        </li>
       </ul>
 
       <div className="mt-5 grid grid-cols-2 gap-2">
