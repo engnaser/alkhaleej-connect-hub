@@ -31,7 +31,7 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { useYouItems, type YouSection, type YouItem } from "@/lib/youServicesStore";
-import { useYouPackagesStore, type YouPackage, type YouCategory } from "@/lib/youPackagesStore";
+import { useYouPackagesStore, type YouPackage } from "@/lib/youPackagesStore";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 
 export const Route = createFileRoute("/you-services")({
