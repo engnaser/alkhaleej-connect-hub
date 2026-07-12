@@ -348,6 +348,7 @@ function PackagesPanel() {
 function YouPackageCard({ pkg }: { pkg: YouPackage }) {
   const [copied, setCopied] = useState(false);
   const dialCode = pkg.code?.trim();
+  const { isAdmin } = useIsAdmin();
 
   const details = [
     `📦 ${pkg.name}`,
