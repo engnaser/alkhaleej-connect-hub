@@ -20,6 +20,7 @@ import {
   Settings,
 } from "lucide-react";
 import { useYouItems, type YouSection, type YouItem } from "@/lib/youServicesStore";
+import { useYouPackagesStore, type YouPackage, type YouCategory } from "@/lib/youPackagesStore";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 
 export const Route = createFileRoute("/you-services")({
@@ -50,13 +51,22 @@ function YouServicesPage() {
         cta={
           <div className="flex items-center gap-2">
             {isAdmin && (
-              <Link
-                to="/admin/you-services"
-                className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-2 text-xs font-bold text-primary hover:bg-primary/20"
-              >
-                <Settings className="h-3.5 w-3.5" />
-                لوحة التحكم
-              </Link>
+              <>
+                <Link
+                  to="/admin/you-packages"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-2 text-xs font-bold text-primary hover:bg-primary/20"
+                >
+                  <Package className="h-3.5 w-3.5" />
+                  إدارة الباقات
+                </Link>
+                <Link
+                  to="/admin/you-services"
+                  className="inline-flex items-center gap-1.5 rounded-full border border-primary/40 bg-primary/10 px-3 py-2 text-xs font-bold text-primary hover:bg-primary/20"
+                >
+                  <Settings className="h-3.5 w-3.5" />
+                  إدارة الخدمات
+                </Link>
+              </>
             )}
             <Link
               to="/services"
@@ -136,7 +146,7 @@ function YouServicesPage() {
             </div>
 
             <TabsContent value="packages" className="mt-6">
-              <SectionList section="packages" />
+              <PackagesPanel />
             </TabsContent>
             <TabsContent value="services" className="mt-6">
               <SectionList section="services" />
@@ -224,3 +234,99 @@ function YouItemCard({ item }: { item: YouItem }) {
     </div>
   );
 }
+
+function PackagesPanel() {
+  const { categories, loading } = useYouPackagesStore();
+
+  if (loading) {
+    return (
+      <div className="rounded-2xl border border-border bg-card p-10 text-center text-sm text-muted-foreground">
+        جاري التحميل...
+      </div>
+    );
+  }
+
+  if (categories.length === 0) {
+    return (
+      <div className="rounded-2xl border border-border bg-card p-10 text-center shadow-[var(--shadow-card)]">
+        <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-primary/10 text-primary">
+          <Package className="h-7 w-7" />
+        </div>
+        <h3 className="text-xl font-black text-foreground">لا توجد باقات بعد</h3>
+        <p className="mt-2 text-sm text-muted-foreground">
+          سيتم إضافة باقات شركة يو قريباً بإذن الله.
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-8">
+      {categories.map((cat) => (
+        <YouCategorySection key={cat.id} category={cat} />
+      ))}
+    </div>
+  );
+}
+
+function YouCategorySection({ category }: { category: YouCategory }) {
+  return (
+    <section>
+      <div className="mb-3">
+        <h2 className="text-xl font-black text-primary">{category.title}</h2>
+        {category.description && (
+          <p className="mt-1 text-sm text-muted-foreground">{category.description}</p>
+        )}
+      </div>
+      {category.packages.length === 0 ? (
+        <div className="rounded-xl border border-dashed border-border p-6 text-center text-xs text-muted-foreground">
+          لا توجد باقات في هذا القسم بعد.
+        </div>
+      ) : (
+        <div className="grid gap-3 sm:grid-cols-2">
+          {category.packages.map((pkg) => (
+            <YouPackageCard key={pkg.id} pkg={pkg} />
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
+function YouPackageCard({ pkg }: { pkg: YouPackage }) {
+  const dialCode = pkg.code?.trim();
+  return (
+    <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
+      <div className="flex items-start justify-between gap-3">
+        <div>
+          <h3 className="text-base font-black text-foreground">{pkg.name}</h3>
+          <div className="mt-1 text-lg font-black text-primary">{pkg.price}</div>
+        </div>
+        <span className="shrink-0 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+          {pkg.network}
+        </span>
+      </div>
+      <ul className="grid grid-cols-2 gap-2 text-xs text-foreground/80">
+        <li>الإنترنت: <span className="font-bold">{pkg.internet}</span></li>
+        <li>الدقائق: <span className="font-bold">{pkg.minutes}</span></li>
+        <li>الرسائل: <span className="font-bold">{pkg.sms}</span></li>
+        <li>الصلاحية: <span className="font-bold">{pkg.validity}</span></li>
+      </ul>
+      {dialCode && (
+        <div className="mt-auto flex items-center justify-between gap-3 rounded-xl border border-border bg-background/60 p-3">
+          <span className="font-mono text-sm font-bold text-foreground" dir="ltr">
+            {dialCode}
+          </span>
+          <a
+            href={`tel:${encodeURIComponent(dialCode)}`}
+            className="inline-flex items-center gap-1.5 rounded-lg bg-primary px-3 py-1.5 text-xs font-bold text-primary-foreground hover:scale-[1.02]"
+          >
+            <Phone className="h-3.5 w-3.5" />
+            تفعيل
+          </a>
+        </div>
+      )}
+    </div>
+  );
+}
+
