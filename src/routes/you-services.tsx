@@ -20,7 +20,7 @@ import {
   Settings,
 } from "lucide-react";
 import { useYouItems, type YouSection, type YouItem } from "@/lib/youServicesStore";
-import { useIsAdmin } from "@/hooks/use-is-admin";
+import { useYouPackagesStore, type YouPackage, type YouCategory } from "@/lib/youPackagesStore";
 
 export const Route = createFileRoute("/you-services")({
   head: () => ({
