@@ -348,8 +348,27 @@ function PackagesPanel() {
 
 function YouPackageCard({ pkg }: { pkg: YouPackage }) {
   const [copied, setCopied] = useState(false);
-  const dialCode = pkg.code?.trim();
   const { isAdmin } = useIsAdmin();
+  const [editing, setEditing] = useState(false);
+  const [codeDraft, setCodeDraft] = useState(pkg.code ?? "");
+  const [saving, setSaving] = useState(false);
+  const dialCode = (pkg.code ?? "").trim();
+
+  const saveCode = async () => {
+    const value = codeDraft.trim().slice(0, 32);
+    setSaving(true);
+    const { error } = await supabase
+      .from("you_packages")
+      .update({ code: value || null })
+      .eq("id", pkg.id);
+    setSaving(false);
+    if (!error) {
+      setEditing(false);
+      window.dispatchEvent(new CustomEvent("you_packages_changed"));
+    } else {
+      alert("تعذّر حفظ الكود: " + error.message);
+    }
+  };
 
   const details = [
     `📦 ${pkg.name}`,
