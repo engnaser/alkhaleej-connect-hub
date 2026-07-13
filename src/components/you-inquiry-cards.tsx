@@ -216,23 +216,9 @@ export function YouSuperKashefOffCard() {
         تصلك رسالة SMS بأرقام المتصلين الذين حاولوا الاتصال بك أثناء إغلاق
         جهازك أو خروجه عن التغطية، حتى لا يفوتك أي اتصال مهم.
       </p>
-      <div className="mb-4 grid grid-cols-2 gap-2">
-        <div className="rounded-xl border border-primary/20 bg-primary/5 p-3 text-center">
-          <div className="text-xs text-muted-foreground">تفعيل</div>
-          <bdi dir="ltr" className="block font-mono text-base font-black text-primary" style={{ unicodeBidi: "isolate" }}>
-            *62#
-          </bdi>
-        </div>
-        <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-3 text-center">
-          <div className="text-xs text-muted-foreground">إلغاء</div>
-          <bdi dir="ltr" className="block font-mono text-base font-black text-destructive" style={{ unicodeBidi: "isolate" }}>
-            ##62#
-          </bdi>
-        </div>
-      </div>
-      <div className="mt-auto grid grid-cols-3 gap-2">
+      <CodePill code="*62#" />
+      <div className="mt-auto grid grid-cols-2 gap-2">
         <ActivateButton href="tel:*62%23" />
-        <CancelButton href="tel:%23%2362%23" />
         <DetailsButton title="سوبر كاشف — خارج التغطية">
           <p>
             الخدمة تُبلّغك عبر رسالة نصية بجميع الأرقام التي حاولت الاتصال بك
@@ -262,23 +248,9 @@ export function YouSuperKashefBusyCard() {
         تصلك رسالة SMS بأرقام المتصلين الذين حاولوا الاتصال بك أثناء انشغال خطك
         بمكالمة أخرى.
       </p>
-      <div className="mb-4 grid grid-cols-2 gap-2">
-        <div className="rounded-xl border border-primary/20 bg-primary/5 p-3 text-center">
-          <div className="text-xs text-muted-foreground">تفعيل</div>
-          <bdi dir="ltr" className="block font-mono text-base font-black text-primary" style={{ unicodeBidi: "isolate" }}>
-            *67#
-          </bdi>
-        </div>
-        <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-3 text-center">
-          <div className="text-xs text-muted-foreground">إلغاء</div>
-          <bdi dir="ltr" className="block font-mono text-base font-black text-destructive" style={{ unicodeBidi: "isolate" }}>
-            ##67#
-          </bdi>
-        </div>
-      </div>
-      <div className="mt-auto grid grid-cols-3 gap-2">
+      <CodePill code="*67#" />
+      <div className="mt-auto grid grid-cols-2 gap-2">
         <ActivateButton href="tel:*67%23" />
-        <CancelButton href="tel:%23%2367%23" />
         <DetailsButton title="سوبر كاشف — انشغال الخط">
           <p>
             الخدمة تُبلّغك عبر رسالة نصية بجميع الأرقام التي حاولت الاتصال بك
