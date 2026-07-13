@@ -64,6 +64,10 @@ import {
   YouFamilyFriendsCard,
   YouFamilyFriendsManageCard,
   YouFamilyFriendsEditCard,
+  YouFamilyFriendsInquiryCard,
+  YouInternationalRoamingCard,
+  YouRoamingPostpaidCard,
+  YouRoamingPrepaidCard,
 } from "@/components/you-inquiry-cards";
 
 export const Route = createFileRoute("/you-services")({
