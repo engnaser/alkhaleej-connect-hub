@@ -17,6 +17,10 @@ import {
   PhoneForwarded,
   PhoneCall,
   Contact,
+  Users2,
+  Globe,
+  Plane,
+  CreditCard as CreditCardIcon,
 } from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
