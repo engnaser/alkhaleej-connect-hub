@@ -36,6 +36,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 import { CallMeCard } from "@/components/call-me-card";
 import { YouCallOnMeCard } from "@/components/you-call-on-me-card";
+import { YouSalifniCard } from "@/components/you-salifni-card";
 
 export const Route = createFileRoute("/you-services")({
   head: () => ({
@@ -182,7 +183,7 @@ function YouServicesPage() {
 
 function SectionList({ section }: { section: YouSection }) {
   const { items, loading } = useYouItems(section);
-  const extras = section === "services" ? [<YouCallOnMeCard key="__you-call-on-me" />, <CallMeCard key="__call-me" />] : [];
+  const extras = section === "services" ? [<YouSalifniCard key="__you-salifni" />, <YouCallOnMeCard key="__you-call-on-me" />, <CallMeCard key="__call-me" />] : [];
 
   if (loading) {
     return (
