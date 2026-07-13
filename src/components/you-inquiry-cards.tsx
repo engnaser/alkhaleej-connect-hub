@@ -498,13 +498,8 @@ function ForwardWithNumberCard({
           <PhoneCall className="h-4 w-4" />
           تفعيل
         </Button>
-        <a
-          href={`tel:${cancelCode.replace(/#/g, "%23")}`}
-          className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-destructive px-3 py-2 text-sm font-bold text-destructive-foreground hover:bg-destructive/90"
-        >
-          <PhoneOff className="h-4 w-4" />
-          إلغاء التفعيل
-        </a>
+        <CodeRow id={id} kind="cancel" defaultCode={cancelDefault} />
+
         <DetailsButton title={detailsTitle}>
           <p>هذه الخدمة تحوّل المكالمات الواردة إلى رقم بديل تختاره {condition}.</p>
           <p>
