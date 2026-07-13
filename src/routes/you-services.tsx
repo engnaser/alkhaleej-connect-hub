@@ -38,6 +38,13 @@ import { CallMeCard } from "@/components/call-me-card";
 import { YouCallOnMeCard } from "@/components/you-call-on-me-card";
 import { YouSalifniCard } from "@/components/you-salifni-card";
 import { YouBalanceTransferCard } from "@/components/you-balance-transfer-card";
+import {
+  YouBalanceInquiryCard,
+  YouBillInquiryCard,
+  YouBrowse4GCard,
+  YouSuperKashefOffCard,
+  YouSuperKashefBusyCard,
+} from "@/components/you-inquiry-cards";
 
 export const Route = createFileRoute("/you-services")({
   head: () => ({
