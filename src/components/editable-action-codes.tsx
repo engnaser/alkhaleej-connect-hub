@@ -84,6 +84,7 @@ function CodeRow({
   const { isAdmin } = useIsAdmin();
   const savedCode = useServiceCode(id, kind, defaultCode);
   const [draft, setDraft] = useState(savedCode);
+  const [editing, setEditing] = useState(false);
 
   useEffect(() => {
     setDraft(savedCode);
@@ -119,22 +120,64 @@ function CodeRow({
     );
   }
 
+  if (!editing && !isDirty) {
+    return (
+      <div className="relative">
+        <a
+          href={toTelHref(savedCode)}
+          className={`inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-bold ${btnClass}`}
+        >
+          <Icon className="h-4 w-4" />
+          {label}
+        </a>
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            setEditing(true);
+          }}
+          className="absolute -top-1.5 -right-1.5 grid h-5 w-5 place-items-center rounded-full border border-border bg-background text-muted-foreground shadow-sm hover:text-primary"
+          aria-label="تعديل الكود"
+          title={`تعديل الكود: ${savedCode}`}
+        >
+          <Pencil className="h-3 w-3" />
+        </button>
+      </div>
+    );
+  }
+
   return (
     <div
       className={`flex flex-col gap-1.5 rounded-xl border p-1.5 ${
-        isDirty ? "border-amber-500/60 bg-amber-500/5" : "border-border bg-background"
+        isDirty ? "border-amber-500/60 bg-amber-500/5" : "border-primary/40 bg-background"
       }`}
     >
-      <input
-        dir="ltr"
-        value={draft}
-        onChange={(e) => {
-          setDraft(e.target.value);
-          setPending(id, kind, e.target.value);
-        }}
-        className="w-full rounded-lg bg-transparent px-2 py-1 text-center text-sm font-mono font-bold text-foreground outline-none"
-        placeholder="*123#"
-      />
+      <div className="flex items-center gap-1">
+        <input
+          dir="ltr"
+          value={draft}
+          onChange={(e) => {
+            setDraft(e.target.value);
+            setPending(id, kind, e.target.value);
+          }}
+          className="min-w-0 flex-1 rounded-lg bg-transparent px-2 py-1 text-center text-sm font-mono font-bold text-foreground outline-none"
+          placeholder="*123#"
+        />
+        <button
+          onClick={() => {
+            setDraft(savedCode);
+            if (pending[id]) {
+              delete pending[id][kind];
+              if (!pending[id].activate && !pending[id].cancel) delete pending[id];
+              window.dispatchEvent(new Event(PENDING_EVENT));
+            }
+            setEditing(false);
+          }}
+          className="grid h-6 w-6 shrink-0 place-items-center rounded-lg border border-border text-muted-foreground hover:text-foreground"
+          aria-label="إغلاق"
+        >
+          <X className="h-3 w-3" />
+        </button>
+      </div>
       <a
         href={toTelHref(activeCode)}
         className={`inline-flex w-full items-center justify-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-bold ${btnClass}`}
