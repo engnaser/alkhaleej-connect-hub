@@ -34,6 +34,7 @@ import { useYouItems, youIconFor, type YouSection, type YouItem } from "@/lib/yo
 import { useYouPackagesStore, type YouPackage } from "@/lib/youPackagesStore";
 import { supabase } from "@/integrations/supabase/client";
 import { useIsAdmin } from "@/hooks/use-is-admin";
+import { CallMeCard } from "@/components/call-me-card";
 
 export const Route = createFileRoute("/you-services")({
   head: () => ({
