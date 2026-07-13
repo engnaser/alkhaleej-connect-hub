@@ -1,4 +1,4 @@
-import { Coins, MessageSquare } from "lucide-react";
+import { Coins, MessageSquare, Sparkles } from "lucide-react";
 
 type Row = { label: string; amount: string };
 
