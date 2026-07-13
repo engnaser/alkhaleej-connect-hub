@@ -178,7 +178,7 @@ function CodeRow({
           <X className="h-3 w-3" />
         </button>
       </div>
-      {isDirty && (
+      {(isDirty || editing) && (
         <button
           onClick={() => {
             const trimmed = draft.trim();
