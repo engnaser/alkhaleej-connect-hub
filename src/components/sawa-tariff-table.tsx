@@ -1,4 +1,4 @@
-import { Coins, MessageSquare } from "lucide-react";
+import { Coins, MessageSquare, Sparkles } from "lucide-react";
 
 type Row = { label: string; amount: string };
 
@@ -20,6 +20,16 @@ const KALAM_ROWS: Row[] = [
   { label: "اتصال بشبكة CDMA", amount: "22 ريال للدقيقة" },
   { label: "الرسالة الواحدة لجميع الشبكات المحلية", amount: "5 ريال" },
   { label: "الاشتراك الشهري للرسائل", amount: "بدون اشتراك شهري" },
+];
+
+const SHABAB_ROWS: Row[] = [
+  { label: "اتصال بشبكة GSM محلية أخرى", amount: "22 ريال للدقيقة" },
+  { label: "الاتصال بالهاتف الثابت", amount: "22 ريال للدقيقة" },
+  { label: "اتصال ضمن الشبكة (من 11 مساءً إلى 07:00 صباحاً)", amount: "5 ريال للدقيقة" },
+  { label: "اتصال ضمن الشبكة (من 07:00 صباحاً إلى 11:00 مساءً)", amount: "16 ريال للدقيقة" },
+  { label: "اتصال بشبكة CDMA", amount: "22 ريال للدقيقة" },
+  { label: "الرسالة إلى جميع الشبكات المحلية", amount: "5 ريال للرسالة" },
+  { label: "الاشتراك الشهري", amount: "بدون اشتراك شهري" },
 ];
 
 function TariffTable({ title, rows, Icon }: { title: string; rows: Row[]; Icon: typeof Coins }) {
@@ -57,9 +67,10 @@ function TariffTable({ title, rows, Icon }: { title: string; rows: Row[]; Icon: 
 
 export function SawaTariffTable() {
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
+    <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
       <TariffTable title="تعرفة باقة سوا" rows={SAWA_ROWS} Icon={Coins} />
       <TariffTable title="تعرفة باقة كلام" rows={KALAM_ROWS} Icon={MessageSquare} />
+      <TariffTable title="تعرفة باقة شباب" rows={SHABAB_ROWS} Icon={Sparkles} />
     </div>
   );
 }
