@@ -579,7 +579,7 @@ import {
   Voicemail,
   Mic,
   Smartphone,
-  SimCard as SimCardIcon,
+  CreditCard,
   Users,
   Settings2,
   UserCog,
