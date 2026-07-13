@@ -67,9 +67,10 @@ function TariffTable({ title, rows, Icon }: { title: string; rows: Row[]; Icon: 
 
 export function SawaTariffTable() {
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
+    <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
       <TariffTable title="تعرفة باقة سوا" rows={SAWA_ROWS} Icon={Coins} />
       <TariffTable title="تعرفة باقة كلام" rows={KALAM_ROWS} Icon={MessageSquare} />
+      <TariffTable title="تعرفة باقة شباب" rows={SHABAB_ROWS} Icon={Sparkles} />
     </div>
   );
 }
