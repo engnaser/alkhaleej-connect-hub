@@ -1,4 +1,4 @@
-import { Coins, MessageSquare, Sparkles, GraduationCap, Zap, FileText } from "lucide-react";
+import { Coins, MessageSquare, Sparkles, GraduationCap, Zap, FileText, Wallet } from "lucide-react";
 
 type Row = { label: string; amount: string };
 
@@ -60,6 +60,50 @@ const FATURA_ROWS: Row[] = [
   { label: "سعر تصفح الإنترنت لكل 10 كيلوبايت", amount: "0.04 ريال" },
 ];
 
+const RECHARGE_ROWS: { category: string; price: string; days: string }[] = [
+  { category: "410", price: "496", days: "7" },
+  { category: "830", price: "1004", days: "30" },
+  { category: "1000", price: "1210", days: "30" },
+  { category: "1250", price: "1513", days: "40" },
+  { category: "2500", price: "3025", days: "60" },
+  { category: "5000", price: "6050", days: "90" },
+  { category: "7500", price: "9075", days: "90" },
+  { category: "10000", price: "12100", days: "365" },
+];
+
+function RechargeTable() {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
+      <div className="flex items-center gap-3 border-b border-border bg-secondary/40 px-5 py-4">
+        <div className="grid h-10 w-10 place-items-center rounded-full bg-primary/10 text-primary">
+          <Wallet className="h-5 w-5" />
+        </div>
+        <h3 className="text-base font-extrabold text-foreground">فئات الشحن</h3>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[360px] text-sm">
+          <thead>
+            <tr className="border-b border-border bg-secondary/20 text-xs font-bold text-muted-foreground">
+              <th className="px-5 py-3 text-center">الفئة</th>
+              <th className="px-5 py-3 text-center">السعر</th>
+              <th className="px-5 py-3 text-center">الأيام</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {RECHARGE_ROWS.map((r) => (
+              <tr key={r.category} className="transition-colors hover:bg-secondary/30">
+                <td className="px-5 py-4 text-center font-mono text-sm font-extrabold text-primary">{r.category}</td>
+                <td className="px-5 py-4 text-center font-mono text-sm font-semibold text-foreground">{r.price}</td>
+                <td className="px-5 py-4 text-center font-mono text-sm font-semibold text-muted-foreground">{r.days}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
 function TariffTable({ title, rows, Icon }: { title: string; rows: Row[]; Icon: typeof Coins }) {
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
@@ -102,6 +146,7 @@ export function SawaTariffTable() {
       <TariffTable title="تعرفة باقة الطالب" rows={TALEB_ROWS} Icon={GraduationCap} />
       <TariffTable title="تعرفة باقة باور" rows={BAWER_ROWS} Icon={Zap} />
       <TariffTable title="تعرفة الفوترة" rows={FATURA_ROWS} Icon={FileText} />
+      <RechargeTable />
     </div>
   );
 }
