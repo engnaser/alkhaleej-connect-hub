@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
+import { SaveAllCodesBar } from "@/components/editable-action-codes";
 import {
   Tabs,
   TabsContent,
@@ -209,6 +210,7 @@ function YouServicesPage() {
       </main>
 
       <SiteFooter />
+      <SaveAllCodesBar />
     </div>
   );
 }
