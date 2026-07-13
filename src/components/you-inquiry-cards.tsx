@@ -579,6 +579,10 @@ import {
   Voicemail,
   Mic,
   Smartphone,
+  SimCard as SimCardIcon,
+  Users,
+  Settings2,
+  UserCog,
 } from "lucide-react";
 
 export function YouCustomerCareCard() {
