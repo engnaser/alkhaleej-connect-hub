@@ -1,4 +1,4 @@
-import { Coins, MessageSquare, Sparkles } from "lucide-react";
+import { Coins, MessageSquare, Sparkles, GraduationCap } from "lucide-react";
 
 type Row = { label: string; amount: string };
 
@@ -29,6 +29,16 @@ const SHABAB_ROWS: Row[] = [
   { label: "اتصال ضمن الشبكة (من 07:00 صباحاً إلى 11:00 مساءً)", amount: "16 ريال للدقيقة" },
   { label: "اتصال بشبكة CDMA", amount: "22 ريال للدقيقة" },
   { label: "الرسالة إلى جميع الشبكات المحلية", amount: "5 ريال للرسالة" },
+  { label: "الاشتراك الشهري", amount: "بدون اشتراك شهري" },
+];
+
+const TALEB_ROWS: Row[] = [
+  { label: "الرسائل النصية لجميع الشبكات المحلية", amount: "300 رسالة" },
+  { label: "الاتصال ضمن الشبكة", amount: "300 دقيقة" },
+  { label: "الإنترنت", amount: "300 ميجا" },
+  { label: "استخدام لتطبيقات واتساب وفيسبوك", amount: "غير محدود" },
+  { label: "صلاحية الباقة", amount: "30 يوماً" },
+  { label: "تكلفة الباقة", amount: "1250 ريال" },
   { label: "الاشتراك الشهري", amount: "بدون اشتراك شهري" },
 ];
 
@@ -71,6 +81,7 @@ export function SawaTariffTable() {
       <TariffTable title="تعرفة باقة سوا" rows={SAWA_ROWS} Icon={Coins} />
       <TariffTable title="تعرفة باقة كلام" rows={KALAM_ROWS} Icon={MessageSquare} />
       <TariffTable title="تعرفة باقة شباب" rows={SHABAB_ROWS} Icon={Sparkles} />
+      <TariffTable title="تعرفة باقة الطالب" rows={TALEB_ROWS} Icon={GraduationCap} />
     </div>
   );
 }
