@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useIsAdmin } from "@/hooks/use-is-admin";
-import { PhoneCall, XCircle, Save, RotateCcw } from "lucide-react";
+import { PhoneCall, XCircle, Save, RotateCcw, Pencil, X } from "lucide-react";
 import { toast } from "sonner";
 
 type Kind = "activate" | "cancel";
