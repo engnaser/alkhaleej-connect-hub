@@ -50,6 +50,11 @@ import {
   YouForwardBusyCard,
   YouForwardNoAnswerCard,
   YouForwardAllCard,
+  YouCustomerCareCard,
+  YouCallWaitingCard,
+  YouKnowMyNumberCard,
+  YouCallerIdCard,
+  YouRingtoneCard,
 } from "@/components/you-inquiry-cards";
 
 export const Route = createFileRoute("/you-services")({
