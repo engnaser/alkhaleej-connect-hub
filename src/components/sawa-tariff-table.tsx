@@ -22,6 +22,16 @@ const KALAM_ROWS: Row[] = [
   { label: "الاشتراك الشهري للرسائل", amount: "بدون اشتراك شهري" },
 ];
 
+const SHABAB_ROWS: Row[] = [
+  { label: "اتصال بشبكة GSM محلية أخرى", amount: "22 ريال للدقيقة" },
+  { label: "الاتصال بالهاتف الثابت", amount: "22 ريال للدقيقة" },
+  { label: "اتصال ضمن الشبكة (من 11 مساءً إلى 07:00 صباحاً)", amount: "5 ريال للدقيقة" },
+  { label: "اتصال ضمن الشبكة (من 07:00 صباحاً إلى 11:00 مساءً)", amount: "16 ريال للدقيقة" },
+  { label: "اتصال بشبكة CDMA", amount: "22 ريال للدقيقة" },
+  { label: "الرسالة إلى جميع الشبكات المحلية", amount: "5 ريال للرسالة" },
+  { label: "الاشتراك الشهري", amount: "بدون اشتراك شهري" },
+];
+
 function TariffTable({ title, rows, Icon }: { title: string; rows: Row[]; Icon: typeof Coins }) {
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
