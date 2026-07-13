@@ -81,6 +81,7 @@ export function SawaTariffTable() {
       <TariffTable title="تعرفة باقة سوا" rows={SAWA_ROWS} Icon={Coins} />
       <TariffTable title="تعرفة باقة كلام" rows={KALAM_ROWS} Icon={MessageSquare} />
       <TariffTable title="تعرفة باقة شباب" rows={SHABAB_ROWS} Icon={Sparkles} />
+      <TariffTable title="تعرفة باقة الطالب" rows={TALEB_ROWS} Icon={GraduationCap} />
     </div>
   );
 }
