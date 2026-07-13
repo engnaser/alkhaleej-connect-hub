@@ -1,4 +1,4 @@
-import { Coins, MessageSquare, Sparkles, GraduationCap, Zap } from "lucide-react";
+import { Coins, MessageSquare, Sparkles, GraduationCap, Zap, FileText } from "lucide-react";
 
 type Row = { label: string; amount: string };
 
@@ -50,6 +50,16 @@ const BAWER_ROWS: Row[] = [
   { label: "الاشتراك الشهري", amount: "200 ريال" },
 ];
 
+const FATURA_ROWS: Row[] = [
+  { label: "الاشتراك الشهري", amount: "500 ريال" },
+  { label: "التمنيع على الاتصالات المحلية", amount: "4000 ريال" },
+  { label: "دقيقة الاتصال ضمن الشبكة", amount: "8 ريالات" },
+  { label: "دقيقة الاتصال إلى الشبكات المحلية الأخرى", amount: "10 ريالات" },
+  { label: "الرسالة القصيرة إلى جميع الشبكات المحلية", amount: "5 ريالات" },
+  { label: "الرسالة القصيرة الدولية", amount: "15 ريال" },
+  { label: "سعر تصفح الإنترنت لكل 10 كيلوبايت", amount: "0.04 ريال" },
+];
+
 function TariffTable({ title, rows, Icon }: { title: string; rows: Row[]; Icon: typeof Coins }) {
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
@@ -91,6 +101,7 @@ export function SawaTariffTable() {
       <TariffTable title="تعرفة باقة شباب" rows={SHABAB_ROWS} Icon={Sparkles} />
       <TariffTable title="تعرفة باقة الطالب" rows={TALEB_ROWS} Icon={GraduationCap} />
       <TariffTable title="تعرفة باقة باور" rows={BAWER_ROWS} Icon={Zap} />
+      <TariffTable title="تعرفة الفوترة" rows={FATURA_ROWS} Icon={FileText} />
     </div>
   );
 }
