@@ -568,7 +568,18 @@ export function YouForwardAllCard() {
 
 /* ---------- 12) Customer care ---------- */
 
-import { Headphones, PhoneIncoming, Hash, User, Music2 } from "lucide-react";
+import {
+  Headphones,
+  PhoneIncoming,
+  Hash,
+  User,
+  Music2,
+  Gift,
+  Megaphone,
+  Voicemail,
+  Mic,
+  Sim,
+} from "lucide-react";
 
 export function YouCustomerCareCard() {
   const activate = useServiceCode("you-customer-care", "activate", "111");
