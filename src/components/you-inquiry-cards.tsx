@@ -744,7 +744,12 @@ export function YouRingtoneCard() {
               الرنين الافتراضية.
             </p>
           </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
 }
+
 
 /* ---------- 17) Thimar rewards ---------- */
 
