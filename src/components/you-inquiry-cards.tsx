@@ -34,7 +34,7 @@ import {
 
 /* ---------- shared building blocks (match site style) ---------- */
 
-function CodePill({ code, label = "كود التفعيل" }: { code: string; label?: string }) {
+export function CodePill({ code, label = "كود التفعيل" }: { code: string; label?: string }) {
   return (
     <div className="mb-4 rounded-xl border border-primary/20 bg-primary/5 p-3">
       <div className="flex items-center justify-between gap-2 text-sm">
@@ -51,7 +51,8 @@ function CodePill({ code, label = "كود التفعيل" }: { code: string; lab
   );
 }
 
-function DetailsButton({
+
+export function DetailsButton({
   title,
   children,
 }: {
@@ -78,7 +79,7 @@ function DetailsButton({
   );
 }
 
-function CardShell({
+export function CardShell({
   title,
   icon,
   children,
@@ -102,6 +103,7 @@ function CardShell({
     </div>
   );
 }
+
 
 /* ---------- 1) Balance & packages inquiry ---------- */
 
