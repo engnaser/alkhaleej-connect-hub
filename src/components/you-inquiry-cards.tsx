@@ -1066,3 +1066,146 @@ export function YouFamilyFriendsEditCard() {
   );
 }
 
+/* ---------- Family & Friends — inquire numbers ---------- */
+
+export function YouFamilyFriendsInquiryCard() {
+  const code = useServiceCode("you-family-inquiry", "activate", "*141*3#");
+  return (
+    <CardShell
+      title="خدمة الأهل والأصدقاء — للإستعلام عن الأرقام"
+      icon={<Users2 className="h-5 w-5" />}
+    >
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        استعلم عن قائمة أرقام الأهل والأصدقاء المسجّلة على خطك للاستفادة من
+        التعرفة المخفّضة على المكالمات فيما بينكم.
+      </p>
+      <CodePill code={code} label="كود الاستعلام" />
+      <EditableActionCodes
+        id="you-family-inquiry"
+        activateCode="*141*3#"
+        detailsSlot={
+          <DetailsButton title="الاستعلام عن أرقام الأهل والأصدقاء">
+            <p>
+              اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{code}</bdi>{" "}
+              لعرض قائمة الأرقام المفضّلة المسجّلة حالياً على خطك.
+            </p>
+            <p>الخدمة مجانية ولا تُحتسب عليها أي رسوم إضافية.</p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+/* ---------- International roaming ---------- */
+
+export function YouInternationalRoamingCard() {
+  const act = useServiceCode("you-roaming", "activate", "*145*1#");
+  const cancel = useServiceCode("you-roaming", "cancel", "*145*2#");
+  return (
+    <CardShell
+      title="خدمة التجوال الدولي"
+      icon={<Globe className="h-5 w-5" />}
+    >
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        تمتّع بخدمة التجوال الدولي مع شركة يو للبقاء على تواصل خلال سفرك خارج
+        اليمن عبر شبكات شركاء التجوال حول العالم.
+      </p>
+      <div className="mb-4 grid grid-cols-2 gap-2">
+        <CodePill code={act} label="تفعيل" />
+        <CodePill code={cancel} label="إلغاء" />
+      </div>
+      <EditableActionCodes
+        id="you-roaming"
+        activateCode="*145*1#"
+        cancelCode="*145*2#"
+        detailsSlot={
+          <DetailsButton title="التجوال الدولي">
+            <p>
+              للتفعيل اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{act}</bdi>{" "}
+              وللإلغاء اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-destructive" style={{ unicodeBidi: "isolate" }}>{cancel}</bdi>.
+            </p>
+            <p>
+              تُطبّق تعرفة التجوال حسب الدولة والشبكة المستضيفة، يرجى مراجعة
+              أسعار التجوال قبل السفر.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+/* ---------- International roaming — postpaid ---------- */
+
+export function YouRoamingPostpaidCard() {
+  const code = useServiceCode("you-roaming-postpaid", "activate", "*145*11#");
+  return (
+    <CardShell
+      title="التجوال الدولي فوترة"
+      icon={<Plane className="h-5 w-5" />}
+    >
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        خدمة التجوال الدولي المخصّصة لمشتركي نظام الفوترة (Postpaid) مع إمكانية
+        استخدام المكالمات والإنترنت خلال التجوال وتضمين الاستهلاك في فاتورتك
+        الشهرية.
+      </p>
+      <CodePill code={code} label="كود التفعيل" />
+      <EditableActionCodes
+        id="you-roaming-postpaid"
+        activateCode="*145*11#"
+        detailsSlot={
+          <DetailsButton title="التجوال الدولي — فوترة">
+            <p>
+              للتفعيل اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{code}</bdi>.
+            </p>
+            <p>
+              قد يُطلب منك إيداع تأميني قابل للاسترداد قبل تفعيل التجوال، وتُضاف
+              الاستهلاكات إلى فاتورتك الشهرية حسب تعرفة الدولة المزارة.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+/* ---------- International roaming — prepaid ---------- */
+
+export function YouRoamingPrepaidCard() {
+  const code = useServiceCode("you-roaming-prepaid", "activate", "*145*12#");
+  return (
+    <CardShell
+      title="التجوال الدولي دفع مسبق"
+      icon={<CreditCardIcon className="h-5 w-5" />}
+    >
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        خدمة التجوال الدولي لمشتركي الدفع المسبق (Prepaid) — تُخصم قيمة
+        الاستهلاك من رصيدك مباشرة أثناء التجوال خارج اليمن.
+      </p>
+      <CodePill code={code} label="كود التفعيل" />
+      <EditableActionCodes
+        id="you-roaming-prepaid"
+        activateCode="*145*12#"
+        detailsSlot={
+          <DetailsButton title="التجوال الدولي — دفع مسبق">
+            <p>
+              للتفعيل اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{code}</bdi>{" "}
+              قبل السفر لضمان جاهزية الخدمة عند الوصول.
+            </p>
+            <p>
+              تأكّد من توفّر رصيد كافٍ في خطك، وتُطبّق تعرفة التجوال حسب الدولة
+              والشبكة المستضيفة.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
