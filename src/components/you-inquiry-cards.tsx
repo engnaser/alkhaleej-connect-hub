@@ -48,17 +48,6 @@ function ActivateButton({ href, label = "تفعيل" }: { href: string; label?: 
   );
 }
 
-function CancelButton({ href }: { href: string }) {
-  return (
-    <a
-      href={href}
-      className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-destructive px-3 py-2.5 text-sm font-bold text-destructive-foreground hover:bg-destructive/90"
-    >
-      <XCircle className="h-4 w-4" />
-      إلغاء التفعيل
-    </a>
-  );
-}
 
 function DetailsButton({
   title,
