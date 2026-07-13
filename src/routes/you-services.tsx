@@ -44,6 +44,9 @@ import {
   YouBrowse4GCard,
   YouSuperKashefOffCard,
   YouSuperKashefBusyCard,
+  YouSuperKashefNoAnswerCard,
+  YouSuperKashefAllCard,
+  YouForwardOffCard,
 } from "@/components/you-inquiry-cards";
 
 export const Route = createFileRoute("/you-services")({
@@ -191,7 +194,7 @@ function YouServicesPage() {
 
 function SectionList({ section }: { section: YouSection }) {
   const { items, loading } = useYouItems(section);
-  const extras = section === "services" ? [<YouBalanceInquiryCard key="__you-balance-inquiry" />, <YouBillInquiryCard key="__you-bill-inquiry" />, <YouBrowse4GCard key="__you-browse-4g" />, <YouSuperKashefOffCard key="__you-kashef-off" />, <YouSuperKashefBusyCard key="__you-kashef-busy" />, <YouBalanceTransferCard key="__you-balance-transfer" />, <YouSalifniCard key="__you-salifni" />, <YouCallOnMeCard key="__you-call-on-me" />, <CallMeCard key="__call-me" />] : [];
+  const extras = section === "services" ? [<YouBalanceInquiryCard key="__you-balance-inquiry" />, <YouBillInquiryCard key="__you-bill-inquiry" />, <YouBrowse4GCard key="__you-browse-4g" />, <YouSuperKashefOffCard key="__you-kashef-off" />, <YouSuperKashefBusyCard key="__you-kashef-busy" />, <YouSuperKashefNoAnswerCard key="__you-kashef-noanswer" />, <YouSuperKashefAllCard key="__you-kashef-all" />, <YouForwardOffCard key="__you-forward-off" />, <YouBalanceTransferCard key="__you-balance-transfer" />, <YouSalifniCard key="__you-salifni" />, <YouCallOnMeCard key="__you-call-on-me" />, <CallMeCard key="__call-me" />] : [];
 
   if (loading) {
     return (
