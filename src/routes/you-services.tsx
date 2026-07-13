@@ -191,7 +191,7 @@ function SectionList({ section }: { section: YouSection }) {
     );
   }
 
-  if (items.length === 0) {
+  if (items.length === 0 && extras.length === 0) {
     return (
       <div className="rounded-2xl border border-border bg-card p-10 text-center shadow-[var(--shadow-card)]">
         <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-primary/10 text-primary">
@@ -207,6 +207,7 @@ function SectionList({ section }: { section: YouSection }) {
 
   return (
     <div className="grid gap-4 sm:grid-cols-2">
+      {extras}
       {items.map((item) => (
         <YouItemCard key={item.id} item={item} />
       ))}
