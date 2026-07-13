@@ -204,6 +204,7 @@ export function SawaTariffTable() {
       <TariffTable title="تعرفة باقة باور" rows={BAWER_ROWS} Icon={Zap} />
       <TariffTable title="تعرفة الفوترة" rows={FATURA_ROWS} Icon={FileText} />
       <RechargeTable />
+      <RoamingTable />
     </div>
   );
 }
