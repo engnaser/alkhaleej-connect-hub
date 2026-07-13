@@ -101,6 +101,7 @@ export function SawaTariffTable() {
       <TariffTable title="تعرفة باقة شباب" rows={SHABAB_ROWS} Icon={Sparkles} />
       <TariffTable title="تعرفة باقة الطالب" rows={TALEB_ROWS} Icon={GraduationCap} />
       <TariffTable title="تعرفة باقة باور" rows={BAWER_ROWS} Icon={Zap} />
+      <TariffTable title="تعرفة الفوترة" rows={FATURA_ROWS} Icon={FileText} />
     </div>
   );
 }
