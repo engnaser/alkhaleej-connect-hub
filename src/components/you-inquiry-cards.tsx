@@ -568,7 +568,18 @@ export function YouForwardAllCard() {
 
 /* ---------- 12) Customer care ---------- */
 
-import { Headphones, PhoneIncoming, Hash, User, Music2 } from "lucide-react";
+import {
+  Headphones,
+  PhoneIncoming,
+  Hash,
+  User,
+  Music2,
+  Gift,
+  Megaphone,
+  Voicemail,
+  Mic,
+  Smartphone,
+} from "lucide-react";
 
 export function YouCustomerCareCard() {
   const activate = useServiceCode("you-customer-care", "activate", "111");
@@ -738,6 +749,175 @@ export function YouRingtoneCard() {
     </CardShell>
   );
 }
+
+
+/* ---------- 17) Thimar rewards ---------- */
+
+export function YouThimarCard() {
+  const activate = useServiceCode("you-thimar", "activate", "*700*1#");
+  const cancel = useServiceCode("you-thimar", "cancel", "*700*2#");
+  const balance = useServiceCode("you-thimar-balance", "activate", "*700#");
+  const redeem = useServiceCode("you-thimar-redeem", "activate", "*700*3#");
+  return (
+    <CardShell title="خدمة ثمار" icon={<Gift className="h-5 w-5" />}>
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        برنامج مكافآت شركة يو: اجمع نقاط ثمار من استخدامك اليومي واستبدلها
+        بدقائق، رسائل، وباقات إنترنت مجانية.
+      </p>
+      <div className="mb-4 grid grid-cols-2 gap-2">
+        <CodePill code={activate} label="تفعيل" />
+        <CodePill code={cancel} label="إلغاء التفعيل" />
+        <CodePill code={balance} label="رصيد ثمار" />
+        <CodePill code={redeem} label="استبدال الرصيد" />
+      </div>
+      <EditableActionCodes
+        id="you-thimar"
+        activateCode="*700*1#"
+        cancelCode="*700*2#"
+        detailsSlot={
+          <DetailsButton title="خدمة ثمار">
+            <p>
+              للتفعيل اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{activate}</bdi>{" "}
+              وللإلغاء اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-destructive" style={{ unicodeBidi: "isolate" }}>{cancel}</bdi>.
+            </p>
+            <p>
+              لمعرفة رصيد نقاط ثمار اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{balance}</bdi>{" "}
+              ولاستبدالها بمكافآت اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{redeem}</bdi>.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+/* ---------- 18) Khabirhum (Notify them) ---------- */
+
+export function YouKhabirhumCard() {
+  const code = useServiceCode("you-khabirhum", "activate", "*56#");
+  return (
+    <CardShell title="خدمة خبرهم" icon={<Megaphone className="h-5 w-5" />}>
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        خدمة تتيح لك إخبار الأشخاص الذين حاولوا الاتصال بك أثناء إغلاق جهازك أو
+        خروجه عن التغطية برسالة نصية مجانية بأنك متصل الآن.
+      </p>
+      <CodePill code={code} label="كود التفعيل" />
+      <EditableActionCodes
+        id="you-khabirhum"
+        activateCode="*56#"
+        detailsSlot={
+          <DetailsButton title="خدمة خبرهم">
+            <p>
+              اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{code}</bdi>{" "}
+              لتفعيل الخدمة، بعدها سيتم إشعار الأرقام التي حاولت الاتصال بك أنك
+              أصبحت متاحاً.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+/* ---------- 19) Electronic answering ---------- */
+
+export function YouEAnsweringCard() {
+  const code = useServiceCode("you-e-answering", "activate", "*86#");
+  return (
+    <CardShell title="خدمة المجيب الالكتروني" icon={<Voicemail className="h-5 w-5" />}>
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        خدمة الرد الآلي التي تُشعر المتصلين بحالة خطك حين تكون مشغولاً أو غير
+        متاح، عبر رسالة إلكترونية جاهزة.
+      </p>
+      <CodePill code={code} label="كود التفعيل" />
+      <EditableActionCodes
+        id="you-e-answering"
+        activateCode="*86#"
+        detailsSlot={
+          <DetailsButton title="خدمة المجيب الالكتروني">
+            <p>
+              اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{code}</bdi>{" "}
+              لتفعيل خدمة الرد الآلي على المكالمات الواردة عندما لا تستطيع الرد.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+/* ---------- 20) New SIM — know your number ---------- */
+
+export function YouNewSimNumberCard() {
+  const code = useServiceCode("you-new-sim-number", "activate", "*888#");
+  return (
+    <CardShell title="شريحة جديدة — معرفة رقم شريحتك" icon={<Smartphone className="h-5 w-5" />}>
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        بعد تفعيل شريحة يو الجديدة، اعرف رقم خطك بسرعة عبر كود مختصر ومجاني
+        يظهر الرقم مباشرة على الشاشة.
+      </p>
+      <CodePill code={code} label="كود عرض الرقم" />
+      <EditableActionCodes
+        id="you-new-sim-number"
+        activateCode="*888#"
+        detailsSlot={
+          <DetailsButton title="معرفة رقم شريحتك الجديدة">
+            <p>
+              أدخل الشريحة الجديدة في جهازك ثم اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{code}</bdi>{" "}
+              ليتم عرض رقم الشريحة مباشرة.
+            </p>
+            <p>الخدمة مجانية ومتاحة على كل الخطوط الجديدة.</p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+/* ---------- 21) Voice mail ---------- */
+
+export function YouVoiceMailCard() {
+  const activate = useServiceCode("you-voicemail", "activate", "*61*+967771222999#");
+  const control = useServiceCode("you-voicemail", "cancel", "121");
+  return (
+    <CardShell title="خدمة المجيب الصوتي" icon={<Mic className="h-5 w-5" />}>
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        خدمة البريد الصوتي تتيح للمتصلين ترك رسالة صوتية عند عدم قدرتك على الرد،
+        ثم يمكنك الاستماع لها في أي وقت.
+      </p>
+      <div className="mb-4 grid grid-cols-2 gap-2">
+        <CodePill code={activate} label="تفعيل" />
+        <CodePill code={control} label="التحكم / الاستماع" />
+      </div>
+      <EditableActionCodes
+        id="you-voicemail"
+        activateCode="*61*+967771222999#"
+        cancelCode="121"
+        detailsSlot={
+          <DetailsButton title="خدمة المجيب الصوتي">
+            <p>
+              للتفعيل اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{activate}</bdi>.
+            </p>
+            <p>
+              للاستماع للرسائل والتحكم بالإعدادات اتصل بالرقم{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{control}</bdi>.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+
 
 
 
