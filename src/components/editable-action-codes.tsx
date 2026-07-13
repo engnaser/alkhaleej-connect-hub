@@ -178,6 +178,31 @@ function CodeRow({
           <X className="h-3 w-3" />
         </button>
       </div>
+      {isDirty && (
+        <button
+          onClick={() => {
+            const trimmed = draft.trim();
+            if (!trimmed) {
+              toast.error("لا يمكن حفظ كود فارغ");
+              return;
+            }
+            const s = readStore();
+            s[id] = { ...s[id], [kind]: trimmed };
+            writeStore(s);
+            if (pending[id]) {
+              delete pending[id][kind];
+              if (!pending[id].activate && !pending[id].cancel) delete pending[id];
+              window.dispatchEvent(new Event(PENDING_EVENT));
+            }
+            setEditing(false);
+            toast.success("تم حفظ الكود");
+          }}
+          className="inline-flex w-full items-center justify-center gap-1 rounded-lg bg-emerald-600 px-2 py-1.5 text-xs font-bold text-white hover:bg-emerald-700"
+        >
+          <Save className="h-3.5 w-3.5" />
+          حفظ الكود
+        </button>
+      )}
       <a
         href={toTelHref(activeCode)}
         className={`inline-flex w-full items-center justify-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-bold ${btnClass}`}
