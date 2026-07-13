@@ -199,7 +199,8 @@ function YouServicesPage() {
             <TabsContent value="services" className="mt-6">
               <SectionList section="services" />
             </TabsContent>
-            <TabsContent value="account" className="mt-6">
+            <TabsContent value="account" className="mt-6 space-y-6">
+              <SawaTariffTable />
               <SectionList section="account" />
             </TabsContent>
             <TabsContent value="internet" className="mt-6">
