@@ -60,6 +60,10 @@ import {
   YouEAnsweringCard,
   YouNewSimNumberCard,
   YouVoiceMailCard,
+  YouNewPrepaidLineCard,
+  YouFamilyFriendsCard,
+  YouFamilyFriendsManageCard,
+  YouFamilyFriendsEditCard,
 } from "@/components/you-inquiry-cards";
 
 export const Route = createFileRoute("/you-services")({
