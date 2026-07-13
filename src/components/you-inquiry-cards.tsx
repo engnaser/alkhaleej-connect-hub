@@ -435,3 +435,135 @@ export function YouForwardOffCard() {
   );
 }
 
+/* ---------- Generic call-forwarding-with-number card ---------- */
+
+function ForwardWithNumberCard({
+  id,
+  title,
+  description,
+  activatePrefix,
+  cancelDefault,
+  detailsTitle,
+  condition,
+}: {
+  id: string;
+  title: string;
+  description: string;
+  activatePrefix: string;
+  cancelDefault: string;
+  detailsTitle: string;
+  condition: string;
+}) {
+  const [phone, setPhone] = useState("");
+  const cancelCode = useServiceCode(id, "cancel", cancelDefault);
+
+  const activate = () => {
+    const trimmed = phone.trim().replace(/\s|-/g, "");
+    if (!/^\d{6,}$/.test(trimmed)) {
+      toast.error("يرجى إدخال رقم صحيح لتحويل المكالمات إليه");
+      return;
+    }
+    window.location.href = `tel:${activatePrefix}${trimmed}%23`;
+  };
+
+  return (
+    <CardShell title={title} icon={<PhoneForwarded className="h-5 w-5" />}>
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        {description}
+      </p>
+
+      <div className="relative mb-3">
+        <Contact className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Input
+          type="tel"
+          inputMode="tel"
+          placeholder="أدخل الرقم المراد التحويل إليه"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value.slice(0, 9))}
+          className="pr-9 text-right"
+          dir="ltr"
+          maxLength={9}
+        />
+        <div className="mt-1 text-[11px] text-muted-foreground">{phone.length}/9</div>
+      </div>
+
+      <div className="mt-auto grid grid-cols-3 gap-2">
+        <Button
+          onClick={activate}
+          className="gap-1.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90"
+        >
+          <PhoneCall className="h-4 w-4" />
+          تفعيل
+        </Button>
+        <a
+          href={`tel:${cancelCode.replace(/#/g, "%23")}`}
+          className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-destructive px-3 py-2 text-sm font-bold text-destructive-foreground hover:bg-destructive/90"
+        >
+          <PhoneOff className="h-4 w-4" />
+          إلغاء التفعيل
+        </a>
+        <DetailsButton title={detailsTitle}>
+          <p>هذه الخدمة تحوّل المكالمات الواردة إلى رقم بديل تختاره {condition}.</p>
+          <p>
+            للتفعيل: أدخل الرقم في الحقل ثم اضغط «تفعيل» ليتم استدعاء الكود{" "}
+            <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>
+              {activatePrefix}الرقم#
+            </bdi>
+            .
+          </p>
+          <p>
+            للإلغاء اطلب{" "}
+            <bdi dir="ltr" className="font-mono font-bold text-destructive" style={{ unicodeBidi: "isolate" }}>
+              {cancelCode}
+            </bdi>
+            .
+          </p>
+        </DetailsButton>
+      </div>
+    </CardShell>
+  );
+}
+
+export function YouForwardBusyCard() {
+  return (
+    <ForwardWithNumberCard
+      id="you-forward-busy"
+      title="تحويل المكالمات — عند انشغال الخط"
+      description="حوّل المكالمات الواردة إلى رقم آخر تختاره عندما يكون خطك مشغولاً بمكالمة أخرى."
+      activatePrefix="*67*"
+      cancelDefault="##67#"
+      detailsTitle="تحويل المكالمات — عند انشغال الخط"
+      condition="عندما يكون خطك مشغولاً بمكالمة أخرى"
+    />
+  );
+}
+
+export function YouForwardNoAnswerCard() {
+  return (
+    <ForwardWithNumberCard
+      id="you-forward-noanswer"
+      title="تحويل المكالمات — عند عدم الرد"
+      description="حوّل المكالمات الواردة إلى رقم آخر تختاره عندما لا ترد على الاتصال."
+      activatePrefix="*61*"
+      cancelDefault="##61#"
+      detailsTitle="تحويل المكالمات — عند عدم الرد"
+      condition="عندما لا يتم الرد على الاتصال"
+    />
+  );
+}
+
+export function YouForwardAllCard() {
+  return (
+    <ForwardWithNumberCard
+      id="you-forward-all"
+      title="تحويل المكالمات — تحويل جميع المكالمات"
+      description="حوّل جميع المكالمات الواردة تلقائياً إلى رقم آخر تختاره في كل الحالات."
+      activatePrefix="*21*"
+      cancelDefault="##21#"
+      detailsTitle="تحويل المكالمات — تحويل جميع المكالمات"
+      condition="في كل الحالات (يتم تحويل كل مكالمة واردة مباشرة)"
+    />
+  );
+}
+
+
