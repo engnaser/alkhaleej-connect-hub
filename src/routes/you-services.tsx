@@ -36,6 +36,7 @@ import { supabase } from "@/integrations/supabase/client";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 import { CallMeCard } from "@/components/call-me-card";
 import { YouCallOnMeCard } from "@/components/you-call-on-me-card";
+import { YouSalifniCard } from "@/components/you-salifni-card";
 
 export const Route = createFileRoute("/you-services")({
   head: () => ({
