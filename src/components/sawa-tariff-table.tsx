@@ -1,4 +1,61 @@
-import { Coins, MessageSquare, Sparkles, GraduationCap, Zap, FileText, Wallet } from "lucide-react";
+import { Coins, MessageSquare, Sparkles, GraduationCap, Zap, FileText, Wallet, Plane } from "lucide-react";
+
+type RoamingRow = {
+  category: string;
+  intl: string;
+  local: string;
+  incoming: string;
+  toYemen: string;
+};
+
+const ROAMING_ROWS: RoamingRow[] = [
+  { category: "دول الخليج", intl: "540", local: "200", incoming: "180", toYemen: "425" },
+  { category: "الإمارات العربية المتحدة", intl: "1250", local: "650", incoming: "450", toYemen: "950" },
+  { category: "الدول العربية", intl: "540", local: "200", incoming: "210", toYemen: "460" },
+  { category: "أوروبا، أمريكا وكندا", intl: "650", local: "200", incoming: "280", toYemen: "620" },
+  { category: "آسيا وأفريقيا", intl: "705", local: "200", incoming: "310", toYemen: "680" },
+  { category: "بقية دول العالم", intl: "740", local: "200", incoming: "330", toYemen: "690" },
+  { category: "التجوال الجوي والبحري والأقمار الاصطناعية", intl: "1200", local: "850", incoming: "1600", toYemen: "1000" },
+];
+
+function RoamingTable() {
+  return (
+    <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)] lg:col-span-2 xl:col-span-3">
+      <div className="flex items-center gap-3 border-b border-border bg-secondary/40 px-5 py-4">
+        <div className="grid h-10 w-10 place-items-center rounded-full bg-primary/10 text-primary">
+          <Plane className="h-5 w-5" />
+        </div>
+        <h3 className="text-base font-extrabold text-foreground">
+          تعرفة تكلفة المكالمات والرسائل أثناء التجوال الدولي من الرصيد الأساسي
+        </h3>
+      </div>
+      <div className="overflow-x-auto">
+        <table className="w-full min-w-[640px] text-sm">
+          <thead>
+            <tr className="border-b border-border bg-secondary/20 text-xs font-bold text-muted-foreground">
+              <th className="px-4 py-3 text-right">الفئة</th>
+              <th className="px-4 py-3 text-center">الاتصال الدولي</th>
+              <th className="px-4 py-3 text-center">الاتصال المحلي</th>
+              <th className="px-4 py-3 text-center">الاتصال الوارد</th>
+              <th className="px-4 py-3 text-center">الاتصال إلى اليمن</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {ROAMING_ROWS.map((r) => (
+              <tr key={r.category} className="transition-colors hover:bg-secondary/30">
+                <td className="px-4 py-4 font-semibold text-foreground">{r.category}</td>
+                <td className="px-4 py-4 text-center font-mono text-sm font-extrabold text-primary">{r.intl}</td>
+                <td className="px-4 py-4 text-center font-mono text-sm font-semibold text-foreground">{r.local}</td>
+                <td className="px-4 py-4 text-center font-mono text-sm font-semibold text-foreground">{r.incoming}</td>
+                <td className="px-4 py-4 text-center font-mono text-sm font-extrabold text-primary">{r.toYemen}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
 
 type Row = { label: string; amount: string };
 
@@ -147,6 +204,7 @@ export function SawaTariffTable() {
       <TariffTable title="تعرفة باقة باور" rows={BAWER_ROWS} Icon={Zap} />
       <TariffTable title="تعرفة الفوترة" rows={FATURA_ROWS} Icon={FileText} />
       <RechargeTable />
+      <RoamingTable />
     </div>
   );
 }
