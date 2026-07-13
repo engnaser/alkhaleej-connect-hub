@@ -277,3 +277,161 @@ export function YouSuperKashefBusyCard() {
     </CardShell>
   );
 }
+
+/* ---------- 6) Super Kashef — no answer ---------- */
+
+export function YouSuperKashefNoAnswerCard() {
+  const act = useServiceCode("you-kashef-noanswer", "activate", "*61#");
+  const cancel = useServiceCode("you-kashef-noanswer", "cancel", "##61#");
+  return (
+    <CardShell
+      title="خدمة سوبر كاشف — عند عدم الرد"
+      icon={<PhoneMissed className="h-5 w-5" />}
+    >
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        تصلك رسالة SMS بأرقام المتصلين الذين حاولوا الاتصال بك ولم ترد على
+        اتصالهم، حتى لا يفوتك أي اتصال مهم.
+      </p>
+      <div className="mb-4 grid grid-cols-2 gap-2">
+        <CodePill code={act} label="تفعيل" />
+        <CodePill code={cancel} label="إلغاء" />
+      </div>
+      <EditableActionCodes
+        id="you-kashef-noanswer"
+        activateCode="*61#"
+        cancelCode="##61#"
+        detailsSlot={
+          <DetailsButton title="سوبر كاشف — عند عدم الرد">
+            <p>
+              الخدمة تُبلّغك عبر رسالة نصية بجميع الأرقام التي حاولت الاتصال بك
+              ولم يتم الرد عليها.
+            </p>
+            <p>
+              للتفعيل اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{act}</bdi>{" "}
+              وللإلغاء اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-destructive" style={{ unicodeBidi: "isolate" }}>{cancel}</bdi>.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+/* ---------- 7) Super Kashef — forward all calls (close/open SIM) ---------- */
+
+export function YouSuperKashefAllCard() {
+  const act = useServiceCode("you-kashef-all", "activate", "*21#");
+  const cancel = useServiceCode("you-kashef-all", "cancel", "##21#");
+  return (
+    <CardShell
+      title="خدمة سوبر كاشف — تحويل جميع المكالمات (إغلاق وفتح الشريحة)"
+      icon={<PhoneForwarded className="h-5 w-5" />}
+    >
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        تصلك رسالة SMS بجميع الأرقام التي حاولت الاتصال بك، وتعمل بميزة إغلاق
+        وفتح الشريحة تلقائياً لاستقبال الإشعارات.
+      </p>
+      <div className="mb-4 grid grid-cols-2 gap-2">
+        <CodePill code={act} label="تفعيل" />
+        <CodePill code={cancel} label="إلغاء" />
+      </div>
+      <EditableActionCodes
+        id="you-kashef-all"
+        activateCode="*21#"
+        cancelCode="##21#"
+        detailsSlot={
+          <DetailsButton title="سوبر كاشف — تحويل جميع المكالمات">
+            <p>
+              الخدمة تُبلّغك عبر رسالة نصية بجميع الأرقام التي حاولت الاتصال بك
+              في مختلف الحالات، وتعتمد على ميزة إغلاق وفتح الشريحة لاستقبال
+              الإشعارات المتراكمة.
+            </p>
+            <p>
+              للتفعيل اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{act}</bdi>{" "}
+              وللإلغاء اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-destructive" style={{ unicodeBidi: "isolate" }}>{cancel}</bdi>.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+/* ---------- 8) Call forwarding — device off / out of coverage ---------- */
+
+export function YouForwardOffCard() {
+  const [phone, setPhone] = useState("");
+  const cancelCode = useServiceCode("you-forward-off", "cancel", "##62#");
+
+  const activate = () => {
+    const trimmed = phone.trim().replace(/\s|-/g, "");
+    if (!/^\d{6,}$/.test(trimmed)) {
+      toast.error("يرجى إدخال رقم صحيح لتحويل المكالمات إليه");
+      return;
+    }
+    window.location.href = `tel:*62*${trimmed}%23`;
+  };
+
+  return (
+    <CardShell
+      title="تحويل المكالمات — عند إغلاق الجهاز أو خارج التغطية"
+      icon={<PhoneForwarded className="h-5 w-5" />}
+    >
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        حوّل المكالمات الواردة إلى رقم آخر تختاره عندما يكون جهازك مغلقاً أو
+        خارج نطاق التغطية.
+      </p>
+
+      <div className="relative mb-3">
+        <Contact className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Input
+          type="tel"
+          inputMode="tel"
+          placeholder="أدخل الرقم المراد التحويل إليه"
+          value={phone}
+          onChange={(e) => setPhone(e.target.value.slice(0, 9))}
+          className="pr-9 text-right"
+          dir="ltr"
+          maxLength={9}
+        />
+        <div className="mt-1 text-[11px] text-muted-foreground">{phone.length}/9</div>
+      </div>
+
+      <div className="mt-auto grid grid-cols-3 gap-2">
+        <Button
+          onClick={activate}
+          className="col-span-1 gap-1.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90"
+        >
+          <PhoneCall className="h-4 w-4" />
+          تفعيل
+        </Button>
+        <a
+          href={`tel:${cancelCode.replace(/#/g, "%23")}`}
+          className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-destructive px-3 py-2 text-sm font-bold text-destructive-foreground hover:bg-destructive/90"
+        >
+          <PhoneOff className="h-4 w-4" />
+          إلغاء التفعيل
+        </a>
+        <DetailsButton title="تحويل المكالمات — إغلاق أو خارج التغطية">
+          <p>
+            هذه الخدمة تحوّل المكالمات الواردة إلى رقم بديل تختاره عندما يكون
+            جهازك مغلقاً أو خارج نطاق التغطية.
+          </p>
+          <p>
+            للتفعيل: أدخل الرقم في الحقل ثم اضغط «تفعيل» ليتم استدعاء الكود{" "}
+            <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>*62*الرقم#</bdi>.
+          </p>
+          <p>
+            للإلغاء اطلب{" "}
+            <bdi dir="ltr" className="font-mono font-bold text-destructive" style={{ unicodeBidi: "isolate" }}>{cancelCode}</bdi>.
+          </p>
+        </DetailsButton>
+      </div>
+    </CardShell>
+  );
+}
+
