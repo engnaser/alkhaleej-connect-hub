@@ -210,6 +210,7 @@ function YouServicesPage() {
       </main>
 
       <SiteFooter />
+      <SaveAllCodesBar />
     </div>
   );
 }
