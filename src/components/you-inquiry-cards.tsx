@@ -578,7 +578,7 @@ import {
   Megaphone,
   Voicemail,
   Mic,
-  Sim,
+  SimCard,
 } from "lucide-react";
 
 export function YouCustomerCareCard() {
