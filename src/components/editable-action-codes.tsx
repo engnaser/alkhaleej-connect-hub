@@ -72,7 +72,7 @@ function toTelHref(code: string) {
 }
 
 // ============ Per-code editable row ============
-function CodeRow({
+export function CodeRow({
   id,
   kind,
   defaultCode,
@@ -81,6 +81,7 @@ function CodeRow({
   kind: Kind;
   defaultCode: string;
 }) {
+
   const { isAdmin } = useIsAdmin();
   const savedCode = useServiceCode(id, kind, defaultCode);
   const [draft, setDraft] = useState(savedCode);
