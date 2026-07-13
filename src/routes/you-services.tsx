@@ -47,6 +47,9 @@ import {
   YouSuperKashefNoAnswerCard,
   YouSuperKashefAllCard,
   YouForwardOffCard,
+  YouForwardBusyCard,
+  YouForwardNoAnswerCard,
+  YouForwardAllCard,
 } from "@/components/you-inquiry-cards";
 
 export const Route = createFileRoute("/you-services")({
