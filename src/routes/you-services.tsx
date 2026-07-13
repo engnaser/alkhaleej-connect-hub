@@ -181,6 +181,7 @@ function YouServicesPage() {
 
 function SectionList({ section }: { section: YouSection }) {
   const { items, loading } = useYouItems(section);
+  const extras = section === "services" ? [<CallMeCard key="__call-me" />] : [];
 
   if (loading) {
     return (
