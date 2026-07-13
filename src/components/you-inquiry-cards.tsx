@@ -566,4 +566,178 @@ export function YouForwardAllCard() {
   );
 }
 
+/* ---------- 12) Customer care ---------- */
+
+import { Headphones, PhoneIncoming, Hash, User, Music2 } from "lucide-react";
+
+export function YouCustomerCareCard() {
+  const activate = useServiceCode("you-customer-care", "activate", "111");
+  const control = useServiceCode("you-customer-care", "cancel", "121");
+  return (
+    <CardShell title="خدمة العملاء" icon={<Headphones className="h-5 w-5" />}>
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        تواصل مع مركز خدمة عملاء شركة يو للاستفسار عن الخدمات، الشكاوى، أو
+        التحكم بحسابك مباشرة عبر الاتصال.
+      </p>
+      <div className="mb-4 grid grid-cols-2 gap-2">
+        <CodePill code={activate} label="اتصال بخدمة العملاء" />
+        <CodePill code={control} label="مركز التحكم" />
+      </div>
+      <EditableActionCodes
+        id="you-customer-care"
+        activateCode="111"
+        cancelCode="121"
+        detailsSlot={
+          <DetailsButton title="خدمة العملاء">
+            <p>
+              اتصل بالرقم{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{activate}</bdi>{" "}
+              للتحدث مباشرة مع موظف خدمة العملاء.
+            </p>
+            <p>
+              أو اتصل بمركز التحكم على{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{control}</bdi>{" "}
+              لإدارة الخدمات والباقات تلقائياً.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+/* ---------- 13) Call waiting ---------- */
+
+export function YouCallWaitingCard() {
+  const act = useServiceCode("you-call-waiting", "activate", "*43#");
+  const cancel = useServiceCode("you-call-waiting", "cancel", "#43#");
+  return (
+    <CardShell title="وضع المكالمات في الانتظار" icon={<PhoneIncoming className="h-5 w-5" />}>
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        فعّل خدمة الانتظار لاستقبال مكالمة جديدة أثناء انشغالك بمكالمة أخرى، مع
+        إمكانية التبديل بينهما دون قطع الاتصال.
+      </p>
+      <div className="mb-4 grid grid-cols-2 gap-2">
+        <CodePill code={act} label="تفعيل" />
+        <CodePill code={cancel} label="إلغاء" />
+      </div>
+      <EditableActionCodes
+        id="you-call-waiting"
+        activateCode="*43#"
+        cancelCode="#43#"
+        detailsSlot={
+          <DetailsButton title="وضع المكالمات في الانتظار">
+            <p>
+              الخدمة تتيح لك استقبال مكالمة جديدة وأنت في مكالمة قائمة، حيث تسمع
+              نغمة تنبيه ويمكنك التبديل بين المكالمتين.
+            </p>
+            <p>
+              للتفعيل اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{act}</bdi>{" "}
+              وللإلغاء اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-destructive" style={{ unicodeBidi: "isolate" }}>{cancel}</bdi>.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+/* ---------- 14) Know your own number ---------- */
+
+export function YouKnowMyNumberCard() {
+  const code = useServiceCode("you-know-number", "activate", "*888#");
+  return (
+    <CardShell title="خدمة معرفة رقم حسابك" icon={<Hash className="h-5 w-5" />}>
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        اعرف رقم خطك الخاص بشركة يو بسرعة عبر كود مختصر ومجاني.
+      </p>
+      <CodePill code={code} label="كود عرض الرقم" />
+      <EditableActionCodes
+        id="you-know-number"
+        activateCode="*888#"
+        detailsSlot={
+          <DetailsButton title="معرفة رقم حسابك">
+            <p>
+              اطلب الرمز{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{code}</bdi>{" "}
+              ليعرض لك رقم خطك الخاص بشركة يو مباشرة على الشاشة.
+            </p>
+            <p>الخدمة مجانية ومتاحة على جميع الخطوط.</p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+/* ---------- 15) Show/hide caller ID ---------- */
+
+export function YouCallerIdCard() {
+  const act = useServiceCode("you-caller-id", "activate", "*31#");
+  const cancel = useServiceCode("you-caller-id", "cancel", "#31#");
+  return (
+    <CardShell title="تفعيل وإلغاء إظهار رقم حسابك" icon={<User className="h-5 w-5" />}>
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        تحكّم في إظهار أو إخفاء رقمك عند إجراء المكالمات الصادرة إلى الآخرين.
+      </p>
+      <div className="mb-4 grid grid-cols-2 gap-2">
+        <CodePill code={act} label="إظهار الرقم" />
+        <CodePill code={cancel} label="إخفاء الرقم" />
+      </div>
+      <EditableActionCodes
+        id="you-caller-id"
+        activateCode="*31#"
+        cancelCode="#31#"
+        detailsSlot={
+          <DetailsButton title="إظهار وإخفاء رقم حسابك">
+            <p>
+              لإظهار رقمك للمتصل به اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{act}</bdi>.
+            </p>
+            <p>
+              لإخفاء رقمك عن المتصل به اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-destructive" style={{ unicodeBidi: "isolate" }}>{cancel}</bdi>.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+/* ---------- 16) Ringtone service (نغم) ---------- */
+
+export function YouRingtoneCard() {
+  const code = useServiceCode("you-ringtone", "activate", "700");
+  return (
+    <CardShell title="خدمة نغم" icon={<Music2 className="h-5 w-5" />}>
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        اختر نغمة رنين مميزة يسمعها من يتصل بك بدلاً من نغمة الرنين الاعتيادية،
+        من مكتبة واسعة من الأغاني والأناشيد.
+      </p>
+      <CodePill code={code} label="رقم الاشتراك" />
+      <EditableActionCodes
+        id="you-ringtone"
+        activateCode="700"
+        detailsSlot={
+          <DetailsButton title="خدمة نغم">
+            <p>
+              اتصل بالرقم{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{code}</bdi>{" "}
+              للاشتراك في خدمة نغم واختيار النغمة التي تفضلها.
+            </p>
+            <p>
+              الخدمة تتيح لمن يتصل بك سماع نغمة أو مقطع صوتي بدلاً من نغمة
+              الرنين الافتراضية.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+
 
