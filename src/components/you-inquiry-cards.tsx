@@ -921,7 +921,144 @@ export function YouVoiceMailCard() {
   );
 }
 
+/* ---------- 22) Activate new prepaid line ---------- */
 
+export function YouNewPrepaidLineCard() {
+  const code = useServiceCode("you-new-prepaid", "activate", "*555#");
+  return (
+    <CardShell title="تفعيل خط جديد بنظام الدفع المسبق" icon={<CreditCard className="h-5 w-5" />}>
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        فعّل شريحتك الجديدة من شركة يو بنظام الدفع المسبق واستمتع بجميع الخدمات
+        والباقات مباشرة بعد التفعيل.
+      </p>
+      <CodePill code={code} label="كود التفعيل" />
+      <EditableActionCodes
+        id="you-new-prepaid"
+        activateCode="*555#"
+        detailsSlot={
+          <DetailsButton title="تفعيل خط جديد — الدفع المسبق">
+            <p>
+              أدخل الشريحة الجديدة في جهازك، ثم اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{code}</bdi>{" "}
+              واتبع التعليمات لإكمال عملية التفعيل.
+            </p>
+            <p>
+              بعد التفعيل يمكنك شحن الرصيد والاشتراك في باقات الإنترنت والمكالمات
+              مباشرة.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
 
+/* ---------- 23) Family & Friends ---------- */
 
+export function YouFamilyFriendsCard() {
+  const act = useServiceCode("you-family-friends", "activate", "*141#");
+  const cancel = useServiceCode("you-family-friends", "cancel", "##141#");
+  return (
+    <CardShell title="خدمة الأهل والأصدقاء" icon={<Users className="h-5 w-5" />}>
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        أضف أرقام أهلك وأصدقائك المفضلين واحصل على أسعار مخفّضة للمكالمات
+        والرسائل معهم داخل شبكة يو.
+      </p>
+      <div className="mb-4 grid grid-cols-2 gap-2">
+        <CodePill code={act} label="تفعيل" />
+        <CodePill code={cancel} label="إلغاء التفعيل" />
+      </div>
+      <EditableActionCodes
+        id="you-family-friends"
+        activateCode="*141#"
+        cancelCode="##141#"
+        detailsSlot={
+          <DetailsButton title="خدمة الأهل والأصدقاء">
+            <p>
+              للتفعيل اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{act}</bdi>{" "}
+              ثم أضف الأرقام المفضّلة للاستفادة من التعرفة المخفّضة.
+            </p>
+            <p>
+              للإلغاء اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-destructive" style={{ unicodeBidi: "isolate" }}>{cancel}</bdi>.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+/* ---------- 24) Family & Friends — manage numbers ---------- */
+
+export function YouFamilyFriendsManageCard() {
+  const act = useServiceCode("you-family-manage", "activate", "*141*1#");
+  const cancel = useServiceCode("you-family-manage", "cancel", "*141*0#");
+  return (
+    <CardShell
+      title="خدمة الأهل والأصدقاء — للتحكم في الأرقام"
+      icon={<Settings2 className="h-5 w-5" />}
+    >
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        تحكّم بقائمة أرقامك المفضّلة في خدمة الأهل والأصدقاء: أضف، اعرض،
+        أو احذف أي رقم من القائمة بسهولة.
+      </p>
+      <div className="mb-4 grid grid-cols-2 gap-2">
+        <CodePill code={act} label="إضافة رقم" />
+        <CodePill code={cancel} label="حذف رقم" />
+      </div>
+      <EditableActionCodes
+        id="you-family-manage"
+        activateCode="*141*1#"
+        cancelCode="*141*0#"
+        detailsSlot={
+          <DetailsButton title="التحكم في أرقام الأهل والأصدقاء">
+            <p>
+              لإضافة رقم إلى القائمة اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{act}</bdi>{" "}
+              واتبع التعليمات.
+            </p>
+            <p>
+              لحذف رقم من القائمة اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-destructive" style={{ unicodeBidi: "isolate" }}>{cancel}</bdi>.
+            </p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
+
+/* ---------- 25) Family & Friends — edit any number ---------- */
+
+export function YouFamilyFriendsEditCard() {
+  const code = useServiceCode("you-family-edit", "activate", "*141*2#");
+  return (
+    <CardShell
+      title="خدمة الأهل والأصدقاء — لتعديل أي رقم"
+      icon={<UserCog className="h-5 w-5" />}
+    >
+      <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
+        عدّل أي رقم من قائمة أرقامك المفضّلة في خدمة الأهل والأصدقاء واستبدله
+        برقم آخر ترغب بالحصول على تعرفة مخفّضة عليه.
+      </p>
+      <CodePill code={code} label="كود التعديل" />
+      <EditableActionCodes
+        id="you-family-edit"
+        activateCode="*141*2#"
+        detailsSlot={
+          <DetailsButton title="تعديل رقم في الأهل والأصدقاء">
+            <p>
+              اطلب{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{code}</bdi>{" "}
+              ثم اتبع التعليمات لاختيار الرقم القديم واستبداله بالرقم الجديد.
+            </p>
+            <p>قد تُطبَّق رسوم بسيطة على عملية التعديل حسب سياسة شركة يو.</p>
+          </DetailsButton>
+        }
+      />
+    </CardShell>
+  );
+}
 
