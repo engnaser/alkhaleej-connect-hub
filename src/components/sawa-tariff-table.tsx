@@ -32,6 +32,16 @@ const SHABAB_ROWS: Row[] = [
   { label: "الاشتراك الشهري", amount: "بدون اشتراك شهري" },
 ];
 
+const TALEB_ROWS: Row[] = [
+  { label: "الرسائل النصية لجميع الشبكات المحلية", amount: "300 رسالة" },
+  { label: "الاتصال ضمن الشبكة", amount: "300 دقيقة" },
+  { label: "الإنترنت", amount: "300 ميجا" },
+  { label: "استخدام لتطبيقات واتساب وفيسبوك", amount: "غير محدود" },
+  { label: "صلاحية الباقة", amount: "30 يوماً" },
+  { label: "تكلفة الباقة", amount: "1250 ريال" },
+  { label: "الاشتراك الشهري", amount: "بدون اشتراك شهري" },
+];
+
 function TariffTable({ title, rows, Icon }: { title: string; rows: Row[]; Icon: typeof Coins }) {
   return (
     <div className="overflow-hidden rounded-2xl border border-border bg-card shadow-[var(--shadow-card)]">
