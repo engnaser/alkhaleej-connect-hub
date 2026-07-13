@@ -14,7 +14,6 @@ import {
   Wifi,
   BellRing,
   PhoneOff,
-  XCircle,
 } from "lucide-react";
 import type { ReactNode } from "react";
 
