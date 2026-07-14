@@ -125,6 +125,15 @@ const TEMPLATES: Template[] = [
       phone: { x: 31, y: 65, size: 3, color: "#ffffff", dir: "ltr", weight: 800, mono: true, maxWidth: 45 },
     },
   },
+  {
+    id: "khalij-services", title: "كل الخدمات الرقمية", occasion: "وكيل معتمد — الخليج تيليكوم", src: posterKhalijServices.url,
+    fields: SIMPLE_FIELDS,
+    defaults: { name: "اسم الوكيل", phone: "+967 7XX XXX XXX" },
+    layout: {
+      name:  { x: 50, y: 62,   size: 2.6, color: "#0d3b46", dir: "rtl", weight: 900, maxWidth: 70 },
+      phone: { x: 50, y: 66.5, size: 2.2, color: "#b98a3a", dir: "ltr", weight: 800, mono: true, maxWidth: 70 },
+    },
+  },
 ];
 
 function useSession() {
