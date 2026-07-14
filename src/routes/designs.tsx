@@ -16,6 +16,7 @@ import posterMawloud from "@/assets/poster-mawloud.png?format=webp&quality=78&as
 import posterKhalij from "@/assets/poster-khalij.png.asset.json";
 import posterJumaaGold from "@/assets/poster-jumaa-gold.png.asset.json";
 import posterEidMosque from "@/assets/poster-eid-mosque.png.asset.json";
+import posterKhalijServices from "@/assets/poster-khalij-services.jpg.asset.json";
 
 const SITE = "https://alkhaleej-connect-hub.lovable.app";
 
@@ -122,6 +123,15 @@ const TEMPLATES: Template[] = [
     layout: {
       name:  { x: 32, y: 59, size: 3, color: "#ffffff", dir: "rtl", weight: 900, maxWidth: 45 },
       phone: { x: 31, y: 65, size: 3, color: "#ffffff", dir: "ltr", weight: 800, mono: true, maxWidth: 45 },
+    },
+  },
+  {
+    id: "khalij-services", title: "كل الخدمات الرقمية", occasion: "وكيل معتمد — الخليج تيليكوم", src: posterKhalijServices.url,
+    fields: SIMPLE_FIELDS,
+    defaults: { name: "اسم الوكيل", phone: "+967 7XX XXX XXX" },
+    layout: {
+      name:  { x: 50, y: 62,   size: 2.6, color: "#0d3b46", dir: "rtl", weight: 900, maxWidth: 70 },
+      phone: { x: 50, y: 66.5, size: 2.2, color: "#b98a3a", dir: "ltr", weight: 800, mono: true, maxWidth: 70 },
     },
   },
 ];
