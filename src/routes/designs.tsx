@@ -16,6 +16,7 @@ import posterMawloud from "@/assets/poster-mawloud.png?format=webp&quality=78&as
 import posterKhalij from "@/assets/poster-khalij.png.asset.json";
 import posterJumaaGold from "@/assets/poster-jumaa-gold.png.asset.json";
 import posterEidMosque from "@/assets/poster-eid-mosque.png.asset.json";
+import posterKhalijServices from "@/assets/poster-khalij-services.jpg.asset.json";
 
 const SITE = "https://alkhaleej-connect-hub.lovable.app";
 
