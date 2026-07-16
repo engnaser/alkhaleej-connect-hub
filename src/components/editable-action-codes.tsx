@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 import { PhoneCall, XCircle, Save, RotateCcw, Pencil, X } from "lucide-react";
 import { toast } from "sonner";
