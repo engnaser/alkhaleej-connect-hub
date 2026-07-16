@@ -294,12 +294,16 @@ const SABAFON_4G_CATEGORY_IDS = new Set<string>([
   "sabafon-cat-supernet-2g",
 ]);
 
+const SABAFON_SHARED_CATEGORY_IDS = new Set<string>([
+  "sabafon-cat-supernet-2g",
+]);
+
 function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
   const { categories, loading } = useSabafonPackagesStore();
   const filtered = categories.filter((c) =>
     generation === "4g"
       ? SABAFON_4G_CATEGORY_IDS.has(c.id)
-      : !SABAFON_4G_CATEGORY_IDS.has(c.id),
+      : !SABAFON_4G_CATEGORY_IDS.has(c.id) || SABAFON_SHARED_CATEGORY_IDS.has(c.id),
   );
 
 
