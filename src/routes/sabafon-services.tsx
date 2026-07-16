@@ -285,7 +285,11 @@ function SabafonItemCard({ item }: { item: SabafonItem }) {
 
 function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
   const { categories, loading } = useSabafonPackagesStore();
-  const filtered = generation === "4g" ? [] : categories;
+  const is4G = (title: string) => /4G|فورجي/i.test(title);
+  const filtered = categories.filter((c) =>
+    generation === "4g" ? is4G(c.title) : !is4G(c.title),
+  );
+
 
 
 
