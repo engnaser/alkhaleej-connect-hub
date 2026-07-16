@@ -119,7 +119,7 @@ function SabafonServicesPage() {
 
         {/* TABS */}
         <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-          <Tabs defaultValue="packages" className="w-full">
+          <Tabs defaultValue="packages_3g" className="w-full">
             <TabsList className="flex h-auto w-full flex-wrap justify-center gap-2 rounded-2xl border border-border bg-card p-2 shadow-[var(--shadow-card)]">
               <TabsTrigger
                 value="packages_3g"
@@ -283,8 +283,16 @@ function SabafonItemCard({ item }: { item: SabafonItem }) {
   );
 }
 
-function PackagesPanel() {
+function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
   const { categories, loading } = useSabafonPackagesStore();
+  const filtered = categories.filter((c) => {
+    const text = `${c.title} ${c.description ?? ""}`.toLowerCase();
+    const has3g = /3g|ثري\s*جي/.test(text);
+    const has4g = /4g|فورجي|فور\s*جي/.test(text);
+    if (generation === "3g") return has3g || (!has3g && !has4g);
+    return has4g;
+  });
+
 
   if (loading) {
     return (
