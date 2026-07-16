@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { PhoneCall, ArrowLeftRight } from "lucide-react";
+import { ArrowLeftRight } from "lucide-react";
 import { CardShell, CodePill, DetailsButton } from "@/components/you-inquiry-cards";
+import { TemplateRow } from "@/components/editable-action-codes";
 
 export function YouBalanceTransferCard() {
   const [phone, setPhone] = useState("");
@@ -10,7 +11,6 @@ export function YouBalanceTransferCard() {
   const amt = amount.replace(/\D/g, "").slice(0, 6);
   const ready = digits.length === 9 && amt.length > 0;
   const ussd = ready ? `*201*${digits}*${amt}#` : "*201*رقم*المبلغ#";
-  const activateHref = ready ? `tel:${encodeURIComponent(`*201*${digits}*${amt}#`)}` : undefined;
 
   return (
     <CardShell title="خدمة تحويل الرصيد" icon={<ArrowLeftRight className="h-5 w-5" />}>
@@ -50,19 +50,11 @@ export function YouBalanceTransferCard() {
       <CodePill code={ussd} />
 
       <div className="mt-auto grid grid-cols-2 gap-2">
-        <a
-          href={activateHref}
-          aria-disabled={!ready}
-          onClick={(e) => {
-            if (!ready) e.preventDefault();
-          }}
-          className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-bold text-primary-foreground ${
-            ready ? "bg-primary hover:bg-primary/90" : "cursor-not-allowed bg-primary/50"
-          }`}
-        >
-          <PhoneCall className="h-4 w-4" />
-          تفعيل
-        </a>
+        <TemplateRow
+          id="you-balance-transfer"
+          defaultTemplate="*201*{n}*{amt}#"
+          values={{ n: digits.length === 9 ? digits : "", amt }}
+        />
         <DetailsButton title="خدمة تحويل الرصيد — يو">
           <p>
             تُمكّنك خدمة تحويل الرصيد من إرسال جزء من رصيدك إلى أي مشترك آخر في

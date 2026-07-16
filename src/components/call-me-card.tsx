@@ -1,22 +1,13 @@
 import { useState } from "react";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { PhoneCall, Contact } from "lucide-react";
-import { toast } from "sonner";
 import { CardShell, CodePill } from "@/components/you-inquiry-cards";
+import { TemplateRow } from "@/components/editable-action-codes";
 
 export function CallMeCard() {
   const [phone, setPhone] = useState("");
   const digits = phone.replace(/\D/g, "");
   const ussd = digits ? `*555*${digits}#` : "*555*رقم#";
-
-  const handleActivate = () => {
-    if (!/^\d{6,}$/.test(digits)) {
-      toast.error("الرجاء إدخال رقم صحيح");
-      return;
-    }
-    window.location.href = `tel:*555*${digits}%23`;
-  };
 
   return (
     <CardShell title="خدمة اتصل بي" icon={<PhoneCall className="h-5 w-5" />}>
@@ -40,13 +31,13 @@ export function CallMeCard() {
 
       <CodePill code={ussd} />
 
-      <Button
-        onClick={handleActivate}
-        className="mt-auto w-full gap-2 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90"
-      >
-        <PhoneCall className="h-4 w-4" />
-        تفعيل
-      </Button>
+      <div className="mt-auto">
+        <TemplateRow
+          id="you-call-me"
+          defaultTemplate="*555*{n}#"
+          values={{ n: digits }}
+        />
+      </div>
     </CardShell>
   );
 }

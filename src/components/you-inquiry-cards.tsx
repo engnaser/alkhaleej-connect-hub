@@ -24,13 +24,12 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { toast } from "sonner";
 import type { ReactNode } from "react";
 import {
   EditableActionCodes,
   useServiceCode,
   CodeRow,
+  TemplateRow,
 } from "@/components/editable-action-codes";
 
 
@@ -173,7 +172,6 @@ export function YouBillInquiryCard() {
 
 export function YouBrowse4GCard() {
   const code = useServiceCode("you-browse-4g", "activate", "*555#");
-  const telHref = `tel:${encodeURIComponent(code)}`;
   return (
     <CardShell title="تصفح باقات YOU 4G" icon={<Wifi className="h-5 w-5" />}>
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
@@ -181,30 +179,27 @@ export function YouBrowse4GCard() {
         والصلاحيات قبل التفعيل.
       </p>
       <CodePill code={code} label="كود التصفح" />
-      <div className="mt-auto grid grid-cols-2 gap-2">
-        <a
-          href={telHref}
-          className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary px-3 py-2.5 text-sm font-bold text-primary-foreground hover:bg-primary/90"
-        >
-          <Wifi className="h-4 w-4" />
-          تفعيل / تصفح
-        </a>
-        <DetailsButton title="باقات YOU 4G">
-          <p>
-            توفر شركة يو مجموعة واسعة من باقات الإنترنت فورجي بأسعار وسعات متنوعة،
-            منها: باقات <span className="font-bold">سمارت نت</span> الشهرية، وباقات{" "}
-            <span className="font-bold">مكس</span> التي تجمع بين الإنترنت والمكالمات،
-            وباقات <span className="font-bold">وفر</span> الاقتصادية.
-          </p>
-          <p>
-            اطلب الكود{" "}
-            <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>
-              {code}
-            </bdi>{" "}
-            من هاتفك لعرض قائمة الباقات مباشرة، أو اضغط "تصفح الباقات" للانتقال إلى صفحة الباقات.
-          </p>
-        </DetailsButton>
-      </div>
+      <EditableActionCodes
+        id="you-browse-4g"
+        activateCode="*555#"
+        detailsSlot={
+          <DetailsButton title="باقات YOU 4G">
+            <p>
+              توفر شركة يو مجموعة واسعة من باقات الإنترنت فورجي بأسعار وسعات متنوعة،
+              منها: باقات <span className="font-bold">سمارت نت</span> الشهرية، وباقات{" "}
+              <span className="font-bold">مكس</span> التي تجمع بين الإنترنت والمكالمات،
+              وباقات <span className="font-bold">وفر</span> الاقتصادية.
+            </p>
+            <p>
+              اطلب الكود{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>
+                {code}
+              </bdi>{" "}
+              من هاتفك لعرض قائمة الباقات مباشرة، أو اضغط "تصفح الباقات" للانتقال إلى صفحة الباقات.
+            </p>
+          </DetailsButton>
+        }
+      />
       <div className="mt-3">
         <Link
           to="/you-services"
@@ -213,9 +208,6 @@ export function YouBrowse4GCard() {
         >
           تصفح الباقات في الموقع
         </Link>
-      </div>
-      <div className="mt-3">
-        <CodeRow id="you-browse-4g" kind="activate" defaultCode="*555#" />
       </div>
     </CardShell>
   );
@@ -392,15 +384,8 @@ export function YouSuperKashefAllCard() {
 export function YouForwardOffCard() {
   const [phone, setPhone] = useState("");
   const cancelCode = useServiceCode("you-forward-off", "cancel", "##62#");
-
-  const activate = () => {
-    const trimmed = phone.trim().replace(/\s|-/g, "");
-    if (!/^\d{6,}$/.test(trimmed)) {
-      toast.error("يرجى إدخال رقم صحيح لتحويل المكالمات إليه");
-      return;
-    }
-    window.location.href = `tel:*62*${trimmed}%23`;
-  };
+  const trimmed = phone.trim().replace(/\s|-/g, "");
+  const validN = /^\d{6,}$/.test(trimmed) ? trimmed : "";
 
   return (
     <CardShell
@@ -428,13 +413,11 @@ export function YouForwardOffCard() {
       </div>
 
       <div className="mt-auto grid grid-cols-3 gap-2">
-        <Button
-          onClick={activate}
-          className="col-span-1 gap-1.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90"
-        >
-          <PhoneCall className="h-4 w-4" />
-          تفعيل
-        </Button>
+        <TemplateRow
+          id="you-forward-off"
+          defaultTemplate="*62*{n}#"
+          values={{ n: validN }}
+        />
         <CodeRow id="you-forward-off" kind="cancel" defaultCode="##62#" />
 
         <DetailsButton title="تحويل المكالمات — إغلاق أو خارج التغطية">
@@ -477,15 +460,8 @@ function ForwardWithNumberCard({
 }) {
   const [phone, setPhone] = useState("");
   const cancelCode = useServiceCode(id, "cancel", cancelDefault);
-
-  const activate = () => {
-    const trimmed = phone.trim().replace(/\s|-/g, "");
-    if (!/^\d{6,}$/.test(trimmed)) {
-      toast.error("يرجى إدخال رقم صحيح لتحويل المكالمات إليه");
-      return;
-    }
-    window.location.href = `tel:${activatePrefix}${trimmed}%23`;
-  };
+  const trimmed = phone.trim().replace(/\s|-/g, "");
+  const validN = /^\d{6,}$/.test(trimmed) ? trimmed : "";
 
   return (
     <CardShell title={title} icon={<PhoneForwarded className="h-5 w-5" />}>
@@ -509,13 +485,11 @@ function ForwardWithNumberCard({
       </div>
 
       <div className="mt-auto grid grid-cols-3 gap-2">
-        <Button
-          onClick={activate}
-          className="gap-1.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90"
-        >
-          <PhoneCall className="h-4 w-4" />
-          تفعيل
-        </Button>
+        <TemplateRow
+          id={id}
+          defaultTemplate={`${activatePrefix}{n}#`}
+          values={{ n: validN }}
+        />
         <CodeRow id={id} kind="cancel" defaultCode={cancelDefault} />
 
         <DetailsButton title={detailsTitle}>

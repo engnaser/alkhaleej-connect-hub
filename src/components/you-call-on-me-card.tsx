@@ -1,21 +1,13 @@
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { PhoneCall, Contact, Settings2 } from "lucide-react";
-import { toast } from "sonner";
+import { PhoneCall, Contact } from "lucide-react";
 import { CardShell, CodePill, DetailsButton } from "@/components/you-inquiry-cards";
+import { TemplateRow, CodeRow } from "@/components/editable-action-codes";
 
 export function YouCallOnMeCard() {
   const [phone, setPhone] = useState("");
   const digits = phone.replace(/\D/g, "").slice(0, 9);
   const ussd = digits ? `*73${digits}` : "*73XXXXXXX";
-
-  const handleActivate = () => {
-    if (digits.length < 7) {
-      toast.error("الرجاء إدخال رقم صحيح");
-      return;
-    }
-    window.location.href = `tel:*73${digits}`;
-  };
 
   return (
     <CardShell title="مكالمتك على حسابي" icon={<PhoneCall className="h-5 w-5" />}>
@@ -41,20 +33,12 @@ export function YouCallOnMeCard() {
       <CodePill code={ussd} />
 
       <div className="mt-auto grid grid-cols-3 gap-2">
-        <button
-          onClick={handleActivate}
-          className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary px-3 py-2.5 text-sm font-bold text-primary-foreground hover:bg-primary/90"
-        >
-          <PhoneCall className="h-4 w-4" />
-          تفعيل
-        </button>
-        <a
-          href="tel:*800%23"
-          className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-primary/40 bg-primary/10 px-3 py-2.5 text-sm font-bold text-primary hover:bg-primary/20"
-        >
-          <Settings2 className="h-4 w-4" />
-          تحكم
-        </a>
+        <TemplateRow
+          id="you-call-on-me"
+          defaultTemplate="*73{n}"
+          values={{ n: digits }}
+        />
+        <CodeRow id="you-call-on-me-control" kind="cancel" defaultCode="*800#" />
         <DetailsButton title="مكالمتك على حسابي">
           <p>
             تمكّنك هذه الخدمة من الاتصال بأي مشترك ضمن شبكة YOU على حسابك،
@@ -73,13 +57,6 @@ export function YouCallOnMeCard() {
           <p>
             سيتم خصم قيمة المكالمة من الرصيد الأساسي أو من رصيد الباقة
             للمستقبل. يمكن استخدام الخدمة مرتين في اليوم.
-          </p>
-          <p>
-            للتحكم وإدارة الخدمة اطلب الرمز{" "}
-            <bdi dir="ltr" className="font-mono font-bold text-primary">
-              *800#
-            </bdi>
-            .
           </p>
           <p className="text-xs text-muted-foreground">
             هذه الخدمة متاحة لمشتركي الدفع المسبق.
