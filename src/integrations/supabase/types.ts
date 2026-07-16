@@ -188,6 +188,131 @@ export type Database = {
         }
         Relationships: []
       }
+      sabafon_categories: {
+        Row: {
+          created_at: string
+          description: string | null
+          id: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          id: string
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          id?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      sabafon_packages: {
+        Row: {
+          category_id: string
+          code: string | null
+          created_at: string
+          id: string
+          internet: string
+          minutes: string
+          name: string
+          network: string
+          price: string
+          sms: string
+          sort_order: number
+          updated_at: string
+          validity: string
+        }
+        Insert: {
+          category_id: string
+          code?: string | null
+          created_at?: string
+          id: string
+          internet?: string
+          minutes?: string
+          name: string
+          network?: string
+          price?: string
+          sms?: string
+          sort_order?: number
+          updated_at?: string
+          validity?: string
+        }
+        Update: {
+          category_id?: string
+          code?: string | null
+          created_at?: string
+          id?: string
+          internet?: string
+          minutes?: string
+          name?: string
+          network?: string
+          price?: string
+          sms?: string
+          sort_order?: number
+          updated_at?: string
+          validity?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "sabafon_packages_category_id_fkey"
+            columns: ["category_id"]
+            isOneToOne: false
+            referencedRelation: "sabafon_categories"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      sabafon_services_items: {
+        Row: {
+          code: string | null
+          created_at: string
+          deactivation_code: string | null
+          description: string | null
+          icon: string
+          id: string
+          price: string | null
+          section: string
+          sort_order: number
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          code?: string | null
+          created_at?: string
+          deactivation_code?: string | null
+          description?: string | null
+          icon?: string
+          id?: string
+          price?: string | null
+          section: string
+          sort_order?: number
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          code?: string | null
+          created_at?: string
+          deactivation_code?: string | null
+          description?: string | null
+          icon?: string
+          id?: string
+          price?: string | null
+          section?: string
+          sort_order?: number
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       template_layouts: {
         Row: {
           created_at: string

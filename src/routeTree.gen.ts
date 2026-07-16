@@ -21,6 +21,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SecondaryCertificateRouteImport } from './routes/secondary-certificate'
 import { Route as SafetyRouteImport } from './routes/safety'
+import { Route as SabafonServicesRouteImport } from './routes/sabafon-services'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PollinationsImageRouteImport } from './routes/pollinations-image'
 import { Route as PhoneBillInquiryRouteImport } from './routes/phone-bill-inquiry'
@@ -45,6 +46,8 @@ import { Route as ApiGenerateImageRouteImport } from './routes/api/generate-imag
 import { Route as AdminYouServicesRouteImport } from './routes/admin.you-services'
 import { Route as AdminYouPackagesRouteImport } from './routes/admin.you-packages'
 import { Route as AdminServicesRouteImport } from './routes/admin.services'
+import { Route as AdminSabafonServicesRouteImport } from './routes/admin.sabafon-services'
+import { Route as AdminSabafonPackagesRouteImport } from './routes/admin.sabafon-packages'
 import { Route as AdminPackagesRouteImport } from './routes/admin.packages'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
@@ -110,6 +113,11 @@ const SecondaryCertificateRoute = SecondaryCertificateRouteImport.update({
 const SafetyRoute = SafetyRouteImport.update({
   id: '/safety',
   path: '/safety',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SabafonServicesRoute = SabafonServicesRouteImport.update({
+  id: '/sabafon-services',
+  path: '/sabafon-services',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -232,6 +240,16 @@ const AdminServicesRoute = AdminServicesRouteImport.update({
   path: '/admin/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSabafonServicesRoute = AdminSabafonServicesRouteImport.update({
+  id: '/admin/sabafon-services',
+  path: '/admin/sabafon-services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSabafonPackagesRoute = AdminSabafonPackagesRouteImport.update({
+  id: '/admin/sabafon-packages',
+  path: '/admin/sabafon-packages',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminPackagesRoute = AdminPackagesRouteImport.update({
   id: '/admin/packages',
   path: '/admin/packages',
@@ -285,6 +303,7 @@ export interface FileRoutesByFullPath {
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
   '/pollinations-image': typeof PollinationsImageRoute
   '/privacy': typeof PrivacyRoute
+  '/sabafon-services': typeof SabafonServicesRoute
   '/safety': typeof SafetyRoute
   '/secondary-certificate': typeof SecondaryCertificateRoute
   '/services': typeof ServicesRoute
@@ -301,6 +320,8 @@ export interface FileRoutesByFullPath {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
+  '/admin/sabafon-packages': typeof AdminSabafonPackagesRoute
+  '/admin/sabafon-services': typeof AdminSabafonServicesRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/you-packages': typeof AdminYouPackagesRoute
   '/admin/you-services': typeof AdminYouServicesRoute
@@ -329,6 +350,7 @@ export interface FileRoutesByTo {
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
   '/pollinations-image': typeof PollinationsImageRoute
   '/privacy': typeof PrivacyRoute
+  '/sabafon-services': typeof SabafonServicesRoute
   '/safety': typeof SafetyRoute
   '/secondary-certificate': typeof SecondaryCertificateRoute
   '/services': typeof ServicesRoute
@@ -345,6 +367,8 @@ export interface FileRoutesByTo {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
+  '/admin/sabafon-packages': typeof AdminSabafonPackagesRoute
+  '/admin/sabafon-services': typeof AdminSabafonServicesRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/you-packages': typeof AdminYouPackagesRoute
   '/admin/you-services': typeof AdminYouServicesRoute
@@ -374,6 +398,7 @@ export interface FileRoutesById {
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
   '/pollinations-image': typeof PollinationsImageRoute
   '/privacy': typeof PrivacyRoute
+  '/sabafon-services': typeof SabafonServicesRoute
   '/safety': typeof SafetyRoute
   '/secondary-certificate': typeof SecondaryCertificateRoute
   '/services': typeof ServicesRoute
@@ -390,6 +415,8 @@ export interface FileRoutesById {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
+  '/admin/sabafon-packages': typeof AdminSabafonPackagesRoute
+  '/admin/sabafon-services': typeof AdminSabafonServicesRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/you-packages': typeof AdminYouPackagesRoute
   '/admin/you-services': typeof AdminYouServicesRoute
@@ -420,6 +447,7 @@ export interface FileRouteTypes {
     | '/phone-bill-inquiry'
     | '/pollinations-image'
     | '/privacy'
+    | '/sabafon-services'
     | '/safety'
     | '/secondary-certificate'
     | '/services'
@@ -436,6 +464,8 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/admin/analytics'
     | '/admin/packages'
+    | '/admin/sabafon-packages'
+    | '/admin/sabafon-services'
     | '/admin/services'
     | '/admin/you-packages'
     | '/admin/you-services'
@@ -464,6 +494,7 @@ export interface FileRouteTypes {
     | '/phone-bill-inquiry'
     | '/pollinations-image'
     | '/privacy'
+    | '/sabafon-services'
     | '/safety'
     | '/secondary-certificate'
     | '/services'
@@ -480,6 +511,8 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/admin/analytics'
     | '/admin/packages'
+    | '/admin/sabafon-packages'
+    | '/admin/sabafon-services'
     | '/admin/services'
     | '/admin/you-packages'
     | '/admin/you-services'
@@ -508,6 +541,7 @@ export interface FileRouteTypes {
     | '/phone-bill-inquiry'
     | '/pollinations-image'
     | '/privacy'
+    | '/sabafon-services'
     | '/safety'
     | '/secondary-certificate'
     | '/services'
@@ -524,6 +558,8 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/admin/analytics'
     | '/admin/packages'
+    | '/admin/sabafon-packages'
+    | '/admin/sabafon-services'
     | '/admin/services'
     | '/admin/you-packages'
     | '/admin/you-services'
@@ -553,6 +589,7 @@ export interface RootRouteChildren {
   PhoneBillInquiryRoute: typeof PhoneBillInquiryRoute
   PollinationsImageRoute: typeof PollinationsImageRoute
   PrivacyRoute: typeof PrivacyRoute
+  SabafonServicesRoute: typeof SabafonServicesRoute
   SafetyRoute: typeof SafetyRoute
   SecondaryCertificateRoute: typeof SecondaryCertificateRoute
   ServicesRoute: typeof ServicesRoute
@@ -569,6 +606,8 @@ export interface RootRouteChildren {
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   AdminAnalyticsRoute: typeof AdminAnalyticsRoute
   AdminPackagesRoute: typeof AdminPackagesRoute
+  AdminSabafonPackagesRoute: typeof AdminSabafonPackagesRoute
+  AdminSabafonServicesRoute: typeof AdminSabafonServicesRoute
   AdminServicesRoute: typeof AdminServicesRoute
   AdminYouPackagesRoute: typeof AdminYouPackagesRoute
   AdminYouServicesRoute: typeof AdminYouServicesRoute
@@ -663,6 +702,13 @@ declare module '@tanstack/react-router' {
       path: '/safety'
       fullPath: '/safety'
       preLoaderRoute: typeof SafetyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sabafon-services': {
+      id: '/sabafon-services'
+      path: '/sabafon-services'
+      fullPath: '/sabafon-services'
+      preLoaderRoute: typeof SabafonServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -833,6 +879,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/sabafon-services': {
+      id: '/admin/sabafon-services'
+      path: '/admin/sabafon-services'
+      fullPath: '/admin/sabafon-services'
+      preLoaderRoute: typeof AdminSabafonServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/sabafon-packages': {
+      id: '/admin/sabafon-packages'
+      path: '/admin/sabafon-packages'
+      fullPath: '/admin/sabafon-packages'
+      preLoaderRoute: typeof AdminSabafonPackagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/packages': {
       id: '/admin/packages'
       path: '/admin/packages'
@@ -897,6 +957,7 @@ const rootRouteChildren: RootRouteChildren = {
   PhoneBillInquiryRoute: PhoneBillInquiryRoute,
   PollinationsImageRoute: PollinationsImageRoute,
   PrivacyRoute: PrivacyRoute,
+  SabafonServicesRoute: SabafonServicesRoute,
   SafetyRoute: SafetyRoute,
   SecondaryCertificateRoute: SecondaryCertificateRoute,
   ServicesRoute: ServicesRoute,
@@ -914,6 +975,8 @@ const rootRouteChildren: RootRouteChildren = {
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   AdminAnalyticsRoute: AdminAnalyticsRoute,
   AdminPackagesRoute: AdminPackagesRoute,
+  AdminSabafonPackagesRoute: AdminSabafonPackagesRoute,
+  AdminSabafonServicesRoute: AdminSabafonServicesRoute,
   AdminServicesRoute: AdminServicesRoute,
   AdminYouPackagesRoute: AdminYouPackagesRoute,
   AdminYouServicesRoute: AdminYouServicesRoute,

@@ -148,6 +148,15 @@ const SERVICES = [
     to: "/you-services" as const,
     cta: "ابدأ الآن",
   },
+  {
+    icon: Smartphone,
+    title: "خدمات شركة سبافون",
+    desc: "باقات وخدمات شركة سبافون، إدارة الحساب، وإعدادات الإنترنت في مكان واحد.",
+    to: "/sabafon-services" as const,
+    cta: "ابدأ الآن",
+  },
+
+
 
   {
     icon: PhoneCall,
