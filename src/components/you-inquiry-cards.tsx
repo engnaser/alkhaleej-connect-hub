@@ -462,15 +462,8 @@ function ForwardWithNumberCard({
 }) {
   const [phone, setPhone] = useState("");
   const cancelCode = useServiceCode(id, "cancel", cancelDefault);
-
-  const activate = () => {
-    const trimmed = phone.trim().replace(/\s|-/g, "");
-    if (!/^\d{6,}$/.test(trimmed)) {
-      toast.error("يرجى إدخال رقم صحيح لتحويل المكالمات إليه");
-      return;
-    }
-    window.location.href = `tel:${activatePrefix}${trimmed}%23`;
-  };
+  const trimmed = phone.trim().replace(/\s|-/g, "");
+  const validN = /^\d{6,}$/.test(trimmed) ? trimmed : "";
 
   return (
     <CardShell title={title} icon={<PhoneForwarded className="h-5 w-5" />}>
@@ -494,13 +487,11 @@ function ForwardWithNumberCard({
       </div>
 
       <div className="mt-auto grid grid-cols-3 gap-2">
-        <Button
-          onClick={activate}
-          className="gap-1.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90"
-        >
-          <PhoneCall className="h-4 w-4" />
-          تفعيل
-        </Button>
+        <TemplateRow
+          id={id}
+          defaultTemplate={`${activatePrefix}{n}#`}
+          values={{ n: validN }}
+        />
         <CodeRow id={id} kind="cancel" defaultCode={cancelDefault} />
 
         <DetailsButton title={detailsTitle}>
