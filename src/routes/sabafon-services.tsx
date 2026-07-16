@@ -283,7 +283,10 @@ function SabafonItemCard({ item }: { item: SabafonItem }) {
   );
 }
 
-const SABAFON_4G_CATEGORY_IDS = new Set<string>(["sabafon-cat-anter-4g"]);
+const SABAFON_4G_CATEGORY_IDS = new Set<string>([
+  "sabafon-cat-anter-4g",
+  "sabafon-cat-yabalash-4g-mixed",
+]);
 
 function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
   const { categories, loading } = useSabafonPackagesStore();
