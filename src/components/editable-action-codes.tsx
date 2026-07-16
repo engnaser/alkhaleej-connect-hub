@@ -280,3 +280,191 @@ export function SaveAllCodesBar() {
     </div>
   );
 }
+
+/* =========================================================
+ * TemplateRow — editable code template with {placeholders}
+ * Used for dynamic-input activate buttons (e.g. *555*{n}#)
+ * ========================================================= */
+
+const TPL_LS_KEY = "you-service-templates-v1";
+
+function readTplStore(): Record<string, { activate?: string; cancel?: string }> {
+  if (typeof window === "undefined") return {};
+  try {
+    return JSON.parse(localStorage.getItem(TPL_LS_KEY) || "{}");
+  } catch {
+    return {};
+  }
+}
+function writeTplStore(v: Record<string, { activate?: string; cancel?: string }>) {
+  localStorage.setItem(TPL_LS_KEY, JSON.stringify(v));
+  window.dispatchEvent(new Event("you-service-templates-changed"));
+}
+
+export function useTemplate(id: string, kind: Kind, defaultTpl: string) {
+  const [tpl, setTpl] = useState(defaultTpl);
+  useEffect(() => {
+    const load = () => {
+      const s = readTplStore();
+      setTpl(s[id]?.[kind] ?? defaultTpl);
+    };
+    load();
+    window.addEventListener("you-service-templates-changed", load);
+    return () => window.removeEventListener("you-service-templates-changed", load);
+  }, [id, kind, defaultTpl]);
+  return tpl;
+}
+
+function resolveTpl(tpl: string, values: Record<string, string>) {
+  return tpl.replace(/\{(\w+)\}/g, (_, k) => values[k] ?? "");
+}
+function hasAllPlaceholders(tpl: string, values: Record<string, string>) {
+  const keys = Array.from(tpl.matchAll(/\{(\w+)\}/g)).map((m) => m[1]);
+  return keys.every((k) => (values[k] ?? "").length > 0);
+}
+
+export function TemplateRow({
+  id,
+  kind = "activate",
+  defaultTemplate,
+  values,
+  label,
+  icon,
+  onBeforeCall,
+}: {
+  id: string;
+  kind?: Kind;
+  defaultTemplate: string;
+  values: Record<string, string>;
+  label?: string;
+  icon?: ReactNode;
+  onBeforeCall?: () => boolean | void;
+}) {
+  const { isAdmin } = useIsAdmin();
+  const savedTpl = useTemplate(id, kind, defaultTemplate);
+  const [draft, setDraft] = useState(savedTpl);
+  const [editing, setEditing] = useState(false);
+
+  useEffect(() => {
+    setDraft(savedTpl);
+  }, [savedTpl]);
+
+  const isActivate = kind === "activate";
+  const Icon = icon ?? (isActivate ? <PhoneCall className="h-4 w-4" /> : <XCircle className="h-4 w-4" />);
+  const lbl = label ?? (isActivate ? "تفعيل" : "إلغاء");
+  const btnClass = isActivate
+    ? "bg-primary text-primary-foreground hover:bg-primary/90"
+    : "bg-destructive text-destructive-foreground hover:bg-destructive/90";
+
+  const ready = hasAllPlaceholders(savedTpl, values);
+  const resolved = resolveTpl(savedTpl, values);
+  const href = ready ? toTelHref(resolved) : undefined;
+  const isDirty = draft.trim() !== savedTpl;
+
+  const handleClick = (e: React.MouseEvent) => {
+    if (!ready) {
+      e.preventDefault();
+      toast.error("يرجى إدخال البيانات المطلوبة");
+      return;
+    }
+    if (onBeforeCall && onBeforeCall() === false) {
+      e.preventDefault();
+    }
+  };
+
+  const btn = (
+    <a
+      href={href}
+      onClick={handleClick}
+      aria-disabled={!ready}
+      className={`inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-bold ${
+        ready ? btnClass : "cursor-not-allowed bg-muted text-muted-foreground"
+      }`}
+    >
+      {Icon}
+      {lbl}
+    </a>
+  );
+
+  if (!isAdmin) return btn;
+
+  if (!editing && !isDirty) {
+    return (
+      <div className="relative">
+        {btn}
+        <button
+          onClick={(e) => {
+            e.preventDefault();
+            setEditing(true);
+          }}
+          className="absolute -top-1.5 -right-1.5 grid h-5 w-5 place-items-center rounded-full border border-border bg-background text-muted-foreground shadow-sm hover:text-primary"
+          aria-label="تعديل قالب الكود"
+          title={`تعديل القالب: ${savedTpl}`}
+        >
+          <Pencil className="h-3 w-3" />
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`flex flex-col gap-1.5 rounded-xl border p-1.5 ${
+        isDirty ? "border-amber-500/60 bg-amber-500/5" : "border-primary/40 bg-background"
+      }`}
+    >
+      <div className="flex items-center gap-1">
+        <input
+          dir="ltr"
+          value={draft}
+          onChange={(e) => setDraft(e.target.value)}
+          className="min-w-0 flex-1 rounded-lg bg-transparent px-2 py-1 text-center text-xs font-mono font-bold text-foreground outline-none"
+          placeholder="*123*{n}#"
+        />
+        <button
+          onClick={() => {
+            setDraft(savedTpl);
+            setEditing(false);
+          }}
+          className="grid h-6 w-6 shrink-0 place-items-center rounded-lg border border-border text-muted-foreground hover:text-foreground"
+          aria-label="إغلاق"
+        >
+          <X className="h-3 w-3" />
+        </button>
+      </div>
+      <p className="px-1 text-[10px] leading-tight text-muted-foreground">
+        استخدم {"{n}"} أو {"{amt}"} كموضع للإدخال — مثال: *201*{"{n}"}*{"{amt}"}#
+      </p>
+      {(isDirty || editing) && (
+        <button
+          onClick={() => {
+            const trimmed = draft.trim();
+            if (!trimmed) {
+              toast.error("لا يمكن حفظ قالب فارغ");
+              return;
+            }
+            const s = readTplStore();
+            s[id] = { ...s[id], [kind]: trimmed };
+            writeTplStore(s);
+            setEditing(false);
+            toast.success("تم حفظ القالب");
+          }}
+          className="inline-flex w-full items-center justify-center gap-1 rounded-lg bg-emerald-600 px-2 py-1.5 text-xs font-bold text-white hover:bg-emerald-700"
+        >
+          <Save className="h-3.5 w-3.5" />
+          حفظ القالب
+        </button>
+      )}
+      <a
+        href={href}
+        onClick={handleClick}
+        className={`inline-flex w-full items-center justify-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-bold ${
+          ready ? btnClass : "cursor-not-allowed bg-muted text-muted-foreground"
+        }`}
+      >
+        {Icon}
+        {lbl}
+      </a>
+    </div>
+  );
+}
