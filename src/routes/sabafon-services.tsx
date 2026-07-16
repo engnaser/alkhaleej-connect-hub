@@ -302,7 +302,7 @@ function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
     );
   }
 
-  if (categories.length === 0) {
+  if (filtered.length === 0) {
     return (
       <div className="rounded-2xl border border-border bg-card p-10 text-center shadow-[var(--shadow-card)]">
         <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-primary/10 text-primary">
@@ -310,7 +310,7 @@ function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
         </div>
         <h3 className="text-xl font-black text-foreground">لا توجد باقات بعد</h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          سيتم إضافة باقات شركة سبافون قريباً بإذن الله.
+          سيتم إضافة باقات {generation === "3g" ? "3G" : "4G"} قريباً بإذن الله.
         </p>
       </div>
     );
@@ -323,10 +323,10 @@ function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
       </div>
       <Accordion
         type="multiple"
-        defaultValue={[categories[0].id]}
+        defaultValue={[filtered[0].id]}
         className="space-y-3"
       >
-        {categories.map((cat) => (
+        {filtered.map((cat) => (
           <AccordionItem
             key={cat.id}
             value={cat.id}
