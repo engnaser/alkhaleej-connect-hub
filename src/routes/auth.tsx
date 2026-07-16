@@ -5,6 +5,12 @@ import { supabase } from "@/integrations/supabase/client";
 import logoKhalij from "@/assets/logo-khalij.png";
 
 export const Route = createFileRoute("/auth")({
+  validateSearch: (s: Record<string, unknown>) => ({
+    next:
+      typeof s.next === "string" && s.next.startsWith("/") && !s.next.startsWith("//")
+        ? s.next
+        : "",
+  }),
   head: () => ({
     meta: [
       { title: "تسجيل دخول المسؤول | الخليج تيليكوم" },
@@ -16,6 +22,14 @@ export const Route = createFileRoute("/auth")({
 
 function AuthPage() {
   const navigate = useNavigate();
+  const { next } = Route.useSearch();
+  const goNext = () => {
+    if (next) {
+      window.location.href = next;
+    } else {
+      navigate({ to: "/admin/packages" });
+    }
+  };
   const [mode, setMode] = useState<"signin" | "signup">("signin");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -26,9 +40,10 @@ function AuthPage() {
   // Redirect when already signed in
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
-      if (data.user) navigate({ to: "/admin/packages" });
+      if (data.user) goNext();
     });
-  }, [navigate]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -39,16 +54,19 @@ function AuthPage() {
       if (mode === "signin") {
         const { error: err } = await supabase.auth.signInWithPassword({ email, password });
         if (err) throw err;
-        navigate({ to: "/admin/packages" });
+        goNext();
       } else {
+        const emailRedirect = next
+          ? window.location.origin + "/auth?next=" + encodeURIComponent(next)
+          : window.location.origin + "/auth";
         const { data, error: err } = await supabase.auth.signUp({
           email,
           password,
-          options: { emailRedirectTo: window.location.origin + "/auth" },
+          options: { emailRedirectTo: emailRedirect },
         });
         if (err) throw err;
         if (data.session) {
-          navigate({ to: "/admin/packages" });
+          goNext();
         } else {
           setInfo("تم إنشاء الحساب. إذا طُلب تأكيد البريد، أكّده ثم سجّل الدخول.");
           setMode("signin");
