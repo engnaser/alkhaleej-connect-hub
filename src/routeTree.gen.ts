@@ -46,6 +46,8 @@ import { Route as ApiGenerateImageRouteImport } from './routes/api/generate-imag
 import { Route as AdminYouServicesRouteImport } from './routes/admin.you-services'
 import { Route as AdminYouPackagesRouteImport } from './routes/admin.you-packages'
 import { Route as AdminServicesRouteImport } from './routes/admin.services'
+import { Route as AdminSabafonServicesRouteImport } from './routes/admin.sabafon-services'
+import { Route as AdminSabafonPackagesRouteImport } from './routes/admin.sabafon-packages'
 import { Route as AdminPackagesRouteImport } from './routes/admin.packages'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
 import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
@@ -238,6 +240,16 @@ const AdminServicesRoute = AdminServicesRouteImport.update({
   path: '/admin/services',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminSabafonServicesRoute = AdminSabafonServicesRouteImport.update({
+  id: '/admin/sabafon-services',
+  path: '/admin/sabafon-services',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminSabafonPackagesRoute = AdminSabafonPackagesRouteImport.update({
+  id: '/admin/sabafon-packages',
+  path: '/admin/sabafon-packages',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AdminPackagesRoute = AdminPackagesRouteImport.update({
   id: '/admin/packages',
   path: '/admin/packages',
@@ -308,6 +320,8 @@ export interface FileRoutesByFullPath {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
+  '/admin/sabafon-packages': typeof AdminSabafonPackagesRoute
+  '/admin/sabafon-services': typeof AdminSabafonServicesRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/you-packages': typeof AdminYouPackagesRoute
   '/admin/you-services': typeof AdminYouServicesRoute
@@ -353,6 +367,8 @@ export interface FileRoutesByTo {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
+  '/admin/sabafon-packages': typeof AdminSabafonPackagesRoute
+  '/admin/sabafon-services': typeof AdminSabafonServicesRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/you-packages': typeof AdminYouPackagesRoute
   '/admin/you-services': typeof AdminYouServicesRoute
@@ -399,6 +415,8 @@ export interface FileRoutesById {
   '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
+  '/admin/sabafon-packages': typeof AdminSabafonPackagesRoute
+  '/admin/sabafon-services': typeof AdminSabafonServicesRoute
   '/admin/services': typeof AdminServicesRoute
   '/admin/you-packages': typeof AdminYouPackagesRoute
   '/admin/you-services': typeof AdminYouServicesRoute
@@ -446,6 +464,8 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/admin/analytics'
     | '/admin/packages'
+    | '/admin/sabafon-packages'
+    | '/admin/sabafon-services'
     | '/admin/services'
     | '/admin/you-packages'
     | '/admin/you-services'
@@ -491,6 +511,8 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/admin/analytics'
     | '/admin/packages'
+    | '/admin/sabafon-packages'
+    | '/admin/sabafon-services'
     | '/admin/services'
     | '/admin/you-packages'
     | '/admin/you-services'
@@ -536,6 +558,8 @@ export interface FileRouteTypes {
     | '/.well-known/oauth-protected-resource'
     | '/admin/analytics'
     | '/admin/packages'
+    | '/admin/sabafon-packages'
+    | '/admin/sabafon-services'
     | '/admin/services'
     | '/admin/you-packages'
     | '/admin/you-services'
@@ -582,6 +606,8 @@ export interface RootRouteChildren {
   Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   AdminAnalyticsRoute: typeof AdminAnalyticsRoute
   AdminPackagesRoute: typeof AdminPackagesRoute
+  AdminSabafonPackagesRoute: typeof AdminSabafonPackagesRoute
+  AdminSabafonServicesRoute: typeof AdminSabafonServicesRoute
   AdminServicesRoute: typeof AdminServicesRoute
   AdminYouPackagesRoute: typeof AdminYouPackagesRoute
   AdminYouServicesRoute: typeof AdminYouServicesRoute
@@ -853,6 +879,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/sabafon-services': {
+      id: '/admin/sabafon-services'
+      path: '/admin/sabafon-services'
+      fullPath: '/admin/sabafon-services'
+      preLoaderRoute: typeof AdminSabafonServicesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/sabafon-packages': {
+      id: '/admin/sabafon-packages'
+      path: '/admin/sabafon-packages'
+      fullPath: '/admin/sabafon-packages'
+      preLoaderRoute: typeof AdminSabafonPackagesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/admin/packages': {
       id: '/admin/packages'
       path: '/admin/packages'
@@ -935,6 +975,8 @@ const rootRouteChildren: RootRouteChildren = {
     Char91DotwellKnownChar93OauthProtectedResourceRoute,
   AdminAnalyticsRoute: AdminAnalyticsRoute,
   AdminPackagesRoute: AdminPackagesRoute,
+  AdminSabafonPackagesRoute: AdminSabafonPackagesRoute,
+  AdminSabafonServicesRoute: AdminSabafonServicesRoute,
   AdminServicesRoute: AdminServicesRoute,
   AdminYouPackagesRoute: AdminYouPackagesRoute,
   AdminYouServicesRoute: AdminYouServicesRoute,
