@@ -21,6 +21,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as ServicesRouteImport } from './routes/services'
 import { Route as SecondaryCertificateRouteImport } from './routes/secondary-certificate'
 import { Route as SafetyRouteImport } from './routes/safety'
+import { Route as SabafonServicesRouteImport } from './routes/sabafon-services'
 import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PollinationsImageRouteImport } from './routes/pollinations-image'
 import { Route as PhoneBillInquiryRouteImport } from './routes/phone-bill-inquiry'
@@ -110,6 +111,11 @@ const SecondaryCertificateRoute = SecondaryCertificateRouteImport.update({
 const SafetyRoute = SafetyRouteImport.update({
   id: '/safety',
   path: '/safety',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const SabafonServicesRoute = SabafonServicesRouteImport.update({
+  id: '/sabafon-services',
+  path: '/sabafon-services',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PrivacyRoute = PrivacyRouteImport.update({
@@ -285,6 +291,7 @@ export interface FileRoutesByFullPath {
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
   '/pollinations-image': typeof PollinationsImageRoute
   '/privacy': typeof PrivacyRoute
+  '/sabafon-services': typeof SabafonServicesRoute
   '/safety': typeof SafetyRoute
   '/secondary-certificate': typeof SecondaryCertificateRoute
   '/services': typeof ServicesRoute
@@ -329,6 +336,7 @@ export interface FileRoutesByTo {
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
   '/pollinations-image': typeof PollinationsImageRoute
   '/privacy': typeof PrivacyRoute
+  '/sabafon-services': typeof SabafonServicesRoute
   '/safety': typeof SafetyRoute
   '/secondary-certificate': typeof SecondaryCertificateRoute
   '/services': typeof ServicesRoute
@@ -374,6 +382,7 @@ export interface FileRoutesById {
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
   '/pollinations-image': typeof PollinationsImageRoute
   '/privacy': typeof PrivacyRoute
+  '/sabafon-services': typeof SabafonServicesRoute
   '/safety': typeof SafetyRoute
   '/secondary-certificate': typeof SecondaryCertificateRoute
   '/services': typeof ServicesRoute
@@ -420,6 +429,7 @@ export interface FileRouteTypes {
     | '/phone-bill-inquiry'
     | '/pollinations-image'
     | '/privacy'
+    | '/sabafon-services'
     | '/safety'
     | '/secondary-certificate'
     | '/services'
@@ -464,6 +474,7 @@ export interface FileRouteTypes {
     | '/phone-bill-inquiry'
     | '/pollinations-image'
     | '/privacy'
+    | '/sabafon-services'
     | '/safety'
     | '/secondary-certificate'
     | '/services'
@@ -508,6 +519,7 @@ export interface FileRouteTypes {
     | '/phone-bill-inquiry'
     | '/pollinations-image'
     | '/privacy'
+    | '/sabafon-services'
     | '/safety'
     | '/secondary-certificate'
     | '/services'
@@ -553,6 +565,7 @@ export interface RootRouteChildren {
   PhoneBillInquiryRoute: typeof PhoneBillInquiryRoute
   PollinationsImageRoute: typeof PollinationsImageRoute
   PrivacyRoute: typeof PrivacyRoute
+  SabafonServicesRoute: typeof SabafonServicesRoute
   SafetyRoute: typeof SafetyRoute
   SecondaryCertificateRoute: typeof SecondaryCertificateRoute
   ServicesRoute: typeof ServicesRoute
@@ -663,6 +676,13 @@ declare module '@tanstack/react-router' {
       path: '/safety'
       fullPath: '/safety'
       preLoaderRoute: typeof SafetyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/sabafon-services': {
+      id: '/sabafon-services'
+      path: '/sabafon-services'
+      fullPath: '/sabafon-services'
+      preLoaderRoute: typeof SabafonServicesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/privacy': {
@@ -897,6 +917,7 @@ const rootRouteChildren: RootRouteChildren = {
   PhoneBillInquiryRoute: PhoneBillInquiryRoute,
   PollinationsImageRoute: PollinationsImageRoute,
   PrivacyRoute: PrivacyRoute,
+  SabafonServicesRoute: SabafonServicesRoute,
   SafetyRoute: SafetyRoute,
   SecondaryCertificateRoute: SecondaryCertificateRoute,
   ServicesRoute: ServicesRoute,
