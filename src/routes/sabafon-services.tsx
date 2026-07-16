@@ -288,6 +288,7 @@ const SABAFON_4G_CATEGORY_IDS = new Set<string>([
   "sabafon-cat-yabalash-4g-mixed",
   "sabafon-cat-safari-4g",
   "sabafon-cat-hybrid-4g",
+  "sabafon-cat-wahed-4g",
 ]);
 
 function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
