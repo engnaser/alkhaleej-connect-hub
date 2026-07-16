@@ -283,9 +283,17 @@ function SabafonItemCard({ item }: { item: SabafonItem }) {
   );
 }
 
+const SABAFON_4G_CATEGORY_IDS = new Set<string>(["sabafon-cat-anter-4g"]);
+
 function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
   const { categories, loading } = useSabafonPackagesStore();
-  const filtered = generation === "4g" ? [] : categories;
+  const filtered = categories.filter((c) =>
+    generation === "4g"
+      ? SABAFON_4G_CATEGORY_IDS.has(c.id)
+      : !SABAFON_4G_CATEGORY_IDS.has(c.id),
+  );
+
+
 
 
 
