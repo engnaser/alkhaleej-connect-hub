@@ -174,7 +174,6 @@ export function YouBillInquiryCard() {
 
 export function YouBrowse4GCard() {
   const code = useServiceCode("you-browse-4g", "activate", "*555#");
-  const telHref = `tel:${encodeURIComponent(code)}`;
   return (
     <CardShell title="تصفح باقات YOU 4G" icon={<Wifi className="h-5 w-5" />}>
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
@@ -182,30 +181,27 @@ export function YouBrowse4GCard() {
         والصلاحيات قبل التفعيل.
       </p>
       <CodePill code={code} label="كود التصفح" />
-      <div className="mt-auto grid grid-cols-2 gap-2">
-        <a
-          href={telHref}
-          className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary px-3 py-2.5 text-sm font-bold text-primary-foreground hover:bg-primary/90"
-        >
-          <Wifi className="h-4 w-4" />
-          تفعيل / تصفح
-        </a>
-        <DetailsButton title="باقات YOU 4G">
-          <p>
-            توفر شركة يو مجموعة واسعة من باقات الإنترنت فورجي بأسعار وسعات متنوعة،
-            منها: باقات <span className="font-bold">سمارت نت</span> الشهرية، وباقات{" "}
-            <span className="font-bold">مكس</span> التي تجمع بين الإنترنت والمكالمات،
-            وباقات <span className="font-bold">وفر</span> الاقتصادية.
-          </p>
-          <p>
-            اطلب الكود{" "}
-            <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>
-              {code}
-            </bdi>{" "}
-            من هاتفك لعرض قائمة الباقات مباشرة، أو اضغط "تصفح الباقات" للانتقال إلى صفحة الباقات.
-          </p>
-        </DetailsButton>
-      </div>
+      <EditableActionCodes
+        id="you-browse-4g"
+        activateCode="*555#"
+        detailsSlot={
+          <DetailsButton title="باقات YOU 4G">
+            <p>
+              توفر شركة يو مجموعة واسعة من باقات الإنترنت فورجي بأسعار وسعات متنوعة،
+              منها: باقات <span className="font-bold">سمارت نت</span> الشهرية، وباقات{" "}
+              <span className="font-bold">مكس</span> التي تجمع بين الإنترنت والمكالمات،
+              وباقات <span className="font-bold">وفر</span> الاقتصادية.
+            </p>
+            <p>
+              اطلب الكود{" "}
+              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>
+                {code}
+              </bdi>{" "}
+              من هاتفك لعرض قائمة الباقات مباشرة، أو اضغط "تصفح الباقات" للانتقال إلى صفحة الباقات.
+            </p>
+          </DetailsButton>
+        }
+      />
       <div className="mt-3">
         <Link
           to="/you-services"
@@ -214,9 +210,6 @@ export function YouBrowse4GCard() {
         >
           تصفح الباقات في الموقع
         </Link>
-      </div>
-      <div className="mt-3">
-        <CodeRow id="you-browse-4g" kind="activate" defaultCode="*555#" />
       </div>
     </CardShell>
   );
