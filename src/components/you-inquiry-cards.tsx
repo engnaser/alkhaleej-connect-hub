@@ -172,24 +172,23 @@ export function YouBillInquiryCard() {
 /* ---------- 3) Browse YOU 4G packages ---------- */
 
 export function YouBrowse4GCard() {
+  const code = useServiceCode("you-browse-4g", "activate", "*555#");
+  const telHref = `tel:${encodeURIComponent(code)}`;
   return (
     <CardShell title="تصفح باقات YOU 4G" icon={<Wifi className="h-5 w-5" />}>
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
         تصفح جميع باقات الإنترنت من يو فورجي (سمارت نت، مكس، وفر) وقارن الأسعار
         والصلاحيات قبل التفعيل.
       </p>
-      <div className="mb-4 rounded-xl border border-primary/20 bg-primary/5 p-3 text-sm text-muted-foreground">
-        باقات إنترنت متنوعة تناسب الاستخدام اليومي والاستخدام الكثيف.
-      </div>
+      <CodePill code={code} label="كود التصفح" />
       <div className="mt-auto grid grid-cols-2 gap-2">
-        <Link
-          to="/you-services"
-          hash="packages"
+        <a
+          href={telHref}
           className="inline-flex items-center justify-center gap-1.5 rounded-xl bg-primary px-3 py-2.5 text-sm font-bold text-primary-foreground hover:bg-primary/90"
         >
           <Wifi className="h-4 w-4" />
-          تصفح الباقات
-        </Link>
+          تفعيل / تصفح
+        </a>
         <DetailsButton title="باقات YOU 4G">
           <p>
             توفر شركة يو مجموعة واسعة من باقات الإنترنت فورجي بأسعار وسعات متنوعة،
@@ -197,12 +196,31 @@ export function YouBrowse4GCard() {
             <span className="font-bold">مكس</span> التي تجمع بين الإنترنت والمكالمات،
             وباقات <span className="font-bold">وفر</span> الاقتصادية.
           </p>
-          <p>اضغط "تصفح الباقات" للانتقال إلى تبويب الباقات ومقارنة الخيارات.</p>
+          <p>
+            اطلب الكود{" "}
+            <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>
+              {code}
+            </bdi>{" "}
+            من هاتفك لعرض قائمة الباقات مباشرة، أو اضغط "تصفح الباقات" للانتقال إلى صفحة الباقات.
+          </p>
         </DetailsButton>
+      </div>
+      <div className="mt-3">
+        <Link
+          to="/you-services"
+          hash="packages"
+          className="inline-flex w-full items-center justify-center gap-1.5 rounded-xl border border-border bg-background px-3 py-2 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
+        >
+          تصفح الباقات في الموقع
+        </Link>
+      </div>
+      <div className="mt-3">
+        <CodeRow id="you-browse-4g" kind="activate" defaultCode="*555#" />
       </div>
     </CardShell>
   );
 }
+
 
 /* ---------- 4) Super Kashef — off / out of coverage ---------- */
 
