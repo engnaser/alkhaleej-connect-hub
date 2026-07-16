@@ -386,15 +386,8 @@ export function YouSuperKashefAllCard() {
 export function YouForwardOffCard() {
   const [phone, setPhone] = useState("");
   const cancelCode = useServiceCode("you-forward-off", "cancel", "##62#");
-
-  const activate = () => {
-    const trimmed = phone.trim().replace(/\s|-/g, "");
-    if (!/^\d{6,}$/.test(trimmed)) {
-      toast.error("يرجى إدخال رقم صحيح لتحويل المكالمات إليه");
-      return;
-    }
-    window.location.href = `tel:*62*${trimmed}%23`;
-  };
+  const trimmed = phone.trim().replace(/\s|-/g, "");
+  const validN = /^\d{6,}$/.test(trimmed) ? trimmed : "";
 
   return (
     <CardShell
@@ -422,13 +415,11 @@ export function YouForwardOffCard() {
       </div>
 
       <div className="mt-auto grid grid-cols-3 gap-2">
-        <Button
-          onClick={activate}
-          className="col-span-1 gap-1.5 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90"
-        >
-          <PhoneCall className="h-4 w-4" />
-          تفعيل
-        </Button>
+        <TemplateRow
+          id="you-forward-off"
+          defaultTemplate="*62*{n}#"
+          values={{ n: validN }}
+        />
         <CodeRow id="you-forward-off" kind="cancel" defaultCode="##62#" />
 
         <DetailsButton title="تحويل المكالمات — إغلاق أو خارج التغطية">
