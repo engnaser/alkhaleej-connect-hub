@@ -290,6 +290,7 @@ const SABAFON_4G_CATEGORY_IDS = new Set<string>([
   "sabafon-cat-hybrid-4g",
   "sabafon-cat-wahed-4g",
   "sabafon-cat-social-4g",
+  "sabafon-cat-sms-only",
 ]);
 
 function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
