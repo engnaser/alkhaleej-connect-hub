@@ -1,4 +1,40 @@
-import { createFileRoute } from '@tanstack/react-router'
+import { createFileRoute, Link } from "@tanstack/react-router";
+import { SiteHeader } from "@/components/site-header";
+import { SiteFooter } from "@/components/site-footer";
+import { SaveAllCodesBar } from "@/components/editable-action-codes";
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/ui/tabs";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+import {
+  ArrowLeft,
+  Sparkles,
+  Package,
+  Wrench,
+  UserCog,
+  Settings2,
+  AlertTriangle,
+  Clock,
+  Phone,
+  Settings,
+  Copy,
+  Check,
+  Share2,
+  PhoneCall,
+} from "lucide-react";
+import React, { useState } from "react";
+import { useSabafonItems, sabafonIconFor, type SabafonSection, type SabafonItem } from "@/lib/sabafonServicesStore";
+import { useSabafonPackagesStore, type SabafonPackage } from "@/lib/sabafonPackagesStore";
+import { supabase } from "@/integrations/supabase/client";
+import { useIsAdmin } from "@/hooks/use-is-admin";
 
 export const Route = createFileRoute("/sabafon-services")({
   head: () => ({
@@ -146,7 +182,7 @@ function SabafonServicesPage() {
 
 function SectionList({ section }: { section: SabafonSection }) {
   const { items, loading } = useSabafonItems(section);
-  const extras: ReactNode[] = [];
+  const extras: React.ReactNode[] = [];
 
   if (loading) {
     return (
@@ -334,7 +370,7 @@ function SabafonPackageCard({ pkg }: { pkg: SabafonPackage }) {
     const value = codeDraft.trim().slice(0, 32);
     setSaving(true);
     const { error } = await supabase
-      .from("sabafon_packages")
+      .from("you_packages")
       .update({ code: value || null })
       .eq("id", pkg.id);
     setSaving(false);
