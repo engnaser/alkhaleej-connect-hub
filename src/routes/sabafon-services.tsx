@@ -285,13 +285,8 @@ function SabafonItemCard({ item }: { item: SabafonItem }) {
 
 function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
   const { categories, loading } = useSabafonPackagesStore();
-  const filtered = categories.filter((c) => {
-    const text = `${c.title} ${c.description ?? ""}`.toLowerCase();
-    const has3g = /3g|ثري\s*جي/.test(text);
-    const has4g = /4g|فورجي|فور\s*جي/.test(text);
-    if (generation === "3g") return has3g || (!has3g && !has4g);
-    return has4g;
-  });
+  const filtered = generation === "4g" ? [] : categories;
+
 
 
   if (loading) {
