@@ -119,14 +119,21 @@ function SabafonServicesPage() {
 
         {/* TABS */}
         <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
-          <Tabs defaultValue="packages" className="w-full">
+          <Tabs defaultValue="packages_3g" className="w-full">
             <TabsList className="flex h-auto w-full flex-wrap justify-center gap-2 rounded-2xl border border-border bg-card p-2 shadow-[var(--shadow-card)]">
               <TabsTrigger
-                value="packages"
+                value="packages_3g"
                 className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
               >
                 <Package className="h-4 w-4" />
-                تفعيل الباقات
+                أكواد باقات 3G
+              </TabsTrigger>
+              <TabsTrigger
+                value="packages_4g"
+                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+              >
+                <Package className="h-4 w-4" />
+                أكواد باقات 4G
               </TabsTrigger>
               <TabsTrigger
                 value="services"
@@ -158,8 +165,11 @@ function SabafonServicesPage() {
               </p>
             </div>
 
-            <TabsContent value="packages" className="mt-6">
-              <PackagesPanel />
+            <TabsContent value="packages_3g" className="mt-6">
+              <PackagesPanel generation="3g" />
+            </TabsContent>
+            <TabsContent value="packages_4g" className="mt-6">
+              <PackagesPanel generation="4g" />
             </TabsContent>
             <TabsContent value="services" className="mt-6">
               <SectionList section="services" />
@@ -171,6 +181,7 @@ function SabafonServicesPage() {
               <SectionList section="internet" />
             </TabsContent>
           </Tabs>
+
         </section>
       </main>
 
@@ -272,8 +283,16 @@ function SabafonItemCard({ item }: { item: SabafonItem }) {
   );
 }
 
-function PackagesPanel() {
+function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
   const { categories, loading } = useSabafonPackagesStore();
+  const filtered = categories.filter((c) => {
+    const text = `${c.title} ${c.description ?? ""}`.toLowerCase();
+    const has3g = /3g|ثري\s*جي/.test(text);
+    const has4g = /4g|فورجي|فور\s*جي/.test(text);
+    if (generation === "3g") return has3g || (!has3g && !has4g);
+    return has4g;
+  });
+
 
   if (loading) {
     return (
@@ -283,7 +302,7 @@ function PackagesPanel() {
     );
   }
 
-  if (categories.length === 0) {
+  if (filtered.length === 0) {
     return (
       <div className="rounded-2xl border border-border bg-card p-10 text-center shadow-[var(--shadow-card)]">
         <div className="mx-auto mb-4 grid h-14 w-14 place-items-center rounded-full bg-primary/10 text-primary">
@@ -291,7 +310,7 @@ function PackagesPanel() {
         </div>
         <h3 className="text-xl font-black text-foreground">لا توجد باقات بعد</h3>
         <p className="mt-2 text-sm text-muted-foreground">
-          سيتم إضافة باقات شركة سبافون قريباً بإذن الله.
+          سيتم إضافة باقات {generation === "3g" ? "3G" : "4G"} قريباً بإذن الله.
         </p>
       </div>
     );
@@ -304,10 +323,10 @@ function PackagesPanel() {
       </div>
       <Accordion
         type="multiple"
-        defaultValue={[categories[0].id]}
+        defaultValue={[filtered[0].id]}
         className="space-y-3"
       >
-        {categories.map((cat) => (
+        {filtered.map((cat) => (
           <AccordionItem
             key={cat.id}
             value={cat.id}
