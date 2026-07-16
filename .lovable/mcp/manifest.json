@@ -1,0 +1,109 @@
+{
+  "version": 1,
+  "sdk_version": "0.23.0",
+  "path": "/mcp",
+  "auth": {
+    "type": "oauth",
+    "issuer": "https://llapkhdkefablqhxzqmm.supabase.co/auth/v1",
+    "accepted_audiences": [
+      "authenticated"
+    ]
+  },
+  "mcp": {
+    "server": {
+      "name": "alkhaleej-connect-hub-mcp",
+      "version": "0.1.0",
+      "title": "الخليج تيليكوم — MCP"
+    },
+    "tools": [
+      {
+        "name": "list_services",
+        "title": "قائمة الخدمات",
+        "description": "قراءة قائمة خدمات يمن موبايل أو يو من قاعدة البيانات. اختر provider = 'ym' أو 'you'.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "provider": {
+              "type": "string",
+              "enum": [
+                "ym",
+                "you"
+              ],
+              "description": "مزود الخدمة: ym = يمن موبايل، you = شركة يو."
+            },
+            "limit": {
+              "description": "الحد الأقصى لعدد النتائج (افتراضي 50).",
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "provider"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "list_packages",
+        "title": "قائمة الباقات",
+        "description": "قراءة باقات يمن موبايل أو يو. اختر provider = 'ym' أو 'you'.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "provider": {
+              "type": "string",
+              "enum": [
+                "ym",
+                "you"
+              ],
+              "description": "مزود الخدمة."
+            },
+            "limit": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 100
+            }
+          },
+          "required": [
+            "provider"
+          ]
+        },
+        "outputSchema": null
+      },
+      {
+        "name": "get_exchange_rates",
+        "title": "أسعار الصرف",
+        "description": "قراءة أحدث أسعار صرف العملات المخزنة في التطبيق.",
+        "annotations": {
+          "readOnlyHint": true,
+          "idempotentHint": true,
+          "openWorldHint": false
+        },
+        "inputSchema": {
+          "$schema": "http://json-schema.org/draft-07/schema#",
+          "type": "object",
+          "properties": {
+            "currency": {
+              "description": "رمز العملة (اختياري) مثل USD أو SAR للتصفية.",
+              "type": "string"
+            }
+          }
+        },
+        "outputSchema": null
+      }
+    ]
+  }
+}
