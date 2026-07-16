@@ -25,6 +25,7 @@ import { Route as PrivacyRouteImport } from './routes/privacy'
 import { Route as PollinationsImageRouteImport } from './routes/pollinations-image'
 import { Route as PhoneBillInquiryRouteImport } from './routes/phone-bill-inquiry'
 import { Route as MyPhotosRouteImport } from './routes/my-photos'
+import { Route as McpRouteImport } from './routes/mcp'
 import { Route as MarketingWriterRouteImport } from './routes/marketing-writer'
 import { Route as ImageGeneratorRouteImport } from './routes/image-generator'
 import { Route as GoldPricesRouteImport } from './routes/gold-prices'
@@ -46,6 +47,10 @@ import { Route as AdminYouPackagesRouteImport } from './routes/admin.you-package
 import { Route as AdminServicesRouteImport } from './routes/admin.services'
 import { Route as AdminPackagesRouteImport } from './routes/admin.packages'
 import { Route as AdminAnalyticsRouteImport } from './routes/admin.analytics'
+import { Route as Char91DotwellKnownChar93OauthProtectedResourceRouteImport } from './routes/[.well-known]/oauth-protected-resource'
+import { Route as Char91DotmcpChar93ListToolsRouteImport } from './routes/[.mcp]/list-tools'
+import { Route as Char91DotmcpChar93InvokeToolToolRouteImport } from './routes/[.mcp]/invoke-tool/$tool'
+import { Route as DotlovableOauthConsentRouteImport } from './routes/[.]lovable.oauth.consent'
 
 const YouServicesRoute = YouServicesRouteImport.update({
   id: '/you-services',
@@ -125,6 +130,11 @@ const PhoneBillInquiryRoute = PhoneBillInquiryRouteImport.update({
 const MyPhotosRoute = MyPhotosRouteImport.update({
   id: '/my-photos',
   path: '/my-photos',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const McpRoute = McpRouteImport.update({
+  id: '/mcp',
+  path: '/mcp',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MarketingWriterRoute = MarketingWriterRouteImport.update({
@@ -232,6 +242,29 @@ const AdminAnalyticsRoute = AdminAnalyticsRouteImport.update({
   path: '/admin/analytics',
   getParentRoute: () => rootRouteImport,
 } as any)
+const Char91DotwellKnownChar93OauthProtectedResourceRoute =
+  Char91DotwellKnownChar93OauthProtectedResourceRouteImport.update({
+    id: '/.well-known/oauth-protected-resource',
+    path: '/.well-known/oauth-protected-resource',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotmcpChar93ListToolsRoute =
+  Char91DotmcpChar93ListToolsRouteImport.update({
+    id: '/.mcp/list-tools',
+    path: '/.mcp/list-tools',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const Char91DotmcpChar93InvokeToolToolRoute =
+  Char91DotmcpChar93InvokeToolToolRouteImport.update({
+    id: '/.mcp/invoke-tool/$tool',
+    path: '/.mcp/invoke-tool/$tool',
+    getParentRoute: () => rootRouteImport,
+  } as any)
+const DotlovableOauthConsentRoute = DotlovableOauthConsentRouteImport.update({
+  id: '/.lovable/oauth/consent',
+  path: '/.lovable/oauth/consent',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -247,6 +280,7 @@ export interface FileRoutesByFullPath {
   '/gold-prices': typeof GoldPricesRoute
   '/image-generator': typeof ImageGeneratorRoute
   '/marketing-writer': typeof MarketingWriterRoute
+  '/mcp': typeof McpRoute
   '/my-photos': typeof MyPhotosRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
   '/pollinations-image': typeof PollinationsImageRoute
@@ -263,6 +297,8 @@ export interface FileRoutesByFullPath {
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
   '/you-services': typeof YouServicesRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
   '/admin/services': typeof AdminServicesRoute
@@ -271,6 +307,8 @@ export interface FileRoutesByFullPath {
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -286,6 +324,7 @@ export interface FileRoutesByTo {
   '/gold-prices': typeof GoldPricesRoute
   '/image-generator': typeof ImageGeneratorRoute
   '/marketing-writer': typeof MarketingWriterRoute
+  '/mcp': typeof McpRoute
   '/my-photos': typeof MyPhotosRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
   '/pollinations-image': typeof PollinationsImageRoute
@@ -302,6 +341,8 @@ export interface FileRoutesByTo {
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
   '/you-services': typeof YouServicesRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
   '/admin/services': typeof AdminServicesRoute
@@ -310,6 +351,8 @@ export interface FileRoutesByTo {
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud': typeof MawloudIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -326,6 +369,7 @@ export interface FileRoutesById {
   '/gold-prices': typeof GoldPricesRoute
   '/image-generator': typeof ImageGeneratorRoute
   '/marketing-writer': typeof MarketingWriterRoute
+  '/mcp': typeof McpRoute
   '/my-photos': typeof MyPhotosRoute
   '/phone-bill-inquiry': typeof PhoneBillInquiryRoute
   '/pollinations-image': typeof PollinationsImageRoute
@@ -342,6 +386,8 @@ export interface FileRoutesById {
   '/yemen-mobile': typeof YemenMobileRoute
   '/yemen4g-inquiry': typeof Yemen4gInquiryRoute
   '/you-services': typeof YouServicesRoute
+  '/.mcp/list-tools': typeof Char91DotmcpChar93ListToolsRoute
+  '/.well-known/oauth-protected-resource': typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   '/admin/analytics': typeof AdminAnalyticsRoute
   '/admin/packages': typeof AdminPackagesRoute
   '/admin/services': typeof AdminServicesRoute
@@ -350,6 +396,8 @@ export interface FileRoutesById {
   '/api/generate-image': typeof ApiGenerateImageRoute
   '/mawloud/settings': typeof MawloudSettingsRoute
   '/mawloud/': typeof MawloudIndexRoute
+  '/.lovable/oauth/consent': typeof DotlovableOauthConsentRoute
+  '/.mcp/invoke-tool/$tool': typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -367,6 +415,7 @@ export interface FileRouteTypes {
     | '/gold-prices'
     | '/image-generator'
     | '/marketing-writer'
+    | '/mcp'
     | '/my-photos'
     | '/phone-bill-inquiry'
     | '/pollinations-image'
@@ -383,6 +432,8 @@ export interface FileRouteTypes {
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
     | '/you-services'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/admin/analytics'
     | '/admin/packages'
     | '/admin/services'
@@ -391,6 +442,8 @@ export interface FileRouteTypes {
     | '/api/generate-image'
     | '/mawloud/settings'
     | '/mawloud/'
+    | '/.lovable/oauth/consent'
+    | '/.mcp/invoke-tool/$tool'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -406,6 +459,7 @@ export interface FileRouteTypes {
     | '/gold-prices'
     | '/image-generator'
     | '/marketing-writer'
+    | '/mcp'
     | '/my-photos'
     | '/phone-bill-inquiry'
     | '/pollinations-image'
@@ -422,6 +476,8 @@ export interface FileRouteTypes {
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
     | '/you-services'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/admin/analytics'
     | '/admin/packages'
     | '/admin/services'
@@ -430,6 +486,8 @@ export interface FileRouteTypes {
     | '/api/generate-image'
     | '/mawloud/settings'
     | '/mawloud'
+    | '/.lovable/oauth/consent'
+    | '/.mcp/invoke-tool/$tool'
   id:
     | '__root__'
     | '/'
@@ -445,6 +503,7 @@ export interface FileRouteTypes {
     | '/gold-prices'
     | '/image-generator'
     | '/marketing-writer'
+    | '/mcp'
     | '/my-photos'
     | '/phone-bill-inquiry'
     | '/pollinations-image'
@@ -461,6 +520,8 @@ export interface FileRouteTypes {
     | '/yemen-mobile'
     | '/yemen4g-inquiry'
     | '/you-services'
+    | '/.mcp/list-tools'
+    | '/.well-known/oauth-protected-resource'
     | '/admin/analytics'
     | '/admin/packages'
     | '/admin/services'
@@ -469,6 +530,8 @@ export interface FileRouteTypes {
     | '/api/generate-image'
     | '/mawloud/settings'
     | '/mawloud/'
+    | '/.lovable/oauth/consent'
+    | '/.mcp/invoke-tool/$tool'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -485,6 +548,7 @@ export interface RootRouteChildren {
   GoldPricesRoute: typeof GoldPricesRoute
   ImageGeneratorRoute: typeof ImageGeneratorRoute
   MarketingWriterRoute: typeof MarketingWriterRoute
+  McpRoute: typeof McpRoute
   MyPhotosRoute: typeof MyPhotosRoute
   PhoneBillInquiryRoute: typeof PhoneBillInquiryRoute
   PollinationsImageRoute: typeof PollinationsImageRoute
@@ -501,6 +565,8 @@ export interface RootRouteChildren {
   YemenMobileRoute: typeof YemenMobileRoute
   Yemen4gInquiryRoute: typeof Yemen4gInquiryRoute
   YouServicesRoute: typeof YouServicesRoute
+  Char91DotmcpChar93ListToolsRoute: typeof Char91DotmcpChar93ListToolsRoute
+  Char91DotwellKnownChar93OauthProtectedResourceRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRoute
   AdminAnalyticsRoute: typeof AdminAnalyticsRoute
   AdminPackagesRoute: typeof AdminPackagesRoute
   AdminServicesRoute: typeof AdminServicesRoute
@@ -509,6 +575,8 @@ export interface RootRouteChildren {
   ApiGenerateImageRoute: typeof ApiGenerateImageRoute
   MawloudSettingsRoute: typeof MawloudSettingsRoute
   MawloudIndexRoute: typeof MawloudIndexRoute
+  DotlovableOauthConsentRoute: typeof DotlovableOauthConsentRoute
+  Char91DotmcpChar93InvokeToolToolRoute: typeof Char91DotmcpChar93InvokeToolToolRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -623,6 +691,13 @@ declare module '@tanstack/react-router' {
       path: '/my-photos'
       fullPath: '/my-photos'
       preLoaderRoute: typeof MyPhotosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/mcp': {
+      id: '/mcp'
+      path: '/mcp'
+      fullPath: '/mcp'
+      preLoaderRoute: typeof McpRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/marketing-writer': {
@@ -772,6 +847,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AdminAnalyticsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/.well-known/oauth-protected-resource': {
+      id: '/.well-known/oauth-protected-resource'
+      path: '/.well-known/oauth-protected-resource'
+      fullPath: '/.well-known/oauth-protected-resource'
+      preLoaderRoute: typeof Char91DotwellKnownChar93OauthProtectedResourceRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/list-tools': {
+      id: '/.mcp/list-tools'
+      path: '/.mcp/list-tools'
+      fullPath: '/.mcp/list-tools'
+      preLoaderRoute: typeof Char91DotmcpChar93ListToolsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.mcp/invoke-tool/$tool': {
+      id: '/.mcp/invoke-tool/$tool'
+      path: '/.mcp/invoke-tool/$tool'
+      fullPath: '/.mcp/invoke-tool/$tool'
+      preLoaderRoute: typeof Char91DotmcpChar93InvokeToolToolRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/.lovable/oauth/consent': {
+      id: '/.lovable/oauth/consent'
+      path: '/.lovable/oauth/consent'
+      fullPath: '/.lovable/oauth/consent'
+      preLoaderRoute: typeof DotlovableOauthConsentRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -789,6 +892,7 @@ const rootRouteChildren: RootRouteChildren = {
   GoldPricesRoute: GoldPricesRoute,
   ImageGeneratorRoute: ImageGeneratorRoute,
   MarketingWriterRoute: MarketingWriterRoute,
+  McpRoute: McpRoute,
   MyPhotosRoute: MyPhotosRoute,
   PhoneBillInquiryRoute: PhoneBillInquiryRoute,
   PollinationsImageRoute: PollinationsImageRoute,
@@ -805,6 +909,9 @@ const rootRouteChildren: RootRouteChildren = {
   YemenMobileRoute: YemenMobileRoute,
   Yemen4gInquiryRoute: Yemen4gInquiryRoute,
   YouServicesRoute: YouServicesRoute,
+  Char91DotmcpChar93ListToolsRoute: Char91DotmcpChar93ListToolsRoute,
+  Char91DotwellKnownChar93OauthProtectedResourceRoute:
+    Char91DotwellKnownChar93OauthProtectedResourceRoute,
   AdminAnalyticsRoute: AdminAnalyticsRoute,
   AdminPackagesRoute: AdminPackagesRoute,
   AdminServicesRoute: AdminServicesRoute,
@@ -813,6 +920,8 @@ const rootRouteChildren: RootRouteChildren = {
   ApiGenerateImageRoute: ApiGenerateImageRoute,
   MawloudSettingsRoute: MawloudSettingsRoute,
   MawloudIndexRoute: MawloudIndexRoute,
+  DotlovableOauthConsentRoute: DotlovableOauthConsentRoute,
+  Char91DotmcpChar93InvokeToolToolRoute: Char91DotmcpChar93InvokeToolToolRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
