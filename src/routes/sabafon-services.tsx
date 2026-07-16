@@ -122,11 +122,18 @@ function SabafonServicesPage() {
           <Tabs defaultValue="packages" className="w-full">
             <TabsList className="flex h-auto w-full flex-wrap justify-center gap-2 rounded-2xl border border-border bg-card p-2 shadow-[var(--shadow-card)]">
               <TabsTrigger
-                value="packages"
+                value="packages_3g"
                 className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
               >
                 <Package className="h-4 w-4" />
-                تفعيل الباقات
+                أكواد باقات 3G
+              </TabsTrigger>
+              <TabsTrigger
+                value="packages_4g"
+                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+              >
+                <Package className="h-4 w-4" />
+                أكواد باقات 4G
               </TabsTrigger>
               <TabsTrigger
                 value="services"
@@ -158,8 +165,11 @@ function SabafonServicesPage() {
               </p>
             </div>
 
-            <TabsContent value="packages" className="mt-6">
-              <PackagesPanel />
+            <TabsContent value="packages_3g" className="mt-6">
+              <PackagesPanel generation="3g" />
+            </TabsContent>
+            <TabsContent value="packages_4g" className="mt-6">
+              <PackagesPanel generation="4g" />
             </TabsContent>
             <TabsContent value="services" className="mt-6">
               <SectionList section="services" />
@@ -171,6 +181,7 @@ function SabafonServicesPage() {
               <SectionList section="internet" />
             </TabsContent>
           </Tabs>
+
         </section>
       </main>
 
