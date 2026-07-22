@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Download, LogOut, Settings2, Sparkles, X } from "lucide-react";
+import { ArrowDown, ArrowUp, Download, EyeOff, LogOut, Settings2, Sparkles, Trash2, X } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { supabase } from "@/integrations/supabase/client";
 import { getMyAdminStatus } from "@/lib/admin.functions";
