@@ -258,20 +258,21 @@ function DesignsPage() {
     const current = meta[templateId] ?? { hidden: false, sort_order: 1000 };
     const next = { ...current, ...patch };
     setMeta((p) => ({ ...p, [templateId]: next }));
-    const { error } = await supabase
+    // Try UPDATE first to avoid overwriting existing layout jsonb
+    const { data: updated, error: updErr } = await supabase
       .from("template_layouts")
-      .upsert(
-        { template_id: templateId, layout: {} as never, hidden: next.hidden, sort_order: next.sort_order },
-        { onConflict: "template_id", ignoreDuplicates: false },
-      );
-    if (error) {
-      // fallback: update only (upsert without touching layout)
+      .update({ hidden: next.hidden, sort_order: next.sort_order })
+      .eq("template_id", templateId)
+      .select("template_id");
+    if (updErr) return;
+    if (!updated || updated.length === 0) {
+      // No row yet — insert with empty layout placeholder
       await supabase
         .from("template_layouts")
-        .update({ hidden: next.hidden, sort_order: next.sort_order })
-        .eq("template_id", templateId);
+        .insert({ template_id: templateId, layout: {} as never, hidden: next.hidden, sort_order: next.sort_order });
     }
   };
+
 
   const toggleHidden = async (templateId: string, e: React.MouseEvent) => {
     e.stopPropagation();
