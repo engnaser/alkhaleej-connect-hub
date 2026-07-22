@@ -1,0 +1,1 @@
+UPDATE public.template_layouts SET layout = jsonb_set(jsonb_set(jsonb_set(layout #- '{phone,mono}', '{phone,size}', '2.4'), '{phone,weight}', '900'), '{phone,dir}', '"ltr"') WHERE template_id='khalij-agent';
