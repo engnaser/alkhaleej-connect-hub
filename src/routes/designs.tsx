@@ -19,6 +19,7 @@ import posterEidMosque from "@/assets/poster-eid-mosque.png.asset.json";
 import posterKhalijServices from "@/assets/poster-khalij-services.jpg.asset.json";
 import posterKhalijAgent from "@/assets/poster-khalij-agent-services.png.asset.json";
 import posterKhalijEngagement from "@/assets/poster-khalij-engagement.png.asset.json";
+import posterKhalijWedding from "@/assets/poster-khalij-wedding.png.asset.json";
 
 const SITE = "https://alkhaleej-connect-hub.lovable.app";
 
@@ -147,6 +148,18 @@ const TEMPLATES: Template[] = [
   },
   {
     id: "khalij-engagement", title: "تهانينا بمناسبة الخطوبة", occasion: "تهنئة خطوبة — الخليج تيليكوم", src: posterKhalijEngagement.url,
+    fields: [
+      { key: "toName",   label: "تهنئة مقدمة إلى الأخ", placeholder: "اسم المهنّأ", type: "text", dir: "rtl", maxLength: 40, required: true },
+      { key: "fromName", label: "تهنئة مرسلة من الأخ",  placeholder: "اسم مقدم التهنئة", type: "text", dir: "rtl", maxLength: 40, required: true },
+    ],
+    defaults: { toName: "اسم المهنّأ", fromName: "اسم مقدم التهنئة" },
+    layout: {
+      toName:   { x: 42, y: 65.5, size: 2.6, color: "#0d3b46", dir: "rtl", weight: 800, maxWidth: 55 },
+      fromName: { x: 42, y: 78,   size: 2.6, color: "#0d3b46", dir: "rtl", weight: 800, maxWidth: 55 },
+    },
+  },
+  {
+    id: "khalij-wedding", title: "تهانينا بمناسبة الزواج", occasion: "تهنئة زواج — الخليج تيليكوم", src: posterKhalijWedding.url,
     fields: [
       { key: "toName",   label: "تهنئة مقدمة إلى الأخ", placeholder: "اسم المهنّأ", type: "text", dir: "rtl", maxLength: 40, required: true },
       { key: "fromName", label: "تهنئة مرسلة من الأخ",  placeholder: "اسم مقدم التهنئة", type: "text", dir: "rtl", maxLength: 40, required: true },
