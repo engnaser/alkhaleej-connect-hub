@@ -21,6 +21,7 @@ import posterKhalijAgent from "@/assets/poster-khalij-agent-services.png.asset.j
 import posterKhalijEngagement from "@/assets/poster-khalij-engagement.png.asset.json";
 import posterKhalijWedding from "@/assets/poster-khalij-wedding.png.asset.json";
 import posterKhalijMawloud from "@/assets/poster-khalij-mawloud.png.asset.json";
+import posterKhalijEidAdha from "@/assets/poster-khalij-eid-adha.png.asset.json";
 
 const SITE = "https://alkhaleej-connect-hub.lovable.app";
 
@@ -181,6 +182,16 @@ const TEMPLATES: Template[] = [
     layout: {
       toName:   { x: 42, y: 62, size: 2.4, color: "#0d3b46", dir: "rtl", weight: 800, maxWidth: 55 },
       fromName: { x: 42, y: 75, size: 2.4, color: "#0d3b46", dir: "rtl", weight: 800, maxWidth: 55 },
+    },
+  },
+  {
+    id: "khalij-eid-adha", title: "تهنئة عيد الأضحى المبارك", occasion: "عيد الأضحى — الخليج تيليكوم", src: posterKhalijEidAdha.url,
+    fields: [
+      { key: "fromName", label: "تهنئة مقدمة من الأخ", placeholder: "اسم مقدم التهنئة", type: "text", dir: "rtl", maxLength: 40, required: true },
+    ],
+    defaults: { fromName: "اسم مقدم التهنئة" },
+    layout: {
+      fromName: { x: 42, y: 78, size: 2.6, color: "#0d3b46", dir: "rtl", weight: 800, maxWidth: 45 },
     },
   },
 ];
