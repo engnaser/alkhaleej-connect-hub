@@ -144,7 +144,7 @@ const TEMPLATES: Template[] = [
       phone: { x: 46, y: 82,   size: 2.2, color: "#ffffff", dir: "ltr", weight: 800, mono: true, maxWidth: 55 },
     },
   },
-],
+];
 
 function useSession() {
   const [userId, setUserId] = useState<string | null | undefined>(undefined);
