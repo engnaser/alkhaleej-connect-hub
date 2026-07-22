@@ -195,6 +195,16 @@ const TEMPLATES: Template[] = [
       fromName: { x: 42, y: 78, size: 2.6, color: "#0d3b46", dir: "rtl", weight: 800, maxWidth: 45 },
     },
   },
+  {
+    id: "khalij-eid-fitr", title: "تهنئة عيد الفطر المبارك", occasion: "عيد الفطر — الخليج تيليكوم", src: posterKhalijEidFitr.url,
+    fields: [
+      { key: "fromName", label: "تهنئة مقدمة من الأخ", placeholder: "اسم مقدم التهنئة", type: "text", dir: "rtl", maxLength: 40, required: true },
+    ],
+    defaults: { fromName: "اسم مقدم التهنئة" },
+    layout: {
+      fromName: { x: 42, y: 78, size: 2.6, color: "#0d3b46", dir: "rtl", weight: 800, maxWidth: 45 },
+    },
+  },
 ];
 
 function useSession() {
