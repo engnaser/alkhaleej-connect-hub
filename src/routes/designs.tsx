@@ -141,7 +141,7 @@ const TEMPLATES: Template[] = [
     defaults: { name: "اسم الوكيل", phone: "+967 7XX XXX XXX" },
     layout: {
       name:  { x: 46, y: 75.5, size: 2.4, color: "#000000", dir: "rtl", weight: 900, maxWidth: 55 },
-      phone: { x: 46, y: 82,   size: 2.2, color: "#000000", dir: "ltr", weight: 800, mono: true, maxWidth: 55 },
+      phone: { x: 46, y: 82,   size: 2.4, color: "#000000", dir: "ltr", weight: 900, maxWidth: 55 },
     },
   },
 ];
