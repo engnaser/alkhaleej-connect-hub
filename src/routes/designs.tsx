@@ -135,7 +135,16 @@ const TEMPLATES: Template[] = [
       phone: { x: 50, y: 66.5, size: 2.2, color: "#b98a3a", dir: "ltr", weight: 800, mono: true, maxWidth: 70 },
     },
   },
-];
+  {
+    id: "khalij-agent", title: "كل الخدمات الرقمية بين يديك", occasion: "وكيل معتمد — الخليج تيليكوم", src: posterKhalijAgent.url,
+    fields: SIMPLE_FIELDS,
+    defaults: { name: "اسم الوكيل", phone: "+967 7XX XXX XXX" },
+    layout: {
+      name:  { x: 46, y: 75.5, size: 2.4, color: "#ffffff", dir: "rtl", weight: 900, maxWidth: 55 },
+      phone: { x: 46, y: 82,   size: 2.2, color: "#ffffff", dir: "ltr", weight: 800, mono: true, maxWidth: 55 },
+    },
+  },
+],
 
 function useSession() {
   const [userId, setUserId] = useState<string | null | undefined>(undefined);
