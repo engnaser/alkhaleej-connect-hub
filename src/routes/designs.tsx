@@ -1,7 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { Download, LogOut, Settings2, Sparkles, X } from "lucide-react";
+import { ArrowDown, ArrowUp, Download, EyeOff, LogOut, Settings2, Sparkles, Trash2, X } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { supabase } from "@/integrations/supabase/client";
 import { getMyAdminStatus } from "@/lib/admin.functions";
@@ -200,10 +200,13 @@ function useSession() {
   return userId;
 }
 
+type TemplateMeta = { hidden: boolean; sort_order: number };
+
 function DesignsPage() {
   const [openId, setOpenId] = useState<string | null>(null);
-  const activeTpl = TEMPLATES.find((t) => t.id === openId) ?? null;
   const userId = useSession();
+  const [meta, setMeta] = useState<Record<string, TemplateMeta>>({});
+  const [metaLoaded, setMetaLoaded] = useState(false);
 
   const { data: adminData } = useQuery({
     queryKey: ["admin-status", userId],
@@ -213,6 +216,92 @@ function DesignsPage() {
   });
   const adminMode = Boolean(adminData?.isAdmin);
 
+  // Load template metadata (hidden + sort_order) from cloud for all visitors
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const { data } = await supabase
+        .from("template_layouts")
+        .select("template_id, hidden, sort_order");
+      if (cancelled) return;
+      const map: Record<string, TemplateMeta> = {};
+      for (const row of (data ?? []) as Array<{ template_id: string; hidden: boolean | null; sort_order: number | null }>) {
+        map[row.template_id] = {
+          hidden: Boolean(row.hidden),
+          sort_order: row.sort_order ?? 1000,
+        };
+      }
+      setMeta(map);
+      setMetaLoaded(true);
+    })();
+  }, []);
+
+  const orderedTemplates = useMemo(() => {
+    const list = TEMPLATES.map((tpl, i) => ({
+      tpl,
+      hidden: meta[tpl.id]?.hidden ?? false,
+      order: meta[tpl.id]?.sort_order ?? 1000 + i,
+      fallback: i,
+    }));
+    list.sort((a, b) => (a.order - b.order) || (a.fallback - b.fallback));
+    return list;
+  }, [meta]);
+
+  const visibleTemplates = useMemo(
+    () => (adminMode ? orderedTemplates : orderedTemplates.filter((t) => !t.hidden)),
+    [orderedTemplates, adminMode],
+  );
+
+  const activeTpl = TEMPLATES.find((t) => t.id === openId) ?? null;
+
+  const persistMeta = async (templateId: string, patch: Partial<TemplateMeta>) => {
+    const current = meta[templateId] ?? { hidden: false, sort_order: 1000 };
+    const next = { ...current, ...patch };
+    setMeta((p) => ({ ...p, [templateId]: next }));
+    // Try UPDATE first to avoid overwriting existing layout jsonb
+    const { data: updated, error: updErr } = await supabase
+      .from("template_layouts")
+      .update({ hidden: next.hidden, sort_order: next.sort_order })
+      .eq("template_id", templateId)
+      .select("template_id");
+    if (updErr) return;
+    if (!updated || updated.length === 0) {
+      // No row yet — insert with empty layout placeholder
+      await supabase
+        .from("template_layouts")
+        .insert({ template_id: templateId, layout: {} as never, hidden: next.hidden, sort_order: next.sort_order });
+    }
+  };
+
+
+  const toggleHidden = async (templateId: string, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const currentlyHidden = meta[templateId]?.hidden ?? false;
+    if (!currentlyHidden && !window.confirm("هل تريد حذف هذا القالب من الموقع؟ سيختفي عن جميع الزوار.")) return;
+    await persistMeta(templateId, { hidden: !currentlyHidden });
+  };
+
+  const move = async (index: number, direction: -1 | 1, e: React.MouseEvent) => {
+    e.stopPropagation();
+    const target = index + direction;
+    if (target < 0 || target >= orderedTemplates.length) return;
+    const a = orderedTemplates[index];
+    const b = orderedTemplates[target];
+    // Assign concrete sort_orders based on current positions
+    const newList = [...orderedTemplates];
+    newList[index] = b;
+    newList[target] = a;
+    // Reassign sequential orders
+    const updates: Promise<unknown>[] = [];
+    newList.forEach((item, i) => {
+      const newOrder = (i + 1) * 10;
+      if ((meta[item.tpl.id]?.sort_order ?? -1) !== newOrder) {
+        updates.push(persistMeta(item.tpl.id, { sort_order: newOrder }));
+      }
+    });
+    await Promise.all(updates);
+  };
+
   const signOut = async () => {
     await supabase.auth.signOut();
   };
@@ -221,7 +310,7 @@ function DesignsPage() {
     <div className="min-h-screen bg-background text-foreground">
       {adminMode && (
         <div className="bg-primary/10 px-4 py-2 text-center text-xs font-bold text-primary">
-          وضع المسؤول مفعّل — أدوات ضبط النصوص ظاهرة لك فقط.
+          وضع المسؤول مفعّل — يمكنك حذف القوالب وإعادة ترتيبها.
         </div>
       )}
       <header className="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur-xl">
@@ -260,7 +349,6 @@ function DesignsPage() {
         </div>
       </header>
 
-      {/* Visible admin entry — sign-in button for admin access */}
       {!userId && (
         <Link
           to="/auth"
@@ -289,27 +377,64 @@ function DesignsPage() {
         </div>
 
         <div className="mt-12 grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
-          {TEMPLATES.map((tpl) => (
-            <article
-              key={tpl.id}
-              onClick={() => setOpenId(tpl.id)}
-              className="group cursor-pointer overflow-hidden rounded-2xl border-2 border-border bg-card shadow-[var(--shadow-card)] transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-[var(--shadow-elevated)]"
-            >
-              <div className="relative w-full overflow-hidden">
-                <img src={tpl.src} alt={tpl.title} className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]" loading="lazy" />
-              </div>
-              <div className="flex items-center justify-between gap-3 p-4">
-                <div className="min-w-0">
-                  <h3 className="truncate text-sm font-extrabold text-foreground">{tpl.title}</h3>
-                  <p className="truncate text-xs text-muted-foreground">{tpl.occasion}</p>
+          {(metaLoaded ? visibleTemplates : orderedTemplates).map((item, idx) => {
+            const tpl = item.tpl;
+            const isHidden = item.hidden;
+            return (
+              <article
+                key={tpl.id}
+                onClick={() => setOpenId(tpl.id)}
+                className={`group relative cursor-pointer overflow-hidden rounded-2xl border-2 border-border bg-card shadow-[var(--shadow-card)] transition-all duration-300 hover:-translate-y-1 hover:border-primary hover:shadow-[var(--shadow-elevated)] ${isHidden ? "opacity-50" : ""}`}
+              >
+                {adminMode && (
+                  <div className="absolute right-2 top-2 z-10 flex flex-col gap-1.5" onClick={(e) => e.stopPropagation()}>
+                    <button
+                      type="button"
+                      onClick={(e) => move(idx, -1, e)}
+                      title="نقل للأعلى"
+                      className="grid h-8 w-8 place-items-center rounded-full bg-background/90 text-foreground shadow-md ring-1 ring-border transition-colors hover:bg-primary hover:text-primary-foreground disabled:opacity-40"
+                      disabled={idx === 0}
+                    >
+                      <ArrowUp className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => move(idx, 1, e)}
+                      title="نقل للأسفل"
+                      className="grid h-8 w-8 place-items-center rounded-full bg-background/90 text-foreground shadow-md ring-1 ring-border transition-colors hover:bg-primary hover:text-primary-foreground disabled:opacity-40"
+                      disabled={idx === visibleTemplates.length - 1}
+                    >
+                      <ArrowDown className="h-4 w-4" />
+                    </button>
+                    <button
+                      type="button"
+                      onClick={(e) => toggleHidden(tpl.id, e)}
+                      title={isHidden ? "إظهار للزوار" : "حذف من الموقع"}
+                      className={`grid h-8 w-8 place-items-center rounded-full shadow-md ring-1 transition-colors ${isHidden ? "bg-background/90 text-primary ring-primary hover:bg-primary hover:text-primary-foreground" : "bg-destructive text-destructive-foreground ring-destructive hover:bg-destructive/90"}`}
+                    >
+                      {isHidden ? <EyeOff className="h-4 w-4" /> : <Trash2 className="h-4 w-4" />}
+                    </button>
+                  </div>
+                )}
+                <div className="relative w-full overflow-hidden">
+                  <img src={tpl.src} alt={tpl.title} className="block h-auto w-full transition-transform duration-500 group-hover:scale-[1.03]" loading="lazy" />
                 </div>
-                <span className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-xs font-bold text-primary-foreground shadow-md transition-transform group-hover:scale-[1.03]">
-                  <Download className="h-3.5 w-3.5" />
-                  تخصيص
-                </span>
-              </div>
-            </article>
-          ))}
+                <div className="flex items-center justify-between gap-3 p-4">
+                  <div className="min-w-0">
+                    <h3 className="truncate text-sm font-extrabold text-foreground">
+                      {tpl.title}
+                      {adminMode && isHidden && <span className="mr-2 text-[10px] font-bold text-destructive">(مخفي)</span>}
+                    </h3>
+                    <p className="truncate text-xs text-muted-foreground">{tpl.occasion}</p>
+                  </div>
+                  <span className="inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-primary px-3 py-2 text-xs font-bold text-primary-foreground shadow-md transition-transform group-hover:scale-[1.03]">
+                    <Download className="h-3.5 w-3.5" />
+                    تخصيص
+                  </span>
+                </div>
+              </article>
+            );
+          })}
         </div>
       </main>
 
@@ -317,6 +442,7 @@ function DesignsPage() {
     </div>
   );
 }
+
 
 function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: boolean; onClose: () => void }) {
   const [values, setValues] = useState<Record<string, string>>(() =>

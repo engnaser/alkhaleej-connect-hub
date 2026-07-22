@@ -316,19 +316,25 @@ export type Database = {
       template_layouts: {
         Row: {
           created_at: string
+          hidden: boolean
           layout: Json
+          sort_order: number
           template_id: string
           updated_at: string
         }
         Insert: {
           created_at?: string
+          hidden?: boolean
           layout: Json
+          sort_order?: number
           template_id: string
           updated_at?: string
         }
         Update: {
           created_at?: string
+          hidden?: boolean
           layout?: Json
+          sort_order?: number
           template_id?: string
           updated_at?: string
         }
