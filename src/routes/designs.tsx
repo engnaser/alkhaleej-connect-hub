@@ -20,6 +20,7 @@ import posterKhalijServices from "@/assets/poster-khalij-services.jpg.asset.json
 import posterKhalijAgent from "@/assets/poster-khalij-agent-services.png.asset.json";
 import posterKhalijEngagement from "@/assets/poster-khalij-engagement.png.asset.json";
 import posterKhalijWedding from "@/assets/poster-khalij-wedding.png.asset.json";
+import posterKhalijMawloud from "@/assets/poster-khalij-mawloud.png.asset.json";
 
 const SITE = "https://alkhaleej-connect-hub.lovable.app";
 
