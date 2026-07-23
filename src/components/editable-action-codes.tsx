@@ -444,15 +444,19 @@ export function TemplateRow({
         <button
           onClick={() => {
             const trimmed = draft.trim();
-            if (!trimmed) {
-              toast.error("لا يمكن حفظ قالب فارغ");
-              return;
-            }
             const s = readTplStore();
-            s[id] = { ...s[id], [kind]: trimmed };
-            writeTplStore(s);
+            if (!trimmed) {
+              if (s[id]) {
+                delete s[id][kind];
+                if (!s[id].activate && !s[id].cancel) delete s[id];
+                writeTplStore(s);
+              }
+            } else {
+              s[id] = { ...s[id], [kind]: trimmed };
+              writeTplStore(s);
+            }
             setEditing(false);
-            toast.success("تم حفظ القالب");
+            toast.success(trimmed ? "تم حفظ القالب" : "تم حذف القالب");
           }}
           className="inline-flex w-full items-center justify-center gap-1 rounded-lg bg-emerald-600 px-2 py-1.5 text-xs font-bold text-white hover:bg-emerald-700"
         >
