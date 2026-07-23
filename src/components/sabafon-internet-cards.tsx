@@ -140,6 +140,7 @@ export function SabafonActivateInternetCard() {
       <EditableActionCodes
         id="sabafon-activate-internet"
         activateCode="*111*1#"
+        detailsSlot={null}
       />
     </CardShell>
   );
