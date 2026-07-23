@@ -478,17 +478,30 @@ function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
 
 type CodeKind = "prepaid" | "postpaid";
 
+function buildDialCode(rawCode: string, phone: string): string {
+  const code = rawCode.trim();
+  const num = phone.replace(/\D+/g, "");
+  if (!num) return code;
+  if (code.includes("{n}")) return code.replace(/\{n\}/g, num);
+  // e.g. *250# → *250*7XXXXXXXX#
+  if (/^\*[\d*]+#$/.test(code)) return code.replace(/#$/, `*${num}#`);
+  return code;
+}
+
 function PackageCodeRow({
   pkg,
   kind,
   label,
   accent,
+  phone,
 }: {
   pkg: SabafonPackage;
   kind: CodeKind;
   label: string;
   accent: "primary" | "amber";
+  phone?: string;
 }) {
+
   const { isAdmin } = useIsAdmin();
   const current = (kind === "prepaid" ? pkg.code : pkg.codePostpaid) ?? "";
   const [editing, setEditing] = useState(false);
