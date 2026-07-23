@@ -480,13 +480,18 @@ type CodeKind = "prepaid" | "postpaid";
 
 function buildDialCode(rawCode: string, phone: string): string {
   const code = rawCode.trim();
-  const num = phone.replace(/\D+/g, "");
+  const num = phone.replace(/\D+/g, "").slice(0, 9);
+  // Placeholders the admin can type inside the code to mark where the number goes
+  const PLACEHOLDER_RE = /\{n\}|الرقم|#رقم#|<رقم>/g;
+  if (PLACEHOLDER_RE.test(code)) {
+    return num ? code.replace(PLACEHOLDER_RE, num) : code.replace(PLACEHOLDER_RE, "").replace(/\*+#/g, "#");
+  }
   if (!num) return code;
-  if (code.includes("{n}")) return code.replace(/\{n\}/g, num);
   // e.g. *250# → *250*7XXXXXXXX#
   if (/^\*[\d*]+#$/.test(code)) return code.replace(/#$/, `*${num}#`);
   return code;
 }
+
 
 function PackageCodeRow({
   pkg,
@@ -711,13 +716,15 @@ function SabafonPackageCard({ pkg, showPostpaid = false }: { pkg: SabafonPackage
           </label>
           <input
             dir="ltr"
-            inputMode="tel"
+            inputMode="numeric"
+            pattern="[0-9]*"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => setPhone(e.target.value.replace(/\D+/g, "").slice(0, 9))}
             placeholder="7XXXXXXXX"
-            maxLength={15}
+            maxLength={9}
             className="w-full rounded-md border border-border bg-background px-2 py-1.5 text-center font-mono text-sm outline-none focus:border-primary"
           />
+
           {phone.replace(/\D+/g, "") && (
             <p className="mt-1 text-[10px] text-muted-foreground">
               سيتم إدراج رقمك تلقائياً في كود التفعيل قبل الاتصال
