@@ -476,28 +476,46 @@ function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
   );
 }
 
-function SabafonPackageCard({ pkg }: { pkg: SabafonPackage }) {
-  const [copied, setCopied] = useState(false);
+type CodeKind = "prepaid" | "postpaid";
+
+function PackageCodeRow({
+  pkg,
+  kind,
+  label,
+  accent,
+}: {
+  pkg: SabafonPackage;
+  kind: CodeKind;
+  label: string;
+  accent: "primary" | "amber";
+}) {
   const { isAdmin } = useIsAdmin();
+  const current = (kind === "prepaid" ? pkg.code : pkg.codePostpaid) ?? "";
   const [editing, setEditing] = useState(false);
-  const [codeDraft, setCodeDraft] = useState(pkg.code ?? "");
+  const [draft, setDraft] = useState(current);
   const [saving, setSaving] = useState(false);
-  const dialCode = (pkg.code ?? "").trim();
+
+  React.useEffect(() => {
+    setDraft(current);
+  }, [current]);
+
+  const dialCode = current.trim();
   const smsMatch = dialCode.match(/^SMS:([^:]+):(.+)$/i);
   const smsInfo = smsMatch ? { number: smsMatch[1].trim(), body: smsMatch[2].trim() } : null;
   const displayCode = smsInfo ? `أرسل ${smsInfo.body} إلى ${smsInfo.number}` : dialCode;
-  const activationHref = smsInfo
+  const href = smsInfo
     ? `sms:${encodeURIComponent(smsInfo.number)}?body=${encodeURIComponent(smsInfo.body)}`
     : dialCode
     ? `tel:${encodeURIComponent(dialCode)}`
     : "";
 
-  const saveCode = async () => {
-    const value = codeDraft.trim().slice(0, 32);
+  const save = async () => {
+    const value = draft.trim().slice(0, 32);
     setSaving(true);
+    const column = kind === "prepaid" ? "code" : "code_postpaid";
     const { error } = await supabase
       .from("sabafon_packages")
-      .update({ code: value || null })
+      .update({ [column]: value || null })
       .eq("id", pkg.id);
     setSaving(false);
     if (!error) {
@@ -508,6 +526,91 @@ function SabafonPackageCard({ pkg }: { pkg: SabafonPackage }) {
     }
   };
 
+  const badgeColor =
+    accent === "primary"
+      ? "border-primary/30 bg-primary/10 text-primary"
+      : "border-amber-500/40 bg-amber-500/10 text-amber-700 dark:text-amber-400";
+  const btnColor =
+    accent === "primary"
+      ? "border-primary bg-primary/10 text-primary"
+      : "border-amber-500 bg-amber-500/10 text-amber-700 dark:text-amber-400";
+  const codeColor = accent === "primary" ? "text-primary" : "text-amber-700 dark:text-amber-400";
+
+  return (
+    <div className={`rounded-xl border p-3 ${badgeColor}`}>
+      <div className="mb-2 flex items-center justify-between gap-2">
+        <span className="text-[11px] font-black uppercase tracking-wide">{label}</span>
+        {isAdmin && !editing && (
+          <button
+            onClick={() => setEditing(true)}
+            className="rounded-md border border-current/40 bg-background/70 px-2 py-0.5 text-[10px] font-bold hover:bg-background"
+            title={`تعديل كود ${label}`}
+          >
+            تعديل
+          </button>
+        )}
+      </div>
+
+      {isAdmin && editing ? (
+        <div className="flex flex-wrap items-center gap-1">
+          <input
+            dir="ltr"
+            value={draft}
+            onChange={(e) => setDraft(e.target.value)}
+            maxLength={32}
+            placeholder="*250#"
+            className="w-32 flex-1 rounded-md border border-current/40 bg-background px-2 py-1 font-mono text-sm outline-none"
+          />
+          <button
+            onClick={save}
+            disabled={saving}
+            className="rounded-md bg-primary px-2 py-1 text-[11px] font-bold text-primary-foreground disabled:opacity-50"
+          >
+            {saving ? "..." : "حفظ"}
+          </button>
+          <button
+            onClick={() => {
+              setEditing(false);
+              setDraft(current);
+            }}
+            className="rounded-md border border-border bg-background px-2 py-1 text-[11px] font-bold text-muted-foreground"
+          >
+            إلغاء
+          </button>
+        </div>
+      ) : (
+        <div className="flex items-center justify-between gap-2">
+          <bdi dir="ltr" className={`font-mono text-sm font-bold ${codeColor}`} style={{ unicodeBidi: "isolate" }}>
+            {displayCode || "غير محدد"}
+          </bdi>
+        </div>
+      )}
+
+      {href ? (
+        <a
+          href={href}
+          className={`mt-2 inline-flex w-full items-center justify-center gap-2 rounded-full border-2 px-3 py-2 text-xs font-extrabold transition-transform hover:scale-[1.02] ${btnColor}`}
+        >
+          <PhoneCall className="h-3.5 w-3.5" />
+          {smsInfo ? `أرسل للتفعيل` : `تفعيل ${label}`}
+        </a>
+      ) : (
+        <button
+          type="button"
+          disabled
+          className="mt-2 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full border-2 border-dashed border-border bg-muted/40 px-3 py-2 text-xs font-extrabold text-muted-foreground"
+        >
+          كود {label} غير متوفر
+        </button>
+      )}
+    </div>
+  );
+}
+
+function SabafonPackageCard({ pkg, showPostpaid = false }: { pkg: SabafonPackage; showPostpaid?: boolean }) {
+  const [copied, setCopied] = useState(false);
+  const { isAdmin } = useIsAdmin();
+
   const details = [
     `📦 ${pkg.name}`,
     `💰 السعر: ${pkg.price}`,
@@ -516,7 +619,8 @@ function SabafonPackageCard({ pkg }: { pkg: SabafonPackage }) {
     `✉️ الرسائل: ${pkg.sms}`,
     `⏳ الصلاحية: ${pkg.validity}`,
     `📶 الشبكة: ${pkg.network}`,
-    dialCode ? `🔢 كود التفعيل: ${dialCode}` : "",
+    pkg.code ? `🔢 كود الدفع المسبق: ${pkg.code}` : "",
+    showPostpaid && pkg.codePostpaid ? `🧾 كود الفوترة: ${pkg.codePostpaid}` : "",
   ]
     .filter(Boolean)
     .join("\n");
@@ -572,59 +676,25 @@ function SabafonPackageCard({ pkg }: { pkg: SabafonPackage }) {
           <span className="text-muted-foreground">الرسائل</span>
           <span className="font-bold">{pkg.sms}</span>
         </li>
-        <li className="flex items-center justify-between border-b border-border/50 pb-1.5">
+        <li className="flex items-center justify-between pb-1.5">
           <span className="text-muted-foreground">الصلاحية</span>
           <span className="font-bold">{pkg.validity}</span>
         </li>
-        <li className="flex items-center justify-between gap-2">
-          <span className="text-muted-foreground shrink-0">كود التفعيل</span>
-          {isAdmin && editing ? (
-            <div className="flex items-center gap-1">
-              <input
-                dir="ltr"
-                value={codeDraft}
-                onChange={(e) => setCodeDraft(e.target.value)}
-                maxLength={32}
-                placeholder="*250#"
-                className="w-28 rounded-md border border-primary/40 bg-background px-2 py-1 font-mono text-sm text-primary outline-none focus:border-primary"
-              />
-              <button
-                onClick={saveCode}
-                disabled={saving}
-                className="rounded-md bg-primary px-2 py-1 text-[11px] font-bold text-primary-foreground disabled:opacity-50"
-              >
-                {saving ? "..." : "حفظ"}
-              </button>
-              <button
-                onClick={() => {
-                  setEditing(false);
-                  setCodeDraft(pkg.code ?? "");
-                }}
-                className="rounded-md border border-border px-2 py-1 text-[11px] font-bold text-muted-foreground"
-              >
-                إلغاء
-              </button>
-            </div>
-          ) : (
-            <span className="flex items-center gap-2">
-              {isAdmin && (
-                <button
-                  onClick={() => setEditing(true)}
-                  className="rounded-md border border-amber-400/60 bg-amber-50 px-2 py-0.5 text-[11px] font-bold text-amber-700 hover:bg-amber-100"
-                  title="تعديل كود التفعيل"
-                >
-                  تعديل
-                </button>
-              )}
-              <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>
-                {displayCode || "غير محدد"}
-              </bdi>
-            </span>
-          )}
-        </li>
       </ul>
 
-      <div className="mt-5 grid grid-cols-2 gap-2">
+      <div className={`mt-4 grid gap-2 ${showPostpaid ? "grid-cols-1" : "grid-cols-1"}`}>
+        <PackageCodeRow
+          pkg={pkg}
+          kind="prepaid"
+          label={showPostpaid ? "دفع مسبق" : "كود التفعيل"}
+          accent="primary"
+        />
+        {showPostpaid && (
+          <PackageCodeRow pkg={pkg} kind="postpaid" label="فوترة" accent="amber" />
+        )}
+      </div>
+
+      <div className="mt-4 grid grid-cols-2 gap-2">
         <button
           onClick={handleCopy}
           className="inline-flex items-center justify-center gap-1.5 rounded-full border border-border bg-background px-3 py-2 text-xs font-bold text-foreground hover:border-primary/40 hover:text-primary"
@@ -642,26 +712,8 @@ function SabafonPackageCard({ pkg }: { pkg: SabafonPackage }) {
           مشاركة
         </a>
       </div>
-      {activationHref ? (
-        <a
-          href={activationHref}
-          className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary bg-primary/10 px-3 py-2.5 text-sm font-extrabold text-primary transition-transform hover:scale-[1.02]"
-        >
-          <PhoneCall className="h-4 w-4" />
-          {smsInfo ? `أرسل ${smsInfo.body} إلى ${smsInfo.number} للتفعيل` : "اضغط لتفعيل الباقة"}
-        </a>
-      ) : (
-        <button
-          type="button"
-          disabled
-          title="لم يتم تحديد كود تفعيل لهذه الباقة"
-          className="mt-2 inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-full border-2 border-dashed border-border bg-muted/40 px-3 py-2.5 text-sm font-extrabold text-muted-foreground"
-        >
-          <PhoneCall className="h-4 w-4" />
-          كود التفعيل غير متوفر
-        </button>
-      )}
     </div>
   );
 }
+
 
