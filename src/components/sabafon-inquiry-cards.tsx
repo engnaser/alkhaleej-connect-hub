@@ -120,24 +120,32 @@ function SimpleCard({
   detailsBody?: React.ReactNode;
 }) {
   const code = useServiceCode(id, "activate", defaultCode);
+  const [phone, setPhone] = useState("");
+  const showPhoneField = hasPhonePlaceholder(code);
+  const displayCode = showPhoneField ? mergePhoneIntoCode(code, phone) : code;
   return (
     <CardShell title={title} icon={icon}>
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{description}</p>
-      <CodePill code={code} label={label} />
+      <CodePill code={displayCode} label={label} />
+      {showPhoneField && <PhoneMergeField phone={phone} setPhone={setPhone} />}
       <EditableActionCodes
         id={id}
         activateCode={defaultCode}
+        transformActivate={(c) => mergePhoneIntoCode(c, phone)}
         detailsSlot={
           <DetailsButton title={detailsTitle ?? title}>
             {detailsBody ?? (
               <p>
                 اطلب الرمز{" "}
                 <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>
-                  {code}
+                  {displayCode}
                 </bdi>{" "}
                 من هاتفك لاستخدام الخدمة.
               </p>
             )}
+            <p className="mt-2 text-xs text-muted-foreground">
+              نصيحة للمسؤول: أضف {"{n}"} داخل الكود لتفعيل خانة الرقم ودمجه تلقائياً.
+            </p>
           </DetailsButton>
         }
       />
@@ -166,33 +174,42 @@ function ActCancelCard({
 }) {
   const act = useServiceCode(id, "activate", activateCode);
   const cancel = useServiceCode(id, "cancel", cancelCode);
+  const [phone, setPhone] = useState("");
+  const showPhoneField = hasPhonePlaceholder(act);
+  const actDisplay = showPhoneField ? mergePhoneIntoCode(act, phone) : act;
   return (
     <CardShell title={title} icon={icon}>
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{description}</p>
       <div className="mb-4 grid grid-cols-2 gap-2">
-        <CodePill code={act} label="تفعيل" />
+        <CodePill code={actDisplay} label="تفعيل" />
         <CodePill code={cancel} label="إلغاء" />
       </div>
+      {showPhoneField && <PhoneMergeField phone={phone} setPhone={setPhone} />}
       <EditableActionCodes
         id={id}
         activateCode={activateCode}
         cancelCode={cancelCode}
+        transformActivate={(c) => mergePhoneIntoCode(c, phone)}
         detailsSlot={
           <DetailsButton title={detailsTitle ?? title}>
             {detailsBody ?? (
               <p>
                 للتفعيل اطلب{" "}
-                <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{act}</bdi>{" "}
+                <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{actDisplay}</bdi>{" "}
                 وللإلغاء اطلب{" "}
                 <bdi dir="ltr" className="font-mono font-bold text-destructive" style={{ unicodeBidi: "isolate" }}>{cancel}</bdi>.
               </p>
             )}
+            <p className="mt-2 text-xs text-muted-foreground">
+              نصيحة للمسؤول: أضف {"{n}"} داخل كود التفعيل لتفعيل خانة الرقم.
+            </p>
           </DetailsButton>
         }
       />
     </CardShell>
   );
 }
+
 
 function PhoneInputCard({
   id,
