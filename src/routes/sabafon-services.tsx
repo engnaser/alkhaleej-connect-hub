@@ -218,6 +218,7 @@ function SabafonServicesPage() {
               <SectionList section="services" />
             </TabsContent>
             <TabsContent value="account" className="mt-6 space-y-6">
+              <SabafonTariffTables />
               <SectionList section="account" />
             </TabsContent>
             <TabsContent value="internet" className="mt-6">
