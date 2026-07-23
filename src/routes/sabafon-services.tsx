@@ -704,17 +704,41 @@ function SabafonPackageCard({ pkg, showPostpaid = false }: { pkg: SabafonPackage
         </li>
       </ul>
 
+      {showPostpaid && (
+        <div className="mt-4 rounded-xl border border-dashed border-primary/30 bg-primary/5 p-3">
+          <label className="mb-1 block text-[11px] font-bold text-muted-foreground">
+            رقمك (اختياري) — لبرمجة الكود مع رقمك مباشرة
+          </label>
+          <input
+            dir="ltr"
+            inputMode="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="7XXXXXXXX"
+            maxLength={15}
+            className="w-full rounded-md border border-border bg-background px-2 py-1.5 text-center font-mono text-sm outline-none focus:border-primary"
+          />
+          {phone.replace(/\D+/g, "") && (
+            <p className="mt-1 text-[10px] text-muted-foreground">
+              سيتم إدراج رقمك تلقائياً في كود التفعيل قبل الاتصال
+            </p>
+          )}
+        </div>
+      )}
+
       <div className={`mt-4 grid gap-2 ${showPostpaid ? "grid-cols-1" : "grid-cols-1"}`}>
         <PackageCodeRow
           pkg={pkg}
           kind="prepaid"
           label={showPostpaid ? "دفع مسبق" : "كود التفعيل"}
           accent="primary"
+          phone={showPostpaid ? phone : undefined}
         />
         {showPostpaid && (
-          <PackageCodeRow pkg={pkg} kind="postpaid" label="فوترة" accent="amber" />
+          <PackageCodeRow pkg={pkg} kind="postpaid" label="فوترة" accent="amber" phone={phone} />
         )}
       </div>
+
 
       <div className="mt-4 grid grid-cols-2 gap-2">
         <button
