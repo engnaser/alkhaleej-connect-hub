@@ -165,17 +165,19 @@ export function EditableActionCodes({
   cancelCode,
   detailsSlot,
   transformActivate,
+  onActivateClick,
 }: {
   id: string;
   activateCode: string;
   cancelCode?: string;
   detailsSlot: React.ReactNode;
   transformActivate?: (code: string) => string;
+  onActivateClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) {
   const cols = cancelCode ? "grid-cols-3" : "grid-cols-2";
   return (
     <div className={`mt-auto grid ${cols} gap-2`}>
-      <CodeRow id={id} kind="activate" defaultCode={activateCode} transformCode={transformActivate} />
+      <CodeRow id={id} kind="activate" defaultCode={activateCode} transformCode={transformActivate} onActivateClick={onActivateClick} />
       {cancelCode && <CodeRow id={id} kind="cancel" defaultCode={cancelCode} />}
       {detailsSlot}
     </div>
