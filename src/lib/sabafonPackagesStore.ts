@@ -13,6 +13,7 @@ export type SabafonPackage = {
   validity: string;
   network: NetworkType;
   code?: string;
+  codePostpaid?: string;
 };
 
 export type SabafonCategory = {
