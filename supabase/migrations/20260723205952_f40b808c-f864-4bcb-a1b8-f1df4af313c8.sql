@@ -1,0 +1,1 @@
+ALTER TABLE public.sabafon_packages ADD COLUMN IF NOT EXISTS code_postpaid TEXT;
