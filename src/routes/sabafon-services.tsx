@@ -716,13 +716,15 @@ function SabafonPackageCard({ pkg, showPostpaid = false }: { pkg: SabafonPackage
           </label>
           <input
             dir="ltr"
-            inputMode="tel"
+            inputMode="numeric"
+            pattern="[0-9]*"
             value={phone}
-            onChange={(e) => setPhone(e.target.value)}
+            onChange={(e) => setPhone(e.target.value.replace(/\D+/g, "").slice(0, 9))}
             placeholder="7XXXXXXXX"
-            maxLength={15}
+            maxLength={9}
             className="w-full rounded-md border border-border bg-background px-2 py-1.5 text-center font-mono text-sm outline-none focus:border-primary"
           />
+
           {phone.replace(/\D+/g, "") && (
             <p className="mt-1 text-[10px] text-muted-foreground">
               سيتم إدراج رقمك تلقائياً في كود التفعيل قبل الاتصال
