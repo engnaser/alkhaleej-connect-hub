@@ -478,17 +478,30 @@ function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
 
 type CodeKind = "prepaid" | "postpaid";
 
+function buildDialCode(rawCode: string, phone: string): string {
+  const code = rawCode.trim();
+  const num = phone.replace(/\D+/g, "");
+  if (!num) return code;
+  if (code.includes("{n}")) return code.replace(/\{n\}/g, num);
+  // e.g. *250# → *250*7XXXXXXXX#
+  if (/^\*[\d*]+#$/.test(code)) return code.replace(/#$/, `*${num}#`);
+  return code;
+}
+
 function PackageCodeRow({
   pkg,
   kind,
   label,
   accent,
+  phone,
 }: {
   pkg: SabafonPackage;
   kind: CodeKind;
   label: string;
   accent: "primary" | "amber";
+  phone?: string;
 }) {
+
   const { isAdmin } = useIsAdmin();
   const current = (kind === "prepaid" ? pkg.code : pkg.codePostpaid) ?? "";
   const [editing, setEditing] = useState(false);
@@ -502,12 +515,16 @@ function PackageCodeRow({
   const dialCode = current.trim();
   const smsMatch = dialCode.match(/^SMS:([^:]+):(.+)$/i);
   const smsInfo = smsMatch ? { number: smsMatch[1].trim(), body: smsMatch[2].trim() } : null;
-  const displayCode = smsInfo ? `أرسل ${smsInfo.body} إلى ${smsInfo.number}` : dialCode;
+  const dialWithPhone = smsInfo ? "" : buildDialCode(dialCode, phone ?? "");
+  const displayCode = smsInfo
+    ? `أرسل ${smsInfo.body} إلى ${smsInfo.number}`
+    : dialWithPhone;
   const href = smsInfo
     ? `sms:${encodeURIComponent(smsInfo.number)}?body=${encodeURIComponent(smsInfo.body)}`
-    : dialCode
-    ? `tel:${encodeURIComponent(dialCode)}`
+    : dialWithPhone
+    ? `tel:${encodeURIComponent(dialWithPhone)}`
     : "";
+
 
   const save = async () => {
     const value = draft.trim().slice(0, 32);
@@ -611,6 +628,8 @@ function PackageCodeRow({
 }
 
 function SabafonPackageCard({ pkg, showPostpaid = false }: { pkg: SabafonPackage; showPostpaid?: boolean }) {
+  const [phone, setPhone] = useState("");
+
   const [copied, setCopied] = useState(false);
   const { isAdmin } = useIsAdmin();
 
@@ -685,17 +704,41 @@ function SabafonPackageCard({ pkg, showPostpaid = false }: { pkg: SabafonPackage
         </li>
       </ul>
 
+      {showPostpaid && (
+        <div className="mt-4 rounded-xl border border-dashed border-primary/30 bg-primary/5 p-3">
+          <label className="mb-1 block text-[11px] font-bold text-muted-foreground">
+            رقمك (اختياري) — لبرمجة الكود مع رقمك مباشرة
+          </label>
+          <input
+            dir="ltr"
+            inputMode="tel"
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
+            placeholder="7XXXXXXXX"
+            maxLength={15}
+            className="w-full rounded-md border border-border bg-background px-2 py-1.5 text-center font-mono text-sm outline-none focus:border-primary"
+          />
+          {phone.replace(/\D+/g, "") && (
+            <p className="mt-1 text-[10px] text-muted-foreground">
+              سيتم إدراج رقمك تلقائياً في كود التفعيل قبل الاتصال
+            </p>
+          )}
+        </div>
+      )}
+
       <div className={`mt-4 grid gap-2 ${showPostpaid ? "grid-cols-1" : "grid-cols-1"}`}>
         <PackageCodeRow
           pkg={pkg}
           kind="prepaid"
           label={showPostpaid ? "دفع مسبق" : "كود التفعيل"}
           accent="primary"
+          phone={showPostpaid ? phone : undefined}
         />
         {showPostpaid && (
-          <PackageCodeRow pkg={pkg} kind="postpaid" label="فوترة" accent="amber" />
+          <PackageCodeRow pkg={pkg} kind="postpaid" label="فوترة" accent="amber" phone={phone} />
         )}
       </div>
+
 
       <div className="mt-4 grid grid-cols-2 gap-2">
         <button
