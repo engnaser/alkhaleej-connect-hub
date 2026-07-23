@@ -492,7 +492,7 @@ function SabafonPackageCard({ pkg }: { pkg: SabafonPackage }) {
     const value = codeDraft.trim().slice(0, 32);
     setSaving(true);
     const { error } = await supabase
-      .from("you_packages")
+      .from("sabafon_packages")
       .update({ code: value || null })
       .eq("id", pkg.id);
     setSaving(false);
