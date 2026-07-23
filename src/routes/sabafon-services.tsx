@@ -512,10 +512,13 @@ function PackageCodeRow({
   const save = async () => {
     const value = draft.trim().slice(0, 32);
     setSaving(true);
-    const column = kind === "prepaid" ? "code" : "code_postpaid";
+    const patch =
+      kind === "prepaid"
+        ? { code: value || null }
+        : { code_postpaid: value || null };
     const { error } = await supabase
       .from("sabafon_packages")
-      .update({ [column]: value || null })
+      .update(patch)
       .eq("id", pkg.id);
     setSaving(false);
     if (!error) {
