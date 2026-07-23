@@ -515,12 +515,16 @@ function PackageCodeRow({
   const dialCode = current.trim();
   const smsMatch = dialCode.match(/^SMS:([^:]+):(.+)$/i);
   const smsInfo = smsMatch ? { number: smsMatch[1].trim(), body: smsMatch[2].trim() } : null;
-  const displayCode = smsInfo ? `أرسل ${smsInfo.body} إلى ${smsInfo.number}` : dialCode;
+  const dialWithPhone = smsInfo ? "" : buildDialCode(dialCode, phone ?? "");
+  const displayCode = smsInfo
+    ? `أرسل ${smsInfo.body} إلى ${smsInfo.number}`
+    : dialWithPhone;
   const href = smsInfo
     ? `sms:${encodeURIComponent(smsInfo.number)}?body=${encodeURIComponent(smsInfo.body)}`
-    : dialCode
-    ? `tel:${encodeURIComponent(dialCode)}`
+    : dialWithPhone
+    ? `tel:${encodeURIComponent(dialWithPhone)}`
     : "";
+
 
   const save = async () => {
     const value = draft.trim().slice(0, 32);
