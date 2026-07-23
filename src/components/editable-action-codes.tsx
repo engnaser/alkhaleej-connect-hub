@@ -76,10 +76,12 @@ export function CodeRow({
   id,
   kind,
   defaultCode,
+  transformCode,
 }: {
   id: string;
   kind: Kind;
   defaultCode: string;
+  transformCode?: (code: string) => string;
 }) {
 
   const { isAdmin } = useIsAdmin();
@@ -108,11 +110,13 @@ export function CodeRow({
 
   const activeCode = draft || savedCode;
   const isDirty = draft.trim() !== savedCode;
+  const savedHref = toTelHref(transformCode ? transformCode(savedCode) : savedCode);
+  const activeHref = toTelHref(transformCode ? transformCode(activeCode) : activeCode);
 
   if (!isAdmin) {
     return (
       <a
-        href={toTelHref(savedCode)}
+        href={savedHref}
         className={`inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-bold ${btnClass}`}
       >
         <Icon className="h-4 w-4" />
@@ -125,7 +129,7 @@ export function CodeRow({
     return (
       <div className="relative">
         <a
-          href={toTelHref(savedCode)}
+          href={savedHref}
           className={`inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-bold ${btnClass}`}
         >
           <Icon className="h-4 w-4" />
@@ -145,6 +149,7 @@ export function CodeRow({
       </div>
     );
   }
+
 
   return (
     <div
