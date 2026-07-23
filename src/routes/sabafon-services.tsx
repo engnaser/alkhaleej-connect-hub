@@ -222,7 +222,8 @@ function SabafonServicesPage() {
               <SabafonTariffTables />
               <SectionList section="account" />
             </TabsContent>
-            <TabsContent value="internet" className="mt-6">
+            <TabsContent value="internet" className="mt-6 space-y-6">
+              <SabafonInternetCards />
               <SectionList section="internet" />
             </TabsContent>
           </Tabs>
