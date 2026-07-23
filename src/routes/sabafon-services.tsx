@@ -382,6 +382,7 @@ const SABAFON_4G_CATEGORY_IDS = new Set<string>([
 const SABAFON_SHARED_CATEGORY_IDS = new Set<string>([
   "sabafon-cat-supernet-2g",
   "sabafon-cat-safari-4g",
+  "sabafon-cat-social-4g",
 ]);
 
 function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
