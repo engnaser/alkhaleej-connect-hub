@@ -192,6 +192,7 @@ function pkgPayload(catId: string, pkg: SabafonPackage, sortOrder?: number) {
     validity: pkg.validity || "",
     network: pkg.network,
     code: pkg.code ?? null,
+    code_postpaid: pkg.codePostpaid ?? null,
     ...(sortOrder !== undefined ? { sort_order: sortOrder } : {}),
   };
 }
