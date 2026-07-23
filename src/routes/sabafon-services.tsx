@@ -375,7 +375,7 @@ const SABAFON_4G_CATEGORY_IDS = new Set<string>([
   "sabafon-cat-hybrid-4g",
   "sabafon-cat-wahed-4g",
   "sabafon-cat-social-4g",
-  "sabafon-cat-sms-only",
+  
   "sabafon-cat-supernet-2g",
 ]);
 
