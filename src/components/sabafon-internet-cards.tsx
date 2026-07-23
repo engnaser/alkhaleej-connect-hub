@@ -202,22 +202,32 @@ export function SabafonApn4GCard() {
   return (
     <CardShell title="اعداد نقاط الوصول بنظام الفورجي 4G" icon={<Wifi className="h-5 w-5" />} tone="info">
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
-        إعدادات نقطة الوصول (APN) لتشغيل إنترنت سبافون على شبكة الجيل الرابع لأجهزة أندرويد.
+        ضبط نقاط الوصول شركة سبأفون لتشغيل بيانات الجوال 4G.
       </p>
       <ApnDetailsDialog
-        title="إعداد APN — سبافون 4G (Android)"
-        intro="من الإعدادات → الشبكة الخلوية → نقاط الوصول (APN) → إضافة جديدة:"
-        rows={[
-          { label: "الاسم", value: "Sabafon 4G" },
-          { label: "APN", value: "sabafon", mono: true },
-          { label: "اسم المستخدم", value: "بدون" },
-          { label: "كلمة المرور", value: "بدون" },
-          { label: "نوع التحقق", value: "None" },
-          { label: "نوع APN", value: "default,supl,ia", mono: true },
-          { label: "البروتوكول", value: "IPv4/IPv6", mono: true },
-          { label: "نوع شبكة APN", value: "LTE", mono: true },
+        title="إعداد APN — سبأفون 4G"
+        intro="لضبط نقطة الوصول في هاتفك لتشغيل بيانات الجوال 4G شركة سبأفون قم بالخطوات التالية:"
+        steps={[
+          "الذهاب إلى الإعدادات / Settings",
+          "الذهاب إلى الاتصالات / Connections",
+          "الذهاب إلى شبكات الهاتف المحمول / Mobile networks",
+          "من نمط الشبكة / Mobile networks اختر LTE/4G أو LTE",
+          "الدخول إلى أسماء نقاط الوصول / Access Point Names",
+          "إضافة نقطة وصول جديدة / Add",
+          "أدخل الإعدادات في كل حقل كما هو موضح بالأسفل",
+          "اضغط على خيارات من الأعلى واحفظ نقطة الوصول، وستظهر في قائمة نقاط الوصول",
+          "اختر نقطة الوصول المسماة internet بالضغط على الدائرة أمامها حتى تصبح خضراء",
+          "شغّل إشارة البيانات لتشغيل النت، وإذا لم يعمل أعد تشغيل الهاتف ثم شغّل إشارة البيانات",
         ]}
-        extraNote="فعّل خيار LTE/4G من إعدادات الشبكة، واختر نقطة الوصول الجديدة كافتراضية."
+        rows={[
+          { label: "الاسم / Name", value: "internet", mono: true },
+          { label: "أسم نقطة الوصول / APN", value: "internet", mono: true },
+          { label: "اسم المستخدم / Username", value: "اتركه فارغاً" },
+          { label: "كلمة المرور / Password", value: "اتركه فارغاً" },
+          { label: "نوع المصادقة / Auth", value: "PAP و CHAP", mono: true },
+          { label: "نوع نقطة الوصول / APN type", value: "default", mono: true },
+        ]}
+        extraNote="بعد الحفظ، اختر نقطة الوصول internet كافتراضية بالضغط على الدائرة أمامها حتى تصبح خضراء، ثم شغّل إشارة البيانات."
       />
     </CardShell>
   );
