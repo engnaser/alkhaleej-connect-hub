@@ -628,6 +628,8 @@ function PackageCodeRow({
 }
 
 function SabafonPackageCard({ pkg, showPostpaid = false }: { pkg: SabafonPackage; showPostpaid?: boolean }) {
+  const [phone, setPhone] = useState("");
+
   const [copied, setCopied] = useState(false);
   const { isAdmin } = useIsAdmin();
 
