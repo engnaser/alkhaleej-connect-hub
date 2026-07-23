@@ -135,11 +135,11 @@ export function SabafonActivateInternetCard() {
   return (
     <CardShell title="تفعيل خدمة الإنترنت" icon={<Wifi className="h-5 w-5" />}>
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
-        للتفعيل، اضغط على زر التفعيل، ثم اتّبع التعليمات وأرسل الطلب.
+        للتفعيل، اضغط زر «تفعيل» ثم أرسل الرسالة الفارغة إلى الرقم <bdi dir="ltr" className="font-mono font-bold text-primary">6633</bdi>.
       </p>
       <EditableActionCodes
         id="sabafon-activate-internet"
-        activateCode="*111*1#"
+        activateCode="sms:6633"
         detailsSlot={null}
       />
     </CardShell>
