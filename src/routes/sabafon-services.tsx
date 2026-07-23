@@ -525,9 +525,9 @@ function PackageCodeRow({
     ? `أرسل ${smsInfo.body} إلى ${smsInfo.number}`
     : dialWithPhone;
   const href = smsInfo
-    ? `sms:${encodeURIComponent(smsInfo.number)}?body=${encodeURIComponent(smsInfo.body)}`
+    ? `sms:${smsInfo.number}?body=${encodeURIComponent(smsInfo.body)}`
     : dialWithPhone
-    ? `tel:${encodeURIComponent(dialWithPhone)}`
+    ? `tel:${dialWithPhone}`
     : "";
 
 
