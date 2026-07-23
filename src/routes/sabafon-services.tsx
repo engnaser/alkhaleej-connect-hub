@@ -34,6 +34,7 @@ import React, { useState } from "react";
 import { useSabafonItems, sabafonIconFor, type SabafonSection, type SabafonItem } from "@/lib/sabafonServicesStore";
 import { useSabafonPackagesStore, type SabafonPackage } from "@/lib/sabafonPackagesStore";
 import { supabase } from "@/integrations/supabase/client";
+import { SabafonInternetCards } from "@/components/sabafon-internet-cards";
 import { useIsAdmin } from "@/hooks/use-is-admin";
 import {
   SabafonCallMeCard,
@@ -222,7 +223,8 @@ function SabafonServicesPage() {
               <SabafonTariffTables />
               <SectionList section="account" />
             </TabsContent>
-            <TabsContent value="internet" className="mt-6">
+            <TabsContent value="internet" className="mt-6 space-y-6">
+              <SabafonInternetCards />
               <SectionList section="internet" />
             </TabsContent>
           </Tabs>
