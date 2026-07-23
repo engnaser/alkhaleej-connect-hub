@@ -219,6 +219,7 @@ export type Database = {
         Row: {
           category_id: string
           code: string | null
+          code_postpaid: string | null
           created_at: string
           id: string
           internet: string
@@ -234,6 +235,7 @@ export type Database = {
         Insert: {
           category_id: string
           code?: string | null
+          code_postpaid?: string | null
           created_at?: string
           id: string
           internet?: string
@@ -249,6 +251,7 @@ export type Database = {
         Update: {
           category_id?: string
           code?: string | null
+          code_postpaid?: string | null
           created_at?: string
           id?: string
           internet?: string
