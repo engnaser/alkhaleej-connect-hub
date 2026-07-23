@@ -714,6 +714,7 @@ function SabafonPackageCard({ pkg, showPostpaid = false }: { pkg: SabafonPackage
         </li>
       </ul>
 
+      {showPostpaid && (
       <div className="mt-4 rounded-xl border border-dashed border-primary/30 bg-primary/5 p-3">
         <label className="mb-1 block text-[11px] font-bold text-muted-foreground">
           رقمك (اختياري) — لبرمجة الكود مع رقمك مباشرة
@@ -735,6 +736,7 @@ function SabafonPackageCard({ pkg, showPostpaid = false }: { pkg: SabafonPackage
           </p>
         )}
       </div>
+      )}
 
       <div className={`mt-4 grid gap-2 ${showPostpaid ? "grid-cols-1" : "grid-cols-1"}`}>
         <PackageCodeRow
