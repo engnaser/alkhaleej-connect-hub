@@ -211,20 +211,29 @@ function ActCancelCard({
   const cancel = useServiceCode(id, "cancel", cancelCode);
   const [phone, setPhone] = useState("");
   const showPhoneField = hasPhonePlaceholder(act);
+  const phoneReady = phone.length >= 8;
   const actDisplay = showPhoneField ? mergePhoneIntoCode(act, phone) : act;
   return (
     <CardShell title={title} icon={icon}>
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{description}</p>
+      {showPhoneField && <PhoneMergeField phone={phone} setPhone={setPhone} />}
       <div className="mb-4 grid grid-cols-2 gap-2">
         <CodePill code={actDisplay} label="تفعيل" />
         <CodePill code={cancel} label="إلغاء" />
       </div>
-      {showPhoneField && <PhoneMergeField phone={phone} setPhone={setPhone} />}
       <EditableActionCodes
         id={id}
         activateCode={activateCode}
         cancelCode={cancelCode}
-        transformActivate={(c) => mergePhoneIntoCode(c, phone)}
+        transformActivate={showPhoneField ? (c) => (phoneReady ? mergePhoneIntoCode(c, phone) : "") : undefined}
+        onActivateClick={
+          showPhoneField && !phoneReady
+            ? (e) => {
+                e.preventDefault();
+                toast.error("أدخل رقم جوالك أولاً في الحقل أعلى الكود");
+              }
+            : undefined
+        }
         detailsSlot={
           <DetailsButton title={detailsTitle ?? title}>
             {detailsBody ?? (
