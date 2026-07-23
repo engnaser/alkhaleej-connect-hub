@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { toast } from "sonner";
 import { Input } from "@/components/ui/input";
 import {
   Wallet,
@@ -76,25 +77,46 @@ function PhoneMergeField({
   phone: string;
   setPhone: (v: string) => void;
 }) {
+  const valid = phone.length >= 8;
   return (
-    <div className="relative mb-3">
-      <Contact className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-      <Input
-        type="tel"
-        inputMode="tel"
-        placeholder="أدخل الرقم (اختياري)"
-        value={phone}
-        onChange={(e) => setPhone(e.target.value.slice(0, 9))}
-        className="pr-9 text-right"
-        dir="ltr"
-        maxLength={9}
-      />
-      <div className="mt-1 text-[11px] text-muted-foreground">
-        {phone.length}/9 — يُدمج مع الكود إذا احتوى على {"{n}"} أو الرقم
+    <div
+      className={`mb-3 rounded-xl border-2 p-3 ${
+        valid
+          ? "border-emerald-500/50 bg-emerald-500/5"
+          : "border-amber-500/60 bg-amber-500/10"
+      }`}
+    >
+      <label className="mb-1.5 block text-xs font-bold text-foreground">
+        ⚠ أدخل رقم جوالك أولاً ليُدمج مع الكود
+      </label>
+      <div className="relative">
+        <Contact className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+        <Input
+          type="tel"
+          inputMode="numeric"
+          placeholder="مثال: 777123456"
+          value={phone}
+          onChange={(e) =>
+            setPhone(e.target.value.replace(/\D+/g, "").slice(0, 9))
+          }
+          className="pr-9 text-right font-mono text-base font-bold"
+          dir="ltr"
+          maxLength={9}
+        />
+      </div>
+      <div className="mt-1 text-[11px] font-semibold">
+        {valid ? (
+          <span className="text-emerald-600">✓ سيتم الاتصال بالكود بعد دمج رقمك تلقائياً</span>
+        ) : (
+          <span className="text-amber-700 dark:text-amber-500">
+            {phone.length}/9 — أكمل إدخال الرقم ثم اضغط «تفعيل»
+          </span>
+        )}
       </div>
     </div>
   );
 }
+
 
 
 
@@ -122,16 +144,28 @@ function SimpleCard({
   const code = useServiceCode(id, "activate", defaultCode);
   const [phone, setPhone] = useState("");
   const showPhoneField = hasPhonePlaceholder(code);
+  const phoneReady = phone.length >= 8;
   const displayCode = showPhoneField ? mergePhoneIntoCode(code, phone) : code;
+  const transformFn = showPhoneField
+    ? (c: string) => (phoneReady ? mergePhoneIntoCode(c, phone) : "")
+    : undefined;
   return (
     <CardShell title={title} icon={icon}>
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{description}</p>
-      <CodePill code={displayCode} label={label} />
       {showPhoneField && <PhoneMergeField phone={phone} setPhone={setPhone} />}
+      <CodePill code={displayCode} label={label} />
       <EditableActionCodes
         id={id}
         activateCode={defaultCode}
-        transformActivate={(c) => mergePhoneIntoCode(c, phone)}
+        transformActivate={transformFn}
+        onActivateClick={
+          showPhoneField && !phoneReady
+            ? (e) => {
+                e.preventDefault();
+                toast.error("أدخل رقم جوالك أولاً في الحقل أعلى الكود");
+              }
+            : undefined
+        }
         detailsSlot={
           <DetailsButton title={detailsTitle ?? title}>
             {detailsBody ?? (
@@ -144,7 +178,7 @@ function SimpleCard({
               </p>
             )}
             <p className="mt-2 text-xs text-muted-foreground">
-              نصيحة للمسؤول: أضف {"{n}"} داخل الكود لتفعيل خانة الرقم ودمجه تلقائياً.
+              نصيحة للمسؤول: أضف {"{n}"} أو كلمة «الرقم» داخل الكود لتفعيل خانة الرقم ودمجه تلقائياً.
             </p>
           </DetailsButton>
         }
@@ -152,6 +186,7 @@ function SimpleCard({
     </CardShell>
   );
 }
+
 
 function ActCancelCard({
   id,
@@ -176,20 +211,29 @@ function ActCancelCard({
   const cancel = useServiceCode(id, "cancel", cancelCode);
   const [phone, setPhone] = useState("");
   const showPhoneField = hasPhonePlaceholder(act);
+  const phoneReady = phone.length >= 8;
   const actDisplay = showPhoneField ? mergePhoneIntoCode(act, phone) : act;
   return (
     <CardShell title={title} icon={icon}>
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{description}</p>
+      {showPhoneField && <PhoneMergeField phone={phone} setPhone={setPhone} />}
       <div className="mb-4 grid grid-cols-2 gap-2">
         <CodePill code={actDisplay} label="تفعيل" />
         <CodePill code={cancel} label="إلغاء" />
       </div>
-      {showPhoneField && <PhoneMergeField phone={phone} setPhone={setPhone} />}
       <EditableActionCodes
         id={id}
         activateCode={activateCode}
         cancelCode={cancelCode}
-        transformActivate={(c) => mergePhoneIntoCode(c, phone)}
+        transformActivate={showPhoneField ? (c) => (phoneReady ? mergePhoneIntoCode(c, phone) : "") : undefined}
+        onActivateClick={
+          showPhoneField && !phoneReady
+            ? (e) => {
+                e.preventDefault();
+                toast.error("أدخل رقم جوالك أولاً في الحقل أعلى الكود");
+              }
+            : undefined
+        }
         detailsSlot={
           <DetailsButton title={detailsTitle ?? title}>
             {detailsBody ?? (

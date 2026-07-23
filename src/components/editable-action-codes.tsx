@@ -25,11 +25,13 @@ export function CodeRow({
   kind,
   defaultCode,
   transformCode,
+  onActivateClick,
 }: {
   id: string;
   kind: Kind;
   defaultCode: string;
   transformCode?: (code: string) => string;
+  onActivateClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) {
   const { isAdmin } = useIsAdmin();
   const savedCode = useServiceCode(id, kind, defaultCode);
@@ -78,6 +80,7 @@ export function CodeRow({
     return (
       <a
         href={savedHref}
+        onClick={isActivate ? onActivateClick : undefined}
         className={`inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-bold ${btnClass}`}
       >
         <Icon className="h-4 w-4" />
@@ -91,6 +94,7 @@ export function CodeRow({
       <div className="relative">
         <a
           href={savedHref}
+          onClick={isActivate ? onActivateClick : undefined}
           className={`inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-bold ${btnClass}`}
         >
           <Icon className="h-4 w-4" />
@@ -161,17 +165,19 @@ export function EditableActionCodes({
   cancelCode,
   detailsSlot,
   transformActivate,
+  onActivateClick,
 }: {
   id: string;
   activateCode: string;
   cancelCode?: string;
   detailsSlot: React.ReactNode;
   transformActivate?: (code: string) => string;
+  onActivateClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) {
   const cols = cancelCode ? "grid-cols-3" : "grid-cols-2";
   return (
     <div className={`mt-auto grid ${cols} gap-2`}>
-      <CodeRow id={id} kind="activate" defaultCode={activateCode} transformCode={transformActivate} />
+      <CodeRow id={id} kind="activate" defaultCode={activateCode} transformCode={transformActivate} onActivateClick={onActivateClick} />
       {cancelCode && <CodeRow id={id} kind="cancel" defaultCode={cancelCode} />}
       {detailsSlot}
     </div>
