@@ -65,12 +65,14 @@ function ApnDetailsDialog({
   triggerLabel = "عرض التفاصيل",
   title,
   intro,
+  steps,
   rows,
   extraNote,
 }: {
   triggerLabel?: string;
   title: string;
   intro?: string;
+  steps?: string[];
   rows: { label: string; value: string; mono?: boolean }[];
   extraNote?: React.ReactNode;
 }) {
@@ -96,13 +98,23 @@ function ApnDetailsDialog({
           {triggerLabel}
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-lg">
+      <DialogContent className="max-h-[85vh] max-w-lg overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-right text-xl">{title}</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           {intro && (
             <p className="text-sm leading-relaxed text-muted-foreground">{intro}</p>
+          )}
+          {steps && steps.length > 0 && (
+            <ol className="space-y-2 rounded-xl border border-primary/30 bg-primary/5 p-4 text-sm leading-relaxed text-foreground">
+              {steps.map((s, i) => (
+                <li key={i} className="flex gap-2">
+                  <span className="font-bold text-primary">{i + 1}-</span>
+                  <span>{s}</span>
+                </li>
+              ))}
+            </ol>
           )}
           <div className="rounded-xl border border-border bg-muted/40 p-4">
             {rows.map((r) => (
@@ -153,21 +165,31 @@ export function SabafonApn2GCard() {
   return (
     <CardShell title="اعداد نقاط الوصول بنظام التوجي 2G" icon={<Signal className="h-5 w-5" />} tone="accent">
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
-        إعدادات نقطة الوصول (APN) لتشغيل إنترنت سبافون على شبكة الجيل الثاني/الثالث.
+        خطوات إعداد نقطة الوصول (APN) لتشغيل إنترنت سبافون على شبكة الجيل الثاني/الثالث.
       </p>
       <ApnDetailsDialog
-        title="إعداد APN — سبافون 2G/3G"
-        intro="من الإعدادات → الشبكة الخلوية → نقاط الوصول (APN) → إضافة جديدة، ثم أدخل القيم التالية:"
-        rows={[
-          { label: "الاسم", value: "Sabafon" },
-          { label: "APN", value: "sabafon", mono: true },
-          { label: "اسم المستخدم", value: "بدون" },
-          { label: "كلمة المرور", value: "بدون" },
-          { label: "نوع التحقق", value: "None" },
-          { label: "نوع APN", value: "default,supl", mono: true },
-          { label: "البروتوكول", value: "IPv4", mono: true },
+        title="إعداد APN — سبافون 2G"
+        intro="اتّبع الخطوات التالية بالترتيب:"
+        steps={[
+          "الذهاب إلى الإعدادات / Settings",
+          "الذهاب إلى الاتصالات / Connections",
+          "الذهاب إلى شبكات الهاتف المحمول / Mobile networks",
+          "من نمط الشبكة / Mobile networks اختر LTE/4G أو LTE",
+          "الدخول إلى أسماء نقاط الوصول / Access Point Names",
+          "إضافة نقطة وصول جديدة / Add",
+          "أدخل الإعدادات في كل حقل كما هو موضح بالأسفل",
+          "احفظ الإعدادات ثم اختر نقطة الوصول Sabafon حتى تصبح الدائرة أمامها خضراء",
+          "شغّل بيانات الجوال، وإن لم يعمل الإنترنت أعد تشغيل الهاتف",
         ]}
-        extraNote="بعد الحفظ، اختر نقطة الوصول الجديدة كافتراضية ثم أعد تشغيل بيانات الجوال."
+        rows={[
+          { label: "الاسم / Name", value: "Sabafon" },
+          { label: "APN", value: "net", mono: true },
+          { label: "اسم المستخدم / Username", value: "internet", mono: true },
+          { label: "كلمة المرور / Password", value: "internet", mono: true },
+          { label: "نوع المصادقة / Auth", value: "PAP و CHAP", mono: true },
+          { label: "نوع نقطة الوصول / APN type", value: "default", mono: true },
+        ]}
+        extraNote="بعد الحفظ، اختر نقطة الوصول الجديدة كافتراضية بالضغط على الدائرة أمام Sabafon، ثم شغّل إشارة البيانات."
       />
     </CardShell>
   );
