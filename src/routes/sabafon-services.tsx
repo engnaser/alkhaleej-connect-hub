@@ -460,7 +460,11 @@ function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
               ) : (
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {cat.packages.map((pkg) => (
-                    <SabafonPackageCard key={pkg.id} pkg={pkg} />
+                    <SabafonPackageCard
+                      key={pkg.id}
+                      pkg={pkg}
+                      showPostpaid={SABAFON_4G_CATEGORY_IDS.has(cat.id)}
+                    />
                   ))}
                 </div>
               )}
