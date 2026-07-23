@@ -76,10 +76,12 @@ export function CodeRow({
   id,
   kind,
   defaultCode,
+  transformCode,
 }: {
   id: string;
   kind: Kind;
   defaultCode: string;
+  transformCode?: (code: string) => string;
 }) {
 
   const { isAdmin } = useIsAdmin();
@@ -108,11 +110,13 @@ export function CodeRow({
 
   const activeCode = draft || savedCode;
   const isDirty = draft.trim() !== savedCode;
+  const savedHref = toTelHref(transformCode ? transformCode(savedCode) : savedCode);
+  const activeHref = toTelHref(transformCode ? transformCode(activeCode) : activeCode);
 
   if (!isAdmin) {
     return (
       <a
-        href={toTelHref(savedCode)}
+        href={savedHref}
         className={`inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-bold ${btnClass}`}
       >
         <Icon className="h-4 w-4" />
@@ -125,7 +129,7 @@ export function CodeRow({
     return (
       <div className="relative">
         <a
-          href={toTelHref(savedCode)}
+          href={savedHref}
           className={`inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-bold ${btnClass}`}
         >
           <Icon className="h-4 w-4" />
@@ -145,6 +149,7 @@ export function CodeRow({
       </div>
     );
   }
+
 
   return (
     <div
@@ -210,7 +215,7 @@ export function CodeRow({
         </button>
       )}
       <a
-        href={toTelHref(activeCode)}
+        href={activeHref}
         className={`inline-flex w-full items-center justify-center gap-1.5 rounded-lg px-2 py-1.5 text-xs font-bold ${btnClass}`}
       >
         <Icon className="h-3.5 w-3.5" />
@@ -225,21 +230,24 @@ export function EditableActionCodes({
   activateCode,
   cancelCode,
   detailsSlot,
+  transformActivate,
 }: {
   id: string;
   activateCode: string;
   cancelCode?: string;
   detailsSlot: React.ReactNode;
+  transformActivate?: (code: string) => string;
 }) {
   const cols = cancelCode ? "grid-cols-3" : "grid-cols-2";
   return (
     <div className={`mt-auto grid ${cols} gap-2`}>
-      <CodeRow id={id} kind="activate" defaultCode={activateCode} />
+      <CodeRow id={id} kind="activate" defaultCode={activateCode} transformCode={transformActivate} />
       {cancelCode && <CodeRow id={id} kind="cancel" defaultCode={cancelCode} />}
       {detailsSlot}
     </div>
   );
 }
+
 
 // ============ Floating global Save bar ============
 export function SaveAllCodesBar() {
