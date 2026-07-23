@@ -43,6 +43,61 @@ import {
   DetailsButton,
 } from "@/components/you-inquiry-cards";
 
+/* ---------- Phone merge helper (placeholder-based, safe by default) ---------- */
+// Merges the user's phone into the code only when the admin included a
+// placeholder like {n}, [n], <رقم>, or the literal words "الرقم"/"رقم".
+// Codes without a placeholder are left untouched — so codes like *111# don't
+// get mangled into *111*7XXXXXXXX#.
+const PHONE_PLACEHOLDER_RE =
+  /\{\s*(?:n|رقم|الرقم)\s*\}|\[\s*(?:n|رقم|الرقم)\s*\]|<\s*(?:رقم|الرقم)\s*>|#(?:رقم|الرقم)#|الرقم|رقم/gi;
+
+export function hasPhonePlaceholder(code: string): boolean {
+  PHONE_PLACEHOLDER_RE.lastIndex = 0;
+  const has = PHONE_PLACEHOLDER_RE.test(code);
+  PHONE_PLACEHOLDER_RE.lastIndex = 0;
+  return has;
+}
+
+export function mergePhoneIntoCode(rawCode: string, phone: string): string {
+  const code = rawCode.trim().replace(/\s+/g, "");
+  const num = phone.replace(/\D+/g, "").slice(0, 9);
+  PHONE_PLACEHOLDER_RE.lastIndex = 0;
+  if (PHONE_PLACEHOLDER_RE.test(code)) {
+    PHONE_PLACEHOLDER_RE.lastIndex = 0;
+    return num ? code.replace(PHONE_PLACEHOLDER_RE, num) : code;
+  }
+  return code;
+}
+
+function PhoneMergeField({
+  phone,
+  setPhone,
+}: {
+  phone: string;
+  setPhone: (v: string) => void;
+}) {
+  return (
+    <div className="relative mb-3">
+      <Contact className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
+      <Input
+        type="tel"
+        inputMode="tel"
+        placeholder="أدخل الرقم (اختياري)"
+        value={phone}
+        onChange={(e) => setPhone(e.target.value.slice(0, 9))}
+        className="pr-9 text-right"
+        dir="ltr"
+        maxLength={9}
+      />
+      <div className="mt-1 text-[11px] text-muted-foreground">
+        {phone.length}/9 — يُدمج مع الكود إذا احتوى على {"{n}"} أو الرقم
+      </div>
+    </div>
+  );
+}
+
+
+
 /* ---------- Small reusable factories ---------- */
 
 function SimpleCard({
