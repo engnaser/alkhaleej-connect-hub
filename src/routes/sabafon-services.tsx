@@ -739,7 +739,7 @@ function SabafonPackageCard({ pkg, showPostpaid = false }: { pkg: SabafonPackage
           kind="prepaid"
           label={showPostpaid ? "دفع مسبق" : "كود التفعيل"}
           accent="primary"
-          phone={showPostpaid ? phone : undefined}
+          phone={phone}
         />
         {showPostpaid && (
           <PackageCodeRow pkg={pkg} kind="postpaid" label="فوترة" accent="amber" phone={phone} />
