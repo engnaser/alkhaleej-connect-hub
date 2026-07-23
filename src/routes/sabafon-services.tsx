@@ -370,12 +370,14 @@ function SabafonItemCard({ item }: { item: SabafonItem }) {
 
 const SABAFON_4G_CATEGORY_IDS = new Set<string>([
   "sabafon-cat-anter-4g",
+  "sabafon-cat-yabalash-4g",
   "sabafon-cat-yabalash-4g-mixed",
+  "sabafon-cat-inter-4g",
   "sabafon-cat-safari-4g",
   "sabafon-cat-hybrid-4g",
   "sabafon-cat-wahed-4g",
   "sabafon-cat-social-4g",
-  
+
   "sabafon-cat-supernet-2g",
 ]);
 
