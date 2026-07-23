@@ -80,6 +80,7 @@ export function CodeRow({
     return (
       <a
         href={savedHref}
+        onClick={isActivate ? onActivateClick : undefined}
         className={`inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-bold ${btnClass}`}
       >
         <Icon className="h-4 w-4" />
@@ -93,6 +94,7 @@ export function CodeRow({
       <div className="relative">
         <a
           href={savedHref}
+          onClick={isActivate ? onActivateClick : undefined}
           className={`inline-flex w-full items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-sm font-bold ${btnClass}`}
         >
           <Icon className="h-4 w-4" />
