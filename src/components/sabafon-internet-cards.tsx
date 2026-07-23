@@ -240,18 +240,23 @@ export function SabafonApniPhone4GCard() {
   return (
     <CardShell title="اعداد نقاط الوصول للأيفون بنظام الفورجي 4G" icon={<Smartphone className="h-5 w-5" />} tone="info">
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
-        إعدادات شبكة البيانات الخلوية لتشغيل إنترنت سبافون 4G على أجهزة الأيفون.
+        ضبط خدمة الفورجي 4G على هواتف الأيفون لشبكة سبأفون.
       </p>
       <ApnDetailsDialog
-        title="إعداد APN — سبافون 4G (iPhone)"
-        intro="من الإعدادات → خلوي → شبكة البيانات الخلوية، أدخل القيم في أقسام (بيانات خلوية / LTE / نقطة اتصال):"
+        title="إعداد APN للأيفون — سبأفون 4G"
+        intro="لضبط خدمة الفورجي في هواتف الأيفون: يتم الدخول على الإعدادات - خلوي - البيانات الخلوية - (تشغيل)، ومن ثم الدخول على «شبكة البيانات الخلوية» وإضافة التالي:"
+        steps={[
+          "قسم البيانات الخلوية (Cellular Data): APN: internet — اسم المستخدم: فارغ — كلمة السر: فارغ",
+          "قسم إعدادات LTE (LTE Setup): APN: internet — اسم المستخدم: فارغ — كلمة السر: فارغ",
+          "بعد الحفظ أعد تشغيل الجهاز، وتأكد أن خيار «تمكين LTE» مضبوط على «الصوت والبيانات»",
+        ]}
         rows={[
-          { label: "APN", value: "sabafon", mono: true },
-          { label: "اسم المستخدم", value: "بدون" },
-          { label: "كلمة المرور", value: "بدون" },
-          { label: "MMSC", value: "بدون" },
-          { label: "خادم MMS الوكيل", value: "بدون" },
-          { label: "الحد الأقصى لـ MMS", value: "1048576" },
+          { label: "APN", value: "internet", mono: true },
+          { label: "اسم المستخدم / Username", value: "فارغ" },
+          { label: "كلمة السر / Password", value: "فارغ" },
+          { label: "إعدادات LTE — APN", value: "internet", mono: true },
+          { label: "إعدادات LTE — Username", value: "فارغ" },
+          { label: "إعدادات LTE — Password", value: "فارغ" },
         ]}
         extraNote="بعد الإدخال أعد تشغيل الجهاز، وتأكد أن خيار «تمكين LTE» مضبوط على «الصوت والبيانات»."
       />
