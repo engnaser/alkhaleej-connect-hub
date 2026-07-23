@@ -78,6 +78,7 @@ import {
   SabafonSmsRoamingPostpaidCard,
   SabafonRoamingPrepaidCard,
 } from "@/components/sabafon-inquiry-cards";
+import { SabafonTariffTables } from "@/components/sabafon-tariff-tables";
 
 export const Route = createFileRoute("/sabafon-services")({
   head: () => ({
