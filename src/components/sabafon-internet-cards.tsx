@@ -65,12 +65,14 @@ function ApnDetailsDialog({
   triggerLabel = "عرض التفاصيل",
   title,
   intro,
+  steps,
   rows,
   extraNote,
 }: {
   triggerLabel?: string;
   title: string;
   intro?: string;
+  steps?: string[];
   rows: { label: string; value: string; mono?: boolean }[];
   extraNote?: React.ReactNode;
 }) {
@@ -96,13 +98,23 @@ function ApnDetailsDialog({
           {triggerLabel}
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-lg">
+      <DialogContent className="max-h-[85vh] max-w-lg overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="text-right text-xl">{title}</DialogTitle>
         </DialogHeader>
         <div className="space-y-4">
           {intro && (
             <p className="text-sm leading-relaxed text-muted-foreground">{intro}</p>
+          )}
+          {steps && steps.length > 0 && (
+            <ol className="space-y-2 rounded-xl border border-primary/30 bg-primary/5 p-4 text-sm leading-relaxed text-foreground">
+              {steps.map((s, i) => (
+                <li key={i} className="flex gap-2">
+                  <span className="font-bold text-primary">{i + 1}-</span>
+                  <span>{s}</span>
+                </li>
+              ))}
+            </ol>
           )}
           <div className="rounded-xl border border-border bg-muted/40 p-4">
             {rows.map((r) => (
