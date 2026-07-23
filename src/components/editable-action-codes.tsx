@@ -183,20 +183,25 @@ export function CodeRow({
         <button
           onClick={() => {
             const trimmed = draft.trim();
-            if (!trimmed) {
-              toast.error("لا يمكن حفظ كود فارغ");
-              return;
-            }
             const s = readStore();
-            s[id] = { ...s[id], [kind]: trimmed };
-            writeStore(s);
+            if (!trimmed) {
+              // حذف التخصيص — يعود الكود إلى القيمة الافتراضية
+              if (s[id]) {
+                delete s[id][kind];
+                if (!s[id].activate && !s[id].cancel) delete s[id];
+                writeStore(s);
+              }
+            } else {
+              s[id] = { ...s[id], [kind]: trimmed };
+              writeStore(s);
+            }
             if (pending[id]) {
               delete pending[id][kind];
               if (!pending[id].activate && !pending[id].cancel) delete pending[id];
               window.dispatchEvent(new Event(PENDING_EVENT));
             }
             setEditing(false);
-            toast.success("تم حفظ الكود");
+            toast.success(trimmed ? "تم حفظ الكود" : "تم حذف الكود");
           }}
           className="inline-flex w-full items-center justify-center gap-1 rounded-lg bg-emerald-600 px-2 py-1.5 text-xs font-bold text-white hover:bg-emerald-700"
         >
