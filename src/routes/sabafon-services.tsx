@@ -479,12 +479,13 @@ function PackagesPanel({ generation }: { generation: "3g" | "4g" }) {
 type CodeKind = "prepaid" | "postpaid";
 
 function buildDialCode(rawCode: string, phone: string): string {
-  const code = rawCode.trim();
+  const code = rawCode.trim().replace(/\s+/g, "");
   const num = phone.replace(/\D+/g, "").slice(0, 9);
   // Placeholders the admin can type inside the code to mark where the number goes
-  const PLACEHOLDER_RE = /\{n\}|\[n\]|\[رقم\]|الرقم|#رقم#|<رقم>/g;
+  const PLACEHOLDER_RE = /\{\s*(?:n|رقم|الرقم)\s*\}|\[\s*(?:n|رقم|الرقم)\s*\]|#(?:رقم|الرقم)#|<\s*(?:رقم|الرقم)\s*>|الرقم|رقم/gi;
   if (PLACEHOLDER_RE.test(code)) {
-    return num ? code.replace(PLACEHOLDER_RE, num) : code.replace(PLACEHOLDER_RE, "").replace(/\*+#/g, "#");
+    PLACEHOLDER_RE.lastIndex = 0;
+    return num ? code.replace(PLACEHOLDER_RE, num) : code;
   }
   if (!num) return code;
   // e.g. *250# → *250*7XXXXXXXX#
@@ -520,14 +521,16 @@ function PackageCodeRow({
   const dialCode = current.trim();
   const smsMatch = dialCode.match(/^SMS:([^:]+):(.+)$/i);
   const smsInfo = smsMatch ? { number: smsMatch[1].trim(), body: smsMatch[2].trim() } : null;
-  const dialWithPhone = smsInfo ? "" : buildDialCode(dialCode, phone ?? "");
+  const normalizedPhone = (phone ?? "").replace(/\D+/g, "").slice(0, 9);
+  const dialWithPhone = smsInfo ? "" : buildDialCode(dialCode, normalizedPhone);
+  const needsValidPhone = Boolean(phone) && normalizedPhone.length !== 9;
   const displayCode = smsInfo
     ? `أرسل ${smsInfo.body} إلى ${smsInfo.number}`
     : dialWithPhone;
   const href = smsInfo
     ? `sms:${smsInfo.number}?body=${encodeURIComponent(smsInfo.body)}`
-    : dialWithPhone
-    ? `tel:${dialWithPhone}`
+    : dialWithPhone && !needsValidPhone
+    ? `tel:${dialWithPhone.replace(/#/g, "%23")}`
     : "";
 
 
@@ -625,7 +628,7 @@ function PackageCodeRow({
           disabled
           className="mt-2 inline-flex w-full cursor-not-allowed items-center justify-center gap-2 rounded-full border-2 border-dashed border-border bg-muted/40 px-3 py-2 text-xs font-extrabold text-muted-foreground"
         >
-          كود {label} غير متوفر
+          {needsValidPhone ? "أدخل رقمًا صحيحًا من 9 أرقام" : `كود ${label} غير متوفر`}
         </button>
       )}
     </div>
