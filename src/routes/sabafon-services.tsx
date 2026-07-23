@@ -525,9 +525,9 @@ function PackageCodeRow({
     ? `أرسل ${smsInfo.body} إلى ${smsInfo.number}`
     : dialWithPhone;
   const href = smsInfo
-    ? `sms:${encodeURIComponent(smsInfo.number)}?body=${encodeURIComponent(smsInfo.body)}`
+    ? `sms:${smsInfo.number}?body=${encodeURIComponent(smsInfo.body)}`
     : dialWithPhone
-    ? `tel:${encodeURIComponent(dialWithPhone)}`
+    ? `tel:${dialWithPhone}`
     : "";
 
 
@@ -739,7 +739,7 @@ function SabafonPackageCard({ pkg, showPostpaid = false }: { pkg: SabafonPackage
           kind="prepaid"
           label={showPostpaid ? "دفع مسبق" : "كود التفعيل"}
           accent="primary"
-          phone={showPostpaid ? phone : undefined}
+          phone={phone}
         />
         {showPostpaid && (
           <PackageCodeRow pkg={pkg} kind="postpaid" label="فوترة" accent="amber" phone={phone} />
