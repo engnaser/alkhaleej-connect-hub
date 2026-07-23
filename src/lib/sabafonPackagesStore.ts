@@ -49,7 +49,7 @@ async function fetchCategories(): Promise<SabafonCategory[]> {
   const { data: pkgs, error: pkgErr } = await supabase
     .from("sabafon_packages")
     .select(
-      "id,category_id,name,price,internet,minutes,sms,validity,network,code,sort_order",
+      "id,category_id,name,price,internet,minutes,sms,validity,network,code,code_postpaid,sort_order",
     )
     .order("sort_order", { ascending: true });
   if (pkgErr) throw pkgErr;
@@ -70,6 +70,7 @@ async function fetchCategories(): Promise<SabafonCategory[]> {
         validity: p.validity,
         network: p.network as NetworkType,
         code: p.code ?? undefined,
+        codePostpaid: (p as { code_postpaid?: string | null }).code_postpaid ?? undefined,
       })),
   }));
 }
