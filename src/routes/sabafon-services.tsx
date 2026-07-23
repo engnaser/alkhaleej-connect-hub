@@ -482,7 +482,7 @@ function buildDialCode(rawCode: string, phone: string): string {
   const code = rawCode.trim();
   const num = phone.replace(/\D+/g, "").slice(0, 9);
   // Placeholders the admin can type inside the code to mark where the number goes
-  const PLACEHOLDER_RE = /\{n\}|الرقم|#رقم#|<رقم>/g;
+  const PLACEHOLDER_RE = /\{n\}|\[n\]|\[رقم\]|الرقم|#رقم#|<رقم>/g;
   if (PLACEHOLDER_RE.test(code)) {
     return num ? code.replace(PLACEHOLDER_RE, num) : code.replace(PLACEHOLDER_RE, "").replace(/\*+#/g, "#");
   }
