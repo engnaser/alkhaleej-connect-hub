@@ -316,6 +316,33 @@ export type Database = {
         }
         Relationships: []
       }
+      service_code_overrides: {
+        Row: {
+          code_type: string
+          kind: string
+          service_id: string
+          updated_at: string
+          updated_by: string | null
+          value: string
+        }
+        Insert: {
+          code_type: string
+          kind: string
+          service_id: string
+          updated_at?: string
+          updated_by?: string | null
+          value: string
+        }
+        Update: {
+          code_type?: string
+          kind?: string
+          service_id?: string
+          updated_at?: string
+          updated_by?: string | null
+          value?: string
+        }
+        Relationships: []
+      }
       template_layouts: {
         Row: {
           created_at: string
