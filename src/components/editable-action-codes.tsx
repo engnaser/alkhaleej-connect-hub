@@ -25,11 +25,13 @@ export function CodeRow({
   kind,
   defaultCode,
   transformCode,
+  onActivateClick,
 }: {
   id: string;
   kind: Kind;
   defaultCode: string;
   transformCode?: (code: string) => string;
+  onActivateClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
 }) {
   const { isAdmin } = useIsAdmin();
   const savedCode = useServiceCode(id, kind, defaultCode);
