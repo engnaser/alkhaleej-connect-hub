@@ -143,16 +143,28 @@ function SimpleCard({
   const code = useServiceCode(id, "activate", defaultCode);
   const [phone, setPhone] = useState("");
   const showPhoneField = hasPhonePlaceholder(code);
+  const phoneReady = phone.length >= 8;
   const displayCode = showPhoneField ? mergePhoneIntoCode(code, phone) : code;
+  const transformFn = showPhoneField
+    ? (c: string) => (phoneReady ? mergePhoneIntoCode(c, phone) : "")
+    : undefined;
   return (
     <CardShell title={title} icon={icon}>
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground">{description}</p>
-      <CodePill code={displayCode} label={label} />
       {showPhoneField && <PhoneMergeField phone={phone} setPhone={setPhone} />}
+      <CodePill code={displayCode} label={label} />
       <EditableActionCodes
         id={id}
         activateCode={defaultCode}
-        transformActivate={(c) => mergePhoneIntoCode(c, phone)}
+        transformActivate={transformFn}
+        onActivateClick={
+          showPhoneField && !phoneReady
+            ? (e) => {
+                e.preventDefault();
+                toast.error("أدخل رقم جوالك أولاً في الحقل أعلى الكود");
+              }
+            : undefined
+        }
         detailsSlot={
           <DetailsButton title={detailsTitle ?? title}>
             {detailsBody ?? (
@@ -165,7 +177,7 @@ function SimpleCard({
               </p>
             )}
             <p className="mt-2 text-xs text-muted-foreground">
-              نصيحة للمسؤول: أضف {"{n}"} داخل الكود لتفعيل خانة الرقم ودمجه تلقائياً.
+              نصيحة للمسؤول: أضف {"{n}"} أو كلمة «الرقم» داخل الكود لتفعيل خانة الرقم ودمجه تلقائياً.
             </p>
           </DetailsButton>
         }
@@ -173,6 +185,7 @@ function SimpleCard({
     </CardShell>
   );
 }
+
 
 function ActCancelCard({
   id,
