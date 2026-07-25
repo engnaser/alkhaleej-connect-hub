@@ -199,69 +199,96 @@ function YemenMobilePage() {
         {/* TABS */}
         <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
           <Tabs defaultValue="packages" className="w-full">
-            <TabsList className="flex h-auto w-full flex-wrap justify-center gap-2 rounded-2xl border border-border bg-card p-2 shadow-[var(--shadow-card)]">
+            <TabsList
+              className="flex h-auto w-full flex-wrap justify-center gap-2 rounded-2xl border-2 p-2 shadow-[0_10px_30px_-15px_rgba(122,30,43,0.35)]"
+              style={{
+                borderColor: "#7a1e2b33",
+                background: "linear-gradient(135deg, #fff6ec 0%, #f9e6d0 100%)",
+              }}
+            >
               <TabsTrigger
                 value="packages"
-                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+                data-brand="ym"
+                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold text-[#2b3f7a] transition data-[state=active]:text-white data-[state=active]:shadow-lg"
               >
                 <Package className="h-4 w-4" />
                 تفعيل الباقات
               </TabsTrigger>
               <TabsTrigger
                 value="services"
-                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+                data-brand="ym"
+                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold text-[#2b3f7a] transition data-[state=active]:text-white data-[state=active]:shadow-lg"
               >
                 <Wrench className="h-4 w-4" />
                 الخدمات
               </TabsTrigger>
               <TabsTrigger
                 value="account"
-                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+                data-brand="ym"
+                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold text-[#2b3f7a] transition data-[state=active]:text-white data-[state=active]:shadow-lg"
               >
                 <UserCog className="h-4 w-4" />
                 أسعار ومعلومات
               </TabsTrigger>
               <TabsTrigger
                 value="internet"
-                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+                data-brand="ym"
+                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold text-[#2b3f7a] transition data-[state=active]:text-white data-[state=active]:shadow-lg"
               >
                 <Settings2 className="h-4 w-4" />
                 ضبط الإنترنت
               </TabsTrigger>
             </TabsList>
 
+            <style>{`
+              [data-brand="ym"][data-state="active"] {
+                background: linear-gradient(135deg, #7a1e2b 0%, #2b3f7a 100%) !important;
+              }
+            `}</style>
+
             {/* Disclaimer */}
-            <div className="mt-6 flex items-start gap-3 rounded-2xl border border-warning-border bg-warning-bg p-4">
-              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-warning-foreground" />
-              <p className="text-sm font-semibold text-warning-foreground">
+            <div
+              className="mt-6 flex items-start gap-3 rounded-2xl border-2 p-4"
+              style={{
+                borderColor: "#7a1e2b40",
+                background: "linear-gradient(135deg, #fff6ec 0%, #fbeacd 100%)",
+              }}
+            >
+              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" style={{ color: "#7a1e2b" }} />
+              <p className="text-sm font-semibold" style={{ color: "#7a1e2b" }}>
                 قد تتغير الأكواد والأسعار من الشركة، يرجى التأكد قبل الاشتراك.
               </p>
             </div>
 
             <TabsContent value="packages" className="mt-6">
-              <PackagesTab />
+              <BrandSection title="تفعيل الباقات" icon={<Package className="h-5 w-5" />}>
+                <PackagesTab />
+              </BrandSection>
             </TabsContent>
             <TabsContent value="services" className="mt-6">
-              <ServicesTab group="general" />
+              <BrandSection title="الخدمات" icon={<Wrench className="h-5 w-5" />}>
+                <ServicesTab group="general" />
+              </BrandSection>
             </TabsContent>
-            <TabsContent value="account" className="mt-6 space-y-6">
-              <PrepaidTariffTable />
-              <PrepaidTariffTableGray />
-              <PrepaidMmsTariffTable />
-              <InternationalRoamingTariff />
-              <RoamingSmsTariffTable />
-              <SabahiServiceCard />
-              <SalifniServiceCard />
-
-
-
-
-              <ServicesTab group="account" />
+            <TabsContent value="account" className="mt-6">
+              <BrandSection title="أسعار ومعلومات" icon={<UserCog className="h-5 w-5" />}>
+                <div className="space-y-6">
+                  <PrepaidTariffTable />
+                  <PrepaidTariffTableGray />
+                  <PrepaidMmsTariffTable />
+                  <InternationalRoamingTariff />
+                  <RoamingSmsTariffTable />
+                  <SabahiServiceCard />
+                  <SalifniServiceCard />
+                  <ServicesTab group="account" />
+                </div>
+              </BrandSection>
             </TabsContent>
-
 
             <TabsContent value="internet" className="mt-6">
-              <InternetTab />
+              <BrandSection title="ضبط الإنترنت" icon={<Settings2 className="h-5 w-5" />}>
+                <InternetTab />
+              </BrandSection>
             </TabsContent>
           </Tabs>
         </section>
@@ -271,6 +298,61 @@ function YemenMobilePage() {
     </div>
   );
 }
+
+function BrandSection({
+  title,
+  icon,
+  children,
+}: {
+  title: string;
+  icon?: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className="relative overflow-hidden rounded-3xl border-2 shadow-[0_15px_40px_-20px_rgba(122,30,43,0.4)]"
+      style={{
+        borderColor: "#7a1e2b33",
+        background: "linear-gradient(180deg, #fff9f1 0%, #ffffff 60%)",
+      }}
+    >
+      {/* Top brand strip */}
+      <div className="flex h-2 w-full">
+        <div className="flex-1" style={{ background: "#7a1e2b" }} />
+        <div className="flex-1" style={{ background: "#2b3f7a" }} />
+      </div>
+
+      {/* Header */}
+      <div
+        className="flex items-center gap-3 border-b px-5 py-4"
+        style={{ borderColor: "#7a1e2b22" }}
+      >
+        <span
+          className="flex h-10 w-10 items-center justify-center rounded-xl text-white shadow-md"
+          style={{
+            background: "linear-gradient(135deg, #7a1e2b 0%, #2b3f7a 100%)",
+          }}
+        >
+          {icon}
+        </span>
+        <h2 className="text-lg font-extrabold" style={{ color: "#7a1e2b" }}>
+          {title}
+        </h2>
+        <div
+          className="mr-auto hidden h-1 flex-1 rounded-full sm:block"
+          style={{
+            background:
+              "linear-gradient(90deg, #7a1e2b33 0%, #2b3f7a33 50%, transparent 100%)",
+          }}
+        />
+      </div>
+
+      {/* Body */}
+      <div className="p-4 sm:p-6">{children}</div>
+    </div>
+  );
+}
+
 
 function PrepaidTariffTable() {
   const rows = [
