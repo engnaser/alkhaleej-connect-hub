@@ -78,7 +78,7 @@ const TOOLS: {
     icon: ScanText,
     title: "كاشف النصوص",
     desc: "اكتشف ما إذا كان النص مكتوباً بواسطة الذكاء الاصطناعي أم إنسان بدقة عالية.",
-    href: `${BASE}/ai-text-detector`,
+    href: "https://generateprompt.ai/ai-detector",
   },
   {
     icon: RefreshCw,
