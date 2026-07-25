@@ -1798,12 +1798,14 @@ function GuideCard({
   steps: string[];
 }) {
   return (
-    <div className="rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
-      <div className="mb-3 flex items-center gap-3">
-        <div className="grid h-10 w-10 place-items-center rounded-xl bg-primary/10 text-primary">
+    <div className="relative overflow-hidden rounded-2xl border-2 bg-white p-5 shadow-[0_10px_30px_-15px_rgba(122,30,43,0.35)]" style={{ borderColor: "#7a1e2b33" }}>
+      <div className="absolute inset-x-0 top-0 flex h-1.5"><div className="flex-1" style={{ background: "#7a1e2b" }} /><div className="flex-1" style={{ background: "#2b3f7a" }} /></div>
+      <div className="pointer-events-none absolute -left-8 -top-8 h-24 w-24 rounded-full opacity-60" style={{ background: "radial-gradient(circle, #f4d7b8 0%, transparent 70%)" }} />
+      <div className="relative mb-3 flex items-center gap-3">
+        <div className="grid h-10 w-10 place-items-center rounded-xl text-white shadow-md" style={{ background: "linear-gradient(135deg, #7a1e2b 0%, #2b3f7a 100%)" }}>
           {icon}
         </div>
-        <h4 className="text-base font-extrabold text-foreground">{title}</h4>
+        <h4 className="text-base font-extrabold" style={{ color: "#7a1e2b" }}>{title}</h4>
       </div>
       <ol className="space-y-2 text-sm text-foreground/85">
         {steps.map((s, i) => (
