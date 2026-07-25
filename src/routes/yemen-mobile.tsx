@@ -37,6 +37,7 @@ import {
   PhoneOff,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
+import yemenMobileLogo from "@/assets/yemen-mobile-logo.png.asset.json";
 import {
   APN_SETTINGS,
   type YMPackage,
@@ -112,27 +113,86 @@ function YemenMobilePage() {
       />
 
       <main>
-        {/* HERO */}
-        <section className="relative overflow-hidden border-b border-border">
+        {/* HERO — Yemen Mobile brand identity */}
+        <section
+          className="relative overflow-hidden border-b-4"
+          style={{ borderColor: "#7a1e2b" }}
+        >
+          {/* brand background layers */}
           <div
             className="absolute inset-0 -z-10"
             style={{
               background:
-                "radial-gradient(900px 500px at 80% -10%, color-mix(in oklab, var(--primary) 18%, transparent), transparent 60%)",
+                "linear-gradient(135deg, #f4d7b8 0%, #f7e2c7 45%, #ffffff 100%)",
             }}
           />
-          <div className="mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 lg:px-8">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-bold text-primary">
-              <Sparkles className="h-3.5 w-3.5" />
-              مركز يمن موبايل
+          <div
+            className="absolute inset-0 -z-10 opacity-[0.07]"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(45deg, #7a1e2b 0 2px, transparent 2px 22px)",
+            }}
+          />
+          {/* burgundy corner ribbon echoing the logo card */}
+          <div
+            className="absolute -top-16 -right-16 -z-10 h-56 w-56 rotate-12 rounded-[2rem]"
+            style={{ background: "#7a1e2b", opacity: 0.9 }}
+          />
+          <div
+            className="absolute -bottom-20 -left-24 -z-10 h-64 w-64 -rotate-12 rounded-[2.5rem]"
+            style={{ background: "#7a1e2b", opacity: 0.12 }}
+          />
+
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+            <div className="flex flex-col items-center gap-6 text-center md:flex-row md:items-center md:justify-center md:gap-10 md:text-right">
+              {/* Logo card */}
+              <div className="relative">
+                <div
+                  className="absolute -inset-3 -z-10 rounded-3xl"
+                  style={{ background: "#7a1e2b", opacity: 0.15 }}
+                />
+                <div className="rounded-2xl bg-white p-3 shadow-[0_20px_50px_-20px_rgba(122,30,43,0.55)] ring-1 ring-[#7a1e2b]/20">
+                  <img
+                    src={yemenMobileLogo.url}
+                    alt="شعار يمن موبايل"
+                    className="h-28 w-28 rounded-xl object-contain sm:h-32 sm:w-32"
+                    loading="eager"
+                  />
+                </div>
+              </div>
+
+              <div className="max-w-2xl">
+                <div
+                  className="mb-4 inline-flex items-center gap-2 rounded-full px-4 py-1.5 text-xs font-bold text-white shadow"
+                  style={{ background: "#7a1e2b" }}
+                >
+                  <Sparkles className="h-3.5 w-3.5" />
+                  مركز يمن موبايل الرسمي
+                </div>
+                <h1
+                  className="text-balance text-3xl font-black leading-tight sm:text-5xl"
+                  style={{ color: "#7a1e2b" }}
+                >
+                  خدمات <span style={{ color: "#2b3f7a" }}>يمن موبايل</span>
+                </h1>
+                <p
+                  className="mt-3 text-base font-bold italic sm:text-lg"
+                  style={{ color: "#2b3f7a" }}
+                >
+                  معنا .. إتصالك أسهل
+                </p>
+                <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-foreground/70 md:mx-0 sm:text-base">
+                  تصفّح الباقات والخدمات وأكواد الاستعلام وإعدادات الإنترنت بسهولة
+                  من مكان واحد.
+                </p>
+              </div>
             </div>
-            <h1 className="text-balance text-3xl font-black text-primary sm:text-5xl">
-              خدمات يمن موبايل
-            </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-              تصفّح الباقات والخدمات وأكواد الاستعلام وإعدادات الإنترنت بسهولة من
-              مكان واحد.
-            </p>
+          </div>
+
+          {/* thin dual-stripe echoing the logo palette */}
+          <div className="flex h-1.5 w-full">
+            <div className="flex-1" style={{ background: "#7a1e2b" }} />
+            <div className="flex-1" style={{ background: "#2b3f7a" }} />
           </div>
         </section>
 
