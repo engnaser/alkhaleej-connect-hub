@@ -933,7 +933,7 @@ function PackageCard({ pkg, catId }: { pkg: YMPackage; catId: string }) {
           type="button"
           onClick={() => setEditOpen(true)}
           aria-label="تعديل الباقة"
-          className="absolute left-3 top-3 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full border bg-background/90 text-muted-foreground shadow-sm backdrop-blur transition-colors hover:text-[#7a1e2b]"
+          className="absolute right-3 top-3 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full border bg-background/90 text-muted-foreground shadow-sm backdrop-blur transition-colors hover:text-[#7a1e2b]"
           style={{ borderColor: "rgba(122,30,43,0.3)" }}
         >
           <Pencil className="h-4 w-4" />
