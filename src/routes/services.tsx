@@ -29,7 +29,6 @@ import {
   Megaphone,
   Wand2,
   Gem,
-  PhoneCall,
 
 
 
@@ -158,13 +157,6 @@ const SERVICES = [
 
 
 
-  {
-    icon: PhoneCall,
-    title: "خدمات الاتصالات (أكواد الشبكة)",
-    desc: "فعّل أو ألغِ خدمات: عدم الإزعاج، اتصل بي، البريد الصوتي، تحويل المكالمات بضغطة زر.",
-    to: "/telecom-services" as const,
-    cta: "افتح الخدمات",
-  },
   {
     icon: Coins,
     title: "أسعار صرف الريال اليمني",
