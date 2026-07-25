@@ -72,7 +72,7 @@ const TOOLS: {
     icon: Video,
     title: "توليد أوامر الفيديو — VEO3",
     desc: "أوامر جاهزة لتوليد مقاطع فيديو احترافية عبر Google VEO3 ونماذج الفيديو الأخرى.",
-    href: `${BASE}/veo3-prompt-generator`,
+    href: "https://generateprompt.ai/video-prompt",
   },
   {
     icon: ScanText,
