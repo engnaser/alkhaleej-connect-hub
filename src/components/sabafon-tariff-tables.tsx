@@ -138,11 +138,11 @@ const POSTPAID_BASE = [
   { type: "الاتصال", detail: "إلى شبكات الجي إس إم الأخرى", v: "9.5" },
   { type: "الاتصال", detail: "إلى يمن موبايل", v: "10" },
   { type: "الاتصال", detail: "إلى الشبكة الثابتة", v: "9" },
-  { type: "الاتصال", detail: "الدولي", v: "تعرفة تليمن" },
+  { type: "الاتصال", detail: "الدولي", v: "أسعار تليمن" },
   { type: "الرسائل", detail: "إلى سبأفون", v: "5" },
   { type: "الرسائل", detail: "إلى شبكات الجي إس إم الأخرى", v: "9" },
   { type: "الرسائل", detail: "إلى يمن موبايل", v: "12.5" },
-  { type: "الرسائل", detail: "الرسائل الدولية", v: "تعرفة تليمن" },
+  { type: "الرسائل", detail: "الرسائل الدولية", v: "أسعار تليمن" },
 ];
 
 // 8. الاشتراك في الفوترة
@@ -155,12 +155,12 @@ const POSTPAID_SUB = [
 // 9. الإنترنت لخطوط الفوترة والدفع المسبق
 const INTERNET = [
   {
-    type: "تعرفة الإنترنت العادية لخطوط الفوترة",
+    type: "أسعار الإنترنت العادية لخطوط الفوترة",
     rate: "50 ريال",
     note: "توجد باقات إنترنت مخفضة تعمل على خطوط الفوترة",
   },
   {
-    type: "تعرفة الإنترنت العادية لخطوط الدفع المسبق",
+    type: "أسعار الإنترنت العادية لخطوط الدفع المسبق",
     rate: "7.17 وحدة",
     note: "توجد باقات إنترنت مخفضة تعمل على والدفع المسبق",
   },
@@ -224,7 +224,7 @@ export function SabafonTariffTables() {
       </TableCard>
 
       {/* بلقيس */}
-      <TableCard title="تعرفة خط بلقيس" Icon={Phone}>
+      <TableCard title="أسعار خط بلقيس" Icon={Phone}>
         <table className="w-full min-w-[520px] text-sm">
           <thead>
             <tr className="border-b border-border bg-secondary/20">
@@ -248,7 +248,7 @@ export function SabafonTariffTables() {
       </TableCard>
 
       {/* يلّا */}
-      <TableCard title="تعرفة خط يلّا" Icon={Sparkles}>
+      <TableCard title="أسعار خط يلّا" Icon={Sparkles}>
         <table className="w-full min-w-[520px] text-sm">
           <thead>
             <tr className="border-b border-border bg-secondary/20">
@@ -272,7 +272,7 @@ export function SabafonTariffTables() {
       </TableCard>
 
       {/* باقة 7 ريال */}
-      <TableCard title="تعرفة باقة 7 ريال" Icon={Coins}>
+      <TableCard title="أسعار باقة 7 ريال" Icon={Coins}>
         <table className="w-full min-w-[520px] text-sm">
           <thead>
             <tr className="border-b border-border bg-secondary/20">
@@ -296,13 +296,13 @@ export function SabafonTariffTables() {
       </TableCard>
 
       {/* سوبر ليالي */}
-      <TableCard title="تعرفة خط سوبر ليالي" Icon={MoonStar}>
+      <TableCard title="أسعار خط سوبر ليالي" Icon={MoonStar}>
         <table className="w-full min-w-[440px] text-sm">
           <thead>
             <tr className="border-b border-border bg-secondary/20">
               <th className={thBase}>النوع</th>
               <th className={thBase}>التفاصيل</th>
-              <th className={thBase}>التعرفة (وحدة)</th>
+              <th className={thBase}>الأسعار (وحدة)</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
@@ -319,7 +319,7 @@ export function SabafonTariffTables() {
 
       {/* الرصيد الأساسي للفوترة */}
       <TableCard
-        title="تعرفة المكالمات والرسائل من الرصيد الأساسي للفوترة"
+        title="أسعار المكالمات والرسائل من الرصيد الأساسي للفوترة"
         Icon={FileText}
       >
         <table className="w-full min-w-[440px] text-sm">
@@ -327,7 +327,7 @@ export function SabafonTariffTables() {
             <tr className="border-b border-border bg-secondary/20">
               <th className={thBase}>النوع</th>
               <th className={thBase}>التفاصيل</th>
-              <th className={thBase}>التعرفة بالريال</th>
+              <th className={thBase}>الأسعار بالريال</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
@@ -364,14 +364,14 @@ export function SabafonTariffTables() {
 
       {/* الإنترنت */}
       <TableCard
-        title="تعرفة الإنترنت لخطوط الفوترة والدفع المسبق"
+        title="أسعار الإنترنت لخطوط الفوترة والدفع المسبق"
         Icon={Globe}
       >
         <table className="w-full min-w-[520px] text-sm">
           <thead>
             <tr className="border-b border-border bg-secondary/20">
               <th className={thBase}>النوع</th>
-              <th className={thBase}>التعرفة لكل 1 ميجا</th>
+              <th className={thBase}>الأسعار لكل 1 ميجا</th>
               <th className={thBase}>ملاحظات</th>
             </tr>
           </thead>
@@ -389,7 +389,7 @@ export function SabafonTariffTables() {
 
       {/* التجوال الدولي */}
       <TableCard
-        title="تعرفة تكلفة المكالمات والرسائل أثناء التجوال الدولي من الرصيد الأساسي"
+        title="أسعار تكلفة المكالمات والرسائل أثناء التجوال الدولي من الرصيد الأساسي"
         Icon={Plane}
         wide
       >

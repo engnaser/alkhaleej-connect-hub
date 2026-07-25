@@ -26,7 +26,7 @@ function RoamingTable() {
           <Plane className="h-5 w-5" />
         </div>
         <h3 className="text-base font-extrabold text-foreground">
-          تعرفة تكلفة المكالمات والرسائل أثناء التجوال الدولي من الرصيد الأساسي
+          أسعار تكلفة المكالمات والرسائل أثناء التجوال الدولي من الرصيد الأساسي
         </h3>
       </div>
       <div className="overflow-x-auto">
@@ -197,12 +197,12 @@ function TariffTable({ title, rows, Icon }: { title: string; rows: Row[]; Icon: 
 export function SawaTariffTable() {
   return (
     <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
-      <TariffTable title="تعرفة باقة سوا" rows={SAWA_ROWS} Icon={Coins} />
-      <TariffTable title="تعرفة باقة كلام" rows={KALAM_ROWS} Icon={MessageSquare} />
-      <TariffTable title="تعرفة باقة شباب" rows={SHABAB_ROWS} Icon={Sparkles} />
-      <TariffTable title="تعرفة باقة الطالب" rows={TALEB_ROWS} Icon={GraduationCap} />
-      <TariffTable title="تعرفة باقة باور" rows={BAWER_ROWS} Icon={Zap} />
-      <TariffTable title="تعرفة الفوترة" rows={FATURA_ROWS} Icon={FileText} />
+      <TariffTable title="أسعار باقة سوا" rows={SAWA_ROWS} Icon={Coins} />
+      <TariffTable title="أسعار باقة كلام" rows={KALAM_ROWS} Icon={MessageSquare} />
+      <TariffTable title="أسعار باقة شباب" rows={SHABAB_ROWS} Icon={Sparkles} />
+      <TariffTable title="أسعار باقة الطالب" rows={TALEB_ROWS} Icon={GraduationCap} />
+      <TariffTable title="أسعار باقة باور" rows={BAWER_ROWS} Icon={Zap} />
+      <TariffTable title="أسعار الفوترة" rows={FATURA_ROWS} Icon={FileText} />
       <RechargeTable />
       <RoamingTable />
     </div>
