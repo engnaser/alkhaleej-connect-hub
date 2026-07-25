@@ -502,7 +502,9 @@ function SabahiServiceCard() {
     { s: "استخدام الانترنت", d: "3 ريال للميجا الواحد" },
   ];
   return (
-    <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+    <div className="relative overflow-hidden rounded-2xl border-2 bg-white p-5 shadow-[0_10px_30px_-15px_rgba(122,30,43,0.35)]" style={{ borderColor: "#7a1e2b33" }}>
+      <div className="absolute inset-x-0 top-0 flex h-1.5"><div className="flex-1" style={{ background: "#7a1e2b" }} /><div className="flex-1" style={{ background: "#2b3f7a" }} /></div>
+      <div className="pointer-events-none absolute -left-8 -top-8 h-24 w-24 rounded-full opacity-60" style={{ background: "radial-gradient(circle, #f4d7b8 0%, transparent 70%)" }} />
       <h3 className="mb-3 text-center text-lg font-bold text-foreground md:text-xl">
         خدمة صباحي
       </h3>
@@ -554,7 +556,9 @@ function SalifniServiceCard() {
     { a: "500 ريال", f: "50 ريال", t: "550 ريال" },
   ];
   return (
-    <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+    <div className="relative overflow-hidden rounded-2xl border-2 bg-white p-5 shadow-[0_10px_30px_-15px_rgba(122,30,43,0.35)]" style={{ borderColor: "#7a1e2b33" }}>
+      <div className="absolute inset-x-0 top-0 flex h-1.5"><div className="flex-1" style={{ background: "#7a1e2b" }} /><div className="flex-1" style={{ background: "#2b3f7a" }} /></div>
+      <div className="pointer-events-none absolute -left-8 -top-8 h-24 w-24 rounded-full opacity-60" style={{ background: "radial-gradient(circle, #f4d7b8 0%, transparent 70%)" }} />
       <h3 className="mb-3 text-center text-lg font-bold text-foreground md:text-xl">
         خدمة سلفني
       </h3>
@@ -681,7 +685,9 @@ function InternationalRoamingTariff() {
   const zone = ROAMING_ZONES.find((z) => z.id === activeZone)!;
 
   return (
-    <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+    <div className="relative overflow-hidden rounded-2xl border-2 bg-white p-5 shadow-[0_10px_30px_-15px_rgba(122,30,43,0.35)]" style={{ borderColor: "#7a1e2b33" }}>
+      <div className="absolute inset-x-0 top-0 flex h-1.5"><div className="flex-1" style={{ background: "#7a1e2b" }} /><div className="flex-1" style={{ background: "#2b3f7a" }} /></div>
+      <div className="pointer-events-none absolute -left-8 -top-8 h-24 w-24 rounded-full opacity-60" style={{ background: "radial-gradient(circle, #f4d7b8 0%, transparent 70%)" }} />
       <div className="mb-4 flex items-center justify-center gap-2 text-center">
         <Globe className="h-5 w-5 shrink-0 text-emerald-600" />
         <h3 className="text-base font-bold text-foreground md:text-lg">
@@ -1513,8 +1519,10 @@ function ServiceCard({ service }: { service: YMServiceRow }) {
     : undefined;
 
   return (
-    <div className="flex flex-col rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-primary/40">
-      <div className="mb-3 grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary">
+    <div className="relative flex flex-col overflow-hidden rounded-2xl border-2 bg-white p-5 shadow-[0_10px_30px_-15px_rgba(122,30,43,0.35)] transition-all hover:-translate-y-0.5 hover:shadow-[0_15px_35px_-15px_rgba(122,30,43,0.45)]" style={{ borderColor: "#7a1e2b33" }}>
+      <div className="absolute inset-x-0 top-0 flex h-1.5"><div className="flex-1" style={{ background: "#7a1e2b" }} /><div className="flex-1" style={{ background: "#2b3f7a" }} /></div>
+      <div className="pointer-events-none absolute -left-8 -top-8 h-24 w-24 rounded-full opacity-60" style={{ background: "radial-gradient(circle, #f4d7b8 0%, transparent 70%)" }} />
+      <div className="relative mb-3 grid h-11 w-11 place-items-center rounded-xl text-white shadow-md" style={{ background: "linear-gradient(135deg, #7a1e2b 0%, #2b3f7a 100%)" }}>
         <Icon className="h-5 w-5" />
       </div>
       <h4 className="text-base font-extrabold text-foreground">
@@ -1687,12 +1695,14 @@ function InternetTab() {
 
       <div className="grid gap-5 lg:grid-cols-2">
 
-      <div className="rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)]">
-        <div className="mb-4 flex items-center gap-3">
-          <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary">
+      <div className="relative overflow-hidden rounded-2xl border-2 bg-white p-6 shadow-[0_10px_30px_-15px_rgba(122,30,43,0.35)]" style={{ borderColor: "#7a1e2b33" }}>
+        <div className="absolute inset-x-0 top-0 flex h-1.5"><div className="flex-1" style={{ background: "#7a1e2b" }} /><div className="flex-1" style={{ background: "#2b3f7a" }} /></div>
+        <div className="pointer-events-none absolute -left-8 -top-8 h-24 w-24 rounded-full opacity-60" style={{ background: "radial-gradient(circle, #f4d7b8 0%, transparent 70%)" }} />
+        <div className="relative mb-4 flex items-center gap-3">
+          <div className="grid h-11 w-11 place-items-center rounded-xl text-white shadow-md" style={{ background: "linear-gradient(135deg, #7a1e2b 0%, #2b3f7a 100%)" }}>
             <Wifi className="h-5 w-5" />
           </div>
-          <h3 className="text-lg font-extrabold text-foreground">
+          <h3 className="text-lg font-extrabold" style={{ color: "#7a1e2b" }}>
             إعدادات APN
           </h3>
         </div>
@@ -1788,12 +1798,14 @@ function GuideCard({
   steps: string[];
 }) {
   return (
-    <div className="rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
-      <div className="mb-3 flex items-center gap-3">
-        <div className="grid h-10 w-10 place-items-center rounded-xl bg-primary/10 text-primary">
+    <div className="relative overflow-hidden rounded-2xl border-2 bg-white p-5 shadow-[0_10px_30px_-15px_rgba(122,30,43,0.35)]" style={{ borderColor: "#7a1e2b33" }}>
+      <div className="absolute inset-x-0 top-0 flex h-1.5"><div className="flex-1" style={{ background: "#7a1e2b" }} /><div className="flex-1" style={{ background: "#2b3f7a" }} /></div>
+      <div className="pointer-events-none absolute -left-8 -top-8 h-24 w-24 rounded-full opacity-60" style={{ background: "radial-gradient(circle, #f4d7b8 0%, transparent 70%)" }} />
+      <div className="relative mb-3 flex items-center gap-3">
+        <div className="grid h-10 w-10 place-items-center rounded-xl text-white shadow-md" style={{ background: "linear-gradient(135deg, #7a1e2b 0%, #2b3f7a 100%)" }}>
           {icon}
         </div>
-        <h4 className="text-base font-extrabold text-foreground">{title}</h4>
+        <h4 className="text-base font-extrabold" style={{ color: "#7a1e2b" }}>{title}</h4>
       </div>
       <ol className="space-y-2 text-sm text-foreground/85">
         {steps.map((s, i) => (
@@ -1848,12 +1860,14 @@ function ApnSetupGuide() {
   };
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)]">
-      <div className="mb-4 flex items-center gap-3">
-        <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary">
+    <div className="relative overflow-hidden rounded-2xl border-2 bg-white p-6 shadow-[0_10px_30px_-15px_rgba(122,30,43,0.35)]" style={{ borderColor: "#7a1e2b33" }}>
+      <div className="absolute inset-x-0 top-0 flex h-1.5"><div className="flex-1" style={{ background: "#7a1e2b" }} /><div className="flex-1" style={{ background: "#2b3f7a" }} /></div>
+      <div className="pointer-events-none absolute -left-8 -top-8 h-24 w-24 rounded-full opacity-60" style={{ background: "radial-gradient(circle, #f4d7b8 0%, transparent 70%)" }} />
+      <div className="relative mb-4 flex items-center gap-3">
+        <div className="grid h-11 w-11 place-items-center rounded-xl text-white shadow-md" style={{ background: "linear-gradient(135deg, #7a1e2b 0%, #2b3f7a 100%)" }}>
           <Settings2 className="h-5 w-5" />
         </div>
-        <h3 className="text-lg font-extrabold text-foreground md:text-xl">
+        <h3 className="text-lg font-extrabold md:text-xl" style={{ color: "#7a1e2b" }}>
           إعداد نقاط الوصول (APN) - يمن موبايل
         </h3>
       </div>
@@ -1974,12 +1988,14 @@ function Apn4GSetupCard() {
   };
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)]">
-      <div className="mb-4 flex items-center gap-3">
-        <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary">
+    <div className="relative overflow-hidden rounded-2xl border-2 bg-white p-6 shadow-[0_10px_30px_-15px_rgba(122,30,43,0.35)]" style={{ borderColor: "#7a1e2b33" }}>
+      <div className="absolute inset-x-0 top-0 flex h-1.5"><div className="flex-1" style={{ background: "#7a1e2b" }} /><div className="flex-1" style={{ background: "#2b3f7a" }} /></div>
+      <div className="pointer-events-none absolute -left-8 -top-8 h-24 w-24 rounded-full opacity-60" style={{ background: "radial-gradient(circle, #f4d7b8 0%, transparent 70%)" }} />
+      <div className="relative mb-4 flex items-center gap-3">
+        <div className="grid h-11 w-11 place-items-center rounded-xl text-white shadow-md" style={{ background: "linear-gradient(135deg, #7a1e2b 0%, #2b3f7a 100%)" }}>
           <Wifi className="h-5 w-5" />
         </div>
-        <h3 className="text-lg font-extrabold text-foreground md:text-xl">
+        <h3 className="text-lg font-extrabold md:text-xl" style={{ color: "#7a1e2b" }}>
           إعداد نقاط الوصول بنظام الفورجي 4G
         </h3>
       </div>
@@ -2137,12 +2153,14 @@ function ApnVolteSetupCard() {
   };
 
   return (
-    <div className="rounded-2xl border border-border bg-card p-6 shadow-[var(--shadow-card)]">
-      <div className="mb-4 flex items-center gap-3">
-        <div className="grid h-11 w-11 place-items-center rounded-xl bg-primary/10 text-primary">
+    <div className="relative overflow-hidden rounded-2xl border-2 bg-white p-6 shadow-[0_10px_30px_-15px_rgba(122,30,43,0.35)]" style={{ borderColor: "#7a1e2b33" }}>
+      <div className="absolute inset-x-0 top-0 flex h-1.5"><div className="flex-1" style={{ background: "#7a1e2b" }} /><div className="flex-1" style={{ background: "#2b3f7a" }} /></div>
+      <div className="pointer-events-none absolute -left-8 -top-8 h-24 w-24 rounded-full opacity-60" style={{ background: "radial-gradient(circle, #f4d7b8 0%, transparent 70%)" }} />
+      <div className="relative mb-4 flex items-center gap-3">
+        <div className="grid h-11 w-11 place-items-center rounded-xl text-white shadow-md" style={{ background: "linear-gradient(135deg, #7a1e2b 0%, #2b3f7a 100%)" }}>
           <Wifi className="h-5 w-5" />
         </div>
-        <h3 className="text-lg font-extrabold text-foreground md:text-xl">
+        <h3 className="text-lg font-extrabold md:text-xl" style={{ color: "#7a1e2b" }}>
           إعداد نقاط الوصول بنظام الفولتي (VoLTE)
         </h3>
       </div>
