@@ -482,7 +482,21 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
   const shareUrl = `https://wa.me/?text=${encodeURIComponent(details)}`;
 
   return (
-    <div className="relative flex flex-col rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-primary/40">
+    <div
+      className="relative flex flex-col overflow-hidden rounded-2xl border-2 bg-white p-5 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-0.5 hover:shadow-[0_15px_35px_-15px_rgba(0,0,0,0.45)]"
+      style={{ borderColor: "#0a0a0a" }}
+    >
+      {/* dual top strip: black + yellow */}
+      <div className="absolute inset-x-0 top-0 flex h-1.5">
+        <div className="flex-1" style={{ background: "#0a0a0a" }} />
+        <div className="flex-1" style={{ background: "#FFC72C" }} />
+      </div>
+      {/* yellow corner accent */}
+      <div
+        className="pointer-events-none absolute -left-8 -top-8 h-24 w-24 rounded-full opacity-60"
+        style={{ background: "radial-gradient(circle, #FFE48A 0%, transparent 70%)" }}
+      />
+
       <div className="mb-3 flex items-start justify-between gap-2">
         <h4 className="min-w-0 flex-1 text-base font-extrabold leading-tight text-foreground break-words">
           {pkg.name}
@@ -593,7 +607,8 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
       {activationHref ? (
         <a
           href={activationHref}
-          className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary bg-primary/10 px-3 py-2.5 text-sm font-extrabold text-primary transition-transform hover:scale-[1.02]"
+          className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border-2 px-3 py-2.5 text-sm font-black transition-transform hover:scale-[1.02]"
+          style={{ borderColor: "#0a0a0a", background: "#0a0a0a", color: "#FFC72C" }}
         >
           <PhoneCall className="h-4 w-4" />
           {smsInfo ? `أرسل ${smsInfo.body} إلى ${smsInfo.number} للتفعيل` : "اضغط لتفعيل الباقة"}
@@ -605,6 +620,54 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
           title="لم يتم تحديد كود تفعيل لهذه الباقة"
           className="mt-2 inline-flex cursor-not-allowed items-center justify-center gap-2 rounded-full border-2 border-dashed border-border bg-muted/40 px-3 py-2.5 text-sm font-extrabold text-muted-foreground"
         >
+          <PhoneCall className="h-4 w-4" />
+          كود التفعيل غير متوفر
+        </button>
+      )}
+    </div>
+  );
+}
+
+function YouBrandSection({
+  title,
+  icon: Icon,
+  children,
+}: {
+  title: string;
+  icon: React.ComponentType<{ className?: string }>;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className="relative overflow-hidden rounded-2xl border-2 bg-white shadow-[0_10px_30px_-15px_rgba(0,0,0,0.3)]"
+      style={{ borderColor: "#0a0a0a" }}
+    >
+      <div className="flex h-2 w-full">
+        <div className="flex-1" style={{ background: "#0a0a0a" }} />
+        <div className="flex-1" style={{ background: "#FFC72C" }} />
+      </div>
+      <div
+        className="flex items-center gap-3 border-b-2 px-5 py-4"
+        style={{ borderColor: "#0a0a0a22", background: "linear-gradient(135deg, #FFF8DC 0%, #FFE48A 100%)" }}
+      >
+        <div
+          className="grid h-10 w-10 place-items-center rounded-xl shadow-md"
+          style={{ background: "#0a0a0a", color: "#FFC72C" }}
+        >
+          <Icon className="h-5 w-5" />
+        </div>
+        <h2 className="text-lg font-black" style={{ color: "#0a0a0a" }}>
+          {title}
+        </h2>
+        <div className="ml-auto h-1 flex-1 rounded-full" style={{ background: "linear-gradient(90deg, #0a0a0a 0%, #FFC72C 100%)" }} />
+      </div>
+      <div className="p-5" style={{ background: "linear-gradient(180deg, #FFFDF5 0%, #ffffff 100%)" }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
           <PhoneCall className="h-4 w-4" />
           كود التفعيل غير متوفر
         </button>
