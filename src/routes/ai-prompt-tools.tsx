@@ -66,7 +66,7 @@ const TOOLS: {
     icon: ImageIcon,
     title: "توليد أوامر الصور",
     desc: "أنشئ أوامر دقيقة لتوليد صور مذهلة بالذكاء الاصطناعي (Midjourney، DALL·E، Stable Diffusion).",
-    href: `${BASE}/image-prompt-generator`,
+    href: "https://generateprompt.ai/image-prompt",
   },
   {
     icon: Video,
