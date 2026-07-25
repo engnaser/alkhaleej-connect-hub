@@ -826,24 +826,45 @@ function PackageCard({ pkg, catId }: { pkg: YMPackage; catId: string }) {
   const shareUrl = `https://wa.me/?text=${encodeURIComponent(details)}`;
 
   return (
-    <div className="relative flex flex-col rounded-2xl border border-border bg-secondary/30 p-5 transition-all hover:-translate-y-0.5 hover:border-primary/40">
+    <div
+      className="relative flex flex-col overflow-hidden rounded-2xl border bg-card p-5 pt-6 shadow-[0_10px_30px_-18px_rgba(122,30,43,0.45)] transition-all hover:-translate-y-0.5"
+      style={{ borderColor: "rgba(122,30,43,0.25)" }}
+    >
+      {/* burgundy top ribbon (Yemen Mobile identity) */}
+      <div
+        className="absolute inset-x-0 top-0 h-1.5"
+        style={{ background: "linear-gradient(90deg,#7a1e2b,#a83341 55%,#2b3f7a)" }}
+      />
+      {/* subtle cream corner echo */}
+      <div
+        className="pointer-events-none absolute -top-10 -left-10 h-24 w-24 rotate-12 rounded-2xl opacity-60"
+        style={{ background: "#f4d7b8" }}
+      />
       {isAdmin && (
         <button
           type="button"
           onClick={() => setEditOpen(true)}
           aria-label="تعديل الباقة"
-          className="absolute left-3 top-3 inline-flex h-8 w-8 items-center justify-center rounded-full border border-border bg-background/80 text-muted-foreground shadow-sm backdrop-blur transition-colors hover:border-primary/50 hover:text-primary"
+          className="absolute left-3 top-3 z-10 inline-flex h-8 w-8 items-center justify-center rounded-full border bg-background/90 text-muted-foreground shadow-sm backdrop-blur transition-colors hover:text-[#7a1e2b]"
+          style={{ borderColor: "rgba(122,30,43,0.3)" }}
         >
           <Pencil className="h-4 w-4" />
         </button>
       )}
-      <div className="mb-3 flex items-center justify-between gap-2">
-        <h4 className="text-base font-extrabold text-foreground">{pkg.name}</h4>
-        <span className="rounded-full bg-primary/15 px-2.5 py-0.5 text-[11px] font-bold text-primary">
+      <div className="relative mb-3 flex items-center justify-between gap-2">
+        <h4 className="text-base font-extrabold" style={{ color: "#7a1e2b" }}>
+          {pkg.name}
+        </h4>
+        <span
+          className="rounded-full px-2.5 py-0.5 text-[11px] font-bold text-white shadow-sm"
+          style={{ background: "#2b3f7a" }}
+        >
           {pkg.network}
         </span>
       </div>
-      <div className="mb-4 text-2xl font-black text-primary">{pkg.price}</div>
+      <div className="relative mb-4 text-2xl font-black" style={{ color: "#7a1e2b" }}>
+        {pkg.price}
+      </div>
       <ul className="space-y-1.5 text-sm text-foreground/85">
         <li className="flex items-center justify-between">
           <span className="text-muted-foreground">الإنترنت</span>
