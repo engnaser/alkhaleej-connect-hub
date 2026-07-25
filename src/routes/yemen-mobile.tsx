@@ -360,12 +360,12 @@ function PrepaidTariffTable() {
     { to: "يمن موبايل إلى الثابت", call: "5 ريال", sms: "---" },
     { to: "من يمن موبايل إلى GSM", call: "20 ريال", sms: "8 ريال" },
     { to: "من ثابت إلى يمن موبايل", call: "5 ريال", sms: "---" },
-    { to: "من يمن موبايل إلى خارج اليمن", call: "بحسب تعرفة تيليمن", sms: "20 ريال" },
+    { to: "من يمن موبايل إلى خارج اليمن", call: "بحسب أسعار تيليمن", sms: "20 ريال" },
   ];
   return (
     <div className="rounded-2xl border border-border bg-card p-5 shadow-sm">
       <h3 className="mb-4 text-center text-base font-bold text-foreground md:text-lg">
-        تعرفة المكالمات والرسائل لنظام الدفع المسبق
+        أسعار المكالمات والرسائل لنظام الدفع المسبق
       </h3>
       <div className="overflow-hidden rounded-lg border border-border">
         <table className="w-full border-collapse text-sm">
@@ -397,12 +397,12 @@ function PrepaidTariffTableGray() {
     { to: "يمن موبايل إلى الثابت", call: "5 ريال", sms: "---" },
     { to: "من يمن موبايل إلى GSM", call: "20 ريال", sms: "8 ريال" },
     { to: "من ثابت إلى يمن موبايل", call: "5 ريال", sms: "---" },
-    { to: "من يمن موبايل إلى خارج اليمن", call: "بحسب تعرفة تيليمن", sms: "20 ريال" },
+    { to: "من يمن موبايل إلى خارج اليمن", call: "بحسب أسعار تيليمن", sms: "20 ريال" },
   ];
   return (
     <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
       <h3 className="mb-4 text-center text-lg font-bold text-foreground md:text-xl">
-        تعرفة المكالمات والرسائل لنظام الدفع المسبق
+        أسعار المكالمات والرسائل لنظام الدفع المسبق
       </h3>
       <div className="overflow-hidden rounded-xl border border-border">
         <table className="w-full border-collapse text-sm">
@@ -437,14 +437,14 @@ function PrepaidMmsTariffTable() {
   return (
     <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
       <h3 className="mb-4 text-center text-lg font-bold text-foreground md:text-xl">
-        تعرفة رسائل الوسائط المتعددة (MMS)
+        أسعار رسائل الوسائط المتعددة (MMS)
       </h3>
       <div className="overflow-hidden rounded-xl border border-border">
         <table className="w-full border-collapse text-sm">
           <thead>
             <tr className="bg-gray-50 text-foreground">
               <th className="border-b border-border px-4 py-3 text-center font-bold">جهة الاتصال</th>
-              <th className="border-b border-border px-4 py-3 text-center font-bold">التعرفة</th>
+              <th className="border-b border-border px-4 py-3 text-center font-bold">الأسعار</th>
             </tr>
           </thead>
           <tbody>
@@ -469,7 +469,7 @@ function RoamingSmsTariffTable() {
   return (
     <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
       <h3 className="mb-4 text-center text-lg font-bold text-foreground md:text-xl">
-        تعرفة تكلفة الرسائل أثناء التجوال الدولي من الرصيد الأساسي
+        أسعار تكلفة الرسائل أثناء التجوال الدولي من الرصيد الأساسي
       </h3>
       <div className="overflow-hidden rounded-xl border border-border">
         <table className="w-full border-collapse text-sm">
@@ -510,7 +510,7 @@ function SabahiServiceCard() {
       </h3>
       <div className="space-y-3 text-sm leading-relaxed text-foreground">
         <p>
-          تمنحك تخفيض في تعرفة الاتصال والرسائل النصية إلى جميع الشبكات المحلية والانترنت،
+          تمنحك تخفيض في أسعار الاتصال والرسائل النصية إلى جميع الشبكات المحلية والانترنت،
           وذلك من الساعة 3:00 فجراً وحتى الساعة 7:00 صباحاً.
           <span className="text-muted-foreground"> (ما عدا شهر رمضان فتبدأ من الساعة 5 فجراً وحتى الساعة 9 صباحاً).</span>
         </p>
@@ -691,7 +691,7 @@ function InternationalRoamingTariff() {
       <div className="mb-4 flex items-center justify-center gap-2 text-center">
         <Globe className="h-5 w-5 shrink-0 text-emerald-600" />
         <h3 className="text-base font-bold text-foreground md:text-lg">
-          تعرفة تكلفة المكالمات أثناء التجوال الدولي من الرصيد الأساسي
+          أسعار تكلفة المكالمات أثناء التجوال الدولي من الرصيد الأساسي
         </h3>
       </div>
 
@@ -750,7 +750,7 @@ function InternationalRoamingTariff() {
       </div>
 
       <p className="mt-3 text-center text-xs text-muted-foreground">
-        الأسعار بالريال اليمني للدقيقة الواحدة، وقد تتغير حسب تعرفة الشركة.
+        الأسعار بالريال اليمني للدقيقة الواحدة، وقد تتغير حسب أسعار الشركة.
       </p>
 
       <div className="mt-5 flex flex-wrap items-center justify-center gap-2">
@@ -1293,9 +1293,9 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
           {group === "general" && (
             <UnifiedServiceCard
               title="خدمة أهلا كل الناس (وخدمة أحبائي)"
-              description={`باقة تمنحك تعرفة مخفضة لجميع الشبكات المحلية باشتراك شهري، بالإضافة لخدمة "أحبائي" لتخفيض تكلفة الاتصال ضمن مجموعة أرقام محددة.
+              description={`باقة تمنحك أسعار مخفضة لجميع الشبكات المحلية باشتراك شهري، بالإضافة لخدمة "أحبائي" لتخفيض تكلفة الاتصال ضمن مجموعة أرقام محددة.
 
-• أهلا كل الناس: تعرفة مخفضة 9 ريال للشبكة المحلية و20 ريال للشبكات الأخرى، اشتراك شهري 300 ريال. التفعيل والإلغاء عبر الاتصال مجاناً بـ 333.
+• أهلا كل الناس: أسعار مخفضة 9 ريال للشبكة المحلية و20 ريال للشبكات الأخرى، اشتراك شهري 300 ريال. التفعيل والإلغاء عبر الاتصال مجاناً بـ 333.
 
 • خدمة أحبائي: تخفيض 30% ضمن مجموعة 10 أرقام (يمن موبايل). تكلفة استبدال الرقم 30 ريال. تدار القائمة عبر الاتصال بـ 333.`}
               icon={PhoneCall}
@@ -1307,9 +1307,9 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
           {group === "general" && (
             <UnifiedServiceCard
               title="باقة سهيل توفير"
-              description={`باقة تمنحك مزايا خط الفوترة والتعرفة المخفضة مع الاحتفاظ بمزايا الدفع المسبق، وبدون دفع تأمين للرقم.
+              description={`باقة تمنحك مزايا خط الفوترة والأسعار المخفضة مع الاحتفاظ بمزايا الدفع المسبق، وبدون دفع تأمين للرقم.
 
-• مميزات الباقة: تمنحك الانتقال إلى مزايا خط الفوترة والتمتع بمميزات (التعرفة المخفضة) مع الاحتفاظ بمزايا الدفع المسبق من خدمات وباقات وغيرها. لا تحتاج أن تدفع تأمين للرقم كخطوط نظام الفوترة.
+• مميزات الباقة: تمنحك الانتقال إلى مزايا خط الفوترة والتمتع بمميزات (الأسعار المخفضة) مع الاحتفاظ بمزايا الدفع المسبق من خدمات وباقات وغيرها. لا تحتاج أن تدفع تأمين للرقم كخطوط نظام الفوترة.
 
 • رسوم الباقة: 500 ريال اشتراك شهري وتلقائي.
 
@@ -1439,7 +1439,7 @@ function ServicesTab({ group }: { group: ServiceGroup }) {
           {group === "general" && (
             <UnifiedServiceCard
               title="الاشتراك بخط فوترة"
-              description={`إمكانية الحصول على خط فوترة والاستمتاع بمزايا الرصيد المجاني والتعرفة الخاصة.
+              description={`إمكانية الحصول على خط فوترة والاستمتاع بمزايا الرصيد المجاني والأسعار الخاصة.
 
 • آلية الاشتراك: للحصول على خط فوترة تفضل بزيارة أقرب مركز خدمات لشركة يمن موبايل مصطحباً البطاقة الشخصية.
 

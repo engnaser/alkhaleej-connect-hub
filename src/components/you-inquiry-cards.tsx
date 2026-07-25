@@ -967,7 +967,7 @@ export function YouFamilyFriendsCard() {
             <p>
               للتفعيل اطلب{" "}
               <bdi dir="ltr" className="font-mono font-bold text-primary" style={{ unicodeBidi: "isolate" }}>{act}</bdi>{" "}
-              ثم أضف الأرقام المفضّلة للاستفادة من التعرفة المخفّضة.
+              ثم أضف الأرقام المفضّلة للاستفادة من الأسعار المخفّضة.
             </p>
             <p>
               للإلغاء اطلب{" "}
@@ -1031,7 +1031,7 @@ export function YouFamilyFriendsEditCard() {
     >
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
         عدّل أي رقم من قائمة أرقامك المفضّلة في خدمة الأهل والأصدقاء واستبدله
-        برقم آخر ترغب بالحصول على تعرفة مخفّضة عليه.
+        برقم آخر ترغب بالحصول على أسعار مخفّضة عليه.
       </p>
       <CodePill code={code} label="كود التعديل" />
       <EditableActionCodes
@@ -1063,7 +1063,7 @@ export function YouFamilyFriendsInquiryCard() {
     >
       <p className="mb-4 text-sm leading-relaxed text-muted-foreground">
         استعلم عن قائمة أرقام الأهل والأصدقاء المسجّلة على خطك للاستفادة من
-        التعرفة المخفّضة على المكالمات فيما بينكم.
+        الأسعار المخفّضة على المكالمات فيما بينكم.
       </p>
       <CodePill code={code} label="كود الاستعلام" />
       <EditableActionCodes
@@ -1115,7 +1115,7 @@ export function YouInternationalRoamingCard() {
               <bdi dir="ltr" className="font-mono font-bold text-destructive" style={{ unicodeBidi: "isolate" }}>{cancel}</bdi>.
             </p>
             <p>
-              تُطبّق تعرفة التجوال حسب الدولة والشبكة المستضيفة، يرجى مراجعة
+              تُطبّق أسعار التجوال حسب الدولة والشبكة المستضيفة، يرجى مراجعة
               أسعار التجوال قبل السفر.
             </p>
           </DetailsButton>
@@ -1151,7 +1151,7 @@ export function YouRoamingPostpaidCard() {
             </p>
             <p>
               قد يُطلب منك إيداع تأميني قابل للاسترداد قبل تفعيل التجوال، وتُضاف
-              الاستهلاكات إلى فاتورتك الشهرية حسب تعرفة الدولة المزارة.
+              الاستهلاكات إلى فاتورتك الشهرية حسب أسعار الدولة المزارة.
             </p>
           </DetailsButton>
         }
@@ -1185,7 +1185,7 @@ export function YouRoamingPrepaidCard() {
               قبل السفر لضمان جاهزية الخدمة عند الوصول.
             </p>
             <p>
-              تأكّد من توفّر رصيد كافٍ في خطك، وتُطبّق تعرفة التجوال حسب الدولة
+              تأكّد من توفّر رصيد كافٍ في خطك، وتُطبّق أسعار التجوال حسب الدولة
               والشبكة المستضيفة.
             </p>
           </DetailsButton>
