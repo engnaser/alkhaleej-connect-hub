@@ -668,11 +668,5 @@ function YouBrandSection({
   );
 }
 
-          <PhoneCall className="h-4 w-4" />
-          كود التفعيل غير متوفر
-        </button>
-      )}
-    </div>
-  );
-}
+
 
