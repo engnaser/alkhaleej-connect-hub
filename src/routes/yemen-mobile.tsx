@@ -280,7 +280,7 @@ function YemenMobilePage() {
                   <RoamingSmsTariffTable />
                   <SabahiServiceCard />
                   <SalifniServiceCard />
-                  <ServicesTab group="account" />
+                  
                 </div>
               </BrandSection>
             </TabsContent>
