@@ -107,23 +107,38 @@ function ServiceCardImpl({
   return (
     <div
       dir="rtl"
-      className="flex flex-col rounded-3xl border border-gray-200 bg-white p-6 shadow-sm transition-all hover:-translate-y-0.5 hover:shadow-md"
+      className="relative flex flex-col overflow-hidden rounded-3xl border-2 bg-white p-6 shadow-[0_10px_30px_-15px_rgba(122,30,43,0.35)] transition-all hover:-translate-y-0.5 hover:shadow-[0_15px_35px_-15px_rgba(122,30,43,0.45)]"
+      style={{ borderColor: "#7a1e2b33" }}
     >
+      {/* Brand top strip */}
+      <div className="absolute inset-x-0 top-0 flex h-1.5">
+        <div className="flex-1" style={{ background: "#7a1e2b" }} />
+        <div className="flex-1" style={{ background: "#2b3f7a" }} />
+      </div>
+      {/* Cream corner accent */}
+      <div
+        className="pointer-events-none absolute -left-8 -top-8 h-24 w-24 rounded-full opacity-60"
+        style={{ background: "radial-gradient(circle, #f4d7b8 0%, transparent 70%)" }}
+      />
+
       {/* Header */}
-      <div className="flex items-start gap-3">
+      <div className="relative flex items-start gap-3 pt-2">
         {Icon && (
-          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-full bg-emerald-50 text-emerald-700">
+          <div
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-white shadow-md"
+            style={{ background: "linear-gradient(135deg, #7a1e2b 0%, #2b3f7a 100%)" }}
+          >
             <Icon className="h-5 w-5" />
           </div>
         )}
-        <h4 className="pt-1 text-xl font-bold text-gray-900">{title}</h4>
+        <h4 className="pt-1 text-xl font-bold" style={{ color: "#7a1e2b" }}>{title}</h4>
       </div>
 
       {/* Description */}
       {description && (
-        <div className="mt-3 flex-1">
+        <div className="relative mt-3 flex-1">
           <p
-            className="text-sm leading-relaxed text-gray-500"
+            className="text-sm leading-relaxed text-gray-600"
             style={
               expanded
                 ? undefined
@@ -141,7 +156,8 @@ function ServiceCardImpl({
             <button
               type="button"
               onClick={() => setExpanded((v) => !v)}
-              className="mt-1.5 text-xs font-semibold text-emerald-700 hover:underline"
+              className="mt-1.5 text-xs font-semibold hover:underline"
+              style={{ color: "#2b3f7a" }}
             >
               {expanded ? "عرض أقل" : "عرض المزيد"}
             </button>
@@ -151,9 +167,12 @@ function ServiceCardImpl({
 
       {/* Codes */}
       {(activationCode || requiresInput || derivedDeactivation) && (
-        <div className="mt-4 space-y-2">
+        <div className="relative mt-4 space-y-2">
           {(activationCode || requiresInput) && (
-            <div className="flex items-center justify-between gap-3 rounded-full border border-dashed border-emerald-300 bg-emerald-50 px-4 py-2">
+            <div
+              className="flex items-center justify-between gap-3 rounded-full border border-dashed px-4 py-2"
+              style={{ borderColor: "#7a1e2b66", background: "#fff6ec" }}
+            >
               <span className="text-xs font-medium text-gray-500">
                 كود التفعيل
               </span>
@@ -165,12 +184,14 @@ function ServiceCardImpl({
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder={inputPlaceholder}
-                  className="w-40 bg-transparent text-left font-mono text-sm font-bold text-emerald-800 placeholder:text-emerald-800/40 focus:outline-none"
+                  className="w-40 bg-transparent text-left font-mono text-sm font-bold placeholder:opacity-40 focus:outline-none"
+                  style={{ color: "#7a1e2b" }}
                 />
               ) : (
                 <span
                   dir="ltr"
-                  className="font-mono text-sm font-bold text-emerald-800"
+                  className="font-mono text-sm font-bold"
+                  style={{ color: "#7a1e2b" }}
                 >
                   {activationCode}
                 </span>
@@ -194,13 +215,14 @@ function ServiceCardImpl({
       )}
 
       {/* Actions */}
-      <div className="mt-5 grid grid-cols-2 gap-2">
+      <div className="relative mt-5 grid grid-cols-2 gap-2">
         {helpUrl && (
           <a
             href={helpUrl}
             target="_blank"
             rel="noreferrer"
-            className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[#2f785b] px-3 py-2.5 text-xs font-extrabold text-white hover:bg-[#28684f]"
+            className="inline-flex items-center justify-center gap-1.5 rounded-full px-3 py-2.5 text-xs font-extrabold text-white shadow-sm hover:opacity-90"
+            style={{ background: "linear-gradient(135deg, #2b3f7a 0%, #1e2d5c 100%)" }}
           >
             <MessageCircle className="h-3.5 w-3.5" />
             مساعدة
@@ -210,7 +232,8 @@ function ServiceCardImpl({
           <button
             type="button"
             onClick={handleCopy}
-            className="inline-flex items-center justify-center gap-1.5 rounded-full border border-gray-200 bg-white px-3 py-2.5 text-xs font-bold text-gray-700 hover:bg-gray-50"
+            className="inline-flex items-center justify-center gap-1.5 rounded-full border bg-white px-3 py-2.5 text-xs font-bold hover:bg-gray-50"
+            style={{ borderColor: "#7a1e2b33", color: "#7a1e2b" }}
           >
             {copied ? (
               <Check className="h-3.5 w-3.5" />
@@ -226,7 +249,8 @@ function ServiceCardImpl({
             <button
               type="button"
               onClick={() => setMethodOpen(true)}
-              className="inline-flex items-center justify-center gap-1.5 rounded-full bg-emerald-50 px-3 py-2.5 text-xs font-extrabold text-[#2f785b] hover:bg-emerald-100"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full px-3 py-2.5 text-xs font-extrabold text-white shadow-sm hover:opacity-90"
+              style={{ background: "linear-gradient(135deg, #7a1e2b 0%, #2b3f7a 100%)" }}
             >
               <PhoneCall className="h-3.5 w-3.5" />
               اتصل للتفعيل
@@ -241,9 +265,10 @@ function ServiceCardImpl({
                   toast.error("أدخل الرقم أولاً");
                 }
               }}
-              className={`inline-flex items-center justify-center gap-1.5 rounded-full bg-emerald-50 px-3 py-2.5 text-xs font-extrabold text-[#2f785b] hover:bg-emerald-100 ${
+              className={`inline-flex items-center justify-center gap-1.5 rounded-full px-3 py-2.5 text-xs font-extrabold text-white shadow-sm hover:opacity-90 ${
                 !callHref ? "opacity-60" : ""
               }`}
+              style={{ background: "linear-gradient(135deg, #7a1e2b 0%, #2b3f7a 100%)" }}
             >
               <PhoneCall className="h-3.5 w-3.5" />
               اتصل للتفعيل
@@ -259,6 +284,7 @@ function ServiceCardImpl({
           </a>
         )}
       </div>
+
 
       {/* Method Dialog */}
       {hasMethodDialog && (
@@ -296,9 +322,14 @@ function ServiceCardImpl({
                     }}
                     className={
                       (isCall
-                        ? "inline-flex items-center justify-center gap-2 rounded-full bg-[#2f785b] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#28684f]"
-                        : "inline-flex items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-sm font-bold text-gray-800 hover:bg-gray-50") +
+                        ? "inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold text-white shadow-sm hover:opacity-90"
+                        : "inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-sm font-bold hover:bg-gray-50") +
                       (disabled ? " opacity-60 pointer-events-none" : "")
+                    }
+                    style={
+                      isCall
+                        ? { background: "linear-gradient(135deg, #7a1e2b 0%, #2b3f7a 100%)" }
+                        : { borderColor: "#7a1e2b33", color: "#7a1e2b", background: "#fff" }
                     }
                   >
                     {isCall ? (
