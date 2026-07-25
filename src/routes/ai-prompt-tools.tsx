@@ -108,7 +108,7 @@ const TOOLS: {
     icon: ShoppingBag,
     title: "توليد وصف المنتجات",
     desc: "أنشئ أوصاف منتجات احترافية جاهزة للنشر على المتاجر الإلكترونية والسوشيال ميديا.",
-    href: `${BASE}/product-description-generator`,
+    href: "https://generateprompt.ai/AI-Product-Description-Generator",
   },
   {
     icon: MessageSquare,
