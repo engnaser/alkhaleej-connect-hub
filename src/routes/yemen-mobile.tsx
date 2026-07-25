@@ -685,7 +685,9 @@ function InternationalRoamingTariff() {
   const zone = ROAMING_ZONES.find((z) => z.id === activeZone)!;
 
   return (
-    <div className="rounded-xl border border-border bg-card p-5 shadow-sm">
+    <div className="relative overflow-hidden rounded-2xl border-2 bg-white p-5 shadow-[0_10px_30px_-15px_rgba(122,30,43,0.35)]" style={{ borderColor: "#7a1e2b33" }}>
+      <div className="absolute inset-x-0 top-0 flex h-1.5"><div className="flex-1" style={{ background: "#7a1e2b" }} /><div className="flex-1" style={{ background: "#2b3f7a" }} /></div>
+      <div className="pointer-events-none absolute -left-8 -top-8 h-24 w-24 rounded-full opacity-60" style={{ background: "radial-gradient(circle, #f4d7b8 0%, transparent 70%)" }} />
       <div className="mb-4 flex items-center justify-center gap-2 text-center">
         <Globe className="h-5 w-5 shrink-0 text-emerald-600" />
         <h3 className="text-base font-bold text-foreground md:text-lg">
