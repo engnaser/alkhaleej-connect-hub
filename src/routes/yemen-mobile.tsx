@@ -299,6 +299,61 @@ function YemenMobilePage() {
   );
 }
 
+function BrandSection({
+  title,
+  icon,
+  children,
+}: {
+  title: string;
+  icon?: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className="relative overflow-hidden rounded-3xl border-2 shadow-[0_15px_40px_-20px_rgba(122,30,43,0.4)]"
+      style={{
+        borderColor: "#7a1e2b33",
+        background: "linear-gradient(180deg, #fff9f1 0%, #ffffff 60%)",
+      }}
+    >
+      {/* Top brand strip */}
+      <div className="flex h-2 w-full">
+        <div className="flex-1" style={{ background: "#7a1e2b" }} />
+        <div className="flex-1" style={{ background: "#2b3f7a" }} />
+      </div>
+
+      {/* Header */}
+      <div
+        className="flex items-center gap-3 border-b px-5 py-4"
+        style={{ borderColor: "#7a1e2b22" }}
+      >
+        <span
+          className="flex h-10 w-10 items-center justify-center rounded-xl text-white shadow-md"
+          style={{
+            background: "linear-gradient(135deg, #7a1e2b 0%, #2b3f7a 100%)",
+          }}
+        >
+          {icon}
+        </span>
+        <h2 className="text-lg font-extrabold" style={{ color: "#7a1e2b" }}>
+          {title}
+        </h2>
+        <div
+          className="mr-auto hidden h-1 flex-1 rounded-full sm:block"
+          style={{
+            background:
+              "linear-gradient(90deg, #7a1e2b33 0%, #2b3f7a33 50%, transparent 100%)",
+          }}
+        />
+      </div>
+
+      {/* Body */}
+      <div className="p-4 sm:p-6">{children}</div>
+    </div>
+  );
+}
+
+
 function PrepaidTariffTable() {
   const rows = [
     { to: "داخل الشبكة", call: "9 ريال", sms: "4 ريال" },
