@@ -198,11 +198,32 @@ export function useTemplate(id: string, kind: Kind, defaultTpl: string) {
   return useOverride(id, kind, "template", defaultTpl);
 }
 
+// Arabic word aliases → placeholder keys. Lets the admin type "الرقم" / "المبلغ" /
+// "الرمز" / "الوحدات" inside the saved template and have it merged like {n} / {amt}.
+const WORD_ALIASES: Record<string, string> = {
+  "الرقم": "n",
+  "رقم": "n",
+  "المبلغ": "amt",
+  "مبلغ": "amt",
+  "الرمز": "p",
+  "الوحدات": "u",
+  "وحدات": "u",
+};
+
+function normalizeTpl(tpl: string) {
+  let out = tpl;
+  for (const [word, key] of Object.entries(WORD_ALIASES)) {
+    // Replace bare Arabic word (not already inside braces) with {key}
+    out = out.replace(new RegExp(`(?<!\\{)${word}(?!\\})`, "g"), `{${key}}`);
+  }
+  return out;
+}
+
 function resolveTpl(tpl: string, values: Record<string, string>) {
-  return tpl.replace(/\{(\w+)\}/g, (_, k) => values[k] ?? "");
+  return normalizeTpl(tpl).replace(/\{(\w+)\}/g, (_, k) => values[k] ?? "");
 }
 function hasAllPlaceholders(tpl: string, values: Record<string, string>) {
-  const keys = Array.from(tpl.matchAll(/\{(\w+)\}/g)).map((m) => m[1]);
+  const keys = Array.from(normalizeTpl(tpl).matchAll(/\{(\w+)\}/g)).map((m) => m[1]);
   return keys.every((k) => (values[k] ?? "").length > 0);
 }
 
