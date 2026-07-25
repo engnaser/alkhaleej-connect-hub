@@ -322,9 +322,14 @@ function ServiceCardImpl({
                     }}
                     className={
                       (isCall
-                        ? "inline-flex items-center justify-center gap-2 rounded-full bg-[#2f785b] px-4 py-2.5 text-sm font-bold text-white hover:bg-[#28684f]"
-                        : "inline-flex items-center justify-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-sm font-bold text-gray-800 hover:bg-gray-50") +
+                        ? "inline-flex items-center justify-center gap-2 rounded-full px-4 py-2.5 text-sm font-bold text-white shadow-sm hover:opacity-90"
+                        : "inline-flex items-center justify-center gap-2 rounded-full border px-4 py-2.5 text-sm font-bold hover:bg-gray-50") +
                       (disabled ? " opacity-60 pointer-events-none" : "")
+                    }
+                    style={
+                      isCall
+                        ? { background: "linear-gradient(135deg, #7a1e2b 0%, #2b3f7a 100%)" }
+                        : { borderColor: "#7a1e2b33", color: "#7a1e2b", background: "#fff" }
                     }
                   >
                     {isCall ? (
