@@ -397,16 +397,33 @@ function SabafonItemCard({ item }: { item: SabafonItem }) {
   const deactivateCode = item.deactivation_code?.trim();
   const Icon = sabafonIconFor(item.icon);
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
-      <div className="flex items-start justify-between gap-3">
+    <div
+      className="relative flex flex-col gap-3 overflow-hidden rounded-2xl border-2 bg-white p-5 pt-6 shadow-[0_10px_30px_-15px_rgba(10,91,168,0.25)]"
+      style={{ borderColor: "#0a5ba830" }}
+    >
+      <div className="absolute inset-x-0 top-0 flex h-1.5">
+        <div className="flex-1" style={{ background: "#0a5ba8" }} />
+        <div className="flex-1" style={{ background: "#29b6f6" }} />
+      </div>
+      <div
+        className="pointer-events-none absolute -left-8 -top-8 h-20 w-20 rotate-12 rounded-2xl"
+        style={{ background: "#eaf4fb", opacity: 0.9 }}
+      />
+      <div className="relative flex items-start justify-between gap-3">
         <div className="flex items-start gap-3">
-          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+          <div
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-xl text-white shadow"
+            style={{ background: "linear-gradient(135deg, #0a5ba8 0%, #29b6f6 100%)" }}
+          >
             <Icon className="h-5 w-5" />
           </div>
-          <h3 className="text-base font-black text-foreground">{item.title}</h3>
+          <h3 className="text-base font-black" style={{ color: "#0a5ba8" }}>{item.title}</h3>
         </div>
         {item.price && (
-          <span className="shrink-0 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+          <span
+            className="shrink-0 rounded-full border px-3 py-1 text-xs font-bold"
+            style={{ borderColor: "#29b6f6", background: "#e7f5ff", color: "#0a5ba8" }}
+          >
             {item.price}
           </span>
         )}
@@ -750,9 +767,22 @@ function SabafonPackageCard({ pkg, showPostpaid = false }: { pkg: SabafonPackage
   const shareUrl = `https://wa.me/?text=${encodeURIComponent(details)}`;
 
   return (
-    <div className="relative flex flex-col rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-primary/40">
-      <div className="mb-3 flex items-start justify-between gap-2">
-        <h4 className="min-w-0 flex-1 text-base font-extrabold leading-tight text-foreground break-words">
+    <div
+      className="relative flex flex-col overflow-hidden rounded-2xl border-2 bg-white p-5 pt-6 shadow-[0_10px_30px_-15px_rgba(10,91,168,0.35)] transition-all hover:-translate-y-0.5"
+      style={{ borderColor: "#0a5ba830" }}
+    >
+      {/* brand top strip */}
+      <div className="absolute inset-x-0 top-0 flex h-1.5">
+        <div className="flex-1" style={{ background: "#0a5ba8" }} />
+        <div className="flex-1" style={{ background: "#29b6f6" }} />
+      </div>
+      {/* cream corner */}
+      <div
+        className="pointer-events-none absolute -left-10 -top-10 h-24 w-24 rotate-12 rounded-2xl"
+        style={{ background: "#eaf4fb", opacity: 0.9 }}
+      />
+      <div className="relative mb-3 flex items-start justify-between gap-2">
+        <h4 className="min-w-0 flex-1 text-base font-extrabold leading-tight break-words" style={{ color: "#0a5ba8" }}>
           {pkg.name}
         </h4>
         <div className="flex shrink-0 items-center gap-2">
@@ -767,12 +797,15 @@ function SabafonPackageCard({ pkg, showPostpaid = false }: { pkg: SabafonPackage
               تعديل
             </Link>
           )}
-          <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-bold text-primary">
+          <span
+            className="rounded-full border px-3 py-1 text-[11px] font-bold"
+            style={{ borderColor: "#29b6f6", background: "#e7f5ff", color: "#0a5ba8" }}
+          >
             {pkg.network}
           </span>
         </div>
       </div>
-      <div className="mb-4 text-3xl font-black text-primary" dir="rtl">
+      <div className="mb-4 text-3xl font-black" dir="rtl" style={{ color: "#0a5ba8" }}>
         ريال {pkg.price}
       </div>
       <ul className="space-y-2 text-sm text-foreground/85">
