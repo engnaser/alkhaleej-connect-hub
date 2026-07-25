@@ -390,8 +390,8 @@ export function SabafonBalanceTransferCard() {
       <div className="mt-auto grid grid-cols-2 gap-2">
         <TemplateRow
           id="sabafon-balance-transfer"
-          defaultTemplate="*142*{n}*{a}*{p}#"
-          values={{ n: validN, a: validAmt, p: validPin }}
+          defaultTemplate="*142*{n}*{amt}*{p}#"
+          values={{ n: validN, a: validAmt, amt: validAmt, p: validPin }}
         />
         <DetailsButton title="تحويل الرصيد">
           <p>أدخل رقم المستفيد والمبلغ والرمز السري ثم اضغط «تفعيل».</p>
