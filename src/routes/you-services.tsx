@@ -3,6 +3,8 @@ import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 import { SaveAllCodesBar } from "@/components/editable-action-codes";
 import { SawaTariffTable } from "@/components/sawa-tariff-table";
+import youLogo from "@/assets/you-logo.jpg.asset.json";
+
 import {
   Tabs,
   TabsContent,
@@ -129,87 +131,122 @@ function YouServicesPage() {
       />
 
       <main>
-        {/* HERO */}
-        <section className="relative overflow-hidden border-b border-border">
+        {/* HERO — You brand identity (yellow #FFC72C + black) */}
+        <section className="relative overflow-hidden border-b-4" style={{ borderColor: "#0a0a0a" }}>
           <div
             className="absolute inset-0 -z-10"
             style={{
               background:
-                "radial-gradient(900px 500px at 80% -10%, color-mix(in oklab, var(--primary) 18%, transparent), transparent 60%)",
+                "linear-gradient(135deg, #FFE48A 0%, #FFC72C 55%, #FFB800 100%)",
             }}
           />
-          <div className="mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 lg:px-8">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-bold text-primary">
-              <Sparkles className="h-3.5 w-3.5" />
-              مركز شركة يو
+          {/* Diagonal stripe pattern */}
+          <div
+            className="pointer-events-none absolute inset-0 -z-10 opacity-[0.08]"
+            style={{
+              backgroundImage:
+                "repeating-linear-gradient(45deg, #0a0a0a 0 2px, transparent 2px 22px)",
+            }}
+          />
+          {/* Black corner ribbon */}
+          <div className="absolute right-0 top-0 h-2 w-full" style={{ background: "#0a0a0a" }} />
+
+          <div className="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 py-14 text-center sm:px-6 lg:flex-row lg:justify-between lg:text-right lg:px-8">
+            <div className="flex-1">
+              <div
+                className="mb-5 inline-flex items-center gap-2 rounded-full border-2 px-4 py-1.5 text-xs font-black"
+                style={{ borderColor: "#0a0a0a", background: "#0a0a0a", color: "#FFC72C" }}
+              >
+                <Sparkles className="h-3.5 w-3.5" />
+                مركز خدمات شركة يو
+              </div>
+              <h1 className="text-balance text-4xl font-black sm:text-6xl" style={{ color: "#0a0a0a", letterSpacing: "-0.02em" }}>
+                خدمات <span className="inline-block rounded-lg px-3 py-1" style={{ background: "#0a0a0a", color: "#FFC72C" }}>YOU</span>
+              </h1>
+              <p className="mx-auto mt-4 max-w-2xl text-base font-semibold leading-relaxed sm:text-lg lg:mx-0" style={{ color: "#1a1a1a" }}>
+                باقات، خدمات، أكواد استعلام وإعدادات إنترنت شركة يو — كل ما تحتاجه في مكان واحد.
+              </p>
             </div>
-            <h1 className="text-balance text-3xl font-black text-primary sm:text-5xl">
-              خدمات شركة يو
-            </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-              تصفّح الباقات والخدمات وأكواد الاستعلام وإعدادات الإنترنت بسهولة
-              من مكان واحد.
-            </p>
+
+            {/* Logo card */}
+            <div className="shrink-0">
+              <div
+                className="relative grid h-32 w-32 place-items-center rounded-3xl border-4 bg-white p-3 shadow-[0_15px_40px_-10px_rgba(0,0,0,0.4)] sm:h-40 sm:w-40"
+                style={{ borderColor: "#0a0a0a" }}
+              >
+                <img src={youLogo.url} alt="شعار شركة يو" className="h-full w-full rounded-2xl object-contain" />
+              </div>
+            </div>
+          </div>
+
+          {/* Bottom dual band */}
+          <div className="flex h-2 w-full">
+            <div className="flex-1" style={{ background: "#0a0a0a" }} />
+            <div className="flex-1" style={{ background: "#FFC72C" }} />
           </div>
         </section>
 
         {/* TABS */}
         <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
           <Tabs defaultValue="packages" className="w-full">
-            <TabsList className="flex h-auto w-full flex-wrap justify-center gap-2 rounded-2xl border border-border bg-card p-2 shadow-[var(--shadow-card)]">
-              <TabsTrigger
-                value="packages"
-                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
-              >
-                <Package className="h-4 w-4" />
-                تفعيل الباقات
-              </TabsTrigger>
-              <TabsTrigger
-                value="services"
-                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
-              >
-                <Wrench className="h-4 w-4" />
-                الخدمات
-              </TabsTrigger>
-              <TabsTrigger
-                value="account"
-                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
-              >
-                <UserCog className="h-4 w-4" />
-                أسعار ومعلومات
-              </TabsTrigger>
-              <TabsTrigger
-                value="internet"
-                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
-              >
-                <Settings2 className="h-4 w-4" />
-                ضبط الإنترنت
-              </TabsTrigger>
+            <TabsList
+              className="flex h-auto w-full flex-wrap justify-center gap-2 rounded-2xl border-2 p-2 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.3)]"
+              style={{ background: "linear-gradient(135deg, #FFF8DC 0%, #FFE48A 100%)", borderColor: "#0a0a0a" }}
+            >
+              {[
+                { v: "packages", i: Package, l: "تفعيل الباقات" },
+                { v: "services", i: Wrench, l: "الخدمات" },
+                { v: "account", i: UserCog, l: "أسعار ومعلومات" },
+                { v: "internet", i: Settings2, l: "ضبط الإنترنت" },
+              ].map(({ v, i: I, l }) => (
+                <TabsTrigger
+                  key={v}
+                  value={v}
+                  className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-black text-[#0a0a0a] data-[state=active]:!bg-[#0a0a0a] data-[state=active]:!text-[#FFC72C] data-[state=active]:shadow-lg"
+                >
+                  <I className="h-4 w-4" />
+                  {l}
+                </TabsTrigger>
+              ))}
             </TabsList>
 
-            <div className="mt-6 flex items-start gap-3 rounded-2xl border border-warning-border bg-warning-bg p-4">
-              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-warning-foreground" />
-              <p className="text-sm font-semibold text-warning-foreground">
+            <div
+              className="mt-6 flex items-start gap-3 rounded-2xl border-2 p-4"
+              style={{ borderColor: "#0a0a0a", background: "#FFF8DC" }}
+            >
+              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" style={{ color: "#0a0a0a" }} />
+              <p className="text-sm font-bold" style={{ color: "#0a0a0a" }}>
                 قد تتغير الأكواد والأسعار من الشركة، يرجى التأكد قبل الاشتراك.
               </p>
             </div>
 
             <TabsContent value="packages" className="mt-6">
-              <PackagesPanel />
+              <YouBrandSection title="تفعيل الباقات" icon={Package}>
+                <PackagesPanel />
+              </YouBrandSection>
             </TabsContent>
             <TabsContent value="services" className="mt-6">
-              <SectionList section="services" />
+              <YouBrandSection title="الخدمات" icon={Wrench}>
+                <SectionList section="services" />
+              </YouBrandSection>
             </TabsContent>
-            <TabsContent value="account" className="mt-6 space-y-6">
-              <SawaTariffTable />
-              <SectionList section="account" />
+            <TabsContent value="account" className="mt-6">
+              <YouBrandSection title="أسعار ومعلومات" icon={UserCog}>
+                <div className="space-y-6">
+                  <SawaTariffTable />
+                  <SectionList section="account" />
+                </div>
+              </YouBrandSection>
             </TabsContent>
             <TabsContent value="internet" className="mt-6">
-              <SectionList section="internet" />
+              <YouBrandSection title="ضبط الإنترنت" icon={Settings2}>
+                <SectionList section="internet" />
+              </YouBrandSection>
             </TabsContent>
           </Tabs>
         </section>
       </main>
+
 
       <SiteFooter />
       <SaveAllCodesBar />
@@ -445,7 +482,21 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
   const shareUrl = `https://wa.me/?text=${encodeURIComponent(details)}`;
 
   return (
-    <div className="relative flex flex-col rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-primary/40">
+    <div
+      className="relative flex flex-col overflow-hidden rounded-2xl border-2 bg-white p-5 shadow-[0_10px_30px_-15px_rgba(0,0,0,0.35)] transition-all hover:-translate-y-0.5 hover:shadow-[0_15px_35px_-15px_rgba(0,0,0,0.45)]"
+      style={{ borderColor: "#0a0a0a" }}
+    >
+      {/* dual top strip: black + yellow */}
+      <div className="absolute inset-x-0 top-0 flex h-1.5">
+        <div className="flex-1" style={{ background: "#0a0a0a" }} />
+        <div className="flex-1" style={{ background: "#FFC72C" }} />
+      </div>
+      {/* yellow corner accent */}
+      <div
+        className="pointer-events-none absolute -left-8 -top-8 h-24 w-24 rounded-full opacity-60"
+        style={{ background: "radial-gradient(circle, #FFE48A 0%, transparent 70%)" }}
+      />
+
       <div className="mb-3 flex items-start justify-between gap-2">
         <h4 className="min-w-0 flex-1 text-base font-extrabold leading-tight text-foreground break-words">
           {pkg.name}
@@ -556,7 +607,8 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
       {activationHref ? (
         <a
           href={activationHref}
-          className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border-2 border-primary bg-primary/10 px-3 py-2.5 text-sm font-extrabold text-primary transition-transform hover:scale-[1.02]"
+          className="mt-2 inline-flex items-center justify-center gap-2 rounded-full border-2 px-3 py-2.5 text-sm font-black transition-transform hover:scale-[1.02]"
+          style={{ borderColor: "#0a0a0a", background: "#0a0a0a", color: "#FFC72C" }}
         >
           <PhoneCall className="h-4 w-4" />
           {smsInfo ? `أرسل ${smsInfo.body} إلى ${smsInfo.number} للتفعيل` : "اضغط لتفعيل الباقة"}
@@ -575,4 +627,46 @@ function YouPackageCard({ pkg }: { pkg: YouPackage }) {
     </div>
   );
 }
+
+function YouBrandSection({
+  title,
+  icon: Icon,
+  children,
+}: {
+  title: string;
+  icon: React.ComponentType<{ className?: string }>;
+  children: React.ReactNode;
+}) {
+  return (
+    <div
+      className="relative overflow-hidden rounded-2xl border-2 bg-white shadow-[0_10px_30px_-15px_rgba(0,0,0,0.3)]"
+      style={{ borderColor: "#0a0a0a" }}
+    >
+      <div className="flex h-2 w-full">
+        <div className="flex-1" style={{ background: "#0a0a0a" }} />
+        <div className="flex-1" style={{ background: "#FFC72C" }} />
+      </div>
+      <div
+        className="flex items-center gap-3 border-b-2 px-5 py-4"
+        style={{ borderColor: "#0a0a0a22", background: "linear-gradient(135deg, #FFF8DC 0%, #FFE48A 100%)" }}
+      >
+        <div
+          className="grid h-10 w-10 place-items-center rounded-xl shadow-md"
+          style={{ background: "#0a0a0a", color: "#FFC72C" }}
+        >
+          <Icon className="h-5 w-5" />
+        </div>
+        <h2 className="text-lg font-black" style={{ color: "#0a0a0a" }}>
+          {title}
+        </h2>
+        <div className="ml-auto h-1 flex-1 rounded-full" style={{ background: "linear-gradient(90deg, #0a0a0a 0%, #FFC72C 100%)" }} />
+      </div>
+      <div className="p-5" style={{ background: "linear-gradient(180deg, #FFFDF5 0%, #ffffff 100%)" }}>
+        {children}
+      </div>
+    </div>
+  );
+}
+
+
 
