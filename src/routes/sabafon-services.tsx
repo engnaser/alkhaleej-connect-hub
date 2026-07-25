@@ -31,6 +31,7 @@ import {
   PhoneCall,
 } from "lucide-react";
 import React, { useState } from "react";
+import sabafonLogo from "@/assets/sabafon-logo.png.asset.json";
 import { useSabafonItems, sabafonIconFor, type SabafonSection, type SabafonItem } from "@/lib/sabafonServicesStore";
 import { useSabafonPackagesStore, type SabafonPackage } from "@/lib/sabafonPackagesStore";
 import { supabase } from "@/integrations/supabase/client";
@@ -138,74 +139,149 @@ function SabafonServicesPage() {
       />
 
       <main>
-        {/* HERO */}
-        <section className="relative overflow-hidden border-b border-border">
+        {/* HERO — Sabafon brand identity (deep blue + light blue) */}
+        <section
+          className="relative overflow-hidden border-b-4"
+          style={{ borderColor: "#0a5ba8" }}
+        >
           <div
             className="absolute inset-0 -z-10"
             style={{
               background:
-                "radial-gradient(900px 500px at 80% -10%, color-mix(in oklab, var(--primary) 18%, transparent), transparent 60%)",
+                "linear-gradient(135deg, #0a5ba8 0%, #1478c9 55%, #29b6f6 100%)",
             }}
           />
-          <div className="mx-auto max-w-7xl px-4 py-12 text-center sm:px-6 lg:px-8">
-            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-4 py-1.5 text-xs font-bold text-primary">
-              <Sparkles className="h-3.5 w-3.5" />
-              مركز شركة سبافون
+          {/* signature swoosh dots pattern */}
+          <div
+            className="pointer-events-none absolute inset-0 -z-10 opacity-[0.12]"
+            style={{
+              backgroundImage:
+                "radial-gradient(circle, #ffffff 1.5px, transparent 2px)",
+              backgroundSize: "22px 22px",
+            }}
+          />
+          <div
+            className="absolute -top-16 -left-16 -z-10 h-56 w-56 rotate-12 rounded-[2.5rem]"
+            style={{ background: "#ffffff", opacity: 0.08 }}
+          />
+          <div
+            className="absolute -bottom-20 -right-24 -z-10 h-64 w-64 -rotate-12 rounded-[2.5rem]"
+            style={{ background: "#29b6f6", opacity: 0.35 }}
+          />
+
+          <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
+            <div className="flex flex-col items-center gap-6 text-center md:flex-row md:items-center md:justify-center md:gap-10 md:text-right">
+              {/* Logo card */}
+              <div className="relative">
+                <div
+                  className="absolute -inset-3 -z-10 rounded-3xl"
+                  style={{ background: "#ffffff", opacity: 0.15 }}
+                />
+                <div className="rounded-2xl bg-white p-3 shadow-[0_20px_50px_-20px_rgba(0,0,0,0.55)] ring-1 ring-white/40">
+                  <img
+                    src={sabafonLogo.url}
+                    alt="شعار سبافون"
+                    className="h-28 w-28 rounded-xl object-contain sm:h-32 sm:w-32"
+                    loading="eager"
+                  />
+                </div>
+              </div>
+
+              <div className="max-w-2xl">
+                <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-white/95 px-4 py-1.5 text-xs font-bold shadow"
+                  style={{ color: "#0a5ba8" }}
+                >
+                  <Sparkles className="h-3.5 w-3.5" />
+                  مركز سبافون الرسمي
+                </div>
+                <h1 className="text-balance text-3xl font-black leading-tight text-white sm:text-5xl">
+                  خدمات <span style={{ color: "#c7ecff" }}>سبافون</span>
+                </h1>
+                <p className="mt-3 text-base font-bold italic sm:text-lg" style={{ color: "#e7f5ff" }}>
+                  أصالة وتواصل
+                </p>
+                <p className="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-white/85 md:mx-0 sm:text-base">
+                  تصفّح الباقات والخدمات وأكواد الاستعلام وإعدادات الإنترنت بسهولة
+                  من مكان واحد.
+                </p>
+              </div>
             </div>
-            <h1 className="text-balance text-3xl font-black text-primary sm:text-5xl">
-              خدمات شركة سبافون
-            </h1>
-            <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg">
-              تصفّح الباقات والخدمات وأكواد الاستعلام وإعدادات الإنترنت بسهولة
-              من مكان واحد.
-            </p>
+          </div>
+
+          {/* dual stripe echoing the sabafon palette */}
+          <div className="flex h-1.5 w-full">
+            <div className="flex-1" style={{ background: "#0a5ba8" }} />
+            <div className="flex-1" style={{ background: "#29b6f6" }} />
           </div>
         </section>
 
         {/* TABS */}
         <section className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
           <Tabs defaultValue="packages_3g" className="w-full">
-            <TabsList className="flex h-auto w-full flex-wrap justify-center gap-2 rounded-2xl border border-border bg-card p-2 shadow-[var(--shadow-card)]">
+            <TabsList
+              className="flex h-auto w-full flex-wrap justify-center gap-2 rounded-2xl border-2 p-2 shadow-[0_10px_30px_-15px_rgba(10,91,168,0.35)]"
+              style={{
+                borderColor: "#0a5ba833",
+                background: "linear-gradient(135deg, #eaf4fb 0%, #cfe6f7 100%)",
+              }}
+            >
               <TabsTrigger
                 value="packages_3g"
-                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+                data-brand="sf"
+                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold text-[#0a5ba8] transition data-[state=active]:text-white data-[state=active]:shadow-lg"
               >
                 <Package className="h-4 w-4" />
                 أكواد باقات 3G
               </TabsTrigger>
               <TabsTrigger
                 value="packages_4g"
-                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+                data-brand="sf"
+                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold text-[#0a5ba8] transition data-[state=active]:text-white data-[state=active]:shadow-lg"
               >
                 <Package className="h-4 w-4" />
                 أكواد باقات 4G
               </TabsTrigger>
               <TabsTrigger
                 value="services"
-                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+                data-brand="sf"
+                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold text-[#0a5ba8] transition data-[state=active]:text-white data-[state=active]:shadow-lg"
               >
                 <Wrench className="h-4 w-4" />
                 الخدمات
               </TabsTrigger>
               <TabsTrigger
                 value="account"
-                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+                data-brand="sf"
+                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold text-[#0a5ba8] transition data-[state=active]:text-white data-[state=active]:shadow-lg"
               >
                 <UserCog className="h-4 w-4" />
                 أسعار ومعلومات
               </TabsTrigger>
               <TabsTrigger
                 value="internet"
-                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-md"
+                data-brand="sf"
+                className="flex-1 min-w-[140px] gap-2 rounded-xl px-4 py-3 text-sm font-bold text-[#0a5ba8] transition data-[state=active]:text-white data-[state=active]:shadow-lg"
               >
                 <Settings2 className="h-4 w-4" />
                 ضبط الإنترنت
               </TabsTrigger>
             </TabsList>
 
-            <div className="mt-6 flex items-start gap-3 rounded-2xl border border-warning-border bg-warning-bg p-4">
-              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0 text-warning-foreground" />
-              <p className="text-sm font-semibold text-warning-foreground">
+            <style>{`
+              [data-brand="sf"][data-state="active"] {
+                background: linear-gradient(135deg, #0a5ba8 0%, #29b6f6 100%) !important;
+              }
+            `}</style>
+
+            <div
+              className="mt-6 flex items-start gap-3 rounded-2xl border-2 p-4"
+              style={{
+                borderColor: "#0a5ba840",
+                background: "linear-gradient(135deg, #eaf4fb 0%, #d5eaf9 100%)",
+              }}
+            >
+              <AlertTriangle className="mt-0.5 h-5 w-5 shrink-0" style={{ color: "#0a5ba8" }} />
+              <p className="text-sm font-semibold" style={{ color: "#0a5ba8" }}>
                 قد تتغير الأكواد والأسعار من الشركة، يرجى التأكد قبل الاشتراك.
               </p>
             </div>
@@ -321,16 +397,33 @@ function SabafonItemCard({ item }: { item: SabafonItem }) {
   const deactivateCode = item.deactivation_code?.trim();
   const Icon = sabafonIconFor(item.icon);
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)]">
-      <div className="flex items-start justify-between gap-3">
+    <div
+      className="relative flex flex-col gap-3 overflow-hidden rounded-2xl border-2 bg-white p-5 pt-6 shadow-[0_10px_30px_-15px_rgba(10,91,168,0.25)]"
+      style={{ borderColor: "#0a5ba830" }}
+    >
+      <div className="absolute inset-x-0 top-0 flex h-1.5">
+        <div className="flex-1" style={{ background: "#0a5ba8" }} />
+        <div className="flex-1" style={{ background: "#29b6f6" }} />
+      </div>
+      <div
+        className="pointer-events-none absolute -left-8 -top-8 h-20 w-20 rotate-12 rounded-2xl"
+        style={{ background: "#eaf4fb", opacity: 0.9 }}
+      />
+      <div className="relative flex items-start justify-between gap-3">
         <div className="flex items-start gap-3">
-          <div className="grid h-11 w-11 shrink-0 place-items-center rounded-xl bg-primary/10 text-primary">
+          <div
+            className="grid h-11 w-11 shrink-0 place-items-center rounded-xl text-white shadow"
+            style={{ background: "linear-gradient(135deg, #0a5ba8 0%, #29b6f6 100%)" }}
+          >
             <Icon className="h-5 w-5" />
           </div>
-          <h3 className="text-base font-black text-foreground">{item.title}</h3>
+          <h3 className="text-base font-black" style={{ color: "#0a5ba8" }}>{item.title}</h3>
         </div>
         {item.price && (
-          <span className="shrink-0 rounded-full bg-primary/10 px-3 py-1 text-xs font-bold text-primary">
+          <span
+            className="shrink-0 rounded-full border px-3 py-1 text-xs font-bold"
+            style={{ borderColor: "#29b6f6", background: "#e7f5ff", color: "#0a5ba8" }}
+          >
             {item.price}
           </span>
         )}
@@ -674,9 +767,22 @@ function SabafonPackageCard({ pkg, showPostpaid = false }: { pkg: SabafonPackage
   const shareUrl = `https://wa.me/?text=${encodeURIComponent(details)}`;
 
   return (
-    <div className="relative flex flex-col rounded-2xl border border-border bg-card p-5 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-primary/40">
-      <div className="mb-3 flex items-start justify-between gap-2">
-        <h4 className="min-w-0 flex-1 text-base font-extrabold leading-tight text-foreground break-words">
+    <div
+      className="relative flex flex-col overflow-hidden rounded-2xl border-2 bg-white p-5 pt-6 shadow-[0_10px_30px_-15px_rgba(10,91,168,0.35)] transition-all hover:-translate-y-0.5"
+      style={{ borderColor: "#0a5ba830" }}
+    >
+      {/* brand top strip */}
+      <div className="absolute inset-x-0 top-0 flex h-1.5">
+        <div className="flex-1" style={{ background: "#0a5ba8" }} />
+        <div className="flex-1" style={{ background: "#29b6f6" }} />
+      </div>
+      {/* cream corner */}
+      <div
+        className="pointer-events-none absolute -left-10 -top-10 h-24 w-24 rotate-12 rounded-2xl"
+        style={{ background: "#eaf4fb", opacity: 0.9 }}
+      />
+      <div className="relative mb-3 flex items-start justify-between gap-2">
+        <h4 className="min-w-0 flex-1 text-base font-extrabold leading-tight break-words" style={{ color: "#0a5ba8" }}>
           {pkg.name}
         </h4>
         <div className="flex shrink-0 items-center gap-2">
@@ -691,12 +797,15 @@ function SabafonPackageCard({ pkg, showPostpaid = false }: { pkg: SabafonPackage
               تعديل
             </Link>
           )}
-          <span className="rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-[11px] font-bold text-primary">
+          <span
+            className="rounded-full border px-3 py-1 text-[11px] font-bold"
+            style={{ borderColor: "#29b6f6", background: "#e7f5ff", color: "#0a5ba8" }}
+          >
             {pkg.network}
           </span>
         </div>
       </div>
-      <div className="mb-4 text-3xl font-black text-primary" dir="rtl">
+      <div className="mb-4 text-3xl font-black" dir="rtl" style={{ color: "#0a5ba8" }}>
         ريال {pkg.price}
       </div>
       <ul className="space-y-2 text-sm text-foreground/85">
