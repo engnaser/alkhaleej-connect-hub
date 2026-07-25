@@ -84,7 +84,7 @@ const TOOLS: {
     icon: RefreshCw,
     title: "إعادة الصياغة",
     desc: "حوّل النصوص المولّدة بالذكاء الاصطناعي إلى أسلوب بشري طبيعي غير قابل للكشف.",
-    href: `${BASE}/humanize-ai-text`,
+    href: "https://generateprompt.ai/ai-humanizer",
   },
   {
     icon: FileImage,
