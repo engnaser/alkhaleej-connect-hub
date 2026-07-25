@@ -90,7 +90,7 @@ const TOOLS: {
     icon: FileImage,
     title: "محوّل الصور إلى أوامر",
     desc: "ارفع صورة واحصل على الأمر (Prompt) الذي يمكن استخدامه لتوليد صورة مشابهة.",
-    href: `${BASE}/image-to-prompt`,
+    href: "https://generateprompt.ai/image-to-prompt",
   },
   {
     icon: FileText,
