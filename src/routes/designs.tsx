@@ -455,8 +455,26 @@ function DesignsPage() {
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
-          {(metaLoaded ? visibleTemplates : orderedTemplates).map((item, idx) => {
+        <div className="mt-10 flex flex-wrap justify-center gap-2">
+          {categories.map((c) => (
+            <button
+              key={c.name}
+              type="button"
+              onClick={() => setActiveCategory(c.name)}
+              className={`rounded-full border-2 px-4 py-2 text-xs font-extrabold transition-all ${
+                activeCategory === c.name
+                  ? "border-primary bg-primary text-primary-foreground shadow-md"
+                  : "border-border bg-card text-foreground/80 hover:border-primary hover:text-primary"
+              }`}
+            >
+              {c.name}
+              <span className="mr-1.5 opacity-70">({c.count})</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
+          {(metaLoaded ? shownTemplates : orderedTemplates).map((item, idx) => {
             const tpl = item.tpl;
             const isHidden = item.hidden;
             return (
@@ -469,7 +487,7 @@ function DesignsPage() {
                   <div className="absolute right-2 top-2 z-10 flex flex-col gap-1.5" onClick={(e) => e.stopPropagation()}>
                     <button
                       type="button"
-                      onClick={(e) => move(idx, -1, e)}
+                      onClick={(e) => move(tpl.id, -1, e)}
                       title="نقل للأعلى"
                       className="grid h-8 w-8 place-items-center rounded-full bg-background/90 text-foreground shadow-md ring-1 ring-border transition-colors hover:bg-primary hover:text-primary-foreground disabled:opacity-40"
                       disabled={idx === 0}
@@ -478,10 +496,10 @@ function DesignsPage() {
                     </button>
                     <button
                       type="button"
-                      onClick={(e) => move(idx, 1, e)}
+                      onClick={(e) => move(tpl.id, 1, e)}
                       title="نقل للأسفل"
                       className="grid h-8 w-8 place-items-center rounded-full bg-background/90 text-foreground shadow-md ring-1 ring-border transition-colors hover:bg-primary hover:text-primary-foreground disabled:opacity-40"
-                      disabled={idx === visibleTemplates.length - 1}
+                      disabled={idx === shownTemplates.length - 1}
                     >
                       <ArrowDown className="h-4 w-4" />
                     </button>
