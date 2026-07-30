@@ -20,6 +20,7 @@ import posterJumaa12 from "@/assets/poster-jumaa-12.webp.asset.json";
 import posterJumaa15 from "@/assets/poster-jumaa-15.webp.asset.json";
 import posterJumaa21 from "@/assets/poster-jumaa-21.webp.asset.json";
 import posterJumaa22 from "@/assets/poster-jumaa-22.webp.asset.json";
+import posterJumaa23 from "@/assets/poster-jumaa-23.png.asset.json";
 import posterEidMosque from "@/assets/poster-eid-mosque.png.asset.json";
 import posterKhalijServices from "@/assets/poster-khalij-services.jpg.asset.json";
 import posterKhalijAgent from "@/assets/poster-khalij-agent-services.png.asset.json";
