@@ -314,6 +314,22 @@ function DesignsPage() {
     [orderedTemplates, adminMode],
   );
 
+  const [activeCategory, setActiveCategory] = useState<string>(ALL_CATEGORY);
+
+  const categories = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const item of visibleTemplates) {
+      const c = categoryOf(item.tpl.id);
+      counts.set(c, (counts.get(c) ?? 0) + 1);
+    }
+    return [{ name: ALL_CATEGORY, count: visibleTemplates.length }, ...Array.from(counts, ([name, count]) => ({ name, count }))];
+  }, [visibleTemplates]);
+
+  const shownTemplates = useMemo(
+    () => (activeCategory === ALL_CATEGORY ? visibleTemplates : visibleTemplates.filter((t) => categoryOf(t.tpl.id) === activeCategory)),
+    [visibleTemplates, activeCategory],
+  );
+
   const activeTpl = TEMPLATES.find((t) => t.id === openId) ?? null;
 
   const persistMeta = async (templateId: string, patch: Partial<TemplateMeta>) => {
