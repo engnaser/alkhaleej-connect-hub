@@ -222,6 +222,31 @@ const TEMPLATES: Template[] = [
   },
 ];
 
+/** تصنيف القوالب إلى مجموعات رئيسية */
+const CATEGORY_OF: Record<string, string> = {
+  sabah: "تحيات الصباح والمساء",
+  masaa: "تحيات الصباح والمساء",
+  jumaa: "تصاميم يوم الجمعة",
+  "jumaa-gold": "تصاميم يوم الجمعة",
+  ramadan: "رمضان",
+  eid: "تصاميم الأعياد",
+  "eid-mosque": "تصاميم الأعياد",
+  "khalij-eid-adha": "تصاميم الأعياد",
+  "khalij-eid-fitr": "تصاميم الأعياد",
+  mawloud: "تهاني المواليد",
+  "khalij-mawloud": "تهاني المواليد",
+  "khalij-engagement": "خطوبة وزواج",
+  "khalij-wedding": "خطوبة وزواج",
+  khalij: "بطاقات الوكلاء",
+  "khalij-services": "بطاقات الوكلاء",
+  "khalij-agent": "بطاقات الوكلاء",
+  "khalij-agent-badge": "بطاقات الوكلاء",
+  "khalij-pos-badge": "بطاقات الوكلاء",
+};
+
+const ALL_CATEGORY = "كل التصاميم";
+const categoryOf = (id: string) => CATEGORY_OF[id] ?? "تصاميم أخرى";
+
 function useSession() {
   const [userId, setUserId] = useState<string | null | undefined>(undefined);
   const queryClient = useQueryClient();
