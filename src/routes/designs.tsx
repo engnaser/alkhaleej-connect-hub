@@ -359,20 +359,21 @@ function DesignsPage() {
     await persistMeta(templateId, { hidden: !currentlyHidden });
   };
 
-  const move = async (index: number, direction: -1 | 1, e: React.MouseEvent) => {
+  const move = async (templateId: string, direction: -1 | 1, e: React.MouseEvent) => {
     e.stopPropagation();
-    const target = index + direction;
-    if (target < 0 || target >= orderedTemplates.length) return;
-    const a = orderedTemplates[index];
-    const b = orderedTemplates[target];
-    // Assign concrete sort_orders based on current positions
+    // move relative to the currently shown (filtered) list
+    const shownIndex = shownTemplates.findIndex((t) => t.tpl.id === templateId);
+    const neighbor = shownTemplates[shownIndex + direction];
+    if (!neighbor) return;
+    const i = orderedTemplates.findIndex((t) => t.tpl.id === templateId);
+    const j = orderedTemplates.findIndex((t) => t.tpl.id === neighbor.tpl.id);
+    if (i < 0 || j < 0) return;
     const newList = [...orderedTemplates];
-    newList[index] = b;
-    newList[target] = a;
-    // Reassign sequential orders
+    newList[i] = orderedTemplates[j];
+    newList[j] = orderedTemplates[i];
     const updates: Promise<unknown>[] = [];
-    newList.forEach((item, i) => {
-      const newOrder = (i + 1) * 10;
+    newList.forEach((item, idx) => {
+      const newOrder = (idx + 1) * 10;
       if ((meta[item.tpl.id]?.sort_order ?? -1) !== newOrder) {
         updates.push(persistMeta(item.tpl.id, { sort_order: newOrder }));
       }
