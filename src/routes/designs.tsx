@@ -21,6 +21,7 @@ import posterJumaa15 from "@/assets/poster-jumaa-15.webp.asset.json";
 import posterJumaa21 from "@/assets/poster-jumaa-21.webp.asset.json";
 import posterJumaa22 from "@/assets/poster-jumaa-22.webp.asset.json";
 import posterJumaa23 from "@/assets/poster-jumaa-23.png.asset.json";
+import posterRamadanAhlan from "@/assets/poster-ramadan-ahlan.webp.asset.json";
 import posterEidMosque from "@/assets/poster-eid-mosque.png.asset.json";
 import posterKhalijServices from "@/assets/poster-khalij-services.jpg.asset.json";
 import posterKhalijAgent from "@/assets/poster-khalij-agent-services.png.asset.json";
@@ -136,6 +137,7 @@ const TEMPLATES: Template[] = [
   { id: "jumaa-tayyiba", title: "جمعة طيبة", occasion: "دعاء يوم الجمعة", src: posterJumaa11.url, fields: [], defaults: {}, layout: {} },
   { id: "jumaa-ilman", title: "جمعة مباركة", occasion: "اللهم إنا نسألك علماً نافعاً", src: posterJumaa23.url, fields: [], defaults: {}, layout: {} },
   { id: "ramadan", title: "رمضان كريم",  occasion: "حلَّ الشهر الفضيل", src: posterRamadan, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
+  { id: "ramadan-ahlan", title: "أهلاً بشهر رمضان", occasion: "مبارك عليكم الشهر", src: posterRamadanAhlan.url, fields: [], defaults: {}, layout: {} },
   { id: "eid",     title: "عيد مبارك",   occasion: "بمناسبة العيد السعيد", src: posterEid,  fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
   { id: "eid-mosque", title: "عيد مبارك", occasion: "تهنئة عيد بالمسجد", src: posterEidMosque.url, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: EID_MOSQUE_LAYOUT },
   {
@@ -247,6 +249,7 @@ const CATEGORY_OF: Record<string, string> = {
   "jumaa-tayyiba": "تصاميم يوم الجمعة",
   "jumaa-ilman": "تصاميم يوم الجمعة",
   ramadan: "رمضان",
+  "ramadan-ahlan": "رمضان",
   eid: "تصاميم الأعياد",
   "eid-mosque": "تصاميم الأعياد",
   "khalij-eid-adha": "تصاميم الأعياد",
