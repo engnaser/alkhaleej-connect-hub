@@ -137,6 +137,7 @@ const TEMPLATES: Template[] = [
   { id: "jumaa-tayyiba", title: "جمعة طيبة", occasion: "دعاء يوم الجمعة", src: posterJumaa11.url, fields: [], defaults: {}, layout: {} },
   { id: "jumaa-ilman", title: "جمعة مباركة", occasion: "اللهم إنا نسألك علماً نافعاً", src: posterJumaa23.url, fields: [], defaults: {}, layout: {} },
   { id: "ramadan", title: "رمضان كريم",  occasion: "حلَّ الشهر الفضيل", src: posterRamadan, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
+  { id: "ramadan-ahlan", title: "أهلاً بشهر رمضان", occasion: "مبارك عليكم الشهر", src: posterRamadanAhlan.url, fields: [], defaults: {}, layout: {} },
   { id: "eid",     title: "عيد مبارك",   occasion: "بمناسبة العيد السعيد", src: posterEid,  fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
   { id: "eid-mosque", title: "عيد مبارك", occasion: "تهنئة عيد بالمسجد", src: posterEidMosque.url, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: EID_MOSQUE_LAYOUT },
   {
