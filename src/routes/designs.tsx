@@ -15,6 +15,11 @@ import posterEid from "@/assets/poster-eid.jpg?format=webp&quality=72&as=src";
 import posterMawloud from "@/assets/poster-mawloud.png?format=webp&quality=78&as=src";
 import posterKhalij from "@/assets/poster-khalij.png.asset.json";
 import posterJumaaGold from "@/assets/poster-jumaa-gold.png.asset.json";
+import posterJumaa11 from "@/assets/poster-jumaa-11.webp.asset.json";
+import posterJumaa12 from "@/assets/poster-jumaa-12.webp.asset.json";
+import posterJumaa15 from "@/assets/poster-jumaa-15.webp.asset.json";
+import posterJumaa21 from "@/assets/poster-jumaa-21.webp.asset.json";
+import posterJumaa22 from "@/assets/poster-jumaa-22.webp.asset.json";
 import posterEidMosque from "@/assets/poster-eid-mosque.png.asset.json";
 import posterKhalijServices from "@/assets/poster-khalij-services.jpg.asset.json";
 import posterKhalijAgent from "@/assets/poster-khalij-agent-services.png.asset.json";
@@ -123,6 +128,11 @@ const TEMPLATES: Template[] = [
   { id: "masaa",   title: "مساء الخير",  occasion: "تحية المساء",       src: posterMasaa,   fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
   { id: "jumaa",   title: "جمعة مباركة", occasion: "تذكير الجمعة",      src: posterJumaa,   fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
   { id: "jumaa-gold", title: "جمعة مباركة", occasion: "تصميم ذهبي أبيض", src: posterJumaaGold.url, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
+  { id: "jumaa-salou", title: "صلوا عليه وسلموا تسليماً", occasion: "تذكير الجمعة", src: posterJumaa15.url, fields: [], defaults: {}, layout: {} },
+  { id: "jumaa-yawm", title: "يوم الجمعة", occasion: "قال النبي ﷺ", src: posterJumaa21.url, fields: [], defaults: {}, layout: {} },
+  { id: "jumaa-kum", title: "جمعتكم مباركة", occasion: "حديث فضل يوم الجمعة", src: posterJumaa22.url, fields: [], defaults: {}, layout: {} },
+  { id: "jumaa-kaaba", title: "جمعة مباركة", occasion: "الكعبة المشرفة", src: posterJumaa12.url, fields: [], defaults: {}, layout: {} },
+  { id: "jumaa-tayyiba", title: "جمعة طيبة", occasion: "دعاء يوم الجمعة", src: posterJumaa11.url, fields: [], defaults: {}, layout: {} },
   { id: "ramadan", title: "رمضان كريم",  occasion: "حلَّ الشهر الفضيل", src: posterRamadan, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
   { id: "eid",     title: "عيد مبارك",   occasion: "بمناسبة العيد السعيد", src: posterEid,  fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
   { id: "eid-mosque", title: "عيد مبارك", occasion: "تهنئة عيد بالمسجد", src: posterEidMosque.url, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: EID_MOSQUE_LAYOUT },
@@ -228,6 +238,11 @@ const CATEGORY_OF: Record<string, string> = {
   masaa: "تحيات الصباح والمساء",
   jumaa: "تصاميم يوم الجمعة",
   "jumaa-gold": "تصاميم يوم الجمعة",
+  "jumaa-salou": "تصاميم يوم الجمعة",
+  "jumaa-yawm": "تصاميم يوم الجمعة",
+  "jumaa-kum": "تصاميم يوم الجمعة",
+  "jumaa-kaaba": "تصاميم يوم الجمعة",
+  "jumaa-tayyiba": "تصاميم يوم الجمعة",
   ramadan: "رمضان",
   eid: "تصاميم الأعياد",
   "eid-mosque": "تصاميم الأعياد",
