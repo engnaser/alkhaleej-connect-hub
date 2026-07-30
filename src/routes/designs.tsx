@@ -222,6 +222,31 @@ const TEMPLATES: Template[] = [
   },
 ];
 
+/** تصنيف القوالب إلى مجموعات رئيسية */
+const CATEGORY_OF: Record<string, string> = {
+  sabah: "تحيات الصباح والمساء",
+  masaa: "تحيات الصباح والمساء",
+  jumaa: "تصاميم يوم الجمعة",
+  "jumaa-gold": "تصاميم يوم الجمعة",
+  ramadan: "رمضان",
+  eid: "تصاميم الأعياد",
+  "eid-mosque": "تصاميم الأعياد",
+  "khalij-eid-adha": "تصاميم الأعياد",
+  "khalij-eid-fitr": "تصاميم الأعياد",
+  mawloud: "تهاني المواليد",
+  "khalij-mawloud": "تهاني المواليد",
+  "khalij-engagement": "خطوبة وزواج",
+  "khalij-wedding": "خطوبة وزواج",
+  khalij: "بطاقات الوكلاء",
+  "khalij-services": "بطاقات الوكلاء",
+  "khalij-agent": "بطاقات الوكلاء",
+  "khalij-agent-badge": "بطاقات الوكلاء",
+  "khalij-pos-badge": "بطاقات الوكلاء",
+};
+
+const ALL_CATEGORY = "كل التصاميم";
+const categoryOf = (id: string) => CATEGORY_OF[id] ?? "تصاميم أخرى";
+
 function useSession() {
   const [userId, setUserId] = useState<string | null | undefined>(undefined);
   const queryClient = useQueryClient();
@@ -289,6 +314,22 @@ function DesignsPage() {
     [orderedTemplates, adminMode],
   );
 
+  const [activeCategory, setActiveCategory] = useState<string>(ALL_CATEGORY);
+
+  const categories = useMemo(() => {
+    const counts = new Map<string, number>();
+    for (const item of visibleTemplates) {
+      const c = categoryOf(item.tpl.id);
+      counts.set(c, (counts.get(c) ?? 0) + 1);
+    }
+    return [{ name: ALL_CATEGORY, count: visibleTemplates.length }, ...Array.from(counts, ([name, count]) => ({ name, count }))];
+  }, [visibleTemplates]);
+
+  const shownTemplates = useMemo(
+    () => (activeCategory === ALL_CATEGORY ? visibleTemplates : visibleTemplates.filter((t) => categoryOf(t.tpl.id) === activeCategory)),
+    [visibleTemplates, activeCategory],
+  );
+
   const activeTpl = TEMPLATES.find((t) => t.id === openId) ?? null;
 
   const persistMeta = async (templateId: string, patch: Partial<TemplateMeta>) => {
@@ -318,20 +359,21 @@ function DesignsPage() {
     await persistMeta(templateId, { hidden: !currentlyHidden });
   };
 
-  const move = async (index: number, direction: -1 | 1, e: React.MouseEvent) => {
+  const move = async (templateId: string, direction: -1 | 1, e: React.MouseEvent) => {
     e.stopPropagation();
-    const target = index + direction;
-    if (target < 0 || target >= orderedTemplates.length) return;
-    const a = orderedTemplates[index];
-    const b = orderedTemplates[target];
-    // Assign concrete sort_orders based on current positions
+    // move relative to the currently shown (filtered) list
+    const shownIndex = shownTemplates.findIndex((t) => t.tpl.id === templateId);
+    const neighbor = shownTemplates[shownIndex + direction];
+    if (!neighbor) return;
+    const i = orderedTemplates.findIndex((t) => t.tpl.id === templateId);
+    const j = orderedTemplates.findIndex((t) => t.tpl.id === neighbor.tpl.id);
+    if (i < 0 || j < 0) return;
     const newList = [...orderedTemplates];
-    newList[index] = b;
-    newList[target] = a;
-    // Reassign sequential orders
+    newList[i] = orderedTemplates[j];
+    newList[j] = orderedTemplates[i];
     const updates: Promise<unknown>[] = [];
-    newList.forEach((item, i) => {
-      const newOrder = (i + 1) * 10;
+    newList.forEach((item, idx) => {
+      const newOrder = (idx + 1) * 10;
       if ((meta[item.tpl.id]?.sort_order ?? -1) !== newOrder) {
         updates.push(persistMeta(item.tpl.id, { sort_order: newOrder }));
       }
@@ -413,8 +455,26 @@ function DesignsPage() {
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
-          {(metaLoaded ? visibleTemplates : orderedTemplates).map((item, idx) => {
+        <div className="mt-10 flex flex-wrap justify-center gap-2">
+          {categories.map((c) => (
+            <button
+              key={c.name}
+              type="button"
+              onClick={() => setActiveCategory(c.name)}
+              className={`rounded-full border-2 px-4 py-2 text-xs font-extrabold transition-all ${
+                activeCategory === c.name
+                  ? "border-primary bg-primary text-primary-foreground shadow-md"
+                  : "border-border bg-card text-foreground/80 hover:border-primary hover:text-primary"
+              }`}
+            >
+              {c.name}
+              <span className="mr-1.5 opacity-70">({c.count})</span>
+            </button>
+          ))}
+        </div>
+
+        <div className="mt-8 grid grid-cols-1 gap-7 sm:grid-cols-2 lg:grid-cols-3">
+          {(metaLoaded ? shownTemplates : orderedTemplates).map((item, idx) => {
             const tpl = item.tpl;
             const isHidden = item.hidden;
             return (
@@ -427,7 +487,7 @@ function DesignsPage() {
                   <div className="absolute right-2 top-2 z-10 flex flex-col gap-1.5" onClick={(e) => e.stopPropagation()}>
                     <button
                       type="button"
-                      onClick={(e) => move(idx, -1, e)}
+                      onClick={(e) => move(tpl.id, -1, e)}
                       title="نقل للأعلى"
                       className="grid h-8 w-8 place-items-center rounded-full bg-background/90 text-foreground shadow-md ring-1 ring-border transition-colors hover:bg-primary hover:text-primary-foreground disabled:opacity-40"
                       disabled={idx === 0}
@@ -436,10 +496,10 @@ function DesignsPage() {
                     </button>
                     <button
                       type="button"
-                      onClick={(e) => move(idx, 1, e)}
+                      onClick={(e) => move(tpl.id, 1, e)}
                       title="نقل للأسفل"
                       className="grid h-8 w-8 place-items-center rounded-full bg-background/90 text-foreground shadow-md ring-1 ring-border transition-colors hover:bg-primary hover:text-primary-foreground disabled:opacity-40"
-                      disabled={idx === visibleTemplates.length - 1}
+                      disabled={idx === shownTemplates.length - 1}
                     >
                       <ArrowDown className="h-4 w-4" />
                     </button>
