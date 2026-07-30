@@ -245,6 +245,7 @@ const CATEGORY_OF: Record<string, string> = {
   "jumaa-kum": "تصاميم يوم الجمعة",
   "jumaa-kaaba": "تصاميم يوم الجمعة",
   "jumaa-tayyiba": "تصاميم يوم الجمعة",
+  "jumaa-ilman": "تصاميم يوم الجمعة",
   ramadan: "رمضان",
   eid: "تصاميم الأعياد",
   "eid-mosque": "تصاميم الأعياد",
