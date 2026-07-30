@@ -23,6 +23,8 @@ import posterKhalijWedding from "@/assets/poster-khalij-wedding.png.asset.json";
 import posterKhalijMawloud from "@/assets/poster-khalij-mawloud.png.asset.json";
 import posterKhalijEidAdha from "@/assets/poster-khalij-eid-adha.png.asset.json";
 import posterKhalijEidFitr from "@/assets/poster-khalij-eid-fitr.png.asset.json";
+import posterKhalijAgentBadge from "@/assets/poster-khalij-agent-badge.webp.asset.json";
+import posterKhalijPosBadge from "@/assets/poster-khalij-pos-badge.webp.asset.json";
 
 const SITE = "https://alkhaleej-connect-hub.lovable.app";
 
@@ -105,6 +107,24 @@ const EID_MOSQUE_LAYOUT: Record<string, FieldLayout> = {
 
 const TEMPLATES: Template[] = [
   { id: "sabah",   title: "صباح الخير",  occasion: "تحية الصباح",       src: posterSabah,   fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
+  {
+    id: "khalij-agent-badge", title: "وكيل معتمد وموزع رئيسي", occasion: "الخليج تيليكوم — لكل شبكات الاتصالات", src: posterKhalijAgentBadge.url,
+    fields: SIMPLE_FIELDS,
+    defaults: { name: "اسم الوكيل", phone: "+967 7XX XXX XXX" },
+    layout: {
+      name:  { x: 50, y: 86, size: 2.4, color: "#f4d28a", dir: "rtl", weight: 900, maxWidth: 60 },
+      phone: { x: 50, y: 90, size: 2.2, color: "#ffffff", dir: "ltr", weight: 800, mono: true, maxWidth: 60 },
+    },
+  },
+  {
+    id: "khalij-pos-badge", title: "نقطة بيع معتمدة", occasion: "الخليج تيليكوم — لكل شبكات الاتصالات", src: posterKhalijPosBadge.url,
+    fields: SIMPLE_FIELDS,
+    defaults: { name: "اسم نقطة البيع", phone: "+967 7XX XXX XXX" },
+    layout: {
+      name:  { x: 50, y: 86, size: 2.4, color: "#f4d28a", dir: "rtl", weight: 900, maxWidth: 60 },
+      phone: { x: 50, y: 90, size: 2.2, color: "#ffffff", dir: "ltr", weight: 800, mono: true, maxWidth: 60 },
+    },
+  },
   { id: "masaa",   title: "مساء الخير",  occasion: "تحية المساء",       src: posterMasaa,   fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
   { id: "jumaa",   title: "جمعة مباركة", occasion: "تذكير الجمعة",      src: posterJumaa,   fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
   { id: "jumaa-gold", title: "جمعة مباركة", occasion: "تصميم ذهبي أبيض", src: posterJumaaGold.url, fields: SIMPLE_FIELDS, defaults: { name: "اسم العميل", phone: "+967 7XX XXX XXX" }, layout: SIMPLE_LAYOUT },
