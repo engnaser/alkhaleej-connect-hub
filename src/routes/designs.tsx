@@ -822,6 +822,32 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
             <p className="mt-1 text-xs text-muted-foreground">{tpl.occasion} — أدخل البيانات الخاصة بهذا التصميم</p>
           </div>
 
+          {tpl.photoSlot && (
+            <div className="mb-4 rounded-xl border-2 border-dashed border-primary/50 bg-primary/5 p-4 text-right">
+              <span className="mb-2 block text-sm font-bold text-foreground">
+                أرفق صورتك <span className="text-primary">*</span>
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => onPickPhoto(e.target.files?.[0])}
+                className="block w-full cursor-pointer rounded-lg border border-border bg-background p-2 text-xs font-bold text-foreground file:ml-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-2 file:text-xs file:font-bold file:text-primary-foreground"
+              />
+              <p className="mt-2 text-[11px] text-muted-foreground">
+                سيتم دمج الصورة تلقائياً داخل الإطار في مكان «أضف الصورة هنا».
+              </p>
+              {photoUrl && (
+                <button
+                  type="button"
+                  onClick={() => { setPhotoUrl(null); photoImgRef.current = null; }}
+                  className="mt-2 rounded-lg border border-border px-3 py-1.5 text-[11px] font-bold text-muted-foreground hover:text-destructive"
+                >
+                  إزالة الصورة
+                </button>
+              )}
+            </div>
+          )}
+
           <div className="space-y-4">
             {tpl.fields.map((f) => (
               <label key={f.key} className="block">
