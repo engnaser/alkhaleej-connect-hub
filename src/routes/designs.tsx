@@ -33,6 +33,7 @@ import posterKhalijEidFitr from "@/assets/poster-khalij-eid-fitr.png.asset.json"
 import posterKhalijAgentBadge from "@/assets/poster-khalij-agent-badge.webp.asset.json";
 import posterKhalijPosBadge from "@/assets/poster-khalij-pos-badge.webp.asset.json";
 import posterKhalijWeddingPhoto from "@/assets/poster-khalij-wedding-photo-v2.png.asset.json";
+import posterKhalijWeddingHex from "@/assets/poster-khalij-wedding-hex.jpg.asset.json";
 
 const SITE = "https://alkhaleej-connect-hub.lovable.app";
 
@@ -86,6 +87,7 @@ type PhotoSlot = {
   y: number; // top %
   w: number; // width %
   h: number; // height %
+  shape?: "arch" | "hex";
 };
 
 type Template = {
