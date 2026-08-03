@@ -790,7 +790,9 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
                   top: `${tpl.photoSlot.y}%`,
                   width: `${tpl.photoSlot.w}%`,
                   height: `${tpl.photoSlot.h}%`,
-                  borderRadius: "50% 50% 2% 2% / 30% 30% 1% 1%",
+                  ...(tpl.photoSlot.shape === "hex"
+                    ? { clipPath: "polygon(50% 0%, 100% 20%, 100% 87.5%, 50% 100%, 0% 87.5%, 0% 20%)" }
+                    : { borderRadius: "50% 50% 2% 2% / 30% 30% 1% 1%" }),
                 }}
               />
             )}
