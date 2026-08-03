@@ -243,6 +243,13 @@ const TEMPLATES: Template[] = [
       fromName: { x: 42, y: 78, size: 2.6, color: "#0d3b46", dir: "rtl", weight: 800, maxWidth: 45 },
     },
   },
+  {
+    id: "khalij-wedding-photo", title: "مبارك الزواج (مع صورة)", occasion: "أرفق صورتك وتُدمج داخل الإطار", src: posterKhalijWeddingPhoto.url,
+    fields: [],
+    defaults: {},
+    layout: {},
+    photoSlot: { x: 27.5, y: 20.3, w: 49, h: 42.5 },
+  },
 ];
 
 /** تصنيف القوالب إلى مجموعات رئيسية */
