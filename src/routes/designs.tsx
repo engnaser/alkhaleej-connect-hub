@@ -81,6 +81,13 @@ type FieldLayout = {
   maxWidth?: number; // max text width in % of image width
 };
 
+type PhotoSlot = {
+  x: number; // left %
+  y: number; // top %
+  w: number; // width %
+  h: number; // height %
+};
+
 type Template = {
   id: string;
   title: string;
@@ -89,6 +96,7 @@ type Template = {
   fields: FieldDef[];
   defaults: Record<string, string>;
   layout: Record<string, FieldLayout>;
+  photoSlot?: PhotoSlot;
 };
 
 const SIMPLE_FIELDS: FieldDef[] = [
