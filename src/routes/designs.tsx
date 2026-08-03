@@ -32,6 +32,7 @@ import posterKhalijEidAdha from "@/assets/poster-khalij-eid-adha.png.asset.json"
 import posterKhalijEidFitr from "@/assets/poster-khalij-eid-fitr.png.asset.json";
 import posterKhalijAgentBadge from "@/assets/poster-khalij-agent-badge.webp.asset.json";
 import posterKhalijPosBadge from "@/assets/poster-khalij-pos-badge.webp.asset.json";
+import posterKhalijWeddingPhoto from "@/assets/poster-khalij-wedding-photo.png.asset.json";
 
 const SITE = "https://alkhaleej-connect-hub.lovable.app";
 
@@ -80,6 +81,13 @@ type FieldLayout = {
   maxWidth?: number; // max text width in % of image width
 };
 
+type PhotoSlot = {
+  x: number; // left %
+  y: number; // top %
+  w: number; // width %
+  h: number; // height %
+};
+
 type Template = {
   id: string;
   title: string;
@@ -88,6 +96,7 @@ type Template = {
   fields: FieldDef[];
   defaults: Record<string, string>;
   layout: Record<string, FieldLayout>;
+  photoSlot?: PhotoSlot;
 };
 
 const SIMPLE_FIELDS: FieldDef[] = [
@@ -234,6 +243,13 @@ const TEMPLATES: Template[] = [
       fromName: { x: 42, y: 78, size: 2.6, color: "#0d3b46", dir: "rtl", weight: 800, maxWidth: 45 },
     },
   },
+  {
+    id: "khalij-wedding-photo", title: "مبارك الزواج (مع صورة)", occasion: "أرفق صورتك وتُدمج داخل الإطار", src: posterKhalijWeddingPhoto.url,
+    fields: [],
+    defaults: {},
+    layout: {},
+    photoSlot: { x: 27.5, y: 20.3, w: 49, h: 42.5 },
+  },
 ];
 
 /** تصنيف القوالب إلى مجموعات رئيسية */
@@ -258,6 +274,7 @@ const CATEGORY_OF: Record<string, string> = {
   "khalij-mawloud": "تهاني المواليد",
   "khalij-engagement": "خطوبة وزواج",
   "khalij-wedding": "خطوبة وزواج",
+  "khalij-wedding-photo": "خطوبة وزواج",
   khalij: "بطاقات الوكلاء",
   "khalij-services": "بطاقات الوكلاء",
   "khalij-agent": "بطاقات الوكلاء",
@@ -575,6 +592,23 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
   const [saving, setSaving] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(true);
   const imgRef = useRef<HTMLImageElement | null>(null);
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
+  const photoImgRef = useRef<HTMLImageElement | null>(null);
+
+  const onPickPhoto = (file: File | undefined) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const url = String(reader.result);
+      const im = new Image();
+      im.onload = () => {
+        photoImgRef.current = im;
+        setPhotoUrl(url);
+      };
+      im.src = url;
+    };
+    reader.readAsDataURL(file);
+  };
 
   // Load cloud-saved layout (shared across all visitors)
   useEffect(() => {
@@ -645,6 +679,33 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     ctx.drawImage(img, 0, 0, w, h);
+
+    // دمج صورة العميل داخل إطار القالب
+    const slot = tpl.photoSlot;
+    const photo = photoImgRef.current;
+    if (slot && photo) {
+      const sx = (slot.x / 100) * w;
+      const sy = (slot.y / 100) * h;
+      const sw = (slot.w / 100) * w;
+      const sh = (slot.h / 100) * h;
+      ctx.save();
+      ctx.beginPath();
+      const archH = sw * 0.55;
+      ctx.moveTo(sx, sy + sh);
+      ctx.lineTo(sx, sy + archH);
+      ctx.quadraticCurveTo(sx + sw * 0.12, sy + archH * 0.28, sx + sw / 2, sy);
+      ctx.quadraticCurveTo(sx + sw * 0.88, sy + archH * 0.28, sx + sw, sy + archH);
+      ctx.lineTo(sx + sw, sy + sh);
+      ctx.closePath();
+      ctx.clip();
+      // cover fit
+      const scale = Math.max(sw / photo.naturalWidth, sh / photo.naturalHeight);
+      const pw = photo.naturalWidth * scale;
+      const ph = photo.naturalHeight * scale;
+      ctx.drawImage(photo, sx + (sw - pw) / 2, sy + (sh - ph) / 2, pw, ph);
+      ctx.restore();
+    }
+
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.shadowColor = "rgba(0,0,0,0.5)";
@@ -700,6 +761,20 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
           <p className="mb-3 text-right text-xs font-bold text-muted-foreground">معاينة مباشرة</p>
           <div className="relative overflow-hidden rounded-2xl" style={{ containerType: "inline-size" }}>
             <img ref={imgRef} src={tpl.src} alt={tpl.title} crossOrigin="anonymous" className="block h-auto w-full" />
+            {tpl.photoSlot && photoUrl && (
+              <img
+                src={photoUrl}
+                alt="صورة العميل"
+                className="pointer-events-none absolute object-cover"
+                style={{
+                  left: `${tpl.photoSlot.x}%`,
+                  top: `${tpl.photoSlot.y}%`,
+                  width: `${tpl.photoSlot.w}%`,
+                  height: `${tpl.photoSlot.h}%`,
+                  borderRadius: "48% 48% 3% 3% / 34% 34% 2% 2%",
+                }}
+              />
+            )}
             {tpl.fields.map((f) => {
               const L = layout[f.key];
               if (!L) return null;
@@ -746,6 +821,32 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
             <h2 className="text-xl font-black text-primary">{tpl.title}</h2>
             <p className="mt-1 text-xs text-muted-foreground">{tpl.occasion} — أدخل البيانات الخاصة بهذا التصميم</p>
           </div>
+
+          {tpl.photoSlot && (
+            <div className="mb-4 rounded-xl border-2 border-dashed border-primary/50 bg-primary/5 p-4 text-right">
+              <span className="mb-2 block text-sm font-bold text-foreground">
+                أرفق صورتك <span className="text-primary">*</span>
+              </span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => onPickPhoto(e.target.files?.[0])}
+                className="block w-full cursor-pointer rounded-lg border border-border bg-background p-2 text-xs font-bold text-foreground file:ml-3 file:rounded-md file:border-0 file:bg-primary file:px-3 file:py-2 file:text-xs file:font-bold file:text-primary-foreground"
+              />
+              <p className="mt-2 text-[11px] text-muted-foreground">
+                سيتم دمج الصورة تلقائياً داخل الإطار في مكان «أضف الصورة هنا».
+              </p>
+              {photoUrl && (
+                <button
+                  type="button"
+                  onClick={() => { setPhotoUrl(null); photoImgRef.current = null; }}
+                  className="mt-2 rounded-lg border border-border px-3 py-1.5 text-[11px] font-bold text-muted-foreground hover:text-destructive"
+                >
+                  إزالة الصورة
+                </button>
+              )}
+            </div>
+          )}
 
           <div className="space-y-4">
             {tpl.fields.map((f) => (
