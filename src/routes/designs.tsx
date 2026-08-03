@@ -700,12 +700,21 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
       const sh = (slot.h / 100) * h;
       ctx.save();
       ctx.beginPath();
-      const archH = sw * 0.30;
-      ctx.moveTo(sx, sy + sh);
-      ctx.lineTo(sx, sy + archH);
-      ctx.quadraticCurveTo(sx + sw * 0.10, sy + archH * 0.18, sx + sw / 2, sy);
-      ctx.quadraticCurveTo(sx + sw * 0.90, sy + archH * 0.18, sx + sw, sy + archH);
-      ctx.lineTo(sx + sw, sy + sh);
+      if (slot.shape === "hex") {
+        ctx.moveTo(sx + sw / 2, sy);
+        ctx.lineTo(sx + sw, sy + sh * 0.2);
+        ctx.lineTo(sx + sw, sy + sh * 0.875);
+        ctx.lineTo(sx + sw / 2, sy + sh);
+        ctx.lineTo(sx, sy + sh * 0.875);
+        ctx.lineTo(sx, sy + sh * 0.2);
+      } else {
+        const archH = sw * 0.30;
+        ctx.moveTo(sx, sy + sh);
+        ctx.lineTo(sx, sy + archH);
+        ctx.quadraticCurveTo(sx + sw * 0.10, sy + archH * 0.18, sx + sw / 2, sy);
+        ctx.quadraticCurveTo(sx + sw * 0.90, sy + archH * 0.18, sx + sw, sy + archH);
+        ctx.lineTo(sx + sw, sy + sh);
+      }
       ctx.closePath();
       ctx.clip();
       // cover fit
