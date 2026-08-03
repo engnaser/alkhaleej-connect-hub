@@ -761,6 +761,20 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
           <p className="mb-3 text-right text-xs font-bold text-muted-foreground">معاينة مباشرة</p>
           <div className="relative overflow-hidden rounded-2xl" style={{ containerType: "inline-size" }}>
             <img ref={imgRef} src={tpl.src} alt={tpl.title} crossOrigin="anonymous" className="block h-auto w-full" />
+            {tpl.photoSlot && photoUrl && (
+              <img
+                src={photoUrl}
+                alt="صورة العميل"
+                className="pointer-events-none absolute object-cover"
+                style={{
+                  left: `${tpl.photoSlot.x}%`,
+                  top: `${tpl.photoSlot.y}%`,
+                  width: `${tpl.photoSlot.w}%`,
+                  height: `${tpl.photoSlot.h}%`,
+                  borderRadius: "48% 48% 3% 3% / 34% 34% 2% 2%",
+                }}
+              />
+            )}
             {tpl.fields.map((f) => {
               const L = layout[f.key];
               if (!L) return null;
