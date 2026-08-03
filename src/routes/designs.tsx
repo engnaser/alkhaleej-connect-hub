@@ -592,6 +592,23 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
   const [saving, setSaving] = useState(false);
   const [showAdvanced, setShowAdvanced] = useState(true);
   const imgRef = useRef<HTMLImageElement | null>(null);
+  const [photoUrl, setPhotoUrl] = useState<string | null>(null);
+  const photoImgRef = useRef<HTMLImageElement | null>(null);
+
+  const onPickPhoto = (file: File | undefined) => {
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = () => {
+      const url = String(reader.result);
+      const im = new Image();
+      im.onload = () => {
+        photoImgRef.current = im;
+        setPhotoUrl(url);
+      };
+      im.src = url;
+    };
+    reader.readAsDataURL(file);
+  };
 
   // Load cloud-saved layout (shared across all visitors)
   useEffect(() => {
