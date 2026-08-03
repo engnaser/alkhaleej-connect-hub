@@ -248,7 +248,7 @@ const TEMPLATES: Template[] = [
     fields: [],
     defaults: {},
     layout: {},
-    photoSlot: { x: 27.5, y: 20.3, w: 49, h: 42.5 },
+    photoSlot: { x: 26.2, y: 19.7, w: 49.1, h: 43.2 },
   },
 ];
 
@@ -690,11 +690,11 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
       const sh = (slot.h / 100) * h;
       ctx.save();
       ctx.beginPath();
-      const archH = sw * 0.55;
+      const archH = sw * 0.30;
       ctx.moveTo(sx, sy + sh);
       ctx.lineTo(sx, sy + archH);
-      ctx.quadraticCurveTo(sx + sw * 0.12, sy + archH * 0.28, sx + sw / 2, sy);
-      ctx.quadraticCurveTo(sx + sw * 0.88, sy + archH * 0.28, sx + sw, sy + archH);
+      ctx.quadraticCurveTo(sx + sw * 0.10, sy + archH * 0.18, sx + sw / 2, sy);
+      ctx.quadraticCurveTo(sx + sw * 0.90, sy + archH * 0.18, sx + sw, sy + archH);
       ctx.lineTo(sx + sw, sy + sh);
       ctx.closePath();
       ctx.clip();
@@ -771,7 +771,7 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
                   top: `${tpl.photoSlot.y}%`,
                   width: `${tpl.photoSlot.w}%`,
                   height: `${tpl.photoSlot.h}%`,
-                  borderRadius: "48% 48% 3% 3% / 34% 34% 2% 2%",
+                  borderRadius: "50% 50% 2% 2% / 30% 30% 1% 1%",
                 }}
               />
             )}
