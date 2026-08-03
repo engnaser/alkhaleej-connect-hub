@@ -33,6 +33,7 @@ import posterKhalijEidFitr from "@/assets/poster-khalij-eid-fitr.png.asset.json"
 import posterKhalijAgentBadge from "@/assets/poster-khalij-agent-badge.webp.asset.json";
 import posterKhalijPosBadge from "@/assets/poster-khalij-pos-badge.webp.asset.json";
 import posterKhalijWeddingPhoto from "@/assets/poster-khalij-wedding-photo-v2.png.asset.json";
+import posterKhalijWeddingHex from "@/assets/poster-khalij-wedding-hex.jpg.asset.json";
 
 const SITE = "https://alkhaleej-connect-hub.lovable.app";
 
@@ -86,6 +87,7 @@ type PhotoSlot = {
   y: number; // top %
   w: number; // width %
   h: number; // height %
+  shape?: "arch" | "hex";
 };
 
 type Template = {
@@ -248,7 +250,14 @@ const TEMPLATES: Template[] = [
     fields: [],
     defaults: {},
     layout: {},
-    photoSlot: { x: 24.8, y: 20.3, w: 50.3, h: 42.3 },
+    photoSlot: { x: 24.8, y: 20.3, w: 50.3, h: 42.3, shape: "arch" },
+  },
+  {
+    id: "khalij-wedding-hex", title: "مبارك الزواج — إطار ماسي (مع صورة)", occasion: "أرفق صورتك وتُدمج داخل الإطار الذهبي", src: posterKhalijWeddingHex.url,
+    fields: [],
+    defaults: {},
+    layout: {},
+    photoSlot: { x: 23.2, y: 19.0, w: 53.5, h: 45.6, shape: "hex" },
   },
 ];
 
@@ -275,6 +284,7 @@ const CATEGORY_OF: Record<string, string> = {
   "khalij-engagement": "خطوبة وزواج",
   "khalij-wedding": "خطوبة وزواج",
   "khalij-wedding-photo": "خطوبة وزواج",
+  "khalij-wedding-hex": "خطوبة وزواج",
   khalij: "بطاقات الوكلاء",
   "khalij-services": "بطاقات الوكلاء",
   "khalij-agent": "بطاقات الوكلاء",
@@ -690,12 +700,21 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
       const sh = (slot.h / 100) * h;
       ctx.save();
       ctx.beginPath();
-      const archH = sw * 0.30;
-      ctx.moveTo(sx, sy + sh);
-      ctx.lineTo(sx, sy + archH);
-      ctx.quadraticCurveTo(sx + sw * 0.10, sy + archH * 0.18, sx + sw / 2, sy);
-      ctx.quadraticCurveTo(sx + sw * 0.90, sy + archH * 0.18, sx + sw, sy + archH);
-      ctx.lineTo(sx + sw, sy + sh);
+      if (slot.shape === "hex") {
+        ctx.moveTo(sx + sw / 2, sy);
+        ctx.lineTo(sx + sw, sy + sh * 0.2);
+        ctx.lineTo(sx + sw, sy + sh * 0.875);
+        ctx.lineTo(sx + sw / 2, sy + sh);
+        ctx.lineTo(sx, sy + sh * 0.875);
+        ctx.lineTo(sx, sy + sh * 0.2);
+      } else {
+        const archH = sw * 0.30;
+        ctx.moveTo(sx, sy + sh);
+        ctx.lineTo(sx, sy + archH);
+        ctx.quadraticCurveTo(sx + sw * 0.10, sy + archH * 0.18, sx + sw / 2, sy);
+        ctx.quadraticCurveTo(sx + sw * 0.90, sy + archH * 0.18, sx + sw, sy + archH);
+        ctx.lineTo(sx + sw, sy + sh);
+      }
       ctx.closePath();
       ctx.clip();
       // cover fit
@@ -771,7 +790,9 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
                   top: `${tpl.photoSlot.y}%`,
                   width: `${tpl.photoSlot.w}%`,
                   height: `${tpl.photoSlot.h}%`,
-                  borderRadius: "50% 50% 2% 2% / 30% 30% 1% 1%",
+                  ...(tpl.photoSlot.shape === "hex"
+                    ? { clipPath: "polygon(50% 0%, 100% 20%, 100% 87.5%, 50% 100%, 0% 87.5%, 0% 20%)" }
+                    : { borderRadius: "50% 50% 2% 2% / 30% 30% 1% 1%" }),
                 }}
               />
             )}
