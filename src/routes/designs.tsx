@@ -679,6 +679,33 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     ctx.drawImage(img, 0, 0, w, h);
+
+    // دمج صورة العميل داخل إطار القالب
+    const slot = tpl.photoSlot;
+    const photo = photoImgRef.current;
+    if (slot && photo) {
+      const sx = (slot.x / 100) * w;
+      const sy = (slot.y / 100) * h;
+      const sw = (slot.w / 100) * w;
+      const sh = (slot.h / 100) * h;
+      ctx.save();
+      ctx.beginPath();
+      const archH = sw * 0.55;
+      ctx.moveTo(sx, sy + sh);
+      ctx.lineTo(sx, sy + archH);
+      ctx.quadraticCurveTo(sx + sw * 0.12, sy + archH * 0.28, sx + sw / 2, sy);
+      ctx.quadraticCurveTo(sx + sw * 0.88, sy + archH * 0.28, sx + sw, sy + archH);
+      ctx.lineTo(sx + sw, sy + sh);
+      ctx.closePath();
+      ctx.clip();
+      // cover fit
+      const scale = Math.max(sw / photo.naturalWidth, sh / photo.naturalHeight);
+      const pw = photo.naturalWidth * scale;
+      const ph = photo.naturalHeight * scale;
+      ctx.drawImage(photo, sx + (sw - pw) / 2, sy + (sh - ph) / 2, pw, ph);
+      ctx.restore();
+    }
+
     ctx.textAlign = "center";
     ctx.textBaseline = "middle";
     ctx.shadowColor = "rgba(0,0,0,0.5)";
