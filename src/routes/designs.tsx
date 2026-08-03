@@ -248,7 +248,7 @@ const TEMPLATES: Template[] = [
     fields: [],
     defaults: {},
     layout: {},
-    photoSlot: { x: 27.5, y: 20.3, w: 49, h: 42.5 },
+    photoSlot: { x: 26.2, y: 19.7, w: 49.1, h: 43.2 },
   },
 ];
 
