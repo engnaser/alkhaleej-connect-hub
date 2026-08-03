@@ -771,7 +771,7 @@ function TemplateModal({ tpl, adminMode, onClose }: { tpl: Template; adminMode: 
                   top: `${tpl.photoSlot.y}%`,
                   width: `${tpl.photoSlot.w}%`,
                   height: `${tpl.photoSlot.h}%`,
-                  borderRadius: "48% 48% 3% 3% / 34% 34% 2% 2%",
+                  borderRadius: "50% 50% 2% 2% / 30% 30% 1% 1%",
                 }}
               />
             )}
