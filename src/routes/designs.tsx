@@ -274,6 +274,7 @@ const CATEGORY_OF: Record<string, string> = {
   "khalij-mawloud": "تهاني المواليد",
   "khalij-engagement": "خطوبة وزواج",
   "khalij-wedding": "خطوبة وزواج",
+  "khalij-wedding-photo": "خطوبة وزواج",
   khalij: "بطاقات الوكلاء",
   "khalij-services": "بطاقات الوكلاء",
   "khalij-agent": "بطاقات الوكلاء",
