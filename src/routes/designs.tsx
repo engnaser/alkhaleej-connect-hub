@@ -250,7 +250,14 @@ const TEMPLATES: Template[] = [
     fields: [],
     defaults: {},
     layout: {},
-    photoSlot: { x: 24.8, y: 20.3, w: 50.3, h: 42.3 },
+    photoSlot: { x: 24.8, y: 20.3, w: 50.3, h: 42.3, shape: "arch" },
+  },
+  {
+    id: "khalij-wedding-hex", title: "مبارك الزواج — إطار ماسي (مع صورة)", occasion: "أرفق صورتك وتُدمج داخل الإطار الذهبي", src: posterKhalijWeddingHex.url,
+    fields: [],
+    defaults: {},
+    layout: {},
+    photoSlot: { x: 23.2, y: 19.0, w: 53.5, h: 45.6, shape: "hex" },
   },
 ];
 
@@ -277,6 +284,7 @@ const CATEGORY_OF: Record<string, string> = {
   "khalij-engagement": "خطوبة وزواج",
   "khalij-wedding": "خطوبة وزواج",
   "khalij-wedding-photo": "خطوبة وزواج",
+  "khalij-wedding-hex": "خطوبة وزواج",
   khalij: "بطاقات الوكلاء",
   "khalij-services": "بطاقات الوكلاء",
   "khalij-agent": "بطاقات الوكلاء",
