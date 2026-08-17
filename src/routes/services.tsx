@@ -29,10 +29,7 @@ import {
   Megaphone,
   Wand2,
   Gem,
-
-
-
-
+  Building2,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { COUNTRIES } from "@/data/countries";
@@ -190,6 +187,13 @@ const SERVICES = [
     title: "استعلام اشتراك بندر عدن",
     desc: "اختصار آمن لبوابة بندر عدن لمعرفة تاريخ انتهاء اشتراكك في الإنترنت.",
     to: "/bandar-aden-inquiry" as const,
+    cta: "استعلم الآن",
+  },
+  {
+    icon: Building2,
+    title: "استعلام عن حوالتك المنسية في بنك القطيبي",
+    desc: "استعلم عن الحوالات المنسية في بنك القطيبي عبر الموقع الرسمي مباشرة.",
+    href: "https://ext.qtbbank.com/?q=+",
     cta: "استعلم الآن",
   },
   {
