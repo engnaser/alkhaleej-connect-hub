@@ -343,6 +343,27 @@ export type Database = {
         }
         Relationships: []
       }
+      site_service_order: {
+        Row: {
+          hidden: boolean
+          service_key: string
+          sort_order: number
+          updated_at: string
+        }
+        Insert: {
+          hidden?: boolean
+          service_key: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Update: {
+          hidden?: boolean
+          service_key?: string
+          sort_order?: number
+          updated_at?: string
+        }
+        Relationships: []
+      }
       template_layouts: {
         Row: {
           created_at: string
