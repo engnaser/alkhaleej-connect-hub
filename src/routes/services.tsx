@@ -36,7 +36,7 @@ import { COUNTRIES } from "@/data/countries";
 
 
 export const Route = createFileRoute("/services")({
-  validateSearch: (search: Record<string, unknown>) => ({
+  validateSearch: (search: Record<string, unknown>): { dial?: string } => ({
     dial: typeof search.dial === "string" ? search.dial : undefined,
   }),
   head: () => ({
