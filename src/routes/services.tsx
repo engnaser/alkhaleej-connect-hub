@@ -36,7 +36,7 @@ import { COUNTRIES } from "@/data/countries";
 
 
 export const Route = createFileRoute("/services")({
-  validateSearch: (search: Record<string, unknown>) => ({
+  validateSearch: (search: Record<string, unknown>): { dial?: string } => ({
     dial: typeof search.dial === "string" ? search.dial : undefined,
   }),
   head: () => ({
@@ -234,8 +234,57 @@ const SERVICES = [
   },
 ];
 
+type ServiceMeta = { sort_order: number };
+
 function ServicesPage() {
   const { dial } = Route.useSearch();
+  const { isAdmin } = useIsAdmin();
+  const [meta, setMeta] = useState<Record<string, ServiceMeta>>({});
+
+  useEffect(() => {
+    let cancelled = false;
+    (async () => {
+      const { data } = await supabase
+        .from("site_service_order")
+        .select("service_key, sort_order");
+      if (cancelled) return;
+      const map: Record<string, ServiceMeta> = {};
+      for (const row of (data ?? []) as Array<{ service_key: string; sort_order: number | null }>) {
+        map[row.service_key] = { sort_order: row.sort_order ?? 1000 };
+      }
+      setMeta(map);
+    })();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const orderedServices = useMemo(() => {
+    const list = SERVICES.map((s, i) => ({
+      s,
+      order: meta[s.title]?.sort_order ?? 1000 + i,
+      fallback: i,
+    }));
+    list.sort((a, b) => a.order - b.order || a.fallback - b.fallback);
+    return list;
+  }, [meta]);
+
+  const move = async (title: string, direction: -1 | 1) => {
+    const i = orderedServices.findIndex((x) => x.s.title === title);
+    const j = i + direction;
+    if (i < 0 || j < 0 || j >= orderedServices.length) return;
+    const newList = [...orderedServices];
+    newList[i] = orderedServices[j];
+    newList[j] = orderedServices[i];
+    const nextMeta: Record<string, ServiceMeta> = {};
+    const rows = newList.map((item, idx) => {
+      nextMeta[item.s.title] = { sort_order: (idx + 1) * 10 };
+      return { service_key: item.s.title, sort_order: (idx + 1) * 10 };
+    });
+    setMeta(nextMeta);
+    await supabase.from("site_service_order").upsert(rows, { onConflict: "service_key" });
+  };
+
   return (
 
     <div dir="rtl" className="min-h-screen bg-background text-foreground">
@@ -253,6 +302,11 @@ function ServicesPage() {
       />
 
       <main>
+        {isAdmin && (
+          <div className="bg-primary/10 px-4 py-2 text-center text-xs font-bold text-primary">
+            وضع المسؤول مفعّل — يمكنك إعادة ترتيب الخدمات بالأسهم.
+          </div>
+        )}
         {/* HERO */}
         <section className="relative overflow-hidden border-b border-border">
           <div
@@ -282,7 +336,7 @@ function ServicesPage() {
         {/* SERVICES GRID */}
         <section className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
           <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-            {SERVICES.map((s) => {
+            {orderedServices.map(({ s }, idx) => {
               const Inner = (
                 <>
                   <div className="mb-4 grid h-12 w-12 place-items-center rounded-xl bg-primary/10 text-primary">
@@ -302,34 +356,53 @@ function ServicesPage() {
               );
               const className =
                 "group block rounded-2xl border border-border bg-card p-6 text-right shadow-[var(--shadow-card)] transition-all hover:-translate-y-1 hover:border-primary/40 hover:shadow-[var(--shadow-elevated)]";
-              if (s.href) {
-                return (
-                  <a
-                    key={s.title}
-                    href={s.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    className={className}
-                  >
-                    {Inner}
-                  </a>
-                );
-              }
-              if (s.to.startsWith("#")) {
-                return (
-                  <a key={s.title} href={s.to} className={className}>
-                    {Inner}
-                  </a>
-                );
-              }
-              return (
-                <Link key={s.title} to={s.to} className={className}>
+              const href = "href" in s ? (s.href as string | undefined) : undefined;
+              const to = "to" in s ? (s.to as string | undefined) : undefined;
+              const card = href ? (
+                <a href={href} target="_blank" rel="noreferrer" className={className}>
+                  {Inner}
+                </a>
+              ) : to && to.startsWith("#") ? (
+                <a href={to} className={className}>
+                  {Inner}
+                </a>
+              ) : (
+                <Link to={to as never} className={className}>
                   {Inner}
                 </Link>
+              );
+
+              return (
+                <div key={s.title} className="relative">
+                  {isAdmin && (
+                    <div className="absolute left-2 top-2 z-10 flex flex-col gap-1.5">
+                      <button
+                        type="button"
+                        onClick={() => move(s.title, -1)}
+                        title="نقل للأعلى"
+                        disabled={idx === 0}
+                        className="grid h-8 w-8 place-items-center rounded-full bg-background/90 text-foreground shadow-md ring-1 ring-border transition-colors hover:bg-primary hover:text-primary-foreground disabled:opacity-40"
+                      >
+                        <ArrowUp className="h-4 w-4" />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => move(s.title, 1)}
+                        title="نقل للأسفل"
+                        disabled={idx === orderedServices.length - 1}
+                        className="grid h-8 w-8 place-items-center rounded-full bg-background/90 text-foreground shadow-md ring-1 ring-border transition-colors hover:bg-primary hover:text-primary-foreground disabled:opacity-40"
+                      >
+                        <ArrowDown className="h-4 w-4" />
+                      </button>
+                    </div>
+                  )}
+                  {card}
+                </div>
               );
             })}
           </div>
         </section>
+
 
         {/* WHATSAPP TOOL */}
         <section
