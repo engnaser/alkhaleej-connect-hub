@@ -29,10 +29,7 @@ import {
   Megaphone,
   Wand2,
   Gem,
-
-
-
-
+  Building2,
 } from "lucide-react";
 import logoKhalij from "@/assets/logo-khalij.png";
 import { COUNTRIES } from "@/data/countries";
